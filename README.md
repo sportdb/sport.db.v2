@@ -10,7 +10,10 @@ In v2 the shared database schema no longer matters.
 What matters is the Football.TXT format and the lexer & parser to 
 read into structs that can than get exported to JSON or CSV.
 
-(SQL) Database import is an optional extra and no longer part of the core tooling and there's no longer a one and only canoncial shared database schema. 
+(SQL) database import is an optional extra and no longer part of the core tooling and there's no longer a one and only canoncial shared (SQL) database schema. 
+
+
+
 
 
 
