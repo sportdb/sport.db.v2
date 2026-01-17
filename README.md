@@ -16,4 +16,14 @@ read into structs that can than get exported to JSON or CSV.
 
 
 
+## Todos
 
+- [ ]  add heading support to lexer & parser and
+       change text input from array of lines to multi-line string
+       incl. comments and blank lines etc. (that is, remove Outliner)
+
+- [ ]  use two lexers 
+       - minimal   - no goal lines, no props, etc.
+       - "maximal"  - supports goal lines, and props 
+
+       

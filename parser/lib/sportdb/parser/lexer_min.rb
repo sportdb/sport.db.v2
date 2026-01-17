@@ -1,7 +1,18 @@
 
 module SportDb
-class Lexer
+class LexerMin
 
+
+###  a quick minimal lexer version
+###       no goal lines, 
+###       no props, etc.
+
+MONTH_MAP = Lexer::MONTH_MAP
+DAY_MAP   = Lexer::DAY_MAP
+
+## todo/fix - add  REs here to remove Lexer:: inline!!!
+##  e.g.   RE = Lexer::RE  etc.
+ROUND_OUTLINE_RE = Lexer::ROUND_OUTLINE_RE
 
 
 def log( msg )
@@ -25,9 +36,7 @@ end
   ##    for now for compatibility
   def is_group?( text )  Lang.is_group?( text ); end
   def is_round?( text )  Lang.is_round?( text ); end
-  def is_leg?( text )    Lang.is_leg?( text ); end
-  def is_zone?( text )   Lang.is_zone?( text ); end
-
+  
 
 
 
@@ -98,7 +107,7 @@ def tokenize_with_errors
         tokens = tokens.map do |t|        
                     if t[0] == :TEXT
                        text = t[1]
-                       t =  if is_round?( text ) || is_leg?( text ) || is_zone?( text )
+                       t =  if is_round?( text ) 
                                [:ROUND, text]   
                             elsif is_group?( text )
                                [:GROUP, text]
@@ -109,17 +118,6 @@ def tokenize_with_errors
                    t
                  end
 
-        ### check for "section" starters e.g. Teams or such
-        t = tokens[0] 
-        if t[0] == :TEXT
-            text = t[1]
-            if text =~ /^teams$/i
-               t[0] = :TEAMS
-            elsif text =~  /^blank$/i   ### todo/fix -- remove!!! add real blanks!!
-               t[0] = :BLANK
-            else
-            end
-        end
 
         #################
         ## pass 2                  
@@ -200,24 +198,6 @@ end   # method tokenize_with_errors
 
 
 
-### add a QUICK_PLAYER_WITH_MINUTE  check
-QUICK_PLAYER_WITH_MINUTE_RE = %r{
-      ##  note - \b  NOT working for ? !!!
-      ##
-      ##  use positive lookbehind
-        (?<= [ ,;\(\)\[\]]|^)
-      
-        (?:
-            (?:
-                \d{1,3}      ## constrain numbers to 0 to 999!!! 
-                (?: \+\d{1,3}   
-                 )?
-            )
-            |
-            (?: \?{2} | _{2} )  ## add support for n/a (not/available)
-        )           
-        '   ## must have minute marker!!!!
-}ix 
  
 
 def _tokenize_line( line )
@@ -230,7 +210,7 @@ def _tokenize_line( line )
    ### special case for empty line (aka BLANK)
    if line.empty?
        ## note - blank always resets parser mode to std/top-level!!!
-       @re = RE
+       @re = Lexer::RE
 
        tokens << [:BLANK, '<|BLANK|>']
        return [tokens, errors]
@@ -246,104 +226,20 @@ def _tokenize_line( line )
 
   ####
   ## quick hack - keep re state/mode between tokenize calls!!!
-  @re  ||= RE     ## note - switch between RE & INSIDE_RE
+  @re  ||= Lexer::RE     ## note - switch between RE & INSIDE_RE
 
 
-  if @re == RE  ## top-level
+  if @re == Lexer::RE  ## top-level
     ### check for modes once (per line) here to speed-up parsing
     ###   for now goals only possible for start of line!!
     ###        fix - remove optional [] - why? why not?  
   
-    ##  start with prop key (match will switch into prop mode!!!)
-    ##   - fix - remove leading spaces in regex (upstream) - why? why not?
-    if (m = PROP_KEY_RE.match( line ))
-      ###  switch into new mode
-      ##  switch context  to PROP_RE
-        puts "  ENTER PROP_RE MODE"   if debug?
-        key = m[:key]
-
-
-        ### todo - add prop yellow/red cards too - why? why not?
-        if ['sent off', 'red cards'].include?( key.downcase) 
-          @re = PROP_CARDS_RE    ## use CARDS_RE ???
-          tokens << [:PROP_REDCARDS, m[:key]]
-        elsif ['yellow cards'].include?( key.downcase )
-          @re = PROP_CARDS_RE  
-          tokens << [:PROP_YELLOWCARDS, m[:key]]
-        elsif ['ref', 'referee'].include?( key.downcase )
-          @re = PROP_REFEREE_RE     
-          tokens << [:PROP_REFEREE, m[:key]]
-        elsif ['att', 'attn', 'attendance'].include?( key.downcase )
-          @re = PROP_ATTENDANCE_RE
-          tokens << [:PROP_ATTENDANCE, m[:key]]         
-        elsif ['goals'].include?( key.downcase )
-          @re = PROP_GOAL_RE
-          tokens << [:PROP_GOALS, m[:key]]
-        elsif ['penalties', 'penalty shootout'].include?( key.downcase )
-          @re = PROP_PENALTIES_RE
-          tokens << [:PROP_PENALTIES, m[:key]]
-        else   ## assume (team) line-up
-          @re = PROP_RE           ## use LINEUP_RE ???
-          tokens << [:PROP, m[:key]]
-        end
-
-        offsets = [m.begin(0), m.end(0)]
-        pos = offsets[1]    ## update pos
-    elsif (m = ROUND_OUTLINE_RE.match( line ))
+    if (m = ROUND_OUTLINE_RE.match( line ))
       puts "   ROUND_OUTLINE"  if debug?
 
       tokens << [:ROUND_OUTLINE, m[:round_outline]]
 
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
-    elsif (m = PLAYER_WITH_SCORE_RE.match( line ))
-      ##  switch context to GOAL_RE (goalline(s)
-      ##   split token (automagically) into two!! - player AND minute!!!
-      @re = GOAL_RE
-      puts "  ENTER GOAL_RE MODE"   if debug?
-
-      score = {}
-      ## must always have ft for now e.g. 1-1 or such
-      ###  change to (generic) score from ft -
-      ##     might be score a.e.t. or such - why? why not?
-      score[:ft] = [m[:ft1].to_i(10),
-                    m[:ft2].to_i(10)]  
-      ## note - for debugging keep (pass along) "literal" score
-      tokens << [:SCORE, [m[:score], score]]
-
-      ## auto-add player token 
-      tokens << [:PLAYER, m[:name]]
-  
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
-
-    ####  FIX/FIX/TODO
-    ### looks to hang in player with minute 
-    ###  FIX - improve / rework PLAYER_WITH_MINUTE_RE  regex!!!!
-    elsif (_quick = QUICK_PLAYER_WITH_MINUTE_RE.match(line) &&
-                m = PLAYER_WITH_MINUTE_RE.match( line ))
-      ##  switch context to GOAL_RE (goalline(s)
-      ##   split token (automagically) into two!! - player AND minute!!!
-      @re = GOAL_RE
-      puts "  ENTER GOAL_RE MODE"   if debug?
-
-      ## check for optional open_bracket
-      tokens << [:'[']     if m[:open_bracket]
-
-      ## check for  -;  (none with separator)
-      ##    todo - find a better way? how possible?
-      tokens << [:NONE, "<|NONE|>"]   if m[:none]
-      
-      ## auto-add player token first
-      tokens << [:PLAYER, m[:name]]
-      ## minute props
-      minute = {}
-      minute[:m]      = m[:value].to_i(10)
-      minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-      ##  t is minute only
-      tokens << [:MINUTE, [m[:minute], minute]]
-
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
     end
@@ -385,7 +281,7 @@ def _tokenize_line( line )
     ## note: racc requires pairs e.g. [:TOKEN, VAL]
     ##         for VAL use "text" or ["text", { opts }]  array
 
-  t = if @re == GEO_RE
+  t = if @re == Lexer::GEO_RE
          ### note - possibly end inline geo on [ (and others?? in the future
          if m[:space] || m[:spaces]
             nil    ## skip space(s)
@@ -405,7 +301,7 @@ def _tokenize_line( line )
             when '[' then
                  ## get out-off geo mode and backtrack (w/ next)
                  puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
-                 @re = RE
+                 @re = Lexer::RE
                  pos = old_pos
                  next   ## backtrack (resume new loop step)                 
             else
@@ -426,212 +322,6 @@ def _tokenize_line( line )
              puts "!!! TOKENIZE ERROR - no match found"
              nil 
           end
-      elsif @re == PROP_CARDS_RE 
-        if m[:space] || m[:spaces]
-              nil    ## skip space(s)
-         elsif m[:prop_name]
-              [:PROP_NAME, m[:name]]
-         elsif m[:minute]
-              minute = {}
-              minute[:m]      = m[:value].to_i(10)
-              minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-             ## note - for debugging keep (pass along) "literal" minute
-             [:MINUTE, [m[:minute], minute]]
-         elsif m[:sym]
-            sym = m[:sym]
-            case sym
-            when ',' then [:',']
-            when ';' then [:';']
-            when '-' then [:'-']
-            else
-              nil  ## ignore others (e.g. brackets [])
-            end
-         else
-            ## report error
-             puts "!!! TOKENIZE ERROR (PROP_CARDS_RE) - no match found"
-             nil 
-         end    
-      elsif @re == PROP_RE   ### todo/fix - change to LINEUP_RE !!!!
-         if m[:space] || m[:spaces]
-              nil    ## skip space(s)
-         elsif m[:prop_key]   ## check for inline prop keys
-              key = m[:key]   
-              ##  supported for now coach/trainer (add manager?)
-              if ['coach', 
-                  'trainer'].include?( key.downcase )
-                [:COACH, m[:key]]   ## use COACH_KEY or such - why? why not?
-              else
-                ## report error - for unknown (inline) prop key in lineup
-                nil
-              end
-         elsif m[:prop_name]
-               if m[:name] == 'Y'
-                 [:YELLOW_CARD, m[:name]]
-               elsif m[:name] == 'R'
-                 [:RED_CARD, m[:name]]
-               else 
-                 [:PROP_NAME, m[:name]]
-               end
-         elsif m[:minute]
-              minute = {}
-              minute[:m]      = m[:value].to_i(10)
-              minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-             ## note - for debugging keep (pass along) "literal" minute
-             [:MINUTE, [m[:minute], minute]]
-         elsif m[:sym]
-            sym = m[:sym]
-            ## return symbols "inline" as is - why? why not?
-            ## (?<sym>[;,@|\[\]-])
- 
-            case sym
-            when ',' then [:',']
-            when ';' then [:';']
-            when '[' then [:'[']
-            when ']' then [:']']
-            when '(' then [:'(']
-            when ')' then [:')']
-            when '-' then [:'-']
-            else
-              nil  ## ignore others (e.g. brackets [])
-            end
-         else
-            ## report error
-             puts "!!! TOKENIZE ERROR (PROP_RE) - no match found"
-             nil 
-         end
-      elsif @re == PROP_ATTENDANCE_RE
-         if m[:space] || m[:spaces]
-              nil    ## skip space(s)
-         elsif m[:enclosed_name]
-              ## reserverd for use for sold out or such (in the future) - why? why not?
-             [:ENCLOSED_NAME, m[:name]]
-         elsif m[:num]
-             [:PROP_NUM, [m[:num], { value: m[:value].to_i(10) } ]]
-=begin             
-         elsif m[:sym]
-            sym = m[:sym]
-            case sym
-            when ',' then [:',']
-            when ';' then [:';']
-            # when '[' then [:'[']
-            # when ']' then [:']']
-            else
-              nil  ## ignore others (e.g. brackets [])
-            end
-=end
-         else
-            ## report error
-            puts "!!! TOKENIZE ERROR (PROP_ATTENDANCE_RE) - no match found"
-            nil 
-         end
-      elsif @re == PROP_REFEREE_RE
-         if m[:space] || m[:spaces]
-              nil    ## skip space(s)
-         elsif m[:prop_key]   ## check for inline prop keys
-              key = m[:key]   
-              ##  supported for now coach/trainer (add manager?)
-              if ['att', 'attn', 'attendance' ].include?( key.downcase )
-                [:ATTENDANCE, m[:key]]   ## use COACH_KEY or such - why? why not?
-              else
-                ## report error - for unknown (inline) prop key in lineup
-                nil
-              end
-         elsif m[:prop_name]    ## note - change prop_name to player
-             [:PROP_NAME, m[:name]]    ### use PLAYER for token - why? why not?
-         elsif m[:num]
-             [:PROP_NUM, [m[:num], { value: m[:value].to_i(10) } ]]
-         elsif m[:enclosed_name]
-              ## use HOLD,SAVE,POST or such keys - why? why not?
-             [:ENCLOSED_NAME, m[:name]]
-         elsif m[:sym]
-            sym = m[:sym]
-            case sym
-            when ',' then [:',']
-            when ';' then [:';']
- #           when '[' then [:'[']
- #           when ']' then [:']']
-            else
-              nil  ## ignore others (e.g. brackets [])
-            end
-         else
-            ## report error
-            puts "!!! TOKENIZE ERROR (PROP_REFEREE_RE) - no match found"
-            nil 
-         end       
-      elsif @re == PROP_PENALTIES_RE
-        if m[:space] || m[:spaces]
-              nil    ## skip space(s)
-         elsif m[:prop_name]    ## note - change prop_name to player
-             [:PROP_NAME, m[:name]]    ### use PLAYER for token - why? why not?
-         elsif m[:enclosed_name]
-              ## use HOLD,SAVE,POST or such keys - why? why not?
-             [:ENCLOSED_NAME, m[:name]]
-         elsif m[:score]
-              score = {}
-              ## must always have ft for now e.g. 1-1 or such
-              ###  change to (generic) score from ft -
-              ##     might be score a.e.t. or such - why? why not?
-              score[:ft] = [m[:ft1].to_i(10),
-                            m[:ft2].to_i(10)]  
-              ## note - for debugging keep (pass along) "literal" score
-              [:SCORE, [m[:score], score]]
-         elsif m[:sym]
-            sym = m[:sym]
-            case sym
-            when ',' then [:',']
-            when ';' then [:';']
-            when '[' then [:'[']
-            when ']' then [:']']
-            else
-              nil  ## ignore others (e.g. brackets [])
-            end
-         else
-            ## report error
-            puts "!!! TOKENIZE ERROR (PROP_PENALTIES_RE) - no match found"
-            nil 
-         end
-      elsif @re == GOAL_RE || @re == PROP_GOAL_RE
-         if m[:space] || m[:spaces]
-              nil    ## skip space(s)
-         elsif m[:prop_name]    ## note - change prop_name to player
-             [:PLAYER, m[:name]] 
-         elsif m[:minute]
-              minute = {}
-              minute[:m]      = m[:value].to_i(10)
-              minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-             ## note - for debugging keep (pass along) "literal" minute
-             [:MINUTE, [m[:minute], minute]]
-         elsif m[:score]
-              score = {}
-              ## must always have ft for now e.g. 1-1 or such
-              ###  change to (generic) score from ft -
-              ##     might be score a.e.t. or such - why? why not?
-              score[:ft] = [m[:ft1].to_i(10),
-                            m[:ft2].to_i(10)]  
-              ## note - for debugging keep (pass along) "literal" score
-              [:SCORE, [m[:score], score]]
-         elsif m[:og]
-             [:OG, m[:og]]    ## for typed drop - string version/variants ??  why? why not?
-         elsif m[:pen]
-             [:PEN, m[:pen]]
-         elsif m[:sym]
-            sym = m[:sym]
-            ## return symbols "inline" as is - why? why not?
-            ## (?<sym>[;,@|\[\]-])
- 
-            case sym
-            when ',' then [:',']
-            when ';' then [:';']
-            when '[' then [:'[']
-            when ']' then [:']']
-            else
-              nil  ## ignore others (e.g. brackets [])
-            end
-         else
-            ## report error
-            puts "!!! TOKENIZE ERROR (GOAL_RE) - no match found"
-            nil 
-         end
       ###################################################
       ## assume TOP_LEVEL (a.k.a. RE) machinery
       else  
@@ -742,7 +432,7 @@ def _tokenize_line( line )
           case sym
           when '@'    ##  enter geo mode
             puts "  ENTER GEO_RE MODE"  if debug?
-            @re = GEO_RE
+            @re = Lexer::GEO_RE
             [:'@']
           when ',' then [:',']
           when ';' then [:';']
@@ -793,40 +483,15 @@ def _tokenize_line( line )
     errors << "parse error (tokenize) - skipping >#{line[offsets[1]..-1]}< @#{offsets[1]},#{line.size} in line >#{line}<"
   end
 
-
-   if @re == GOAL_RE   ### ALWAYS switch back to top level mode
-     puts "  LEAVE GOAL_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
-     @re = RE 
-   end
  
-   if @re == GEO_RE   ### ALWAYS switch back to top level mode
+   if @re == Lexer::GEO_RE   ### ALWAYS switch back to top level mode
      puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
-     @re = RE 
-   end
-
-   ##
-   ## if in prop mode continue if   last token is [,-]
-   ##        otherwise change back to "standard" mode
-   if @re == PROP_RE            || @re == PROP_CARDS_RE ||
-      @re == PROP_GOAL_RE       || @re == PROP_PENALTIES_RE ||
-      @re == PROP_ATTENDANCE_RE || @re == PROP_REFEREE_RE
-     if [:',', :'-', :';'].include?( tokens[-1][0] )
-        ## continue/stay in PROP_RE mode
-        ##  todo/check - auto-add PROP_CONT token or such
-        ##                to help parser with possible NEWLINE
-        ##                  conflicts  - why? why not?
-     else
-        ## switch back to top-level mode!!
-        puts "  LEAVE PROP_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
-        @re = RE 
-        ## note - auto-add PROP_END (<PROP_END>)
-        tokens << [:PROP_END, "<|PROP_END|>"]    
-     end
+     @re = Lexer::RE 
    end
 
   
   [tokens,errors]
 end
 
-end  # class Lexer
+end  # class LexerMin
 end # module SportDb

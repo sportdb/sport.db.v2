@@ -16,13 +16,18 @@ texts = [## try teams
          "UDI '19/Beter Bed",
          "One/Two",
          "One / Two",
-         "V. Köln",
+         "V. Köln",    ## note - v and vs only reserved in lower case!!!
          "V Köln",
          "Naval 1° de Maio",
+         "1° de Maio",
          "Achilles'29 II v UDI'19/Beter Bed",  ## only match up to v!!!!
-         "Qingdao Pijiu (Beer)",
-         "August 1st (Army Team)",
+         "Qingdao Pijiu (Beer)",    ## note (Beer) assumed as country code!!
+         "August 1st (Army Team)",   ## note - invalid country code - no space allowed!!!
+         "Austria 2",
+         "Dnpro-1",
+         "Brighton & A",
 
+         "Cote'd Ivoir",
          "ASC Monts d'Or Chasselay",
          "Grenoble Foot 38",
 
@@ -47,10 +52,78 @@ texts = [## try teams
 
          ## check special starting with quote
          "'s Gravenwezel-Schilde",
+         "'s Gravenwezel",
+         "'s",
 
-         ### check break on dash ( - )
+         ### check break on dash ( - ) or ( / )
          "Final - First Leg",
+         "Final- First Leg",
+         "Final -First Leg",
+         "Final-First Leg",
+         "Final / First Leg",
+         "Final/ First Leg",
+         "Final /First Leg",
+         "Final/First Leg",
          "ITA - FRA",
+
+
+
+         ## check breaks on date, score etc.
+         "Rapid 1-1",
+         "Rapid 2:10",
+         "Rapid 2h10",
+         "Rapid 2",   ## note - ALLOWED - no break
+         "Rapid 2'",
+         "Rapid 45+1'",
+         "Rapid 45+",
+         "Rapid v Austria",
+         "Rapid vs Austria",
+
+         ## check two space rule
+         "Rapid  Austria",
+         "Rapid 2  Austria 2",
+         "A  B",
+         "A B",
+
+         ## check single char
+         "A",
+         "a",
+         ## check codes
+         "A1",
+         "a2",
+         "a3",
+         ## check endings - must be alphanum
+         "A-",  ## not allowed
+         "A&",  ## note - ALLOWED FOR NOW - like strategy& !!
+         "A°",  ## note - ALLOWED FOR NOW
+         "A'",  ## note - ALLOWED FOR NOW
+         "A.",  ## note - ALLOWED FOR NOW
+         "12°",
+         "11",
+         "11  A",
+         "1",
+         ## test weirdos  - maybe disallow - why? why not?
+         "a&&&&&&",
+         "a.........",
+         "a''''''''''",   
+         ## more
+         "Park21 Arena",
+         "Park21-Arena",
+         "Park21/Arena",
+         "21.A",
+         "21°A",
+         "21 A",
+         "21A",
+
+         ## group and matchday (fit team name pattern)
+         "Group A",
+         "Group 1.A",
+         "Group 1A",
+         "Group A.1",
+         "Group A1",
+         "Group 1.1",    ## note - NOT ALLOWED - will break on 1.1 !!
+         "Matchday 1",
+         "1. Round",
          ]
 
 
@@ -60,7 +133,7 @@ texts.each do |text|
   print "  "
   pp m
 
-  if text != m[0]
+  if m.nil? || text != m[0]
      puts "!! text NOT matching"
   end
 end

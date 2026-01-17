@@ -13,6 +13,14 @@ ANY_RE = %r{
 
 
 
+## note - TEXT_RE used for TEAM_NAMES
+##       plus as "legacy" shortcut for (simple) group or round names e.g.
+##                       Group A, Group 1, ..
+##                        Matchday 1, 1. Round,
+##        note - no exception for (shortcut) group or round (MUST match team name pattern!) 
+      
+
+
 ##  note - do NOT allow single alpha text for now
 ##   add later??      A - B    C - D  - why?
 ## opt 1) one alpha
@@ -24,11 +32,13 @@ ANY_RE = %r{
 ### allow special case - starting text with number e.g.
 ##    number must be follow by space or dot ()
 # 1 FC   ##    allow 1-FC or 1FC   - why? why not?
+# 1FC"
 # 1. FC
-# 1.FC   - XXXX  - not allowed for now, parse error
-# 1FC    - XXXX  - now allowed for now, parse error
+# 1.FC  
+# 23° Noviembre
 # 1890 Munich
-#
+# 1-FC    - XXXX  - not allowed for now, parse error
+# 1/FC    - XXXX  - not allowed for now
 
 
 ##
@@ -61,22 +71,14 @@ TEXT_RE = %r{
                       ## MUST be followed by (optional dot) and
                       ##                      required space !!!
                       ## MUST be follow by a to z!!!!
-                      \.?     ## optional dot
+                      [.°]?     ## optional dot (.) or degree(°) - todo - add number sign too!! 
                       [ ]?   ## make space optional too  - why? why not?
                              ##  yes - eg. 1st, 2nd, 5th etc.
                        \p{L}+
                   |
-                ## opt 3 - add weirdo case
-                ##   e.g.  1/8 Finals  1/4 1/2 ...
-                    1/ \d{1,2} [ ] \p{L}+
-                  |
-                ## opt 4 - add another weirdo case
+                ## opt 3 - add another weirdo case
                 ##   e.g.   's Gravenwezel-Schilde
-                    '[s]
-                  |
-                ## opt 5 - add another weirdo case
-                ##   e.g. 5.-8. Platz Playoffs  - keep - why? why not?
-                    \d+\.-\d+\.  [ ]? \p{L}+                 
+                    '[s] [ ] \p{L}+
                )
 
               (?:(?:  (?:[ ]   # only single spaces allowed inline!!! 
