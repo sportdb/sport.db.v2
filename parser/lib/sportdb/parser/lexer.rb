@@ -25,67 +25,47 @@ end
   ##    for now for compatibility
   def is_group?( text )  Lang.is_group?( text ); end
   def is_round?( text )  Lang.is_round?( text ); end
-  def is_leg?( text )    Lang.is_leg?( text ); end
-  def is_zone?( text )   Lang.is_zone?( text ); end
-
+  
 
 
 
 def debug?()  @debug == true; end
 
 def initialize( lines, debug: false )
+   raise ArgumentError, "(string) text expected for lexer; got #{lines.class.name}"  unless lines.is_a?(String)
+  
    @debug = debug
-
-##  note - for convenience - add support
-##         comments (incl. inline end-of-line comments) and empty lines here
-##             why? why not?
-##         why?  keeps handling "centralized" here in one place
-
-   ## todo/fix - rework and make simpler
-    ##             no need to double join array of string to txt etc.
-
-    txt_pre =  if lines.is_a?( Array )
-               ## join together with newline
-                 lines.reduce( String.new ) do |mem,line|
-                                               mem << line; mem << "\n"; mem
-                                            end
-               else  ## assume single-all-in-one txt
-                 lines
-               end
-
-    ##  preprocess automagically - why? why not?
-    ##   strip lines with comments and empty lines striped / removed
-    ##      keep empty lines? why? why not?
-    ##      keep leading spaces (indent) - why?
-    ##
-    ##  note - KEEP empty lines (get turned into BLANK token!!!!)
-
-    @txt = String.new
-    txt_pre.each_line do |line|    ## preprocess
-       line = line.strip
-       next if line.start_with?('#')   ###  skip comments
-       
-       line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
-       
-       @txt << line
-       @txt << "\n"
-    end
+   @txt   = lines
 end
-
 
 
 def tokenize_with_errors
     tokens_by_line = []   ## note: add tokens line-by-line (flatten later)
     errors         = []   ## keep a list of errors - why? why not?
   
+   ##  preprocess automagically - why? why not?
+    ##   strip lines with comments and empty lines striped / removed
+    ##      keep empty lines? why? why not?
+    ##      keep leading spaces (indent) - why?
+    ##
+    ##  note - KEEP empty lines (get turned into BLANK token!!!!)
+
     @txt.each_line do |line|
-        line = line.rstrip   ## note - MUST remove/strip trailing newline (spaces optional)!!!
- 
+        ## line = line.rstrip   ## note - MUST remove/strip trailing newline (spaces optional)!!!
+        line = line.strip   ## note - strip leading AND trailing whitespaces
+                            ## note - trailing whitespace may incl. \n or \r\n!!!
+
+        next if line.start_with?('#')   ###  skip comments
+       
+        line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
+       
+
         more_tokens, more_errors = _tokenize_line( line )
         
         tokens_by_line  << more_tokens   
         errors          += more_errors
     end # each line
+
 
     tokens_by_line = tokens_by_line.map do |tokens|
         #############
@@ -98,12 +78,13 @@ def tokenize_with_errors
         tokens = tokens.map do |t|        
                     if t[0] == :TEXT
                        text = t[1]
-                       t =  if is_round?( text ) || is_leg?( text ) || is_zone?( text )
+                       t =  if is_round?( text ) 
                                [:ROUND, text]   
                             elsif is_group?( text )
                                [:GROUP, text]
                              else
-                               t  ## pass through as-is (1:1)
+                               ## note: was - t  ## pass through as-is (1:1)
+                               [:TEAM, text]
                              end
                     end
                    t
@@ -146,24 +127,17 @@ def tokenize_with_errors
             if buf.match?( :GROUP, :'|' )    ## assume group def (change group to group_def)
                       nodes << [:GROUP_DEF, buf.next[1]]
                       nodes << buf.next 
-                      ## change all text to team - why? why not?
-                      nodes += buf.collect { |t|
-                                t[0] == :TEXT ? [:TEAM, t[1]] : t
-                               }
+                      nodes += buf.collect 
                       break
             end
           end
 
 
-          if buf.match?( :TEXT, [:SCORE, :SCORE_MORE, :VS, :'-'], :TEXT )
-             nodes << [:TEAM, buf.next[1]]
-             nodes << buf.next
-             nodes << [:TEAM, buf.next[1]]
    #   note - now handled (upstream) with GOAL_RE mode!!!
-   #       elsif buf.match?( :TEXT, :MINUTE )
+   #       if buf.match?( :TEXT, :MINUTE )
    #          nodes << [:PLAYER, buf.next[1]]
    #          nodes << buf.next
-          elsif buf.match?( :DATE, :TIME )   ## merge DATE TIME into DATETIME
+          if buf.match?( :DATE, :TIME )   ## merge DATE TIME into DATETIME
                date = buf.next[1]
                time = buf.next[1]
                ## puts "DATETIME:"
@@ -289,6 +263,16 @@ def _tokenize_line( line )
 
         offsets = [m.begin(0), m.end(0)]
         pos = offsets[1]    ## update pos
+    elsif (m = HEADING_RE.match(line))
+      puts "   HEADING"  if debug?
+      ## note - derive heading level from no of (leading) markers
+      ##             e.g. = is 1, == is 2, == is 3, etc.
+      heading_level = m[:heading_marker].size 
+      tokens << [:"H#{heading_level}", m[:heading]]
+
+      ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
+      offsets = [m.begin(0), m.end(0)]
+      pos = offsets[1]    ## update pos
     elsif (m = ROUND_OUTLINE_RE.match( line ))
       puts "   ROUND_OUTLINE"  if debug?
 
