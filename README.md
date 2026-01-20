@@ -27,3 +27,17 @@ read into structs that can than get exported to JSON or CSV.
        - "maximal"  - supports goal lines, and props 
 
        
+### Format Clean-up
+
+- [ ]  add heading1/2/3 etc. to parser rules
+- [ ]  remove (optional) \[\] from date
+- [ ]  remove support for "standalone weekday and weekday+hour only (requires date!)
+- [ ]   change goal format - MUST start with and enclosed by (); 
+           change minutes to goal minutes and 
+           include optional  o.g., pen. WITHOUT enclosing ()!!!
+           e.g.  (Benzema 51' Bale 64', 83'; Mané 55')
+                 (Benzema, Bale 2; Mané)
+           or  multi-line-style  
+               (Milner 15'og, Džeko 52', Nainggolan 86', 90+4'pen; 
+                 Mané 9', Wijnaldum 25')      
+                  

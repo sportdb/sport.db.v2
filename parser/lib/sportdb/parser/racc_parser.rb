@@ -30,7 +30,7 @@ def initialize( txt,  debug: false )
   end
 
 
-  def debug( value ) @debug = value; end
+  def debug( value ) @debug = value; end   ### fix: use setter-style e.g. debug=(value) !!!
   def debug?()  @debug == true; end
 
   ## debug - trace / print message
