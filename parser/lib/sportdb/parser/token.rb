@@ -151,5 +151,29 @@ ROUND_OUTLINE_RE = %r{   \A
                        }ix
 
 
+
+###
+## check for headings 
+##    e.g.  = heading 1
+##          == heading 2  etc.
+
+##  note - use \A (instead of ^) - \A strictly matches the start of the string.
+HEADING_RE = %r{   \A
+                           [ ]*  ## ignore leading spaces (if any)
+                         (?<heading_marker> ={1,5} ) 
+                           [ ]+
+                            (?<heading>
+                               ## must start with letter - why? why not?
+                               ###   1st round
+                               ##  allow numbers e.g. Group A - 1 
+                               [^=]+?   ## use non-greedy 
+                            )
+                           [ ]*  ## ignore trailing spaces (if any)
+                            (?: =* )  ## allow any trailing heading markers
+                           [ ]*  ## ignore trailing spaces (if any)
+                         $
+                       }ix
+
+
 end  # class Lexer
 end # module SportDb

@@ -97,6 +97,7 @@ texts = [## try teams
          "A&",  ## note - ALLOWED FOR NOW - like strategy& !!
          "A°",  ## note - ALLOWED FOR NOW
          "A'",  ## note - ALLOWED FOR NOW
+         "12'",  ## chech minute style number
          "A.",  ## note - ALLOWED FOR NOW
          "12°",
          "11",
@@ -124,6 +125,11 @@ texts = [## try teams
          "Group 1.1",    ## note - NOT ALLOWED - will break on 1.1 !!
          "Matchday 1",
          "1. Round",
+
+         ## check some more
+         "U21 Matzlatan",
+         "U17 Matzlatan",
+         "Bosina & Herz",
          ]
 
 

@@ -10,6 +10,7 @@ require 'sportdb/parser'
 
 txt = read_text( '/sports/openfootball/world.more/2023-24/de.1.txt' )
 ## txt = read_text( '/sports/openfootball/world.more/2023-24/at.1.txt' )
+## txt = ["one","two"]   ## check for input format - only strings allowed for now
 pp txt
      
   lexer = SportDb::LexerMin.new( txt, debug: true )

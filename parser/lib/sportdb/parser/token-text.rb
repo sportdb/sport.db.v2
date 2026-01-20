@@ -92,7 +92,13 @@ TEXT_RE = %r{
                 (?:
                   \p{L} 
                      |
-                  [.&'°]
+                  (?:   ## note - restrict [.&'] to single char usage (no doubled e.g. && etc.)
+                    \. (?! \.)  ## allow single points only (now two or more etc.)
+                     | 
+                    & (?! &)
+                     |
+                    ' (?! ')
+                   )
                      |
                  (?:
                    \d+
@@ -102,6 +108,7 @@ TEXT_RE = %r{
                      (?:[.:-]\d)     ## protected/exclude/break on 12.03 / 12:03 / 12-12
                                      ##  BUT allow Park21-Arena for example e.g. 21-A :-)
                     )
+                    [°]?  ## followed by optional ord                 
                    ## negative lookahead for numbers
                    ##   note - include digits itself!!!
                    ##   note - remove / (slash) e.g. allows UDI'19/Beter Bed

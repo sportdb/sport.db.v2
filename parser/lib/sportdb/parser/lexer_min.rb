@@ -12,7 +12,11 @@ DAY_MAP   = Lexer::DAY_MAP
 
 ## todo/fix - add  REs here to remove Lexer:: inline!!!
 ##  e.g.   RE = Lexer::RE  etc.
+RE               = Lexer::RE
+HEADING_RE       = Lexer::HEADING_RE
 ROUND_OUTLINE_RE = Lexer::ROUND_OUTLINE_RE
+GEO_RE           = Lexer::GEO_RE
+
 
 
 def log( msg )
@@ -25,60 +29,15 @@ def log( msg )
 end
 
 
-  ###
-  ##  todo/fix -   use LangHelper or such
-  ##   e.g.     class Lexer
-  ##                include LangHelper
-  ##            end
-  ##
-  ##  merge back Lang into Lexer - why? why not?
-  ## keep "old" access to checking for group, round & friends
-  ##    for now for compatibility
-  def is_group?( text )  Lang.is_group?( text ); end
-  def is_round?( text )  Lang.is_round?( text ); end
-  
-
 
 
 def debug?()  @debug == true; end
 
 def initialize( lines, debug: false )
+   raise ArgumentError, "(string) text expected for lexer; got #{lines.class.name}"  unless lines.is_a?(String)
+  
    @debug = debug
-
-##  note - for convenience - add support
-##         comments (incl. inline end-of-line comments) and empty lines here
-##             why? why not?
-##         why?  keeps handling "centralized" here in one place
-
-   ## todo/fix - rework and make simpler
-    ##             no need to double join array of string to txt etc.
-
-    txt_pre =  if lines.is_a?( Array )
-               ## join together with newline
-                 lines.reduce( String.new ) do |mem,line|
-                                               mem << line; mem << "\n"; mem
-                                            end
-               else  ## assume single-all-in-one txt
-                 lines
-               end
-
-    ##  preprocess automagically - why? why not?
-    ##   strip lines with comments and empty lines striped / removed
-    ##      keep empty lines? why? why not?
-    ##      keep leading spaces (indent) - why?
-    ##
-    ##  note - KEEP empty lines (get turned into BLANK token!!!!)
-
-    @txt = String.new
-    txt_pre.each_line do |line|    ## preprocess
-       line = line.strip
-       next if line.start_with?('#')   ###  skip comments
-       
-       line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
-       
-       @txt << line
-       @txt << "\n"
-    end
+   @txt   = lines
 end
 
 
@@ -87,33 +46,39 @@ def tokenize_with_errors
     tokens_by_line = []   ## note: add tokens line-by-line (flatten later)
     errors         = []   ## keep a list of errors - why? why not?
   
+    ##  preprocess automagically - why? why not?
+    ##   strip lines with comments and empty lines striped / removed
+    ##      keep empty lines? why? why not?
+    ##      keep leading spaces (indent) - why?
+    ##
+    ##  note - KEEP empty lines (get turned into BLANK token!!!!)
+
     @txt.each_line do |line|
-        line = line.rstrip   ## note - MUST remove/strip trailing newline (spaces optional)!!!
- 
+        ## line = line.rstrip   ## note - MUST remove/strip trailing newline (spaces optional)!!!
+        line = line.strip   ## note - strip leading AND trailing whitespaces
+                            ## note - trailing whitespace may incl. \n or \r\n!!!
+
+        next if line.start_with?('#')   ###  skip comments
+       
+        line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
+       
+
         more_tokens, more_errors = _tokenize_line( line )
         
         tokens_by_line  << more_tokens   
         errors          += more_errors
     end # each line
 
+
     tokens_by_line = tokens_by_line.map do |tokens|
         #############
         ## pass 1
-        ##   replace all texts with keyword matches
-        ##     (e.g. group, round, leg, etc.)
-        ##
-        ##   note - let is_round? get first (before is_group?)
-        ##            will match group stage  as round (NOT group)
+        ##   replace all text with team token in level 1 format
+        ##     note: in level 2 - text maybe  group, round or team!!! 
         tokens = tokens.map do |t|        
                     if t[0] == :TEXT
                        text = t[1]
-                       t =  if is_round?( text ) 
-                               [:ROUND, text]   
-                            elsif is_group?( text )
-                               [:GROUP, text]
-                             else
-                               t  ## pass through as-is (1:1)
-                             end
+                       t = [:TEAM, text]
                     end
                    t
                  end
@@ -132,36 +97,7 @@ def tokenize_with_errors
     loop do
           break if buf.eos?
 
-          if buf.pos == 0   ## MUST start line
-            ## check for
-            ##    group def or round def
-            if buf.match?( :ROUND, :'|' )    ## assume round def (change round to round_def)
-                      nodes << [:ROUND_DEF, buf.next[1]]
-                      nodes << buf.next 
-                      nodes += buf.collect
-                      break
-            end
-            if buf.match?( :GROUP, :'|' )    ## assume group def (change group to group_def)
-                      nodes << [:GROUP_DEF, buf.next[1]]
-                      nodes << buf.next 
-                      ## change all text to team - why? why not?
-                      nodes += buf.collect { |t|
-                                t[0] == :TEXT ? [:TEAM, t[1]] : t
-                               }
-                      break
-            end
-          end
-
-
-          if buf.match?( :TEXT, [:SCORE, :SCORE_MORE, :VS, :'-'], :TEXT )
-             nodes << [:TEAM, buf.next[1]]
-             nodes << buf.next
-             nodes << [:TEAM, buf.next[1]]
-   #   note - now handled (upstream) with GOAL_RE mode!!!
-   #       elsif buf.match?( :TEXT, :MINUTE )
-   #          nodes << [:PLAYER, buf.next[1]]
-   #          nodes << buf.next
-          elsif buf.match?( :DATE, :TIME )   ## merge DATE TIME into DATETIME
+          if buf.match?( :DATE, :TIME )   ## merge DATE TIME into DATETIME
                date = buf.next[1]
                time = buf.next[1]
                ## puts "DATETIME:"
@@ -206,15 +142,14 @@ def _tokenize_line( line )
 
   puts "line: >#{line}<"    if debug?
 
-
-   ### special case for empty line (aka BLANK)
-   if line.empty?
+  ### special case for empty line (aka BLANK)
+  if line.empty?
        ## note - blank always resets parser mode to std/top-level!!!
-       @re = Lexer::RE
+      @re = RE
 
-       tokens << [:BLANK, '<|BLANK|>']
-       return [tokens, errors]
-   end
+      tokens << [:BLANK, '<|BLANK|>']
+      return [tokens, errors]
+  end
 
 
   pos = 0
@@ -226,15 +161,25 @@ def _tokenize_line( line )
 
   ####
   ## quick hack - keep re state/mode between tokenize calls!!!
-  @re  ||= Lexer::RE     ## note - switch between RE & INSIDE_RE
+  @re  ||= RE     ## note - switch between RE & INSIDE_RE
 
 
-  if @re == Lexer::RE  ## top-level
+  if @re == RE  ## top-level
     ### check for modes once (per line) here to speed-up parsing
     ###   for now goals only possible for start of line!!
     ###        fix - remove optional [] - why? why not?  
   
-    if (m = ROUND_OUTLINE_RE.match( line ))
+    if (m = HEADING_RE.match(line))
+      puts "   HEADING"  if debug?
+      ## note - derive heading level from no of (leading) markers
+      ##             e.g. = is 1, == is 2, == is 3, etc.
+      heading_level = m[:heading_marker].size 
+      tokens << [:"H#{heading_level}", m[:heading]]
+
+      ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
+      offsets = [m.begin(0), m.end(0)]
+      pos = offsets[1]    ## update pos
+    elsif (m = ROUND_OUTLINE_RE.match( line ))
       puts "   ROUND_OUTLINE"  if debug?
 
       tokens << [:ROUND_OUTLINE, m[:round_outline]]
@@ -281,7 +226,7 @@ def _tokenize_line( line )
     ## note: racc requires pairs e.g. [:TOKEN, VAL]
     ##         for VAL use "text" or ["text", { opts }]  array
 
-  t = if @re == Lexer::GEO_RE
+  t = if @re == GEO_RE
          ### note - possibly end inline geo on [ (and others?? in the future
          if m[:space] || m[:spaces]
             nil    ## skip space(s)
@@ -301,7 +246,7 @@ def _tokenize_line( line )
             when '[' then
                  ## get out-off geo mode and backtrack (w/ next)
                  puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
-                 @re = Lexer::RE
+                 @re = RE
                  pos = old_pos
                  next   ## backtrack (resume new loop step)                 
             else
@@ -375,19 +320,6 @@ def _tokenize_line( line )
             date[:wday] = DAY_MAP[ m[:day_name].downcase ]   if m[:day_name]
             ## note - for debugging keep (pass along) "literal" date
             [:DATE, [m[:date], date]]
-        elsif m[:duration]
-            ## todo/check/fix - if end: works for kwargs!!!!!
-            duration = { start: {}, end: {}}
-            duration[:start][:y] = m[:year1].to_i(10)  if m[:year1]
-            duration[:start][:m] = MONTH_MAP[ m[:month_name1].downcase ]   if m[:month_name1]
-            duration[:start][:d]  = m[:day1].to_i(10)   if m[:day1]
-            duration[:start][:wday] = DAY_MAP[ m[:day_name1].downcase ]   if m[:day_name1]
-            duration[:end][:y] = m[:year2].to_i(10)  if m[:year2]
-            duration[:end][:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
-            duration[:end][:d]  = m[:day2].to_i(10)   if m[:day2]
-            duration[:end][:wday] = DAY_MAP[ m[:day_name2].downcase ]   if m[:day_name2]
-            ## note - for debugging keep (pass along) "literal" duration
-            [:DURATION, [m[:duration], duration]]
         elsif m[:wday]    ## standalone weekday e.g. Mo/Tu/We/etc.
              [:WDAY, [m[:wday], { wday: DAY_MAP[ m[:day_name].downcase ] } ]]
         elsif m[:num]   ## fix - change to ord (for ordinal number!!!)
@@ -416,12 +348,6 @@ def _tokenize_line( line )
                           m[:ft2].to_i(10)]  
           ## note - for debugging keep (pass along) "literal" score
           [:SCORE, [m[:score], score]]
-      elsif m[:minute]
-              minute = {}
-              minute[:m]      = m[:value].to_i(10)
-              minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-             ## note - for debugging keep (pass along) "literal" minute
-             [:MINUTE, [m[:minute], minute]]
         elsif m[:vs]
            [:VS, m[:vs]]
         elsif m[:sym]
@@ -432,7 +358,7 @@ def _tokenize_line( line )
           case sym
           when '@'    ##  enter geo mode
             puts "  ENTER GEO_RE MODE"  if debug?
-            @re = Lexer::GEO_RE
+            @re = GEO_RE
             [:'@']
           when ',' then [:',']
           when ';' then [:';']
@@ -484,9 +410,9 @@ def _tokenize_line( line )
   end
 
  
-   if @re == Lexer::GEO_RE   ### ALWAYS switch back to top level mode
+   if @re == GEO_RE   ### ALWAYS switch back to top level mode
      puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
-     @re = Lexer::RE 
+     @re = RE 
    end
 
   
