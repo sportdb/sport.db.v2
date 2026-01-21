@@ -99,56 +99,6 @@ RE = Regexp.union(
                       )
 
 
-
-######################################################
-## goal mode (switched to by PLAYER_WITH_MINUTE_RE)  
-##
-##  note - must be enclosed in ()!!! 
-##          todo - add () in basics - why? why not?
-
-GOAL_BASICS_RE = %r{
-    (?<spaces> [ ]{2,}) |
-    (?<space>  [ ])
-        |
-    (?<sym>  
-        [;,\[\])]   ## add (-) dash too - why? why not?   
-    )   
-}ix
-
-
-## note - assume lines starting with opening ( are goal lines!!!!
-##  note - use \A (instead of ^) - \A strictly matches the start of the string.
-GOAL_LINE_RE = %r{
-                     \A\(
-                 }x
-
-GOAL_NONE_RE = %r{ (?<none>
-                        -[ ]*;
-                    )
-                 }x
-
-GOAL_RE = Regexp.union(
-    GOAL_BASICS_RE,
-    GOAL_NONE_RE,
-    MINUTE_RE,
-   ## MINUTE_NA_RE,   ## note - add/allow not/available (n/a,na) minutes hack for now
-    GOAL_OG_RE, GOAL_PEN_RE,
-   ## SCORE_RE,  ## add back in v2 (level 3) or such!!
-    PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
-)
-
-
-## note - leave out n/a minute in goals - make minutes optional!!!
-PROP_GOAL_RE =  Regexp.union(
-    GOAL_BASICS_RE,
-    MINUTE_RE,
-   ## MINUTE_NA_RE,   ## note - add/allow not/available (n/a,na) minutes hack for now
-    GOAL_OG_RE, GOAL_PEN_RE,
-    SCORE_RE,
-    PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
-)
-
-
 ####
 # 
 ##  note - use \A (instead of ^) - \A strictly matches the start of the string.

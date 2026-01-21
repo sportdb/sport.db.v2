@@ -24,6 +24,7 @@ require_relative 'parser/token-status'
 require_relative 'parser/token-minute'
 require_relative 'parser/token-prop'    ## team prop(erty) mode (note - must be before token)
 require_relative 'parser/token-geo'
+require_relative 'parser/token-goals'
 require_relative 'parser/token'
 require_relative 'parser/lexer_buffer'   ## incl. Tokens (aka TokenBuffer)
 require_relative 'parser/lexer'

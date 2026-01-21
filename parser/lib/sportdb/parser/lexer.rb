@@ -250,9 +250,9 @@ def _tokenize_line( line )
         elsif ['att', 'attn', 'attendance'].include?( key.downcase )
           @re = PROP_ATTENDANCE_RE
           tokens << [:PROP_ATTENDANCE, m[:key]]         
-        elsif ['goals'].include?( key.downcase )
-          @re = PROP_GOAL_RE
-          tokens << [:PROP_GOALS, m[:key]]
+     #   elsif ['goals'].include?( key.downcase )
+     #     @re = PROP_GOAL_RE
+     #     tokens << [:PROP_GOALS, m[:key]]
         elsif ['penalties', 'penalty shootout'].include?( key.downcase )
           @re = PROP_PENALTIES_RE
           tokens << [:PROP_PENALTIES, m[:key]]
@@ -534,23 +534,27 @@ def _tokenize_line( line )
             puts "!!! TOKENIZE ERROR (PROP_PENALTIES_RE) - no match found"
             nil 
          end
-      elsif @re == GOAL_RE || @re == PROP_GOAL_RE
+      elsif @re == GOAL_RE 
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
          elsif m[:none]    ## note - eats-up semicolon!! e.g. -; or - ;
+            ## todo/fix - change to GOAL_NONE
              [:NONE, "<|NONE|>"]
          elsif m[:prop_name]    ## note - change prop_name to player
              [:PLAYER, m[:name]] 
-         elsif m[:minute]
+         elsif m[:goal_minute]
               minute = {}
               minute[:m]      = m[:value].to_i(10)
               minute[:offset] = m[:value2].to_i(10)   if m[:value2]
              ## note - for debugging keep (pass along) "literal" minute
-             [:MINUTE, [m[:minute], minute]]
-         elsif m[:og]
-             [:OG, m[:og]]    ## for typed drop - string version/variants ??  why? why not?
-         elsif m[:pen]
-             [:PEN, m[:pen]]
+             ## todo/fix - change to GOAL_MINUTE
+              minute[:og]  = true    if m[:og]
+              minute[:pen] = true    if m[:pen]
+             [:MINUTE, [m[:goal_minute], minute]]
+       #  elsif m[:og]
+       #      [:OG, m[:og]]    ## for typed drop - string version/variants ??  why? why not?
+       #  elsif m[:pen]
+       #      [:PEN, m[:pen]]
          elsif m[:sym]
             sym = m[:sym]
             ## return symbols "inline" as is - why? why not?
@@ -559,8 +563,8 @@ def _tokenize_line( line )
             case sym
             when ',' then [:',']
             when ';' then [:';']
-            when '[' then [:'[']
-            when ']' then [:']']
+            # when '[' then [:'[']
+            # when ']' then [:']']
             when ')'  ## leave goal mode!!
                 puts "  LEAVE GOAL_RE MODE"   if debug?
                 @re = RE
@@ -749,7 +753,7 @@ def _tokenize_line( line )
    ## if in prop mode continue if   last token is [,-]
    ##        otherwise change back to "standard" mode
    if @re == PROP_RE            || @re == PROP_CARDS_RE ||
-      @re == PROP_GOAL_RE       || @re == PROP_PENALTIES_RE ||
+      @re == PROP_PENALTIES_RE ||
       @re == PROP_ATTENDANCE_RE || @re == PROP_REFEREE_RE
      if [:',', :'-', :';'].include?( tokens[-1][0] )
         ## continue/stay in PROP_RE mode
