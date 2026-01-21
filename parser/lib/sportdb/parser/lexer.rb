@@ -281,55 +281,15 @@ def _tokenize_line( line )
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
-    elsif (m = PLAYER_WITH_SCORE_RE.match( line ))
+    elsif (m =GOAL_LINE_RE.match( line ))   ## line starting with ( - assume
       ##  switch context to GOAL_RE (goalline(s)
       ##   split token (automagically) into two!! - player AND minute!!!
       @re = GOAL_RE
       puts "  ENTER GOAL_RE MODE"   if debug?
 
-      score = {}
-      ## must always have ft for now e.g. 1-1 or such
-      ###  change to (generic) score from ft -
-      ##     might be score a.e.t. or such - why? why not?
-      score[:ft] = [m[:ft1].to_i(10),
-                    m[:ft2].to_i(10)]  
-      ## note - for debugging keep (pass along) "literal" score
-      tokens << [:SCORE, [m[:score], score]]
-
-      ## auto-add player token 
-      tokens << [:PLAYER, m[:name]]
-  
+      ## note - eat-up ( for now; do NOT pass along as token
       offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
-
-    ####  FIX/FIX/TODO
-    ### looks to hang in player with minute 
-    ###  FIX - improve / rework PLAYER_WITH_MINUTE_RE  regex!!!!
-    elsif (_quick = QUICK_PLAYER_WITH_MINUTE_RE.match(line) &&
-                m = PLAYER_WITH_MINUTE_RE.match( line ))
-      ##  switch context to GOAL_RE (goalline(s)
-      ##   split token (automagically) into two!! - player AND minute!!!
-      @re = GOAL_RE
-      puts "  ENTER GOAL_RE MODE"   if debug?
-
-      ## check for optional open_bracket
-      tokens << [:'[']     if m[:open_bracket]
-
-      ## check for  -;  (none with separator)
-      ##    todo - find a better way? how possible?
-      tokens << [:NONE, "<|NONE|>"]   if m[:none]
-      
-      ## auto-add player token first
-      tokens << [:PLAYER, m[:name]]
-      ## minute props
-      minute = {}
-      minute[:m]      = m[:value].to_i(10)
-      minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-      ##  t is minute only
-      tokens << [:MINUTE, [m[:minute], minute]]
-
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
+      pos = offsets[1]    ## update pos      
     end
   end
 
@@ -577,6 +537,8 @@ def _tokenize_line( line )
       elsif @re == GOAL_RE || @re == PROP_GOAL_RE
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
+         elsif m[:none]    ## note - eats-up semicolon!! e.g. -; or - ;
+             [:NONE, "<|NONE|>"]
          elsif m[:prop_name]    ## note - change prop_name to player
              [:PLAYER, m[:name]] 
          elsif m[:minute]
@@ -585,15 +547,6 @@ def _tokenize_line( line )
               minute[:offset] = m[:value2].to_i(10)   if m[:value2]
              ## note - for debugging keep (pass along) "literal" minute
              [:MINUTE, [m[:minute], minute]]
-         elsif m[:score]
-              score = {}
-              ## must always have ft for now e.g. 1-1 or such
-              ###  change to (generic) score from ft -
-              ##     might be score a.e.t. or such - why? why not?
-              score[:ft] = [m[:ft1].to_i(10),
-                            m[:ft2].to_i(10)]  
-              ## note - for debugging keep (pass along) "literal" score
-              [:SCORE, [m[:score], score]]
          elsif m[:og]
              [:OG, m[:og]]    ## for typed drop - string version/variants ??  why? why not?
          elsif m[:pen]
@@ -608,6 +561,10 @@ def _tokenize_line( line )
             when ';' then [:';']
             when '[' then [:'[']
             when ']' then [:']']
+            when ')'  ## leave goal mode!!
+                puts "  LEAVE GOAL_RE MODE"   if debug?
+                @re = RE
+                nil
             else
               nil  ## ignore others (e.g. brackets [])
             end
@@ -778,10 +735,10 @@ def _tokenize_line( line )
   end
 
 
-   if @re == GOAL_RE   ### ALWAYS switch back to top level mode
-     puts "  LEAVE GOAL_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
-     @re = RE 
-   end
+  # if @re == GOAL_RE   ### ALWAYS switch back to top level mode
+  #   puts "  LEAVE GOAL_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
+  #   @re = RE 
+  # end
  
    if @re == GEO_RE   ### ALWAYS switch back to top level mode
      puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
