@@ -25,7 +25,8 @@ class RaccMatchParser
                 
         
        element
-          : date_header 
+          : heading
+          | date_header 
           | group_header
           | round_header
           | round_outline   
@@ -258,7 +259,11 @@ class RaccMatchParser
        card_type    :  YELLOW_CARD | RED_CARD 
 
 
-
+       heading
+           : H1 NEWLINE
+           | H2 NEWLINE
+           | H3 NEWLINE
+           
         ######  
         # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland   
         group_def
@@ -298,12 +303,7 @@ class RaccMatchParser
                      kwargs = {}.merge( val[0] )
                      @tree <<  DateHeader.new( **kwargs )  
                   }
-              | '[' date_header_body ']' NEWLINE       ## note - enclosed in []
-                  {
-                     kwargs = {}.merge( val[1] )
-                     @tree <<  DateHeader.new( **kwargs )  
-                  }
-
+            
          date_header_body  
                : date_header_date            
                | date_header_date geo_opts   {  result = {}.merge( val[0], val[1] ) }
@@ -364,56 +364,20 @@ class RaccMatchParser
                       kwargs = {}.merge( val[0], val[1] )
                       @tree << MatchLine.new( **kwargs )
                   }
-              ##   "compact" formats for match fixtures ONLY (no scores, no geo, no status)
-              ##      try to change  match_opts to date_opts only!!!
-              ##        for now result in shift/reduce conflict!!
-              |  match_opts  match ',' more_matches  NEWLINE 
-                    {
-                      kwargs = {}.merge( val[0], val[1] )
-                      @tree << MatchLine.new( **kwargs )
-                     
-                      ## add more match fixtures
-                      val[3].each do |kwargs|
-                         @tree << MatchLine.new( **kwargs)
-                      end
-                    }
-              |  match ',' more_matches NEWLINE
-                    {
-                      kwargs = val[0]
-                      @tree << MatchLine.new( **kwargs )
- 
-                      ## add more match fixtures
-                      val[2].each do |kwargs|
-                         @tree << MatchLine.new( **kwargs)
-                      end
-                    }
- 
-
-   
-
-         more_matches :   match
-                                  {
-                                    trace( "REDUCE => more_matches : match" ) 
-                                    result = val
-                                  }
-                     |   more_matches ',' match
-                                  {
-                                     trace( "REDUCE => more_matches : more_matches ',' match" ) 
-                                     result.push( val[2] )
-                                  }
-
+         
 
         match_opts
-             :  ORD             {   result = { ord: val[0][1][:value] }  }
-             |  ORD date_opts   {   result = { ord: val[0][1][:value] }.merge( val[1] ) }
-             |  date_opts       
- 
-       date_opts
-             : DATE            {   result = { date: val[0][1]}  }
-             | DATETIME        {   result = {}.merge( val[0][1] )  }
-             | TIME            {   result = { time: val[0][1]}  }
-             | WDAY            {   result = { wday: val[0][1]} }
+             :  date_header_body    ## note: same as (inline) date header but WITHOUT newline!!!
+             |  more_date_opts      
+             |  more_date_opts geo_opts { result = val[0].merge( val[1]) }
+          
+       ### e.g.  time only e.g. 15.00,  or weekday with time only e.g. Fr 15.00
+       more_date_opts
+             : TIME            {   result = { time: val[0][1]}  }
+         ##  | WDAY            {   result = { wday: val[0][1]} }
              | WDAY TIME       {   result = { wday: val[0][1], time: val[1][1] } }
+           # | DATE            {   result = { date: val[0][1]}  }
+           # | DATETIME        {   result = {}.merge( val[0][1] )  }
 
 
         ##

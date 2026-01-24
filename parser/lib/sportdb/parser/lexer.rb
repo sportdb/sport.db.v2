@@ -329,24 +329,32 @@ def _tokenize_line( line )
     ## note: racc requires pairs e.g. [:TOKEN, VAL]
     ##         for VAL use "text" or ["text", { opts }]  array
 
+
   t = if @re == GEO_RE
-         ### note - possibly end inline geo on [ (and others?? in the future
-         if m[:space] || m[:spaces]
-            nil    ## skip space(s)
-         elsif m[:text]
-            [:GEO, m[:text]]   ## keep pos - why? why not?
-         elsif m[:timezone]
-            [:TIMEZONE, m[:timezone]]
-         elsif m[:sym]
-            sym = m[:sym]
-            ## return symbols "inline" as is - why? why not?
-            ## (?<sym>[;,@|\[\]-])
-   
-            case sym
-            when ',' then [:',']
-            when '›' then [:',']  ## note - treat geo sep › (unicode) like comma for now!!!
-            when '>' then [:',']  ## note - treat geo sep > (ascii) like comma for now!!!
-            when '[' then
+           ### note - possibly end inline geo on [ (and others?? in the future
+           ## note: break on double spaces e.g.
+           ## e.g. Jul/16 @ Arena Auf Schalke, Gelsenkirchen  Serbia 0-1 England    
+           if m[:spaces]
+                 ## get out-off geo mode and backtrack (w/ next)
+                 puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
+                 @re = RE
+                 pos = old_pos
+                 next   ## backtrack (resume new loop step)                 
+           elsif m[:space] 
+               nil    ## skip (single) space
+           elsif m[:text]
+               [:GEO, m[:text]]   ## keep pos - why? why not?
+           elsif m[:timezone]
+               [:TIMEZONE, m[:timezone]]
+           elsif m[:sym]
+              sym = m[:sym]
+              ## return symbols "inline" as is - why? why not?
+              ## (?<sym>[;,@|\[\]-])
+              case sym
+              when ',' then  [:',']
+              when '›' then  [:',']  ## note - treat geo sep › (unicode) like comma for now!!!
+              when '>' then  [:',']  ## note - treat geo sep > (ascii) like comma for now!!!
+              when '[' then
                  ## get out-off geo mode and backtrack (w/ next)
                  puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
                  @re = RE
