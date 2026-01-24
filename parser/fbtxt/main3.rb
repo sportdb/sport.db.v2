@@ -27,26 +27,6 @@ Rapid Wien - Austria Wien   [cancelled]   @ Gerhard-Hanappi-Stadion, Wien
 
 
 
-### try "compact" match fixtures separated by comma 
-Matchday 3
-Rapid Wien v Austria Wien, Rapid Wien v Austria Wien
-
-
-Matchday 4
-Fr Sept/24
-Rapid v Austria, GAK v Sturm, Wolfsbrug v Innsbruck
-Fr Sept/24 Rapid v Austria, GAK v Sturm, Wolfsbrug v Innsbruck
-
-
-Matchday 5
-Fr Sept/24 18:00  Rapid - Austria,  GAK v Sturm,   Wolfsbrug v Innsbruck
-
-
-Sevilla 2-1 Bilbao,  Madrid v Barcelona    
-Sevilla v Bilbao 2-1,  Madrid v Barcelona
-Sevilla - Bilbao 2-1,  Madrid - Barcelona 1-5 (0-2), Elche - Getafe   
-
-
 
 ###
 #  try geo with timezone
@@ -61,10 +41,10 @@ Sevilla - Bilbao 2-1,  Madrid - Barcelona 1-5 (0-2), Elche - Getafe
 ###
 #   check big free-standing V in text e.g.
 
-Rivière du Rempart  2-3  Petite Rivière Noire    @  New George V Stadium, Curepipe
+Rivière du Rempart  2-3  Petite Rivière Noire    @ New George V Stadium, Curepipe
  
-Final
-[Sun Jul/19]
+» Final
+Sun Jul/19
   Petite Rivière Noire  2-0  Pamplemousses    @ New George V Stadium, Curepipe
 
   Petite Rivière Noire v Pamplemousses    @ New George V Stadium, Curepipe
@@ -72,27 +52,27 @@ Final
 
 ###
 #  more round names from australia
-Elimination finals
-[Fri May/3]
+» Elimination finals
+Fri May/3
   Melbourne Victory         3-1  Wellington Phoenix
-[Sun May/5]
+Sun May/5
   Adelaide United           1-0 a.e.t.  Melbourne City FC
 
-Semi-finals
-[Fri May/10]
+» Semi-finals
+Fri May/10
   Perth Glory              5-4 pen. 3-3 a.e.t.  Adelaide United
-[Sun May/12]
+Sun May/12
   Sydney FC                 6-1  Melbourne Victory
 
-Grand Final
-[Sun May/19]
+» Grand Final
+Sun May/19
   Perth Glory              1-4 pen. 0-0 a.e.t.  Sydney FC
 
 TXT
 
 
 
-  parser = RaccMatchParser.new( txt )
+  parser = RaccMatchParser.new( txt, debug: true )
   tree, errors = parser.parse_with_errors
   pp tree
 

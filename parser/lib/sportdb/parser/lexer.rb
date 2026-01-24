@@ -90,18 +90,7 @@ def tokenize_with_errors
                    t
                  end
 
-        ### check for "section" starters e.g. Teams or such
-        t = tokens[0] 
-        if t[0] == :TEXT
-            text = t[1]
-            if text =~ /^teams$/i
-               t[0] = :TEAMS
-            elsif text =~  /^blank$/i   ### todo/fix -- remove!!! add real blanks!!
-               t[0] = :BLANK
-            else
-            end
-        end
-
+   
         #################
         ## pass 2                  
         ##    transform tokens (using simple patterns) 
@@ -146,6 +135,16 @@ def tokenize_with_errors
                         { date: date[1], time: time[1] }
                       ]
                nodes << [:DATETIME, val]
+         elsif buf.match?( :GOAL_MINUTE, :',', :GOAL_MINUTE )
+             ## note - only advance by two tokens!
+             ##     allows more :GOAL_MINUTE sequences!! e.g. 12,13,14 etc!!!
+             ##  
+             ## help parser with comma shift/reduce conflict
+             ##   change ',' to GOAL_MINUTE_SEP !!!
+             nodes << buf.next   ## pass through goal_minute 
+             _ = buf.next  ## eat-up goal_minute_sep a.k.a. comma (,)
+                           ##   and replace with dedicated sep(arator)
+             nodes << [:GOAL_MINUTE_SEP,"<|GOAL_MINUTE_SEP|>"]
           else
              ## pass through
              nodes << buf.next
@@ -166,7 +165,7 @@ def tokenize_with_errors
 
          tokens  += tok 
          ## auto-add newlines  (unless BLANK!!)
-         tokens  << [:NEWLINE, "\n"]   unless tok[0][0] == :BLANK
+         tokens  << [:NEWLINE, "\n"]   unless tok[0] && tok[0][0] == :BLANK
     end
 
     [tokens,errors]
@@ -174,25 +173,6 @@ end   # method tokenize_with_errors
 
 
 
-### add a QUICK_PLAYER_WITH_MINUTE  check
-QUICK_PLAYER_WITH_MINUTE_RE = %r{
-      ##  note - \b  NOT working for ? !!!
-      ##
-      ##  use positive lookbehind
-        (?<= [ ,;\(\)\[\]]|^)
-      
-        (?:
-            (?:
-                \d{1,3}      ## constrain numbers to 0 to 999!!! 
-                (?: \+\d{1,3}   
-                 )?
-            )
-            |
-            (?: \?{2} | _{2} )  ## add support for n/a (not/available)
-        )           
-        '   ## must have minute marker!!!!
-}ix 
- 
 
 def _tokenize_line( line )
   tokens = []
@@ -545,9 +525,8 @@ def _tokenize_line( line )
       elsif @re == GOAL_RE 
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
-         elsif m[:none]    ## note - eats-up semicolon!! e.g. -; or - ;
-            ## todo/fix - change to GOAL_NONE
-             [:NONE, "<|NONE|>"]
+         elsif m[:goals_none]    ## note - eats-up semicolon!! e.g. -; or - ;
+             [:GOALS_NONE, "<|GOALS_NONE|>"]
          elsif m[:prop_name]    ## note - change prop_name to player
              [:PLAYER, m[:name]] 
          elsif m[:goal_minute]
@@ -555,14 +534,9 @@ def _tokenize_line( line )
               minute[:m]      = m[:value].to_i(10)
               minute[:offset] = m[:value2].to_i(10)   if m[:value2]
              ## note - for debugging keep (pass along) "literal" minute
-             ## todo/fix - change to GOAL_MINUTE
               minute[:og]  = true    if m[:og]
               minute[:pen] = true    if m[:pen]
-             [:MINUTE, [m[:goal_minute], minute]]
-       #  elsif m[:og]
-       #      [:OG, m[:og]]    ## for typed drop - string version/variants ??  why? why not?
-       #  elsif m[:pen]
-       #      [:PEN, m[:pen]]
+             [:GOAL_MINUTE, [m[:goal_minute], minute]]
          elsif m[:sym]
             sym = m[:sym]
             ## return symbols "inline" as is - why? why not?

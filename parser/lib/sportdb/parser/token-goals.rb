@@ -24,7 +24,7 @@ GOAL_LINE_RE = %r{
                      \A\(
                  }x
 
-GOAL_NONE_RE = %r{ (?<none>
+GOAL_NONE_RE = %r{ (?<goals_none>
                         -[ ]*;
                     )
                  }x

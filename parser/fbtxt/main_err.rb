@@ -3,6 +3,28 @@
 #    $ ruby ./main_err.rb  (in /fbtxt)
 
 
+=begin
+
+
+fix - check why [] !!!! possible?   
+
+ [:TEAM, "France"],
+ [:"@"],
+ [:GEO, "Arena Amazônia"],
+ [:","],
+ [:GEO, "Manaus"],
+ [:TIMEZONE, "(UTC-4)"]]
+[[:BLANK, "<|BLANK|>"]]
+[]
+[[:SCORE, ["20-21", {:ft=>[20, 21]}]]]
+[[:BLANK, "<|BLANK|>"]]
+[[:BLANK, "<|BLANK|>"]]
+[[:TEAM, "Denmark"],
+ [:SCORE, ["2-2", {:ft=>[2, 2]}]],
+ [:TEAM, "France"],
+=end
+
+
 ## try error handling
 
 
@@ -26,27 +48,6 @@ Rapid Wien - Austria Wien
 Rapid Wien - Austria Wien 1-5   [awarded]
 Rapid Wien - Austria Wien 1-6     @ Gerhard-Hanappi-Stadion, Wien
 Rapid Wien - Austria Wien   [cancelled]   @ Gerhard-Hanappi-Stadion, Wien
-
-
-
-### try "compact" match fixtures separated by comma 
-Matchday 3
-Rapid Wien v Austria Wien, Rapid Wien v Austria Wien
-
-
-Matchday 4
-Fr Sept/24
-Rapid v Austria, GAK v Sturm, Wolfsbrug v Innsbruck
-Fr Sept/24 Rapid v Austria, GAK v Sturm, Wolfsbrug v Innsbruck
-
-
-Matchday 5
-Fr Sept/24 18:00  Rapid - Austria,  GAK v Sturm,   Wolfsbrug v Innsbruck
-
-
-Sevilla 2-1 Bilbao,  Madrid v Barcelona    
-Sevilla v Bilbao 2-1,  Madrid v Barcelona
-Sevilla - Bilbao 2-1,  Madrid - Barcelona 1-5 (0-2), Elche - Getafe   
 
 
 
@@ -82,7 +83,7 @@ TXT
 
 
 
-  parser = RaccMatchParser.new( txt )
+  parser = RaccMatchParser.new( txt, debug: true )
   tree, errors = parser.parse_with_errors
   puts "-- tree:"
   pp tree

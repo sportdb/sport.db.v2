@@ -223,12 +223,18 @@ Sat Jun/23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Mo
   (E. Hazard 6' (pen.), 51' R. Lukaku 16', 45+3' Batshuayi 90'; Bronn 18' Khazri 90+3')
   (E. Hazard 6' (pen.) 51' R. Lukaku 16' 45+3' Batshuayi 90'; Bronn 18' Khazri 90+3')
 
-  ### todo/fix
-  ##    add/allow optional commas between players - why? why not? 
-#  (R. Lukaku 16', Batshuayi 90')          
-#  (R. Lukaku 16', 45+3', Batshuayi 90')  
-#  (E. Hazard 6' (pen.), 51', R. Lukaku 16', 45+3', Batshuayi 90'; 
-#    Bronn 18', Khazri 90+3')
+  ## check short-form without minute marker!!
+  (E. Hazard 6pen, 51 R. Lukaku 16, 45+3 Batshuayi 90; Bronn 18 Khazri 90+3)
+  (E. Hazard 6p 51, R. Lukaku 16 45+3, Batshuayi 90; Bronn 18, Khazri 90+3)
+  (E. Hazard 6p, 51, R. Lukaku 16, 45+3, Batshuayi 90; Bronn 18, Khazri 90+3)
+
+  ##   note - allow optional commas between players 
+  (R. Lukaku 16', Batshuayi 90')          
+  (R. Lukaku 16', 45+3', Batshuayi 90')
+  
+  ## allow break on comma between players - why? why not?
+  (E. Hazard 6' (pen.), 51', R. Lukaku 16', 45+3', 
+    Batshuayi 90'; Bronn 18', Khazri 90+3')
         
 
 TXT

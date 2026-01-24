@@ -16,29 +16,27 @@
 class RaccMatchParser
 
      rule 
-       document :  # allow empty documents - why? why not?
+       document : {}  # note - allow empty documents - why? why not?
                 | elements
 
        elements : element 
                 | elements element
                
-                
-        
+                        
        element
-          : heading
-          | date_header 
-          | group_header
-          | round_header
-          | round_outline   
+          : heading       # e.g. h1,h2,h3, etc.
           | group_def
           | round_def
+          | round_outline   
+          | date_header 
           | match_line
-          | goal_lines
-      ##    | goal_lines   ## check - goal_lines MUST follow match_line - why? why not?
+ 
+          ## check - goal_lines MUST follow match_line - why? why not?     
+          | goal_lines     
           | goal_lines_alt   ## allow differnt style/variant 
+ 
           | BLANK        ##  was empty_line
              { trace( "REDUCE BLANK" ) } 
-          | teams_list
           | lineup_lines
           | yellowcard_lines   ## use _line only - why? why not?
           | redcard_lines
@@ -54,18 +52,7 @@ class RaccMatchParser
          ### use   error NEWLINE - why? why not?
          ##           will (re)sync on NEWLINE?
 
-        teams_list :   TEAMS NEWLINE  list   BLANK
-
-        list   :   list_item
-               |   list  list_item
-
-        ### todo/fix - make    list_item_body more flexible (not just single TEXT)!!!
-        ###   todo/check - maybe start with level two e.g. --/---/etc.
-        ##                                      and not single -/--/---  - why? why not?
-        list_item :   '---'  TEXT  NEWLINE   {  puts "level 3" }
-                  |   '--'   TEXT  NEWLINE   {  puts "level 2 #{val[1]}" } 
-                  |   '-'    TEXT  NEWLINE   {  puts "level 1 #{val[1]}" }
-                  |   TEXT NEWLINE
+    
 
 
         attendance_line  : PROP_ATTENDANCE  PROP_NUM  PROP_END NEWLINE
@@ -259,6 +246,8 @@ class RaccMatchParser
        card_type    :  YELLOW_CARD | RED_CARD 
 
 
+
+
        heading
            : H1 NEWLINE
            | H2 NEWLINE
@@ -315,13 +304,6 @@ class RaccMatchParser
 
 
 
-         group_header :  GROUP  NEWLINE
-                 {
-                     @tree <<  GroupHeader.new( name: val[0] )  
-                  }
- 
-
-
 ####
 ##   round ouline for now all-in-one line 
 ##       todo - split-up in tokens
@@ -329,27 +311,6 @@ class RaccMatchParser
                               { 
                                   @tree << RoundOutline.new( outline: val[0] )
                               }
-
-
-###
-##  e.g. Quarter-finals - 1st Leg         
-         round_header 
-               :  round_values  NEWLINE
-                   {
-                     @tree <<  RoundHeader.new( names: val[0] )  
-                   }
-               |  round_values group_sep GROUP  NEWLINE    ## allow round with trailing group
-                   {
-                    @tree <<  RoundHeader.new( names: val[0], group: val[2] )  
-                   }    
-
-          group_sep    : '/'  | ','  ## note - do NOT allow dash (-) for now - why? why not?                        
-
-          round_values :  ROUND    {  result = val }
-                       |  round_values round_sep ROUND  {   result.push( val[2] ) }
-
-          round_sep    : '-' | ','   ## todo/check - allow mixing?
-                                     ##   or only one style at a time - why? why not?
 
 
 
@@ -460,16 +421,21 @@ class RaccMatchParser
                                         
    
         #######
-        ## e.g. Wirtz 10' Musiala 19' Havertz 45+1' (pen.)  Füllkrug 68' Can 90+3';  
-        ##      Rüdiger 87' (o.g.)
+        ## e.g. (Wirtz 10' Musiala 19' Havertz 45+1' (pen.)  Füllkrug 68' Can 90+3';  
+        ##      Rüdiger 87' (o.g.))
+        ##         or
+        ##      (Wirtz 10 Musiala 19 Havertz 45+1p Füllkrug 68 Can 90+3;  
+        ##        Rüdiger 87og)
         ##
-        ##    [Higuaín 2', 9' (pen.); Kane 35' Eriksen 71']
+        ##    (Higuaín 2', 9' (pen.); Kane 35' Eriksen 71')
+        ##      or
+        ##    (Higuaín 2, 9p; Kane 35 Eriksen 71)
  
         #
-        # todo/fix/check -  check how to allow (more) newlines
-        #                      between goals
-        #   for now possible only after ;
+        # note: allow newlines between goals
+        #   for now possible after ;  and after , (if player with ALL goal_minutes)
         #
+
 
 
         ###
@@ -506,98 +472,55 @@ class RaccMatchParser
                         }   
 
 
-       ####
-       # todo/check - change optional comma from between minutes 
-       #                   to between players - why? why not?
-
-        goal_lines : '['  goal_lines_body  ']' NEWLINE 
-                     {
-                       kwargs = val[1]
-                       @tree << GoalLine.new( **kwargs )
-                     }
-                   | goal_lines_body NEWLINE
+     
+        goal_lines : goal_lines_body NEWLINE
                       {
                          kwargs = val[0]
                          @tree << GoalLine.new( **kwargs )
                       }
-                   |  PROP_GOALS goal_lines_body PROP_END NEWLINE    ## prop version (starting with goals:)
-                      {
-                         kwargs = val[1]
-                         @tree << GoalLine.new( **kwargs )
-                      }
-
+                
 
         goal_lines_body : goals                 {  result = { goals1: val[0],
                                                               goals2: [] } 
                                                 }
-                        | NONE  goals           {  result = { goals1: [],
+                        | GOALS_NONE goals           {  result = { goals1: [],
                                                               goals2: val[1] } 
                                                 }
-                        | goals goal_sep goals  {  result = { goals1: val[0],
+                        | goals goals_sep goals  {  result = { goals1: val[0],
                                                               goals2: val[2] }
                                                 }
 
      
-
-        goal_sep    : ';'
-                    | ';' NEWLINE
+        goals_sep    : ';'
+                     | ';' NEWLINE
                        
 
-        # goal_opts     : '-' 
-        #               | goals
-        
-        #  goals_break : goals
-        #              | goals_break NEWLINE goals 
+         goal_sep_opt   :  {}        ## none; optional!!
+                        | ','
+                        | ',' NEWLINE
 
-         goals  :  goal               { result = val }
-                |  goals goal         { result.push( val[1])  }
-                ## allow optional comma separator too - why? why not?
-                ##   results in shift/reduce conflict 
-                ##      retry/rework later 
-                ##    for now added (optinal tamgling comma to goal)
-                ## |  goals ',' goal     { result.push( val[2])  }
-         
-         ## check if changes with PLAXER (instead of TEXT!!!!
-         ## goals  :  TEXT minutes   
-         ##       |  goals TEXT minutes
-         ##       |  goals TEXT minutes ','
-         ##  note - if NOT working out fix in match schedule!!
-         ##                  and remove commas between goals!!!
+         ## note - hacky: lexer MUST change comma 
+         ##                  between GOAL_MINUTES to GOAL_MINUTE_SEP!!
+         goal_minute_sep_opt : {}    ## none; optional!!!
+                             | GOAL_MINUTE_SEP   
 
-         goal : PLAYER  minutes          
-                {  
-                  result = Goal.new( player:  val[0],
-                                     minutes: val[1] )   
-                }
-#              | PLAYER  minutes  ','    
-#                {  
-#                  result = Goal.new( player:  val[0],
-#                                     minutes: val[1] )   
-#                }
-            ## might start a new line
-            ##  | NEWLINE PLAYER minutes 
+         goals   : goal                      { result = val }
+                 | goals goal_sep_opt goal   { result.push( val[2])  }
+               
+         goal    : PLAYER goal_minutes 
+                    {  
+                       result = Goal.new( player:  val[0],
+                                          minutes: val[1] )   
+                    }
+         goal_minutes  : goal_minute   {  result = val }
+                       | goal_minutes goal_minute_sep_opt goal_minute  {  result.push( val[2])  }
 
-
-         minutes : minute              { result = val }
-                 |  minutes minute     { result.push( val[1]) }
-                 |  minutes ',' minute { result.push( val[2]) }
-                                       ## optional comma separator
-                                       
-
-         minute :   MINUTE
-                     {
-                        kwargs = {}.merge( val[0][1] )
-                        result = Minute.new( **kwargs )
-                     }
-                 |  MINUTE minute_opts
-                     {
-                        kwargs = { }.merge( val[0][1] ).merge( val[1] )
-                        result = Minute.new( **kwargs )
-                     } 
-
-         minute_opts : OG     {  result = { og: true } } 
-                     | PEN    {  result = { pen: true } }
-                                
+         goal_minute : GOAL_MINUTE
+                          {
+                             kwargs = {}.merge( val[0][1] )
+                             result = Minute.new( **kwargs )  
+                          }
+                                      
  
 end
 
