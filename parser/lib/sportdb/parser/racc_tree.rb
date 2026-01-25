@@ -174,6 +174,26 @@ RoundOutline = Struct.new( :outline ) do
   end
 end
 
+## todo/check - use a generic Heading instead of Heading1/2/3 - why? why not?
+Heading1 = Struct.new( :text ) do
+  def pretty_print( printer )
+    printer.text( "<Heading1 #{self.text}>" )
+  end
+end
+
+Heading2 = Struct.new( :text ) do
+  def pretty_print( printer )
+    printer.text( "<Heading2 #{self.text}>" )
+  end
+end
+
+Heading3 = Struct.new( :text ) do
+  def pretty_print( printer )
+    printer.text( "<Heading3 #{self.text}>" )
+  end
+end
+
+
 
 MatchLine   = Struct.new( :ord, :date, :time, :wday,
                           :team1, :team2, 

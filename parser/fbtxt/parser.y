@@ -249,10 +249,11 @@ class RaccMatchParser
 
 
        heading
-           : H1 NEWLINE
-           | H2 NEWLINE
-           | H3 NEWLINE
+           : H1 NEWLINE   {  @tree << Heading1.new( text: val[0])  }
+           | H2 NEWLINE   {  @tree << Heading2.new( text: val[0])  }
+           | H3 NEWLINE   {  @tree << Heading3.new( text: val[0])  }
            
+
         ######  
         # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland   
         group_def
@@ -297,7 +298,7 @@ class RaccMatchParser
                : date_header_date            
                | date_header_date geo_opts   {  result = {}.merge( val[0], val[1] ) }
 
-        date_header_date     ## note - only two option allowed (no TIME, or WDAY etc.)
+        date_header_date     ## note - only two option allowed (no "standalone" TIME etc.)
                : DATE            {   result = { date: val[0][1]}  }
                | DATETIME        {   result = {}.merge( val[0][1] ) }
 
@@ -335,8 +336,6 @@ class RaccMatchParser
        ### e.g.  time only e.g. 15.00,  or weekday with time only e.g. Fr 15.00
        more_date_opts
              : TIME            {   result = { time: val[0][1]}  }
-         ##  | WDAY            {   result = { wday: val[0][1]} }
-             | WDAY TIME       {   result = { wday: val[0][1], time: val[1][1] } }
            # | DATE            {   result = { date: val[0][1]}  }
            # | DATETIME        {   result = {}.merge( val[0][1] )  }
 
@@ -502,9 +501,11 @@ class RaccMatchParser
                                                               goals2: val[2] }
                                                 }
 
+         goal_sep   : ','           ## note: separator REQUIRED!!!
+                    | ',' NEWLINE
 
          goals_alt   : goal_alt                      { result = val }
-                     | goals_alt goal_sep_opt goal_alt   { result.push( val[2])  }
+                     | goals_alt goal_sep goal_alt   { result.push( val[2])  }
                
          goal_alt    : PLAYER  
                     {  

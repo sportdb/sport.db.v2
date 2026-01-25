@@ -95,13 +95,13 @@ end
 
 
 
-
+=begin
 puts
 puts "legs:"
 pp lexer.is_leg?( '1st leg' )
 pp lexer.is_leg?( '2nd leg' )
 pp lexer.is_leg?( 'Second leg' )
-
+=end
 
 
 

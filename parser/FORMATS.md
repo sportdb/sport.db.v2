@@ -6,8 +6,8 @@
 e.g.
 
 ```
- (1) Fri Jun/14 21:00         Germany   5-1 (3-0)  Scotland     @ München Fußball Arena, München
-        [Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.)]
+  Fri Jun/14 21:00         Germany   5-1 (3-0)  Scotland     @ München Fußball Arena, München
+        (Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.))
   Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt – Andrich [Y] (46' Groß),
               Kroos (80' Can) – Musiala (74' Müller), Gündogan,
               Wirtz (63' Sane) – Havertz (63' Füllkrug).
@@ -17,10 +17,10 @@ e.g.
 
 ```
 
+
 changed to =>
 
-```
-(1) 
+``` 
 Fri, Jun 14 21:00    @  München Fußball Arena, München
 Germany   (3) 5   Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'  
 Scotland  (0) 1   Rüdiger 87' (o.g.)
@@ -32,7 +32,7 @@ Scotland  (0) 1   Rüdiger 87' (o.g.)
     McTominay, McGregor (67' Gilmour), Robertson – Christie (82' Shankland),
     Adams (46' Hanley), McGinn (67' McLean).
 
-(2) Sat, Jun 15 15:00  @ Köln Stadion, Köln  
+Sat, Jun 15 15:00  @ Köln Stadion, Köln  
 Hungary       (0) 1   Varga 66'    
 Switzerland   (2) 3   Duah 12' Aebischer 45' Embolo 90+3'
            
@@ -47,8 +47,9 @@ or
 
 ```
   Fri Jun/14 21:00 @ München Fußball Arena, München 
-   (1) Germany v  Scotland 5-1 (3-0)
-       Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.)
+    Germany v Scotland  5-1 (3-0)
+       (Wirtz 10 Musiala 19 Havertz 45+1pen Füllkrug 68 Can 90+3; 
+        Rüdiger 87og)
 
   Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt – Andrich [Y] (46' Groß),
               Kroos (80' Can) – Musiala (74' Müller), Gündogan,
@@ -59,7 +60,7 @@ or
 
 
   Fri Jun 14 21:00   @ München Fußball Arena, München 
-   (1) Germany v Scotland   5-1 (3-0)
+     Germany v Scotland   5-1 (3-0)
     
   Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt – Andrich [Y] (46' Groß),
               Kroos (80' Can) – Musiala (74' Müller), Gündogan,

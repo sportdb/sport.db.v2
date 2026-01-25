@@ -320,8 +320,6 @@ def _tokenize_line( line )
             date[:wday] = DAY_MAP[ m[:day_name].downcase ]   if m[:day_name]
             ## note - for debugging keep (pass along) "literal" date
             [:DATE, [m[:date], date]]
-        elsif m[:wday]    ## standalone weekday e.g. Mo/Tu/We/etc.
-             [:WDAY, [m[:wday], { wday: DAY_MAP[ m[:day_name].downcase ] } ]]
         elsif m[:num]   ## fix - change to ord (for ordinal number!!!)
               ## note -  strip enclosing () and convert to integer
              [:ORD, [m[:num], { value: m[:value].to_i(10) } ]]

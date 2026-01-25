@@ -29,15 +29,29 @@ read into structs that can than get exported to JSON or CSV.
        
 ### Format Clean-up
 
-- [ ]  add heading1/2/3 etc. to parser rules
-- [ ]  remove (optional) \[\] from date
+- [x]  add heading1/2/3 etc. to parser rules
+- [x]  remove (optional) \[\] from date
 - [ ]  remove support for "standalone weekday and weekday+hour only (requires date!)
-- [ ]   change goal format - MUST start with and enclosed by (); 
+- [x]   change goal format - MUST start with and enclosed by (); 
            change minutes to goal minutes and 
            include optional  o.g., pen. WITHOUT enclosing ()!!!
            e.g.  (Benzema 51' Bale 64', 83'; Mané 55')
                  (Benzema, Bale 2; Mané)
            or  multi-line-style  
                (Milner 15'og, Džeko 52', Nainggolan 86', 90+4'pen; 
-                 Mané 9', Wijnaldum 25')      
-                  
+                 Mané 9', Wijnaldum 25')   
+
+
+- [ ]  check minute format (note - BBC uses  `45'+2` instead of `45+2'` - support or change - why? why not?)
+- [ ]  clean-up lexer / tokens / regexes   
+        - remove (standalone) weekday for now
+        - remove list support
+        - remove ord number e.g. (1), (42), etc.
+        - ...              
+
+- [ ]  add back alternate goal line format (e.g  0-1 Milner 15', 1-1 Mané 12' etc.)
+       - note - make minutes optional e.g. ( 0-1 Milner, 1-1 Mané)
+- [ ]  goal line (no minutes) - check for  (o.g.) and (pen.) "real-world" samples and such if in use?
+
+
+

@@ -3,8 +3,8 @@
 ##
 ##
 ##    Fri Jun 14 21:00  @ München Fußball Arena, München        
-##  (1)  Germany  v  Scotland   5-1 (3-0)     
-##  Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.)
+##     Germany  v  Scotland   5-1 (3-0)     
+##  (Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.))
 ## 
 ## Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt - Andrich [Y] (Groß 46'),
 ##       Kroos (Can 80') - Musiala (Müller 74'), Gündogan, Wirtz (Sane 63') - 

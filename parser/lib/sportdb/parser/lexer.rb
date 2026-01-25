@@ -625,8 +625,6 @@ def _tokenize_line( line )
             duration[:end][:wday] = DAY_MAP[ m[:day_name2].downcase ]   if m[:day_name2]
             ## note - for debugging keep (pass along) "literal" duration
             [:DURATION, [m[:duration], duration]]
-        elsif m[:wday]    ## standalone weekday e.g. Mo/Tu/We/etc.
-             [:WDAY, [m[:wday], { wday: DAY_MAP[ m[:day_name].downcase ] } ]]
         elsif m[:num]   ## fix - change to ord (for ordinal number!!!)
               ## note -  strip enclosing () and convert to integer
              [:ORD, [m[:num], { value: m[:value].to_i(10) } ]]

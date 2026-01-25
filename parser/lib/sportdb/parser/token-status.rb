@@ -6,6 +6,9 @@ class Lexer
 ##
 ##  add more variants - why? why not?
 
+### fix - move  SCORE_NOTE_RE to token-score_note!!!
+### fix - move  NOTE_RE  to token-note!!!
+
 
 STATUS_RE = %r{
             \[

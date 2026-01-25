@@ -2,6 +2,10 @@ module SportDb
 class Lexer
 
 
+###
+###  todo - move duration to token-date_duration !!!
+
+
 
 def self.parse_names( txt )
   lines = [] # array of lines (with words)

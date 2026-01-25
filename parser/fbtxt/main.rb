@@ -248,9 +248,10 @@ Sat Jun/23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Mo
         
  ## try "simple" (alt) goal format - goal scorers (players) only
   (E. Hazard,  R. Lukaku,  Batshuayi; Bronn, Khazri)
-  (E. Hazard  R. Lukaku  Batshuayi; Bronn  Khazri)  ## keep double-space version - why? why not?
   (R. Lukaku, Batshuayi)          
-  (R. Lukaku   Batshuayi)
+
+##  (E. Hazard  R. Lukaku  Batshuayi; Bronn  Khazri)  ## keep double-space version - why? why not?
+##  (R. Lukaku   Batshuayi)
  
 
 ### check date formats

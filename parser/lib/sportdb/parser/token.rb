@@ -21,36 +21,6 @@ TIME_RE = %r{
 
 
 
-## add wday / stand-alone week day - as separate regex or 
-##          use TEXT with is_wday? check or such with
-##                requirement of beginning of line (anchored to line) only??
-##       - why? why not?
-
-WDAY_RE = %r{
-(?<wday>
-  \b     # note - alternation (|) is lowest precedence (such 
-         #    parathenes required around \b()\b !!!
-         ## note - NOT case sensitive!!!    
-       (?<day_name>
-        (?-i:
-          Mon|Mo|
-          Tue|Tu|
-          Wed|We|
-          Thu|Th|
-          Fri|Fr|
-          Sat|Sa|
-          Sun|Su
-       ))
-       (?=[ ]{2})   # positive lookahead for two space  
-       ## todo/check - must be followed by two spaces or space + [( etc.
-         ##   to allow words starting with weekday abbrevations - why? why not?
-         ##     check if any names (teams, rounds, etc) come up in practice 
-         ##   or maybe remove three letter abbrevations Mon/Tue
-         ##    and keep only Mo/Tu/We etc. - why? why not?
-)}x    
-
-
-
 
 BASICS_RE = %r{
     ## e.g. (51) or (1) etc.  - limit digits of number???
@@ -92,8 +62,6 @@ RE = Regexp.union(
                     SCORE_MORE_RE, 
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_MORE_RE!!!
                     BASICS_RE, 
-                    WDAY_RE,  # allow standalone weekday name (e.g. Mo/Tu/etc.) - why? why not?
-                              #    note - wday MUST be after text e.g. Sun Ke 68' is Sun Ke (NOT Sun) etc.
                    TEXT_RE,
                    ANY_RE,
                       )

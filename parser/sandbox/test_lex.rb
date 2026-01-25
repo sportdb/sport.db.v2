@@ -19,8 +19,9 @@ pp txt
   if errors.size > 0
      puts "!! #{errors.size} tokenize error(s):"
      pp errors
+  else
+     puts "OK - no tokenize errors"
   end
-
 
 puts "bye"
 
