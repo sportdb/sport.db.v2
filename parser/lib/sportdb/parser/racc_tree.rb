@@ -237,8 +237,12 @@ Goal        = Struct.new( :player, :minutes ) do
   def to_s
     buf = String.new
     buf << "#{self.player}"
-    buf << " "
-    buf << minutes.map { |min| min.to_s }.join(' ')
+    if minutes.nil? || minutes.empty?
+      ## add nothing if no minutes available/present
+    else
+      buf << " "
+      buf << minutes.map { |min| min.to_s }.join(' ')
+    end
     buf
   end
 

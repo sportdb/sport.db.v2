@@ -104,7 +104,7 @@ RE = Regexp.union(
 ##  note - use \A (instead of ^) - \A strictly matches the start of the string.
 ROUND_OUTLINE_RE = %r{   \A
                            [ ]*  ## ignore leading spaces (if any)
-                         (?: »|>> ) 
+                         (?: [▪▸»]|>> )    ## BLACK SMALL SQUARE, BLACK RIGHT-POINTING SMALL TRIANGLE  
                            [ ]+
                             (?<round_outline>
                                ## must start with letter - why? why not?

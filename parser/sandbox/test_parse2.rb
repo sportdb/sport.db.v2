@@ -18,8 +18,8 @@ txt = <<TXT
 ##  "work around" for now use comma or such as separator
 ##
 
-» Round of 16 - 1st Leg
-» Round of 16, 1st Leg
+▪ Round of 16 - 1st Leg
+▪ Round of 16, 1st Leg
 ## Round of 16 | 1st Leg
 ### or use pipe (|)  - usually used for round defs - handle new case with text - why? why not?
 
@@ -49,7 +49,7 @@ Wed Feb/21
   20.45  Sevilla              0-0  Manchester United    @ Ramón Sánchez Pizjuán, Seville
 
 
-» Round of 16 - 2nd Leg
+▪ Round of 16 - 2nd Leg
 
 Tue Mar/6
   20.45  Liverpool            0-0  Porto                @ Anfield, Liverpool
@@ -75,7 +75,7 @@ Wed Mar/14
            (Vágner Love 59'; Thiago 18' Gönül 46' (o.g.) Wagner 84')
 
 
-» Quarter-finals - 1st Leg
+▪ Quarter-finals - 1st Leg
 
 Tue Apr/3
   20.45  Juventus             0-3  Real Madrid          @ Juventus Stadium, Turin
@@ -90,7 +90,7 @@ Wed Apr/4
            (Salah 12' Oxlade-Chamberlain 21' Mané 31')
 
 
-» Quarter-finals - 2nd Leg
+▪ Quarter-finals - 2nd Leg
 
 Tue Apr/10
   20.45  Roma                 3-0  Barcelona            @ Stadio Olimpico, Rome
@@ -105,18 +105,19 @@ Wed Apr/11
 
 
 
-» Semi-finals - 1st Leg
+▪ Semi-finals - 1st Leg
 
 Tue Apr/24
   20.45  Liverpool            5-2  Roma                 @ Anfield, Liverpool
-           (Salah 36', 45+1' Mané 56' Firmino 61', 69'; Džeko 81' Perotti 85' (pen.))
+           (Salah 36', 45+1' Mané 56' Firmino 61', 69'; 
+             Džeko 81' Perotti 85' (pen.))
 
 Wed Apr/25
   20.45  Bayern München       1-2  Real Madrid          @ Allianz Arena, München
            (Kimmich 28'; Marcelo 44' Asensio 57')
 
 
-» Semi-finals - 2nd Leg
+▪ Semi-finals - 2nd Leg
 
 Tue May/1
   20.45  Real Madrid          2-2  Bayern München       @ Santiago Bernabéu, Madrid
@@ -124,14 +125,14 @@ Tue May/1
 
 Wed May/2
   20.45  Roma                 4-2  Liverpool            @ Stadio Olimpico, Rome
-          ## (Milner 15'og Džeko 52' Nainggolan 86', 90+4'pen); 
-          ##   Mané 9' Wijnaldum 25')
+          (Milner 15'og Džeko 52' Nainggolan 86', 90+4'pen; 
+             Mané 9' Wijnaldum 25')
 
-» Final
+▪ Final
 
 Sat May/26
   20.45  Real Madrid          3-1  Liverpool            @ NSC Olimpiyskiy Stadium, Kiev
-           ## (Benzema 51' Bale 64', 83'; Mané 55')
+          (Benzema 51' Bale 64', 83'; Mané 55')
 
 TXT
 

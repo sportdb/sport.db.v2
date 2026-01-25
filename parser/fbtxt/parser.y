@@ -443,36 +443,78 @@ class RaccMatchParser
         ##
         ##  fix - for optional WITHOUT minutes
         #             make possible (og) and (pen) too!!! - missing fo now
-        goal_lines_alt : goals_alt NEWLINE
-                           {
-                             @tree << GoalLineAlt.new( goals: val[0] )
-                           }
+#        goal_lines_alt : goals_alt NEWLINE
+#                           {
+#                             @tree << GoalLineAlt.new( goals: val[0] )
+#                           }
+#
+#        goals_alt   :  goal_alt
+#                        { result = val }
+#                    |  goals_alt goal_alt_sep goal_alt  ## allow optional comma sep
+#                        { result.push( val[2])  } 
+#                    |  goals_alt goal_alt
+#                        { result.push( val[1])  }
+#                 
+#        goal_alt_sep :  ','
+#                     |  ',' NEWLINE    ## allow multiline goallines!!!
+#
+#
+#        goal_alt    :  SCORE PLAYER     ## note - minute is optinal in alt goalline style!!!
+#                        {
+#                           result = GoalAlt.new( score:   val[0],
+#                                                 player:  val[1] )
+#                        }   
+#                    |  SCORE PLAYER minute
+#                        {
+#                           result = GoalAlt.new( score:  val[0],
+#                                                 player: val[1],
+#                                                 minute: val[2] )
+#                        }   
+#
 
-        goals_alt   :  goal_alt
-                        { result = val }
-                    |  goals_alt goal_alt_sep goal_alt  ## allow optional comma sep
-                        { result.push( val[2])  } 
-                    |  goals_alt goal_alt
-                        { result.push( val[1])  }
-                 
-        goal_alt_sep :  ','
-                     |  ',' NEWLINE    ## allow multiline goallines!!!
+
+     ###
+     #  merge  goal_lines_alt into goal_lines (or keep separate)    why? why not?
+     #
+     #  e.g.
+     #     (E. Hazard,  R. Lukaku,  Batshuayi; Bronn, Khazri)
+     #     (R. Lukaku, Batshuayi)          
+     #
+     #    todo: add  (pen.) or (og.) too - why? why not?
+     #    todo:  find some real-world examples
+     #           and add goal count e.g.   R. Lukaku (2) or such - why? why not?
+     #          what syntax to use use for one (regular) goal and one penalty, for example?
+
+        goal_lines_alt : goal_lines_alt_body NEWLINE
+                      {
+                         kwargs = val[0]
+                         @tree << GoalLine.new( **kwargs )
+                      }
+                
+
+        goal_lines_alt_body : goals_alt                 {  result = { goals1: val[0],
+                                                              goals2: [] } 
+                                                }
+                        | GOALS_NONE goals_alt           {  result = { goals1: [],
+                                                              goals2: val[1] } 
+                                                }
+                        | goals_alt goals_sep goals_alt  {  result = { goals1: val[0],
+                                                              goals2: val[2] }
+                                                }
 
 
-        goal_alt    :  SCORE PLAYER     ## note - minute is optinal in alt goalline style!!!
-                        {
-                           result = GoalAlt.new( score:   val[0],
-                                                 player:  val[1] )
-                        }   
-                    |  SCORE PLAYER minute
-                        {
-                           result = GoalAlt.new( score:  val[0],
-                                                 player: val[1],
-                                                 minute: val[2] )
-                        }   
+         goals_alt   : goal_alt                      { result = val }
+                     | goals_alt goal_sep_opt goal_alt   { result.push( val[2])  }
+               
+         goal_alt    : PLAYER  
+                    {  
+                        ## note - for minutes pass-in empty array!!!
+                       result = Goal.new( player: val[0], minutes: [] )   
+                    }
+         
 
 
-     
+
         goal_lines : goal_lines_body NEWLINE
                       {
                          kwargs = val[0]

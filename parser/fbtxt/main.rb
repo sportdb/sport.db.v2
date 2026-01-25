@@ -24,6 +24,16 @@ txt = <<-TXT
 === Heading 3 ========================
 
 
+###
+##  check round outlines with different round markers
+
+» Round of 16 - 2nd Leg
+>> Round of 16 - 2nd Leg
+
+### more (possible) unicode variants for round marker 
+▸ Round of 16 - 2nd Leg      # BLACK RIGHT-POINTING SMALL TRIANGLE -- &#x25B8;	&#9656;
+▪ Round of 16 - 2nd Leg      # BLACK SMALL SQUARE -- &#x25AA; &#9642;
+
 
 ### check geo "inline"
 
@@ -72,7 +82,7 @@ Matchday 3  |  Sun Jun/23 - Wed Jun/26
 
 
 
-» Group A
+▪ Group A
 Fri Jun/14
    21:00   Germany   5-1 (3-0)  Scotland     @ München
                 (Wirtz 10' Musiala 19' Havertz 45+1' (pen.)  Füllkrug 68' Can 90+3';  
@@ -83,14 +93,14 @@ Sat Jun/15
                   Duah 12' Aebischer 45' Embolo 90+3')
 
 
-» Semi-finals
+▪ Semi-finals
 Tu July/9 2024
 
   21h00    Netherlands  1-2 (1-1)   England    @ Dortmund
                   (Simons 7'; Kane 18' (pen.) Watkins 90+1')
 
 
-» Final
+▪ Final
 Sunday Jul 14 2024
   21.00   Spain  -  England         @ Berlin   
 
@@ -124,7 +134,7 @@ Wed Feb/21
   20.45  Sevilla              0-0  Manchester United    @ Ramón Sánchez Pizjuán, Seville
 
 
-» Round of 16 - 2nd Leg
+▪ Round of 16 - 2nd Leg
 
 Tue Mar/6
   20.45  Liverpool            0-0  Porto                @ Anfield, Liverpool
@@ -151,7 +161,7 @@ Wed Mar/14
             Thiago 18' Gönül 46' (o.g.) Wagner 84')
 
 
-» Quarter-finals - 1st Leg
+▪ Quarter-finals - 1st Leg
 
 Tue Apr/3
   20.45  Juventus             0-3  Real Madrid          @ Juventus Stadium, Turin
@@ -166,7 +176,7 @@ Wed Apr/4
            (Salah 12' Oxlade-Chamberlain 21' Mané 31')
 
 
-» Quarter-finals - 2nd Leg
+▪ Quarter-finals - 2nd Leg
 
 Tue Apr/10
   20.45  Roma                 3-0  Barcelona            @ Stadio Olimpico, Rome
@@ -182,8 +192,8 @@ Wed Apr/11
 
 
 
-» Semi-finals, 1st Leg
-» Semi-finals - 1st Leg
+▪ Semi-finals, 1st Leg
+▪ Semi-finals - 1st Leg
 
 Tue Apr/24
   20.45  Liverpool            5-2  Roma                 @ Anfield, Liverpool
@@ -195,8 +205,8 @@ Wed Apr/25
            (Kimmich 28';  Marcelo 44' Asensio 57')
 
 
-» Semi-finals - 2nd Leg
-» Semi-finals, 2nd Leg
+▪ Semi-finals - 2nd Leg
+▪ Semi-finals, 2nd Leg
 
 
 Tue May/1
@@ -207,7 +217,7 @@ Wed May/2
   20.45  Roma                 4-2  Liverpool            @ Stadio Olimpico, Rome
            (Milner 15' (o.g.) Džeko 52' Nainggolan 86', 90+4' (pen.); Mané 9' Wijnaldum 25')
 
-» Final
+▪ Final
 
 Sat May/26
   20.45  Real Madrid          3-1  Liverpool            @ NSC Olimpiyskiy Stadium, Kiev
@@ -236,6 +246,27 @@ Sat Jun/23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Mo
   (E. Hazard 6' (pen.), 51', R. Lukaku 16', 45+3', 
     Batshuayi 90'; Bronn 18', Khazri 90+3')
         
+ ## try "simple" (alt) goal format - goal scorers (players) only
+  (E. Hazard,  R. Lukaku,  Batshuayi; Bronn, Khazri)
+  (E. Hazard  R. Lukaku  Batshuayi; Bronn  Khazri)  ## keep double-space version - why? why not?
+  (R. Lukaku, Batshuayi)          
+  (R. Lukaku   Batshuayi)
+ 
+
+### check date formats
+▪ Semifinals
+ 8.7.25 @ East Rutherford    Fluminense        0-2 Chelsea   
+                          (Joao Pedro 18, 56)
+ 9.7.25 @ East Rutherford     Paris Saint-Germain 4-0 Real Madrid   
+                          (Fabian Ruiz 6, 24, Dembelé 9, Ramos 87)
+
+▪ Final
+13.7.25 @ East Rutherford    Paris Saint-Germain 0-3 Chelsea   
+                              (Palmer 22, 30, Joao Pedro 43)
+
+
+
+
 
 TXT
 
