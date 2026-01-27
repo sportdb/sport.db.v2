@@ -12,6 +12,18 @@ class Lexer
     ET_EN =  '(?: aet | a\.e\.t\.? )'     # note: make last . optional (e.g a.e.t) allowed too
 
 
+  
+    ## regex score helpers
+    ##    note - MUST double escape \d e.g. \\d!!!   if not "simple" string (e.g. '' but %Q<>)
+    SCORE_P   = %Q<  (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})
+                          [ ]? #{P_EN}
+                  >
+    SCORE_ET  = %Q<  (?<et1>\\d{1,2}) - (?<et2>\\d{1,2})
+                          [ ]? #{ET_EN}
+                  >
+    SCORE_LOOKAHEAD = '(?= [ ,\]] | $)'
+
+
     ##  note: allow SPECIAL cases WITHOUT full time scores (just a.e.t or pen. + a.e.t.)
     ##      3-4 pen. 2-2 a.e.t.
     ##      3-4 pen.   2-2 a.e.t.
@@ -19,13 +31,10 @@ class Lexer
     SCORE__P_ET__RE = %r{
         (?<score_more>
            \b
-            (?:
-               (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                 [ ]? #{P_EN} [ ]+
-             )?             # note: make penalty (P) score optional for now
-            (?<et1>\d{1,2}) - (?<et2>\d{1,2})
-               [ ]? #{ET_EN}
-               (?=[ ,\]]|$)
+            (?: #{SCORE_P} [ ]+ 
+             )?             ## note: make penalty (P) score optional for now
+            #{SCORE_ET}
+            #{SCORE_LOOKAHEAD}
         )}ix
                 ## todo/check:  remove loakahead assertion here - why require space?
                 ## note: \b works only after non-alphanum e.g. )
@@ -38,12 +47,10 @@ class Lexer
     SCORE__ET_P__RE = %r{
         (?<score_more>
            \b
-            (?<et1>\d{1,2}) - (?<et2>\d{1,2})
-                   [ ]? #{ET_EN}
-                   (?: [ ]*,[ ]* | [ ]+ )
-            (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                   [ ]? #{P_EN}  
-            (?=[ ,\]]|$)
+            #{SCORE_ET}  
+               (?: [ ]*,[ ]* | [ ]+ )
+            #{SCORE_P}  
+            #{SCORE_LOOKAHEAD}
         )}ix
                 ## todo/check:  remove loakahead assertion here - why require space?
                 ## note: \b works only after non-alphanum e.g. )
@@ -51,13 +58,12 @@ class Lexer
 
 
     ##  note: allow SPECIAL with penalty only
-    ##      3-4 pen.
+    ##      3-4 pen.  or 3-4p etc.
     SCORE__P__RE = %r{
         (?<score_more>
            \b
-              (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                [ ]? #{P_EN}
-                (?=[ ,\]]|$)
+             #{SCORE_P}  
+             #{SCORE_LOOKAHEAD}
          )}ix
                 ## todo/check:  remove loakahead assertion here - why require space?
                 ## note: \b works only after non-alphanum e.g. )
@@ -70,8 +76,7 @@ class Lexer
    SCORE__P_ET_FT_HT_V2__RE = %r{
           (?<score_more>
                \b
-                (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                   [ ]? #{P_EN} [ ]+       
+                #{SCORE_P} [ ]+       
                    \(
                    [ ]*
                (?<et1>\d{1,2}) - (?<et2>\d{1,2})
@@ -81,7 +86,7 @@ class Lexer
                (?<ht1>\d{1,2}) - (?<ht2>\d{1,2})
                    [ ]*
                 \)
-               (?=[ ,\]]|$)
+               #{SCORE_LOOKAHEAD}
             )}ix       ## todo/check:  remove loakahead assertion here - why require space?
                                ## note: \b works only after non-alphanum e.g. )
 
@@ -90,8 +95,7 @@ class Lexer
     SCORE__ET_FT_HT_P__RE = %r{
           (?<score_more>
                \b
-               (?<et1>\d{1,2}) - (?<et2>\d{1,2})
-                   [ ]? #{ET_EN} [ ]+
+               #{SCORE_ET} [ ]+
                    \(
                    [ ]*
               (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
@@ -104,9 +108,8 @@ class Lexer
                 )?              # note: make half time (HT) score optional for now
               \)
                (?: [ ]*,[ ]* | [ ]+)
-               (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                   [ ]? #{P_EN}
-             (?=[ ,\]]|$)
+               #{SCORE_P}
+               #{SCORE_LOOKAHEAD}
             )}ix       ## todo/check:  remove loakahead assertion here - why require space?
                                ## note: \b works only after non-alphanum e.g. )
 
@@ -123,11 +126,9 @@ class Lexer
           (?<score_more>
                \b
                (?:
-                (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                   [ ]? #{P_EN} [ ]+
+                  #{SCORE_P} [ ]+
                 )?            ## note - make penalty (P) score optional for now
-               (?<et1>\d{1,2}) - (?<et2>\d{1,2})
-                   [ ]? #{ET_EN} [ ]+
+               #{SCORE_ET} [ ]+
                    \(
                    [ ]*
               (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
@@ -139,7 +140,7 @@ class Lexer
                     )?
                 )?              # note: make half time (HT) score optional for now
               \)
-             (?=[ ,\]]|$)
+             #{SCORE_LOOKAHEAD}
             )}ix       ## todo/check:  remove loakahead assertion here - why require space?
                                ## note: \b works only after non-alphanum e.g. )
 
@@ -149,8 +150,7 @@ class Lexer
     SCORE__P_FT_HT__RE = %r{
              (?<score_more>
                 \b
-     (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-        [ ]? #{P_EN} [ ]+
+               #{SCORE_P} [ ]+
         \(
         [ ]*
       (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
@@ -162,7 +162,7 @@ class Lexer
          )?
      )?              # note: make half time (HT) score optional for now
    \)
-  (?=[ ,\]]|$)
+    #{SCORE_LOOKAHEAD}
     )}ix    ## todo/check:  remove loakahead assertion here - why require space?
             ## note: \b works only after non-alphanum e.g. )
 
@@ -176,7 +176,7 @@ class Lexer
                    [ ]+ \( [ ]*
                 (?<ht1>\d{1,2}) - (?<ht2>\d{1,2})
                    [ ]* \)
-             (?=[ ,\]]|$)
+             #{SCORE_LOOKAHEAD}
              )}ix    ## todo/check:  remove loakahead assertion here - why require space?
                     ## note: \b works only after non-alphanum e.g. )
 
@@ -189,6 +189,8 @@ class Lexer
               \b
              )}ix  
 
+
+             
 #############################################
 # map tables
 #  note: order matters; first come-first matched/served

@@ -10,6 +10,12 @@ require 'sportdb/parser'
 SCORE_MORE_RE  = SportDb::Lexer::SCORE_MORE_RE
 
 
+pp SportDb::Lexer::SCORE__P_ET__RE
+pp SportDb::Lexer::SCORE_P
+pp SportDb::Lexer::SCORE_ET
+
+
+
 texts = [## try some
       ###
       '5-1 pen. (2-2, 1-1, 1-0)',  
