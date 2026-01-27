@@ -21,14 +21,33 @@ class Lexer
            \b
             (?:
                (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                 [ ]* #{P_EN} [ ]+
+                 [ ]? #{P_EN} [ ]+
              )?             # note: make penalty (P) score optional for now
             (?<et1>\d{1,2}) - (?<et2>\d{1,2})
-               [ ]* #{ET_EN}
+               [ ]? #{ET_EN}
                (?=[ ,\]]|$)
         )}ix
                 ## todo/check:  remove loakahead assertion here - why require space?
                 ## note: \b works only after non-alphanum e.g. )
+
+
+    ##  note: allow SPECIAL cases WITHOUT full time scores 
+    ##         AND with pen in last position!
+    ##           2-2 a.e.t., 3-4 pen. 
+    ##           2-2 a.e.t.  3-4 pen.  ## or without comma separator - why? why not?   
+    SCORE__ET_P__RE = %r{
+        (?<score_more>
+           \b
+            (?<et1>\d{1,2}) - (?<et2>\d{1,2})
+                   [ ]? #{ET_EN}
+                   (?: [ ]*,[ ]* | [ ]+ )
+            (?<p1>\d{1,2}) - (?<p2>\d{1,2})
+                   [ ]? #{P_EN}  
+            (?=[ ,\]]|$)
+        )}ix
+                ## todo/check:  remove loakahead assertion here - why require space?
+                ## note: \b works only after non-alphanum e.g. )
+
 
 
     ##  note: allow SPECIAL with penalty only
@@ -37,7 +56,7 @@ class Lexer
         (?<score_more>
            \b
               (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                [ ]* #{P_EN}
+                [ ]? #{P_EN}
                 (?=[ ,\]]|$)
          )}ix
                 ## todo/check:  remove loakahead assertion here - why require space?
@@ -45,15 +64,16 @@ class Lexer
 
    ####
    ## support short all-in-one e.g.
-   ##  e.g.      3-4 pen. 2-2 a.e.t. (1-1, 1-1) becomes
+   ##  e.g.      3-4 pen. 2-2 a.e.t. ( 1-1, 1-1 ) becomes
    ##   3-4 pen. (2-2, 1-1, 1-1)            
          
    SCORE__P_ET_FT_HT_V2__RE = %r{
           (?<score_more>
                \b
                 (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                   [ ]* #{P_EN} [ ]+       
+                   [ ]? #{P_EN} [ ]+       
                    \(
+                   [ ]*
                (?<et1>\d{1,2}) - (?<et2>\d{1,2})
                    [ ]*, [ ]*
                (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
@@ -65,6 +85,32 @@ class Lexer
             )}ix       ## todo/check:  remove loakahead assertion here - why require space?
                                ## note: \b works only after non-alphanum e.g. )
 
+
+    # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen. 
+    SCORE__ET_FT_HT_P__RE = %r{
+          (?<score_more>
+               \b
+               (?<et1>\d{1,2}) - (?<et2>\d{1,2})
+                   [ ]? #{ET_EN} [ ]+
+                   \(
+                   [ ]*
+              (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
+                   [ ]*
+                (?:
+                     , [ ]*
+                    (?: (?<ht1>\d{1,2}) - (?<ht2>\d{1,2})
+                        [ ]*
+                    )?
+                )?              # note: make half time (HT) score optional for now
+              \)
+               (?: [ ]*,[ ]* | [ ]+)
+               (?<p1>\d{1,2}) - (?<p2>\d{1,2})
+                   [ ]? #{P_EN}
+             (?=[ ,\]]|$)
+            )}ix       ## todo/check:  remove loakahead assertion here - why require space?
+                               ## note: \b works only after non-alphanum e.g. )
+
+    
 
     ## e.g. 3-4 pen. 2-2 a.e.t. (1-1, 1-1)  or
     ##      3-4p 2-2aet (1-1, )     or
@@ -78,10 +124,10 @@ class Lexer
                \b
                (?:
                 (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-                   [ ]* #{P_EN} [ ]+
-                )?            # note: make penalty (P) score optional for now
+                   [ ]? #{P_EN} [ ]+
+                )?            ## note - make penalty (P) score optional for now
                (?<et1>\d{1,2}) - (?<et2>\d{1,2})
-                   [ ]* #{ET_EN} [ ]+
+                   [ ]? #{ET_EN} [ ]+
                    \(
                    [ ]*
               (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
@@ -104,7 +150,7 @@ class Lexer
              (?<score_more>
                 \b
      (?<p1>\d{1,2}) - (?<p2>\d{1,2})
-        [ ]* #{P_EN} [ ]+
+        [ ]? #{P_EN} [ ]+
         \(
         [ ]*
       (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
@@ -151,8 +197,10 @@ class Lexer
 
 SCORE_MORE_RE = Regexp.union(
   SCORE__P_ET_FT_HT_V2__RE,  # e.g. 5-1 pen. (2-2, 1-1, 1-0)  
+  SCORE__ET_FT_HT_P__RE,    # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen. 
   SCORE__P_ET_FT_HT__RE,    # e.g. 5-1 pen. 2-2 a.e.t. (1-1, 1-0)
   SCORE__P_FT_HT__RE,     # e.g. 5-1 pen. (1-1)
+  SCORE__ET_P__RE,        # e.g. 2-2 a.e.t., 5-1 pen.
   SCORE__P_ET__RE,        # e.g. 2-2 a.e.t.  or  5-1 pen. 2-2 a.e.t.
   SCORE__P__RE,           # e.g. 5-1 pen.
   SCORE__FT_HT__RE,        # e.g. 1-1 (1-0)
