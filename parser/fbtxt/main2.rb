@@ -12,7 +12,7 @@ require 'sportdb/parser'
 
 txt = <<-TXT
 
-» Group A
+▪ Group A
 
  Fri Jun/14 21:00         Germany   5-1 (3-0)  Scotland     @ München Fußball Arena, München
         (Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.))
@@ -38,7 +38,7 @@ txt = <<-TXT
 ################
 #### more       
 Rapid Wien   0-1  Austria Wien
-Rapid Wien   0-2  Austria Wien    [awarded]
+Rapid Wien   0-3  Austria Wien    [awarded]
 
 Rapid Wien v Austria Wien
 Rapid Wien v Austria Wien 0-3   [awarded]
@@ -58,8 +58,10 @@ TXT
   if errors.size > 0
      puts "!! #{errors.size} parse error(s):"
      pp errors
+  else
+     puts "--  OK - no parse errors found"
   end
-
+ 
 
 puts "bye"
 

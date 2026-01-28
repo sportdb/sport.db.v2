@@ -18,9 +18,11 @@ require_relative 'parser/version'
 require_relative 'parser/lang'
 
 require_relative 'parser/token-score'
+require_relative 'parser/token-score_note'
 require_relative 'parser/token-date'
 require_relative 'parser/token-text'
 require_relative 'parser/token-status'
+require_relative 'parser/token-note'
 require_relative 'parser/token-minute'
 require_relative 'parser/token-prop'    ## team prop(erty) mode (note - must be before token)
 require_relative 'parser/token-geo'

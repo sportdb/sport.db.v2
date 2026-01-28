@@ -282,8 +282,8 @@ Minute      = Struct.new( :m, :offset, :og, :pen )  do
       buf << "#{self.m}"
       buf << "'"
       buf << "+#{self.offset}"  if self.offset 
-      buf << "(og)"   if self.og
-      buf << "(pen)"  if self.pen
+      buf << " (og)"   if self.og
+      buf << " (pen)"  if self.pen
       buf
     end
  

@@ -6,10 +6,6 @@ class Lexer
 ##
 ##  add more variants - why? why not?
 
-### fix - move  SCORE_NOTE_RE to token-score_note!!!
-### fix - move  NOTE_RE  to token-note!!!
-
-
 STATUS_RE = %r{
             \[
       (?:    
@@ -47,6 +43,7 @@ STATUS_RE = %r{
             )
             |
         
+            ###################
             ## opt 2 - short from only (no note/comments)
             (?<status>
                cancelled|canceled|can\.
@@ -72,128 +69,6 @@ STATUS_RE = %r{
       )
     \]
 }ix
-
-
-
-
-###
-## todo/fix - move to token-note.rb (standalone) file 
-
-NOTE_RE = %r{
-    \[ 
-   (?<note>
-     (?:  ##  starting with ___   PLUS requiring more text
-       (?:
-          nb:
-          ##  e.g. [NB: between top-8 of regular season]
-          #        [NB: América, Morelia and Tigres qualified on better record regular season]
-          #        [NB: Celaya qualified on away goals]
-          #        [NB: Alebrijes qualified on away goal]
-          #        [NB: Leones Negros qualified on away goals]
-          #
-          # todo/fix:
-          # add "top-level" NB: version
-          ##   with full (end-of) line note - why? why not?
-          |
-          rescheduled
-          ## e.g.  [rescheduled due to earthquake occurred in Mexico on September 19]
-          |
-          declared
-          ## e.g.  [declared void]
-          |
-          remaining
-          ## e.g. [remaining 79']   
-          ##      [remaining 84'] 
-          ##      [remaining 59']   
-          ##      [remaining 5']
-       )
-      [ ]
-      [^\]]+?    ## slurp all to next ] - (use non-greedy) 
-     )
-   )
-   \] 
-}ix    
-
-
-
-SCORE_NOTE_RE = %r{
-    \[ 
-    (?<score_note>
-      (?:   # plain aet e.g. [aet]
-             aet | a\.e\.t\. |
-             after [ ] extra [ -] time
-       )
-      |
-       (?:  # plain penalties e.g. [3-2 pen]
-             \d{1,2}-\d{1,2}
-                [ ]* (?: p|pen )
-       )
-      |
-        (?:  # plain aet with penalties e.g. [aet; 4-3 pen] or [aet, 4-3p]
-              aet [ ]* [,;]
-                [ ]*
-              \d{1,2}-\d{1,2}
-                [ ]* (?: p|pen )
-         )
-      |
-      (?:
-         ## e.g. Spain wins on penalties
-         ##       1860 München wins on penalties etc.
-         ##   must start with digit 1-9 or letter
-         ##     todo - add more special chars - why? why not?
-         ##     
-               (?:
-                    aet [ ]*   ## allow space here - why? why not
-                       [,;][ ]
-                )?
-           
-              (?:
-              (?:  # opt 1 - no team listed/named - requires score
-                 (?: won|wins? ) [ ]     ## note - allow won,win or wins
-                (?:   ## score
-                   \d{1,2}-\d{1,2}
-                   [ ]
-                ) 
-                on [ ]  (?: pens | penalties |
-                          aggregate  )   
-               )
-              |
-              (?:  # opt 2 - team required; score optional
-                (?:  ## team required
-                      [1-9\p{L}][0-9\p{L} .-]+?    
-                     [ ]
-                 )
-                 (?: won|wins? ) [ ]     ## won/win/wins
-                 (?:   ## score optional
-                    \d{1,2}-\d{1,2}
-                    [ ]
-                  )?            
-                  on [ ] (?:  pens | penalties |
-                              aggregate  )
-             ###  [^\]]*?   ## allow more? use non-greedy
-          )
-        ))
-         |
-         (?:  ## e.g. agg 3-2 etc.
-             agg [ ] \d{1,2}-\d{1,2}
-         )
-         |
-         (?:   ## e.g. agg 4-4, Ajax win on away goals
-              (?:   ## agg 4-4, optional for now - why? why not? 
-                 agg [ ] \d{1,2}-\d{1,2} 
-                 [ ]*[,;][ ]
-               )?
-             (?:  ## team required
-                      [1-9\p{L}][0-9\p{L} .-]+?    
-                     [ ]
-              )
-              (?: won|wins? ) [ ]     # won/win/wins
-              on [ ] away [ ] goals
-         )
-      )   # score_note ref
-    \]
-}ix
-
 
 end  #  class Lexer
 end  # module SportDb

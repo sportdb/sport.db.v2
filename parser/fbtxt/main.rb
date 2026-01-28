@@ -85,19 +85,19 @@ Matchday 3  |  Sun Jun/23 - Wed Jun/26
 ▪ Group A
 Fri Jun/14
    21:00   Germany   5-1 (3-0)  Scotland     @ München
-                (Wirtz 10' Musiala 19' Havertz 45+1' (pen.)  Füllkrug 68' Can 90+3';  
+                (Wirtz 10' Musiala 19' Havertz 45'+1 (pen.)  Füllkrug 68' Can 90'+3;  
                  Rüdiger 87' (o.g.))
 Sat Jun/15
    15.00    Hungary   1-3 (0-2)   Switzerland  @ Köln
                  (Varga 66'; 
-                  Duah 12' Aebischer 45' Embolo 90+3')
+                  Duah 12' Aebischer 45' Embolo 90'+3)
 
 
 ▪ Semi-finals
 Tu July/9 2024
 
   21h00    Netherlands  1-2 (1-1)   England    @ Dortmund
-                  (Simons 7'; Kane 18' (pen.) Watkins 90+1')
+                  (Simons 7'; Kane 18' (pen.) Watkins 90'+1)
 
 
 ▪ Final
@@ -215,7 +215,7 @@ Tue May/1
 
 Wed May/2
   20.45  Roma                 4-2  Liverpool            @ Stadio Olimpico, Rome
-           (Milner 15' (o.g.) Džeko 52' Nainggolan 86', 90+4' (pen.); Mané 9' Wijnaldum 25')
+           (Milner 15' (o.g.) Džeko 52' Nainggolan 86', 90'+4 (pen.); Mané 9' Wijnaldum 25')
 
 ▪ Final
 
@@ -230,8 +230,8 @@ Sat Jun/23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Mo
   (R. Lukaku 45+3' Batshuayi 90')          
   (R. Lukaku 16', 45+3' Batshuayi 90')          
   (R. Lukaku 16' 45+3' Batshuayi 90')          
-  (E. Hazard 6' (pen.), 51' R. Lukaku 16', 45+3' Batshuayi 90'; Bronn 18' Khazri 90+3')
-  (E. Hazard 6' (pen.) 51' R. Lukaku 16' 45+3' Batshuayi 90'; Bronn 18' Khazri 90+3')
+  (E. Hazard 6' (pen.), 51' R. Lukaku 16', 45'+3 Batshuayi 90'; Bronn 18' Khazri 90'+3)
+  (E. Hazard 6' (pen.) 51' R. Lukaku 16' 45'+3 Batshuayi 90'; Bronn 18' Khazri 90'+3)
 
   ## check short-form without minute marker!!
   (E. Hazard 6pen, 51 R. Lukaku 16, 45+3 Batshuayi 90; Bronn 18 Khazri 90+3)
@@ -240,11 +240,11 @@ Sat Jun/23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Mo
 
   ##   note - allow optional commas between players 
   (R. Lukaku 16', Batshuayi 90')          
-  (R. Lukaku 16', 45+3', Batshuayi 90')
+  (R. Lukaku 16', 45'+3, Batshuayi 90')
   
   ## allow break on comma between players - why? why not?
-  (E. Hazard 6' (pen.), 51', R. Lukaku 16', 45+3', 
-    Batshuayi 90'; Bronn 18', Khazri 90+3')
+  (E. Hazard 6' (pen.), 51', R. Lukaku 16', 45'+3, 
+    Batshuayi 90'; Bronn 18', Khazri 90'+3)
         
  ## try "simple" (alt) goal format - goal scorers (players) only
   (E. Hazard,  R. Lukaku,  Batshuayi; Bronn, Khazri)

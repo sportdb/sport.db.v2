@@ -360,13 +360,7 @@ class RaccMatchParser
                  }
              | geo_opts NEWLINE             { result = {}.merge( val[0] ) }
              | geo_opts NOTE NEWLINE        { result = { note: val[1] }.merge( val[0] ) }
-             | geo_opts SCORE_NOTE NEWLINE                            ## note - allow score note after geo too for now 
-                 {
-                    result = { score_note: val[1] }.merge( val[0] )  
-                 }
              | NOTE NEWLINE                 { result = { note: val[0] } }
-#             | SCORE_NOTE NEWLNE            { result = { score_note: val[0]} }
-#             | SCORE_NOTE geo_opts NEWLINE  { result = { score_note: val[0] }.merge( val[1] ) }
              | NEWLINE                      { result = {} }
 
 
@@ -395,38 +389,44 @@ class RaccMatchParser
             ## note - does NOT include SCORE; use SCORE terminal "in-place" if needed
   
 
-         score  :  SCORE | SCORE_MORE     ## support basic e.g 1-1
-                                          ##   and "more" format  1-1 (0-1) or 2-1 a.e.t. etc.
+         score  : SCORE       ## support basic e.g 1-1
+                | SCORE_MORE   ##   and "more" format  1-1 (0-1) or 2-1 a.e.t. etc.
 
-         score_note_opt  :  /* empty */   { result = {} }
-                         |  SCORE_NOTE    { result = { score_note: val[0] } }
-
-
-        match_result :  TEAM  score  TEAM   score_note_opt
+      
+        ## note - "inline" SCORE_NOTE-style is NOT allowed/supported
+        ##                 only basic (SCORE) and more (SCORE_MORE)
+        match_result :  TEAM  score  TEAM      
                          {
                            trace( "REDUCE => match_result : TEAM score TEAM" )
                            result = { team1: val[0],
                                       team2: val[2],
                                       score: val[1][1]
-                                    }.merge( val[3] )   
+                                    }   
                            ## pp result
                         }
-                     |  match_fixture  score  score_note_opt
+                     |  match_fixture  score
                         {
                           trace( "REDUCE  => match_result : match_fixture score" )
-                          result = { score: val[1][1] }.merge( val[0] ).merge( val[2] )  
+                          result = { score: val[1][1] }.merge( val[0] )  
                           ## pp result
+                        }
+                     |  match_fixture  SCORE_NOTE     ## e.g. 1-1 [aet, 4-5 on penalties]
+                        {
+                           ## todo/fix - pass along (experimental) SCORE_NOTE!!
+                           trace( "REDUCE  => match_result : match_fixture SCORE_NOTE" )
+                           result = {}.merge( val[0] )  
+                           ## pp result
                         }
                                         
    
         #######
-        ## e.g. (Wirtz 10' Musiala 19' Havertz 45+1' (pen.)  Füllkrug 68' Can 90+3';  
-        ##      Rüdiger 87' (o.g.))
+        ## e.g. (Wirtz 10' Musiala 19' Havertz 45'+1 (pen)  Füllkrug 68' Can 90'+3;  
+        ##      Rüdiger 87' (og))
         ##         or
         ##      (Wirtz 10 Musiala 19 Havertz 45+1p Füllkrug 68 Can 90+3;  
         ##        Rüdiger 87og)
         ##
-        ##    (Higuaín 2', 9' (pen.); Kane 35' Eriksen 71')
+        ##    (Higuaín 2', 9' (pen); Kane 35' Eriksen 71')
         ##      or
         ##    (Higuaín 2, 9p; Kane 35 Eriksen 71)
  
@@ -481,8 +481,33 @@ class RaccMatchParser
      #
      #    todo: add  (pen.) or (og.) too - why? why not?
      #    todo:  find some real-world examples
-     #           and add goal count e.g.   R. Lukaku (2) or such - why? why not?
+     #           and add goal count e.g.   R. Lukaku 2 or such - why? why not?
      #          what syntax to use use for one (regular) goal and one penalty, for example?
+     #
+     #    (Higuaín x2 (1 pen); Kane, Eriksen)
+     #    (Higuaín x2; Kane (pen), Eriksen (og))
+     #    (Higuaín ×2)
+     #      or
+     #    (Higuaín 2x (1 pen); Kane, Eriksen)    ???
+     #    (Higuaín 2x; Kane (pen), Eriksen (og))  ???
+     #      or
+     #    (Higuaín (2/1 pen); Kane, Eriksen)    ???
+     #    (Higuaín (2/ 1 pen); Kane, Eriksen)    ???
+     #    (Higuaín (2); Kane (pen), Eriksen (og))  ???
+     #
+     #    (Higuaín (2); Kane, Eriksen)  ???
+     #    (Higuaín; Kane (2), Eriksen)  ???
+     #
+     #   note:
+     #    (Higuaín 2)    is ambigious
+     #      2 might be    MINUTE or GOAL_COUNT!!!
+     #    (> Higuaín 2)
+     #    (! Higuaín 2)
+     #    (* Higuaín 2)  - use goal format marker */?/!/_ or such - why? why not?
+     #                         if ambigous ??
+     #    (? Higuaín 2 (1 pen); Kane, Eriksen)
+     #    (_ Higuaín 2 (1 pen); Kane, Eriksen)
+
 
         goal_lines_alt : goal_lines_alt_body NEWLINE
                       {

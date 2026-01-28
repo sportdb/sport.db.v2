@@ -49,10 +49,9 @@ read into structs that can than get exported to JSON or CSV.
         - remove list support
         - remove ord number e.g. (1), (42), etc.
         - ...              
-
 - [ ]  add back alternate goal line format (e.g  0-1 Milner 15', 1-1 Mané 12' etc.)
        - note - make minutes optional e.g. ( 0-1 Milner, 1-1 Mané)
-- [ ]  goal line (no minutes) - check for  (o.g.) and (pen.) "real-world" samples and such if in use?
-
-
+- [ ]   simplify v (versus) - only allow `v` (remove `vs`)
+- [ ]   "fix" alternatve goal line format ( allow (og) and (pen) plus 1,2,3 for score counts, plus 2 (1 pen) or 3 (1 pen) or such for score count PLUS penalty)
+  - [ ]  goal line (no minutes) - check for  (o.g.) and (pen.) "real-world" samples and such if in use?
 

@@ -43,30 +43,32 @@ Rapid Wien - Austria Wien   [cancelled]   @ Gerhard-Hanappi-Stadion, Wien
 
 Rivière du Rempart  2-3  Petite Rivière Noire    @ New George V Stadium, Curepipe
  
-» Final
+▪ Final
 Sun Jul/19
   Petite Rivière Noire  2-0  Pamplemousses    @ New George V Stadium, Curepipe
 
   Petite Rivière Noire v Pamplemousses    @ New George V Stadium, Curepipe
-  Petite Rivière Noire vs Pamplemousses    @ New George V Stadium, Curepipe
 
 ###
 #  more round names from australia
-» Elimination finals
+▪ Elimination finals
 Fri May/3
   Melbourne Victory         3-1  Wellington Phoenix
 Sun May/5
   Adelaide United           1-0 a.e.t.  Melbourne City FC
 
-» Semi-finals
+▪ Semi-finals
 Fri May/10
   Perth Glory              5-4 pen. 3-3 a.e.t.  Adelaide United
 Sun May/12
   Sydney FC                 6-1  Melbourne Victory
 
-» Grand Final
+▪ Grand Final
 Sun May/19
   Perth Glory              1-4 pen. 0-0 a.e.t.  Sydney FC
+
+  Perth Glory  v Sydney FC   1-4 pen. 0-0 a.e.t.  
+  Perth Glory  v Sydney FC   0-0 aet, 1-4 pen   
 
 TXT
 
@@ -79,6 +81,8 @@ TXT
   if errors.size > 0
      puts "!! #{errors.size} parse error(s):"
      pp errors
+  else
+     puts "--  OK - no parse errors found"
   end
 
 
