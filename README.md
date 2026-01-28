@@ -31,7 +31,7 @@ read into structs that can than get exported to JSON or CSV.
 
 - [x]  add heading1/2/3 etc. to parser rules
 - [x]  remove (optional) \[\] from date
-- [ ]  remove support for "standalone weekday and weekday+hour only (requires date!)
+- [x]  remove support for "standalone weekday and weekday+hour only (requires date!)
 - [x]   change goal format - MUST start with and enclosed by (); 
            change minutes to goal minutes and 
            include optional  o.g., pen. WITHOUT enclosing ()!!!
@@ -43,6 +43,7 @@ read into structs that can than get exported to JSON or CSV.
 
 
 - [ ]  check minute format (note - BBC uses  `45'+2` instead of `45+2'` - support or change - why? why not?)
+       yes, change to the BBC style - use `45'+2`  !!!
 - [ ]  clean-up lexer / tokens / regexes   
         - remove (standalone) weekday for now
         - remove list support

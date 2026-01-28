@@ -44,10 +44,23 @@ GOAL_MINUTE_RE = %r{
        (?<=[ (])	 # positive lookbehind for space or opening ( e.g. (61') required
                      #    todo - add more lookbehinds e.g.  ,) etc. - why? why not?
              (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
-                   (?: \+
-                     (?<value2>\d{1,3})   
-                   )?           
-              '?    ## - try optional!!! -- was MUST have minute marker FOR NOW!!!!
+                (?:
+                     ## with minute marker inline
+                     (?:
+                         '?    ## optional minute marker
+                         (?: \+
+                            (?<value2>\d{1,3})   
+                         )?          
+                     )
+                     |
+                     (?:
+                         (?: \+
+                            (?<value2>\d{1,3})   
+                         )?          
+                         '  ## "old-style/legacy" minute marker at the end e.g. 45+1'
+                            ##    use 45'+1 (or 45+1) instead!!!                
+                     )
+                )   
         ## note - add goal minute qualifiers here inline!!! 
         (?:
             (?: [ ]? (?<og>   (?: \((?:og|o\.g\.)\))   ## allow (og)

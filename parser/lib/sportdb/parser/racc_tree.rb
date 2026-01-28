@@ -280,8 +280,8 @@ Minute      = Struct.new( :m, :offset, :og, :pen )  do
     def to_s
       buf = String.new
       buf << "#{self.m}"
-      buf << "+#{self.offset}"  if self.offset 
       buf << "'"
+      buf << "+#{self.offset}"  if self.offset 
       buf << "(og)"   if self.og
       buf << "(pen)"  if self.pen
       buf

@@ -110,7 +110,7 @@ DAY_MAP   = build_map( DAY_LINES, downcase: true )
 
 
 
-## todo - add more date variants !!!!
+## todo - add more date variants !!!! why? why not?
 
 # e.g. Fri Aug/9  or Fri Aug 9
 DATE_I_RE = %r{
