@@ -8,11 +8,13 @@ class Lexer
     #  english helpers (penalty, extra time, ...)
     ##   note - p must go last (shortest match)
     #     pso = penalty shootout
-    P_EN  =  '(?: pso | pen\.? | p\.? )'     # e.g. p., p, pen, pen., PSO, etc.
+    ###  - note - remove PSO for now (may add later back) - why? why not? 
+    P_EN  =  '(?: pen\.? | p\.? )'     # e.g. p., p, pen, pen., etc.
     ET_EN =  '(?: aet | a\.e\.t\.? )'     # note: make last . optional (e.g a.e.t) allowed too
-
-
+    AGG_EN = '(?: agg\.?  )'   ## aggregate e..g  4-4 agg etc.
   
+
+    
     ## regex score helpers
     ##    note - MUST double escape \d e.g. \\d!!!   if not "simple" string (e.g. '' but %Q<>)
     SCORE_P   = %Q<  (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})

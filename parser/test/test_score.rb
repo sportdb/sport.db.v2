@@ -7,7 +7,7 @@ require_relative 'helper'
 
 class TestScore < Minitest::Test
 
-SCORE_MORE_RE  = SportDb::Lexer::SCORE_MORE_RE
+SCORE_FULL_RE  = SportDb::Lexer::SCORE_FULL_RE
 
 
 
@@ -65,7 +65,7 @@ def test_score
   TESTS.each do |text, exp_score|
   
      puts "==> #{text}"
-     m=SCORE_MORE_RE.match( text )
+     m=SCORE_FULL_RE.match( text )
 
      if m
        score = {}

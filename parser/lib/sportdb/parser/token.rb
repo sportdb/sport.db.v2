@@ -53,13 +53,14 @@ BASICS_RE = %r{
 
 
 RE = Regexp.union(
-                    STATUS_RE,
+                    STATUS_RE,   ## match status e.g. [cancelled], etc.
                     SCORE_NOTE_RE,
                     NOTE_RE,
                     DURATION_RE,  # note - duration MUST match before date
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
                     SCORE_FULL_RE, 
+                    SCORE_FULLER_RE,
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
                     BASICS_RE, 
                    TEXT_RE,

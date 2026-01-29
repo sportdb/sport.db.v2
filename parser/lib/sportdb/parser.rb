@@ -18,6 +18,7 @@ require_relative 'parser/version'
 require_relative 'parser/lang'
 
 require_relative 'parser/token-score'
+require_relative 'parser/token-score_fuller'
 require_relative 'parser/token-score_note'
 require_relative 'parser/token-date'
 require_relative 'parser/token-text'

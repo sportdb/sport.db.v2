@@ -266,7 +266,28 @@ Sat Jun/23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Mo
                               (Palmer 22, 30, Joao Pedro 43)
 
 
+##################
+## try fuller score style  (note - no half-time (ht) score possible/allowed here)
 
+Rapid v Austria  3-2 (aet)
+Rapid v Austria  3-2 (a.e.t.)
+
+Rapid v Austria  3-3 (aet, win 5-2 on pens)
+Rapid v Austria  3-3 (aet, 5-2 on pens)
+Rapid v Austria  3-3 (aet, 5-2 pen)
+Rapid v Austria  3-3 (aet, 5-2p)
+Rapid v Austria  3-3 (a.e.t., 5-2 pen.)
+
+Rapid v Austria  3-3 (win 5-2 on pens)
+Rapid v Austria  3-3 (5-2 on pens)
+Rapid v Austria  3-3 (5-2 pen)
+Rapid v Austria  3-3 (5-2 pen.)
+Rapid v Austria  3-3 (5-2p)
+
+Rapid v Austria  3-2 (win 4-5 on aggregate)
+Rapid v Austria  3-2 (4-5 on aggregate)
+Rapid v Austria  3-2 (4-5 agg)
+Rapid v Austria  3-2 (4-5 agg.)
 
 
 TXT

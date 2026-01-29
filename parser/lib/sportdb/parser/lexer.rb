@@ -642,6 +642,22 @@ def _tokenize_line( line )
 
             ## note - for debugging keep (pass along) "literal" score
             [:SCORE_FULL, [m[:score_full], score]]
+        elsif m[:score_fuller]
+               ## note - no half-time (ht) in fuller format-style!!!
+              score = {}
+              score[:p] = [m[:p1].to_i(10),
+                           m[:p2].to_i(10)]  if m[:p1] && m[:p2]
+              score[:et] = [m[:et1].to_i(10),
+                            m[:et2].to_i(10)]  if m[:et1] && m[:et2]
+              score[:ft] = [m[:ft1].to_i(10),
+                            m[:ft2].to_i(10)]  if m[:ft1] && m[:ft2]
+              score[:agg] = [m[:agg1].to_i(10),
+                             m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
+              ## add aet flag true/false
+              score[:aet] = true   if m[:aet]
+
+            ## note - for debugging keep (pass along) "literal" score
+            [:SCORE_FULLER, [m[:score_fuller], score]]
         elsif m[:score]
             score = {}
              ##  note - score is "generic"

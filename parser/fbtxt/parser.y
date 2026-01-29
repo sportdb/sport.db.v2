@@ -415,6 +415,13 @@ class RaccMatchParser
                           result = { score: val[1][1] }.merge( val[0] )  
                           ## pp result
                         }
+                     ## note - SCORE_FULLER NOT supported inline!!
+                     ##              only after  Team1 v Team2 !!
+                     |  match_fixture SCORE_FULLER
+                        {
+                          ## remove aet flag - why? why not?
+                          result = { score: val[1][1] }.merge( val[0] )  
+                        }
                      |  match_fixture  SCORE_NOTE     ## e.g. 1-1 [aet, 4-5 on penalties]
                         {
                            ## todo/fix - pass along (experimental) SCORE_NOTE!!
