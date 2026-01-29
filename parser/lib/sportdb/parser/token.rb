@@ -59,8 +59,8 @@ RE = Regexp.union(
                     DURATION_RE,  # note - duration MUST match before date
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
-                    SCORE_MORE_RE, 
-                    SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_MORE_RE!!!
+                    SCORE_FULL_RE, 
+                    SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
                     BASICS_RE, 
                    TEXT_RE,
                    ANY_RE,

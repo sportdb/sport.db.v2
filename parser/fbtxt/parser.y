@@ -96,12 +96,12 @@ class RaccMatchParser
 
         penalty         :  SCORE PROP_NAME 
                               {
-                                 result = Penalty.new( score: val[0][1],
+                                 result = Penalty.new( score: val[0][1][:score],
                                                        name: val[1] )
                               }
                         |  SCORE PROP_NAME ENCLOSED_NAME
                                {
-                                 result = Penalty.new( score: val[0][1],
+                                 result = Penalty.new( score: val[0][1][:score],
                                                        name: val[1],
                                                        note: val[2] )
                                }
@@ -389,8 +389,13 @@ class RaccMatchParser
             ## note - does NOT include SCORE; use SCORE terminal "in-place" if needed
   
 
-         score  : SCORE       ## support basic e.g 1-1
-                | SCORE_MORE   ##   and "more" format  1-1 (0-1) or 2-1 a.e.t. etc.
+         score  : SCORE       ## support basic ("generic") e.g 1-1
+                    {
+                       ## note - assume full-time (ft) score
+                       ##               that is, change "generic" :score to :ft!!
+                       result = [val[0][0], { ft: val[0][1][:score] }]
+                    }
+                | SCORE_FULL   ##   and full format  1-1 (0-1) or 2-1 a.e.t. etc.
 
       
         ## note - "inline" SCORE_NOTE-style is NOT allowed/supported

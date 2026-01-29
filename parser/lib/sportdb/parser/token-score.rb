@@ -29,7 +29,7 @@ class Lexer
     ##      3-4 pen.   2-2 a.e.t.
     ##               2-2 a.e.t.
     SCORE__P_ET__RE = %r{
-        (?<score_more>
+        (?<score_full>
            \b
             (?: #{SCORE_P} [ ]+ 
              )?             ## note: make penalty (P) score optional for now
@@ -45,7 +45,7 @@ class Lexer
     ##           2-2 a.e.t., 3-4 pen. 
     ##           2-2 a.e.t.  3-4 pen.  ## or without comma separator - why? why not?   
     SCORE__ET_P__RE = %r{
-        (?<score_more>
+        (?<score_full>
            \b
             #{SCORE_ET}  
                (?: [ ]*,[ ]* | [ ]+ )
@@ -58,7 +58,7 @@ class Lexer
     ### special case   - full time with penalties
     ##          2-2, 3-4 pen.
     SCORE__FT_P__RE = %r{
-        (?<score_more>
+        (?<score_full>
            \b
             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})  
                 [ ]*,[ ]*    ## note - comma required!!! 
@@ -70,7 +70,7 @@ class Lexer
     ##  note: allow SPECIAL with penalty only
     ##      3-4 pen.  or 3-4p etc.
     SCORE__P__RE = %r{
-        (?<score_more>
+        (?<score_full>
            \b
              #{SCORE_P}  
              #{SCORE_LOOKAHEAD}
@@ -84,7 +84,7 @@ class Lexer
    ##   3-4 pen. (2-2, 1-1, 1-1)            
          
    SCORE__P_ET_FT_HT_V2__RE = %r{
-          (?<score_more>
+          (?<score_full>
                \b
                 #{SCORE_P} [ ]+       
                    \(
@@ -103,7 +103,7 @@ class Lexer
 
     # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen. 
     SCORE__ET_FT_HT_P__RE = %r{
-          (?<score_more>
+          (?<score_full>
                \b
                #{SCORE_ET} [ ]+
                    \(
@@ -133,7 +133,7 @@ class Lexer
     ##               2-2 a.e.t. (1-1)
 
     SCORE__P_ET_FT_HT__RE = %r{
-          (?<score_more>
+          (?<score_full>
                \b
                (?:
                   #{SCORE_P} [ ]+
@@ -158,7 +158,7 @@ class Lexer
     ##   special case for case WITHOUT extra time!!
     ##     same as above (but WITHOUT extra time and pen required)
     SCORE__P_FT_HT__RE = %r{
-             (?<score_more>
+             (?<score_full>
                 \b
                #{SCORE_P} [ ]+
         \(
@@ -180,7 +180,7 @@ class Lexer
     ##########
     ## e.g. 2-1 (1-1)
     SCORE__FT_HT__RE = %r{
-            (?<score_more>
+            (?<score_full>
               \b
               (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
                    [ ]+ \( [ ]*
@@ -190,24 +190,14 @@ class Lexer
              )}ix    ## todo/check:  remove loakahead assertion here - why require space?
                     ## note: \b works only after non-alphanum e.g. )
 
-    #####
-    ##      2-1
-    SCORE__FT__RE = %r{
-            (?<score>
-              \b
-              (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
-              \b
-             )}ix  
 
 
              
 #############################################
 # map tables
 #  note: order matters; first come-first matched/served
-#
-## check - find a better name for SCORE_MORE - SCORE_EX, SCORE_BIG, or ___ - why? why not?
 
-SCORE_MORE_RE = Regexp.union(
+SCORE_FULL_RE = Regexp.union(
   SCORE__P_ET_FT_HT_V2__RE,  # e.g. 5-1 pen. (2-2, 1-1, 1-0)  
   SCORE__ET_FT_HT_P__RE,    # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen. 
   SCORE__P_ET_FT_HT__RE,    # e.g. 5-1 pen. 2-2 a.e.t. (1-1, 1-0)
@@ -222,7 +212,25 @@ SCORE_MORE_RE = Regexp.union(
   ### SCORE__FT__RE,           # e.g. 1-1  -- note - must go last!!!
 )
 
-SCORE_RE   =   SCORE__FT__RE
+#####
+##      2-1
+###
+###  note - was SCORE__FT__RE
+###           changed to "generic" SCORE_RE
+###                and
+##             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2}) 
+##      changed
+##             (?<score1>\d{1,2}) - (?<score2>\d{1,2}) 
+##                to 
+##             pattern match not necessarily the full-time (ft) scoreline!!!
+##    - pattern also used for goal seq(uence) e.g. 1-0 Kane, 1-1 Johnson
+SCORE_RE  = %r{
+            (?<score>
+              \b
+               (?<score1>\d{1,2}) - (?<score2>\d{1,2})
+              \b
+             )}ix  
+
   
 
 end  #  class Lexer

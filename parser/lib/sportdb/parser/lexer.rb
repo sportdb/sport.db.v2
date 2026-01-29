@@ -628,7 +628,7 @@ def _tokenize_line( line )
         elsif m[:num]   ## fix - change to ord (for ordinal number!!!)
               ## note -  strip enclosing () and convert to integer
              [:ORD, [m[:num], { value: m[:value].to_i(10) } ]]
-        elsif m[:score_more]
+        elsif m[:score_full]
               score = {}
               ## check for pen
               score[:p] = [m[:p1].to_i(10),
@@ -641,15 +641,17 @@ def _tokenize_line( line )
                             m[:ht2].to_i(10)]  if m[:ht1] && m[:ht2]
 
             ## note - for debugging keep (pass along) "literal" score
-            [:SCORE_MORE, [m[:score_more], score]]
+            [:SCORE_FULL, [m[:score_full], score]]
         elsif m[:score]
             score = {}
-            ## must always have ft for now e.g. 1-1 or such
-            ###  change to (generic) score from ft -
-            ##     might be score a.e.t. or such - why? why not?
-            score[:ft] = [m[:ft1].to_i(10),
-                          m[:ft2].to_i(10)]  
-          ## note - for debugging keep (pass along) "literal" score
+             ##  note - score is "generic"
+            ##      might be full-time (ft) or
+            ##         after extra-time (aet) or such
+            ##         or even undecided/unknown
+            ##    thus, use score1/score2 and NOT ft1/ft2
+            score[:score] = [m[:score1].to_i(10),
+                             m[:score2].to_i(10)]  
+         ## note - for debugging keep (pass along) "literal" score
           [:SCORE, [m[:score], score]]
       elsif m[:minute]
               minute = {}
