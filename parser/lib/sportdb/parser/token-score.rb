@@ -9,6 +9,12 @@ class Lexer
     ##   note - p must go last (shortest match)
     #     pso = penalty shootout
     ###  - note - remove PSO for now (may add later back) - why? why not? 
+    #
+    #  todo/fix/clean-up - keep it simple -  remove optional trailing dot (.)
+    #                       from pen., p., agg. etc. - why? why not?
+    #                        always use (simply) pen, p, agg 
+    #                      (also) remove  a.e.t. / a.e.t option - why? why not?
+    #
     P_EN  =  '(?: pen\.? | p\.? )'     # e.g. p., p, pen, pen., etc.
     ET_EN =  '(?: aet | a\.e\.t\.? )'     # note: make last . optional (e.g a.e.t) allowed too
     AGG_EN = '(?: agg\.?  )'   ## aggregate e..g  4-4 agg etc.

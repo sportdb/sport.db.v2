@@ -55,3 +55,12 @@ read into structs that can than get exported to JSON or CSV.
 - [ ]   "fix" alternatve goal line format ( allow (og) and (pen) plus 1,2,3 for score counts, plus 2 (1 pen) or 3 (1 pen) or such for score count PLUS penalty)
   - [ ]  goal line (no minutes) - check for  (o.g.) and (pen.) "real-world" samples and such if in use?
 
+- [ ]   add  agg to "standard" full score format e.g.
+           Rapid v Austria  3-2, 4-5 agg  or
+           Rapid v Austria  3-2 (1-1), 4-5 agg   -- with semi-colon - why? why not?
+           - check aggregate with aet, aet+pen, away goals, etc. !!!!!  
+
+- [ ]  philosophical -   change score: { et: [] } to score: { aet: [] } - why? why not?
+          - keep et: [] for extra time score only (NOT incl. full-time)
+                      that is,  ft+et = aet  e.g.  [1,1] + [1,0] = [2,1]
+                      
