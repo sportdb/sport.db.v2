@@ -389,13 +389,9 @@ class RaccMatchParser
             ## note - does NOT include SCORE; use SCORE terminal "in-place" if needed
   
 
-         score  : SCORE       ## support basic ("generic") e.g 1-1
-                    {
-                       ## note - assume full-time (ft) score
-                       ##               that is, change "generic" :score to :ft!!
-                       result = [val[0][0], { ft: val[0][1][:score] }]
-                    }
-                | SCORE_FULL      ##   and full format  1-1 (0-1) or 2-1 a.e.t. etc.
+         score_full_or_fuller   
+                : SCORE_FULL      ## full format    1-1 (0-1)
+                                  ##             or 2-1 a.e.t. etc.
                 | SCORE_FULLER    ## note - SCORE_FULLER NOT supported inline!!
                                   ##       only after  Team1 v Team2 !!
                    
@@ -406,12 +402,11 @@ class RaccMatchParser
                          {
                            trace( "REDUCE => match_result : TEAM SCORE TEAM" )
  
-                          ## note - assume full-time (ft) score
-                          ##               that is, change "generic" :score to :ft!!
-                     
+                          ## note - use/keep generic score (as array!! NOT hash!!!)
+                          
                            result = { team1: val[0],
                                       team2: val[2],
-                                      score: { ft: val[1][1][:score] }
+                                      score: val[1][1][:score]  ## note - as array e.g. [1,1] !!
                                     }   
                            ## pp result
                         }
@@ -435,7 +430,15 @@ class RaccMatchParser
                                       score: val[1][1]
                                     }                          
                          } 
-                     |  match_fixture  score
+                     |  match_fixture  SCORE   ## note - keep "plain/generic" score separate rule
+                        {
+                          trace( "REDUCE  => match_result : match_fixture SCORE" )
+                          ## note - use/keep generic score (as array!! NOT hash!!!)
+                          result = { score: val[1][1][:score]  ## note - as array e.g. [1,1] !! 
+                                   }.merge( val[0] )  
+                          ## pp result
+                        }
+                     |  match_fixture  score_full_or_fuller
                         {
                           trace( "REDUCE  => match_result : match_fixture score" )
                           result = { score: val[1][1] }.merge( val[0] )  
