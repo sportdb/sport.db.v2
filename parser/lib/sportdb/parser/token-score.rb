@@ -16,6 +16,8 @@ class Lexer
     #                      (also) remove  a.e.t. / a.e.t option - why? why not?
     #
     P_EN  =  '(?: pen\.? | p\.? )'     # e.g. p., p, pen, pen., etc.
+
+    ## fix - change ET_EN  to AET_EN !!!
     ET_EN =  '(?: aet | a\.e\.t\.? )'     # note: make last . optional (e.g a.e.t) allowed too
     AGG_EN = '(?: agg\.?  )'   ## aggregate e..g  4-4 agg etc.
   
@@ -23,6 +25,13 @@ class Lexer
     
     ## regex score helpers
     ##    note - MUST double escape \d e.g. \\d!!!   if not "simple" string (e.g. '' but %Q<>)
+
+    ##
+    ##  fix - change SCORE_P to SCORE_FULL_P
+    ##               SCORE_ET to SCORE_FULL_ET
+    ##
+    ##   (re)use SCORE_P, SCORE_ET for score only part!!!
+
     SCORE_P   = %Q<  (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})
                           [ ]? #{P_EN}
                   >
