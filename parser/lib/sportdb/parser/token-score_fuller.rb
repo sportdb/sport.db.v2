@@ -113,17 +113,31 @@ SCORE_FULLER_MORE__ET__RE = %r{
 #         4-4 (aet, 3-5 on pens)
 #         4-4 (aet, 3-5 pen)
 #         4-4 (a.e.t., 3-5 pen.)
+#            or
+#         Team A  4-4  Team B  (aet, win 3-5 on pens) 
+#         Team A  4-4  Team B  (aet, 3-5 on pens)
+#         Team A  4-4  Team B  (aet, 3-5 pen)
+#         Team A  4-4  Team B  (a.e.t., 3-5 pen.)
+
+SCORE_FULLER__ET_P = %Q<
+             \\(
+                (?<aet> #{ET_EN})
+                 [ ]*,[ ]*
+                 #{SCORE_FULLER_P_WIN}
+             \\)
+>
 
 SCORE_FULLER__ET_P__RE  =  %r{
         (?<score_fuller>
            \b   
             (?<et1>\d{1,2}) - (?<et2>\d{1,2})
             [ ]+
-             \(
-                (?<aet> #{ET_EN})
-                 [ ]*,[ ]*
-                 #{SCORE_FULLER_P_WIN}
-             \)
+             #{SCORE_FULLER__ET_P}
+        )}ix
+
+SCORE_FULLER_MORE__ET_P__RE = %r{
+        (?<score_fuller_more>
+             #{SCORE_FULLER__ET_P}
         )}ix
 
 
@@ -131,6 +145,16 @@ SCORE_FULLER__ET_P__RE  =  %r{
 #         4-4 (win 3-5 on pens)
 #         4-4 (3-5 pen)
 #         4-4 (3-5p)
+#           or
+#       Team A  4-4  Team B (win 3-5 on pens)
+#       Team A  4-4  Team B (3-5 pen)
+#       Team A  4-4  Team B (3-5p)
+
+SCORE_FULLER__FT_P  =  %Q<
+             \\(
+                 #{SCORE_FULLER_P_WIN}
+             \\)
+>
 
 SCORE_FULLER__FT_P__RE  =  %r{
         (?<score_fuller>
@@ -142,6 +166,12 @@ SCORE_FULLER__FT_P__RE  =  %r{
              \)
         )}ix
 
+SCORE_FULLER_MORE__FT_P__RE = %r{
+        (?<score_fuller_more>
+             #{SCORE_FULLER__FT_P}
+        )}ix
+
+
 #####################
 #   3-2 (win 4-5 on aggregate)
 #   3-2 (4-5 on aggregate)
@@ -151,36 +181,53 @@ SCORE_FULLER__FT_P__RE  =  %r{
 #     or  
 #   3-2 (agg 4-5)
 
+SCORE_FULLER__FT_AGG  =  %Q<
+             \\(
+                 #{SCORE_FULLER_AGG_WIN}
+             \\)
+>
 
 SCORE_FULLER__FT_AGG__RE  =  %r{
         (?<score_fuller>
            \b   
             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
             [ ]+
-             \(
-                 #{SCORE_FULLER_AGG_WIN}
-             \)
+             #{SCORE_FULLER__FT_AGG}
         )}ix
+
+SCORE_FULLER_MORE__FT_AGG__RE = %r{
+        (?<score_fuller_more>
+             #{SCORE_FULLER__FT_AGG}
+        )}ix
+
 
 
 #####################
 #   2-1 (aet, 3-3 on aggregate, win 5-2 on pens)
 #   2-1 (aet, 3-3 agg, 5-2 pen.)
 
-SCORE_FULLER__ET_AGG_P__RE  =  %r{
-        (?<score_fuller>
-           \b   
-            (?<et1>\d{1,2}) - (?<et2>\d{1,2})
-            [ ]+
-             \(
+SCORE_FULLER__ET_AGG_P  =  %Q<
+             \\(
                 (?<aet> #{ET_EN})
                     [ ]*,[ ]*
                     #{SCORE_FULLER_AGG}  
                     [ ]*,[ ]*
                     #{SCORE_FULLER_P_WIN}                     
-             \)
+             \\)
+>
+
+SCORE_FULLER__ET_AGG_P__RE  =  %r{
+        (?<score_fuller>
+           \b   
+            (?<et1>\d{1,2}) - (?<et2>\d{1,2})
+            [ ]+
+             #{SCORE_FULLER__ET_AGG_P}
         )}ix
 
+SCORE_FULLER_MORE__ET_AGG_P__RE = %r{
+        (?<score_fuller_more>
+             #{SCORE_FULLER__ET_AGG_P}
+        )}ix
 
 
 #############################################
@@ -188,11 +235,19 @@ SCORE_FULLER__ET_AGG_P__RE  =  %r{
 #  note: order matters - first come-first matched/served
 
 SCORE_FULLER_RE = Regexp.union(
-  SCORE_FULLER__ET_P__RE,     ##  e.g.  2-2 (aet, win 5-3 on pens)
-  SCORE_FULLER__ET__RE,       ##  e.g.  2-3 (aet)
-  SCORE_FULLER__FT_P__RE,     ##  e.g.  2-2 (win 5-3 on pens)
-  SCORE_FULLER__FT_AGG__RE,   ##  e.g.  2-3 (win 5-4 on aggregate)
-  SCORE_FULLER__ET_AGG_P__RE, ##  e.g.  2-1 (aet, 3-3 on aggregate, win 5-2 on pens)
+  SCORE_FULLER__ET_P__RE,     ## e.g.  2-2 (aet, win 5-3 on pens)
+  SCORE_FULLER__ET__RE,       ## e.g.  2-3 (aet)
+  SCORE_FULLER__FT_P__RE,     ## e.g.  2-2 (win 5-3 on pens)
+  SCORE_FULLER__FT_AGG__RE,   ## e.g.  2-3 (win 5-4 on aggregate)
+  SCORE_FULLER__ET_AGG_P__RE, ## e.g.  2-1 (aet, 3-3 on aggregate, win 5-2 on pens)
+)
+
+SCORE_FULLER_MORE_RE = Regexp.union(
+  SCORE_FULLER_MORE__ET_P__RE,     ## e.g. (aet, win 5-3 on pens)
+  SCORE_FULLER_MORE__ET__RE,       ## e.g. (aet)
+  SCORE_FULLER_MORE__FT_P__RE,     ## e.g. (win 5-3 on pens)
+  SCORE_FULLER_MORE__FT_AGG__RE,    ## e.g. (win 5-4 on aggregate)
+  SCORE_FULLER_MORE__ET_AGG_P__RE,  ## e.g. (aet, 3-3 on aggregate, win 5-2 on pens)
 )
 
 

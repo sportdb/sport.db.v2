@@ -395,32 +395,51 @@ class RaccMatchParser
                        ##               that is, change "generic" :score to :ft!!
                        result = [val[0][0], { ft: val[0][1][:score] }]
                     }
-                | SCORE_FULL   ##   and full format  1-1 (0-1) or 2-1 a.e.t. etc.
-
+                | SCORE_FULL      ##   and full format  1-1 (0-1) or 2-1 a.e.t. etc.
+                | SCORE_FULLER    ## note - SCORE_FULLER NOT supported inline!!
+                                  ##       only after  Team1 v Team2 !!
+                   
       
         ## note - "inline" SCORE_NOTE-style is NOT allowed/supported
         ##                 only basic (SCORE) and more (SCORE_MORE)
-        match_result :  TEAM  score  TEAM      
+        match_result :  TEAM  SCORE  TEAM      
                          {
-                           trace( "REDUCE => match_result : TEAM score TEAM" )
+                           trace( "REDUCE => match_result : TEAM SCORE TEAM" )
+ 
+                          ## note - assume full-time (ft) score
+                          ##               that is, change "generic" :score to :ft!!
+                     
                            result = { team1: val[0],
                                       team2: val[2],
-                                      score: val[1][1]
+                                      score: { ft: val[1][1][:score] }
                                     }   
                            ## pp result
                         }
+                     | TEAM SCORE TEAM SCORE_FULLER_MORE
+                          {
+                            trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
+                            score = if val[3][1][:aet]  ## check aet flag present? 
+                                       { et: val[1][1][:score] }
+                                    else   ## assume full-time (ft)
+                                       { ft: val[1][1][:score] }
+                                    end 
+                           result = {  team1: val[0],
+                                      team2: val[2],
+                                      score: score.merge( val[3][1] )
+                                    }
+                          }
+                     | TEAM SCORE_FULL TEAM
+                         {
+                           result = { team1: val[0],
+                                      team2: val[2],
+                                      score: val[1][1]
+                                    }                          
+                         } 
                      |  match_fixture  score
                         {
                           trace( "REDUCE  => match_result : match_fixture score" )
                           result = { score: val[1][1] }.merge( val[0] )  
                           ## pp result
-                        }
-                     ## note - SCORE_FULLER NOT supported inline!!
-                     ##              only after  Team1 v Team2 !!
-                     |  match_fixture SCORE_FULLER
-                        {
-                          ## remove aet flag - why? why not?
-                          result = { score: val[1][1] }.merge( val[0] )  
                         }
                      |  match_fixture  SCORE_NOTE     ## e.g. 1-1 [aet, 4-5 on penalties]
                         {

@@ -150,7 +150,9 @@ TEXT_RE = %r{
             )?
              (?:
                [ ]+   ## allow more than once space - why? why not?
-                  \( (?:
+                  \(  (?! aet\)
+                       )    ## note - auto-exclude reserved (aet)  from SCORE_FULLER_MORE!!!
+                     (?:
                        [A-Z]{1,5}
                      )
                   \)

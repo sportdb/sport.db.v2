@@ -272,6 +272,10 @@ Sat Jun/23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Mo
 Rapid v Austria  3-2 (aet)
 Rapid v Austria  3-2 (a.e.t.)
 
+Rapid 3-2 Austria (aet)
+Rapid 3-2 Austria (a.e.t.)
+
+
 Rapid v Austria  3-3 (aet, win 5-2 on pens)
 Rapid v Austria  3-3 (aet, 5-2 on pens)
 Rapid v Austria  3-3 (aet, 5-2 pen)
@@ -284,10 +288,17 @@ Rapid v Austria  3-3 (5-2 pen)
 Rapid v Austria  3-3 (5-2 pen.)
 Rapid v Austria  3-3 (5-2p)
 
+
 Rapid v Austria  3-2 (win 4-5 on aggregate)
 Rapid v Austria  3-2 (4-5 on aggregate)
 Rapid v Austria  3-2 (4-5 agg)
 Rapid v Austria  3-2 (4-5 agg.)
+
+Rapid 3-2 Austria  (win 4-5 on aggregate)
+Rapid 3-2 Austria  (4-5 on aggregate)
+Rapid 3-2 Austria  (4-5 agg)
+Rapid 3-2 Austria  (4-5 agg.)
+Rapid 3-2 Austria  (agg 4-5)
 
 
 TXT

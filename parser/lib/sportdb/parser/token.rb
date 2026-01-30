@@ -61,6 +61,7 @@ RE = Regexp.union(
                      TIME_RE,
                     SCORE_FULL_RE, 
                     SCORE_FULLER_RE,
+                    SCORE_FULLER_MORE_RE,
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
                     BASICS_RE, 
                    TEXT_RE,

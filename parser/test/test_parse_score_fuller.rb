@@ -12,21 +12,46 @@ TEST = <<-TXT
 ##################
 ## try fuller score style  (note - no half-time (ht) score possible/allowed here)
 
+###
+##    aet
 Rapid v Austria  3-2 (aet)
 Rapid v Austria  3-2 (a.e.t.)
 
+Rapid 3-2 Austria (aet)
+Rapid 3-2 Austria (a.e.t.)
+
+####
+##   aet + pen
 Rapid v Austria  3-3 (aet, win 5-2 on pens)
 Rapid v Austria  3-3 (aet, 5-2 on pens)
 Rapid v Austria  3-3 (aet, 5-2 pen)
 Rapid v Austria  3-3 (aet, 5-2p)
 Rapid v Austria  3-3 (a.e.t., 5-2 pen.)
 
+Rapid 3-3 Austria (aet, win 5-2 on pens)
+Rapid 3-3 Austria (aet, 5-2 on pens)
+Rapid 3-3 Austria (aet, 5-2 pen)
+Rapid 3-3 Austria (aet, 5-2p)
+Rapid 3-3 Austria (a.e.t., 5-2 pen.)
+
+
+#####
+##    ft + pen
 Rapid v Austria  3-3 (win 5-2 on pens)
 Rapid v Austria  3-3 (5-2 on pens)
 Rapid v Austria  3-3 (5-2 pen)
 Rapid v Austria  3-3 (5-2 pen.)
 Rapid v Austria  3-3 (5-2p)
 
+Rapid 3-3 Austria (win 5-2 on pens)
+Rapid 3-3 Austria (5-2 on pens)
+Rapid 3-3 Austria (5-2 pen)
+Rapid 3-3 Austria (5-2 pen.)
+Rapid 3-3 Austria (5-2p)
+
+
+#########
+##    ft + agg 
 Rapid v Austria  3-2 (win 4-5 on aggregate)
 Rapid v Austria  3-2 (4-5 on aggregate)
 Rapid v Austria  3-2 (4-5 on agg)
@@ -34,9 +59,25 @@ Rapid v Austria  3-2 (4-5 agg)
 Rapid v Austria  3-2 (4-5 agg.)
 Rapid v Austria  3-2 (agg 4-5)
 
+Rapid 3-2 Austria (win 4-5 on aggregate)
+Rapid 3-2 Austria (4-5 on aggregate)
+Rapid 3-2 Austria (4-5 on agg)
+Rapid 3-2 Austria (4-5 agg)
+Rapid 3-2 Austria (4-5 agg.)
+Rapid 3-2 Austria (agg 4-5)
+
+
+########
+##    aet + agg + pen
+
 Rapid v Austria   2-1 (aet, 3-3 on aggregate, win 5-2 on pens)
 Rapid v Austria   2-1 (aet, 3-3 agg, 5-2 pen.)
 
+Rapid 2-1 Austria (aet, 3-3 on aggregate, win 5-2 on pens)
+Rapid 2-1 Austria (aet, 3-3 agg, 5-2 pen.)
+
+
+## todo/fix - add win on away goals too!!!
 
 TXT
 
@@ -47,18 +88,30 @@ MatchLine = RaccMatchParser::MatchLine
 EXP_TREE = [
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {et:[3, 2], aet: true}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {et:[3, 2], aet: true}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {et:[3, 2], aet: true}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {et:[3, 2], aet: true}),
  
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], et:[3, 3], aet: true}),
 
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5, 2], ft:[3, 3]}),
 
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
@@ -66,7 +119,15 @@ EXP_TREE = [
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ft:[3, 2], agg:[4, 5]}),
 
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,2], et:[2, 1], aet: true, agg:[3, 3]}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,2], et:[2, 1], aet: true, agg:[3, 3]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,2], et:[2, 1], aet: true, agg:[3, 3]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,2], et:[2, 1], aet: true, agg:[3, 3]}),
 ]
