@@ -2,6 +2,11 @@ module SportDb
 class Lexer
 
 
+##
+## todo/fix - change TEXT_RE  to TEAM_RE !!!!
+##    do NOT use (anymore) as generic TEXT_RE
+
+
 
 ## todo - use ANY_RE  to token_commons or such - for shared by many?
 

@@ -29,6 +29,11 @@ require_relative 'parser/token-prop'    ## team prop(erty) mode (note - must be 
 require_relative 'parser/token-geo'
 require_relative 'parser/token-goals'
 require_relative 'parser/token'
+
+### add token ("private") parse helpers  e.g.  _parse_team() etc.
+require_relative 'parser/token_helpers'
+
+
 require_relative 'parser/lexer_buffer'   ## incl. Tokens (aka TokenBuffer)
 require_relative 'parser/lexer'
 require_relative 'parser/lexer_min'
