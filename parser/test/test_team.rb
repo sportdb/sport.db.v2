@@ -28,6 +28,102 @@ end
 
 
 VALID_TEAMS = prepare(<<TXT)
+
+##########
+## teams with numbers
+345 FC              # Cayman Islands
+345FC               # Cayman Islands
+1987 All Stars      # St Lucia
+758 Boyz            # Sint Maarten
+07 Vestur           # Faroe Islands 
+3FB Toliara         # Madagascar
+
+B1                  # St Lucia
+B36 Torshavn        # Faroe Islands
+B68 Toftir          # Faroe Islands
+F91 Dudelange       # Luxembourg
+
+FC 105              # Gabon
+F.C. 105            # Gabon
+ASPL 2000           # Mauritius
+Persikabo 1973      # Indonesia
+Master 7            # Laos
+Twenty 11           # New Zealand
+Inter Nassau 17     # Bahamas
+Zvijezda 09         # Bosnia & H
+Zvijezda-09         # Bosnia & H
+CSKA 1948           # Bulgaria
+Istra 1961          # Croatia
+Bohemians 1905      # Czech Republic
+Manchester 62       # Gibraltar
+College 1975        # Gibraltar
+Differdange 03      # Luxembourg
+Witz 72             # Luxembourg
+Schifflange 95      # Luxembourg  
+UN Kaerjeng 97      # Luxembourg
+U.N. Kaerjeng '97   # Luxembourg
+U Craiova 1948      # Romania
+Dnipro-1            # Ukraine
+
+Connect 767 East Central      # Dominica
+Metalist 1925 Kharkiv   # Ukraine
+Militar 6 Setembro    # Sao Tome & Principe
+
+CDC Q7          # Djibouti
+Panda B52       # DR Congo
+BFF Academy U19     # Bhutan
+HK U23              # Hong Kong
+
+1º de Maio            # Sao Tome & Principe
+1° de Maio            # Sao Tome & Principe
+1º de Agosto     # Angola  - a.k.a. Primeiro de Agosto
+1° de Agosto     # Angola
+2 de Mayo          # Paraguay
+
+
+
+GR/SIAF         # Djibouti
+EB/Streymur        # Faroe Islands
+
+X-Roads Warriors    # Bermuda
+
+Universidad O&M     # Doninican Republic
+
+L.A. Starz          # Dominica
+N.E. Revolution     # USA
+D.C. United         # USA
+S.J. Earthquakes    # USA
+Sporting K.C.       # USA
+E. Frankfurt        # Germany
+B. Leverkusen        # Germany
+Carlos A. Mannucci      # Peru
+
+IF     # Faroe Islands
+FH     # Iceland
+KR     # Iceland
+KA     # Iceland
+HK     # Iceland
+
+
+
+Vital'O          # Burundi
+Etoile d'Or      # Comoros
+Nathaly's        # Congo
+Zanak'Ala           # Madagascar 
+Nouakchott King's   # Mauritania
+Al Zawra'a          # Iraq
+Ma'an               # Jordan
+Al Ahli San'a       # Yemen
+Doc's United          # Anguilla
+Nott'm Forest             # England
+O'Higgins            # Chile
+
+B. M'gladbach             # Germany
+Ilaoa & To'omata          # American Samoa
+Etoile de Morne-a-l'Eau   # Guadeloupe
+
+
+## more
 Rapid Wien
 1860 München
 1860 Munich
@@ -46,7 +142,12 @@ Naval 1° de Maio
 ##  note - (Beer) assumed as (trailing) country code :-)
 ##    to fix change to "plain" - Qingdao Pijiu Beer 
 ##     () in team names is for now reserved (for special cases)
-Qingdao Pijiu (Beer)     
+Qingdao Pijiu (Beer)     # China   
+Qingdao Pijiu Beer     
+
+General Caballero (JLM)    # Paraguay   -  (JLM) = Juan León Mallorquín
+General Caballero JLM    # Paraguay   -  (JLM) = Juan León Mallorquín
+
 
 Austria 2
 Dnpro-1
