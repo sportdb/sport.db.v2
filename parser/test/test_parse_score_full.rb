@@ -23,9 +23,6 @@ Rapid v Austria  5-1 pen 2-2 aet (1-1,)
 TXT
 
 
-MatchLine = RaccMatchParser::MatchLine
-
-
 EXP_TREE = [
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,1],et:[2, 2],ft:[1,1],ht:[1,0]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,1],et:[2, 2],ft:[1,1],ht:[1,0]}),
@@ -35,17 +32,7 @@ EXP_TREE = [
 
 
 def test_parse
-  parser = RaccMatchParser.new( TEST, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-
+  tree = parse_matches( TEST )
   assert_equal EXP_TREE, tree
 end
 

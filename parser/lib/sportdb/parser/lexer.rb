@@ -625,12 +625,13 @@ def _tokenize_line( line )
             duration[:end][:wday] = DAY_MAP[ m[:day_name2].downcase ]   if m[:day_name2]
             ## note - for debugging keep (pass along) "literal" duration
             [:DURATION, [m[:duration], duration]]
+ 
+        ### todo/fix - removed from lexer - remove here too!!!
         elsif m[:num]   ## fix - change to ord (for ordinal number!!!)
               ## note -  strip enclosing () and convert to integer
              [:ORD, [m[:num], { value: m[:value].to_i(10) } ]]
         elsif m[:score_full]
               score = {}
-              ## check for pen
               score[:p] = [m[:p1].to_i(10),
                            m[:p2].to_i(10)]  if m[:p1] && m[:p2]
               score[:et] = [m[:et1].to_i(10),
@@ -639,11 +640,12 @@ def _tokenize_line( line )
                             m[:ft2].to_i(10)]  if m[:ft1] && m[:ft2]
               score[:ht] = [m[:ht1].to_i(10),
                             m[:ht2].to_i(10)]  if m[:ht1] && m[:ht2]
+              score[:agg] = [m[:agg1].to_i(10),
+                             m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
 
             ## note - for debugging keep (pass along) "literal" score
             [:SCORE_FULL, [m[:score_full], score]]
         elsif m[:score_fuller]
-               ## note - no half-time (ht) in fuller format-style!!!
               score = {}
               score[:p] = [m[:p1].to_i(10),
                            m[:p2].to_i(10)]  if m[:p1] && m[:p2]
@@ -651,6 +653,8 @@ def _tokenize_line( line )
                             m[:et2].to_i(10)]  if m[:et1] && m[:et2]
               score[:ft] = [m[:ft1].to_i(10),
                             m[:ft2].to_i(10)]  if m[:ft1] && m[:ft2]
+              score[:ht] = [m[:ht1].to_i(10),
+                            m[:ht2].to_i(10)]  if m[:ht1] && m[:ht2]
               score[:agg] = [m[:agg1].to_i(10),
                              m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
               ## add aet flag true/false
@@ -660,11 +664,17 @@ def _tokenize_line( line )
             [:SCORE_FULLER, [m[:score_fuller], score]]
         elsif m[:score_fuller_more]
                ##    SCORE + SCORE_FULLER_MORE
-               ## note - no half-time (ht) in fuller more format-style
-               ##        no after extra-time (aet), no full-time (ft) !!!
+               ## note -  after extra-time (aet) or full-time (ft) 
+               ##           score may be present in SCORE!!! 
               score = {}
               score[:p] = [m[:p1].to_i(10),
                            m[:p2].to_i(10)]  if m[:p1] && m[:p2]
+              score[:et] = [m[:et1].to_i(10),
+                            m[:et2].to_i(10)]  if m[:et1] && m[:et2]
+              score[:ft] = [m[:ft1].to_i(10),
+                            m[:ft2].to_i(10)]  if m[:ft1] && m[:ft2]
+              score[:ht] = [m[:ht1].to_i(10),
+                            m[:ht2].to_i(10)]  if m[:ht1] && m[:ht2]
               score[:agg] = [m[:agg1].to_i(10),
                              m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
               ## add aet flag true/false

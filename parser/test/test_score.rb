@@ -7,15 +7,7 @@ require_relative 'helper'
 
 class TestScore < Minitest::Test
 
-SCORE_FULL_RE  = SportDb::Lexer::SCORE_FULL_RE
-
-
-
-pp SportDb::Lexer::SCORE__P_ET__RE
-pp SportDb::Lexer::SCORE_P
-pp SportDb::Lexer::SCORE_ET
-
-
+  
 
 TESTS = [
       ###
@@ -64,21 +56,14 @@ TESTS = [
 def test_score  
   TESTS.each do |text, exp_score|
   
-     puts "==> #{text}"
-     m=SCORE_FULL_RE.match( text )
+     score=SportDb::Lexer._parse_score_full( text )
 
-     if m
-       score = {}
-       score[:p]  = [m[:p1].to_i,m[:p2].to_i]     if m[:p1] && m[:p2]
-       score[:et] = [m[:et1].to_i,m[:et2].to_i]   if m[:et1] && m[:et2]
-       score[:ft] = [m[:ft1].to_i,m[:ft2].to_i]   if m[:ft1] && m[:ft2]
-       score[:ht] = [m[:ht1].to_i,m[:ht2].to_i]   if m[:ht1] && m[:ht2]
-       
-       ## pp m
-       puts "  #{score.pretty_inspect}"
+     if score        
+      ## pp score
+       puts "OK #{text}  -  #{score.pretty_inspect}"
        assert_equal exp_score, score
     else
-       puts "!! NOT matching"
+       puts "!! score (full) NOT matching - #{text}"
        assert false
     end
   end

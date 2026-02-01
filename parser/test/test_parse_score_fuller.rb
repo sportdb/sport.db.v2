@@ -77,12 +77,38 @@ Rapid 2-1 Austria (aet, 3-3 on aggregate, win 5-2 on pens)
 Rapid 2-1 Austria (aet, 3-3 agg, 5-2 pen.)
 
 
+####
+##   check with HT & FT
+Rapid v Austria  3-2 (HT 1-0, FT 2-1, AET)
+Rapid 3-2 Austria (HT 1-0, FT 2-1, AET)
+
+
+
+
+#####
+##  test minimal/compact (fuller) style
+
+A 3-1 B (AET)
+A 3-1 B (AET, P 5-1)
+A 3-1 B (AET, PEN 5-1)
+A 3-1 B (AET, AGG 3-3, P 5-1)
+A 3-1 B (AET, AGG 3-3, PEN 5-1)
+
+
+A 3-1 B (HT 1-0, FT 2-2, AET)
+
+A 3-1 B (HT 1-0, FT 2-2, AET, P 5-1)
+A 3-1 B (HT 1-0, FT 2-2, AET, PEN 5-1)
+
+A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, P 5-1)
+A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, PEN 5-1)
+
 ## todo/fix - add win on away goals too!!!
+# A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, AWAY)
+# A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, AWAY 2-3)
 
 TXT
 
-
-MatchLine = RaccMatchParser::MatchLine
 
 
 EXP_TREE = [
@@ -130,21 +156,33 @@ EXP_TREE = [
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,2], et:[2, 1], aet: true, agg:[3, 3]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,2], et:[2, 1], aet: true, agg:[3, 3]}),
    MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {p:[5,2], et:[2, 1], aet: true, agg:[3, 3]}),
+
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ht:[1,0], ft:[2,1], et:[3, 2], aet: true}),
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  score: {ht:[1,0], ft:[2,1], et:[3, 2], aet: true}),
+
+   # A 3-1 B (AET)
+   MatchLine.new( team1: 'A', team2: 'B',  score: {et:[3, 1], aet: true}),
+   # A 3-1 B (AET, P 5-1)
+   MatchLine.new( team1: 'A', team2: 'B',  score: {p:[5,1], et:[3, 1], aet: true}),
+   MatchLine.new( team1: 'A', team2: 'B',  score: {p:[5,1], et:[3, 1], aet: true}),
+   # A 3-1 B (AET, AGG 3-3, P 5-1)
+   MatchLine.new( team1: 'A', team2: 'B',  score: {p:[5,1], et:[3, 1], aet: true, agg:[3,3]}),
+   MatchLine.new( team1: 'A', team2: 'B',  score: {p:[5,1], et:[3, 1], aet: true, agg:[3,3]}),
+
+   #  A 3-1 B (HT 1-0, FT 2-2, AET)
+   MatchLine.new( team1: 'A', team2: 'B',  score: {ht:[1,0], ft:[2,2], et:[3, 1], aet: true}),
+   #  A 3-1 B (HT 1-0, FT 2-2, AET, P 5-1)
+   MatchLine.new( team1: 'A', team2: 'B',  score: {p:[5,1], ht:[1,0], ft:[2,2], et:[3, 1], aet: true}),
+   MatchLine.new( team1: 'A', team2: 'B',  score: {p:[5,1], ht:[1,0], ft:[2,2], et:[3, 1], aet: true}),
+   # A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, P 5-1)
+   MatchLine.new( team1: 'A', team2: 'B',  score: {p:[5,1], ht:[1,0], ft:[2,2], et:[3, 1], aet: true, agg: [3,3]}),
+   MatchLine.new( team1: 'A', team2: 'B',  score: {p:[5,1], ht:[1,0], ft:[2,2], et:[3, 1], aet: true, agg: [3,3]}),
 ]
 
 
+
 def test_parse
-  parser = RaccMatchParser.new( TEST, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-
+  tree = parse_matches( TEST )
   assert_equal EXP_TREE, tree
 end
 

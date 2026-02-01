@@ -62,11 +62,18 @@ def self._mk_score_fuller_p( win: )    ## with optional win - true|false
                     )
                     |        
                     #####
-                    ## opt 2)  "classic"
+                    ## opt 2)  "classic" (post)
                     (?:
                        (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})
                           [ ]*
                         #{P_EN}   
+                    )
+                    |
+                    #####
+                    ## opt 3) up-front (pre)
+                    (?:
+                         (?: pen|p) [ ]
+                       (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})   
                     )
                  )                   
     >
@@ -81,15 +88,38 @@ SCORE_FULLER_P_WIN =  _mk_score_fuller_p( win: true )
 
 
 
+SCORE_FULLER_HT_OPT   =   %Q<
+                              (?:   HT [ ]
+                                  (?: (?<ht1>\\d{1,2}) - (?<ht2>\\d{1,2})) 
+                                  [ ]*,[ ]*
+                              )?  ## note - make optional
+                            >
+
+SCORE_FULLER_FT_OPT =  %Q<
+                              (?:   FT [ ]
+                                  (?: (?<ft1>\\d{1,2}) - (?<ft2>\\d{1,2})) 
+                                  [ ]*,[ ]*
+                              )?  ## note - make optional
+                            >
+
+      
+
 ############
 #        4-4 (aet)
 #        4-4 (a.e.t.)
 #        or
 #     Team A  4-4  Team B  (aet)
 #     Team A  4-4  Team B  (a.e.t.)
+#
+#        or
+#        4-4 (FT 3-2, AET)
+#        4-4 (HT 2-1, FT 3-2, AET)
+
 
 SCORE_FULLER__ET = %Q<
              \\(
+                #{SCORE_FULLER_HT_OPT} 
+                #{SCORE_FULLER_FT_OPT} 
                 (?<aet> #{ET_EN})
              \\)
 >
@@ -121,6 +151,8 @@ SCORE_FULLER_MORE__ET__RE = %r{
 
 SCORE_FULLER__ET_P = %Q<
              \\(
+                #{SCORE_FULLER_HT_OPT} 
+                #{SCORE_FULLER_FT_OPT} 
                 (?<aet> #{ET_EN})
                  [ ]*,[ ]*
                  #{SCORE_FULLER_P_WIN}
@@ -152,7 +184,8 @@ SCORE_FULLER_MORE__ET_P__RE = %r{
 
 SCORE_FULLER__FT_P  =  %Q<
              \\(
-                 #{SCORE_FULLER_P_WIN}
+                  #{SCORE_FULLER_HT_OPT} 
+                  #{SCORE_FULLER_P_WIN}
              \\)
 >
 
@@ -183,6 +216,7 @@ SCORE_FULLER_MORE__FT_P__RE = %r{
 
 SCORE_FULLER__FT_AGG  =  %Q<
              \\(
+                 #{SCORE_FULLER_HT_OPT} 
                  #{SCORE_FULLER_AGG_WIN}
              \\)
 >
@@ -208,6 +242,8 @@ SCORE_FULLER_MORE__FT_AGG__RE = %r{
 
 SCORE_FULLER__ET_AGG_P  =  %Q<
              \\(
+                #{SCORE_FULLER_HT_OPT} 
+                #{SCORE_FULLER_FT_OPT} 
                 (?<aet> #{ET_EN})
                     [ ]*,[ ]*
                     #{SCORE_FULLER_AGG}  
