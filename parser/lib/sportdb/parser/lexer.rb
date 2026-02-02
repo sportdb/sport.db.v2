@@ -643,6 +643,13 @@ def _tokenize_line( line )
               score[:agg] = [m[:agg1].to_i(10),
                              m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
 
+              if m[:away1] && m[:away2]               
+                 score[:away] = [m[:away1].to_i(10),
+                                 m[:away2].to_i(10)]
+              elsif m[:away]    ## fallback if no away score; check away flag
+                 score[:away] = true
+              end  
+
             ## note - for debugging keep (pass along) "literal" score
             [:SCORE_FULL, [m[:score_full], score]]
         elsif m[:score_fuller]
@@ -657,8 +664,15 @@ def _tokenize_line( line )
                             m[:ht2].to_i(10)]  if m[:ht1] && m[:ht2]
               score[:agg] = [m[:agg1].to_i(10),
                              m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
+              if m[:away1] && m[:away2]               
+                 score[:away] = [m[:away1].to_i(10),
+                                 m[:away2].to_i(10)]
+              elsif m[:away]    ## fallback if no away score; check away flag
+                 score[:away] = true
+              end  
+
               ## add aet flag true/false
-              score[:aet] = true   if m[:aet]
+              # score[:aet] = true   if m[:aet]
 
             ## note - for debugging keep (pass along) "literal" score
             [:SCORE_FULLER, [m[:score_fuller], score]]
@@ -677,6 +691,13 @@ def _tokenize_line( line )
                             m[:ht2].to_i(10)]  if m[:ht1] && m[:ht2]
               score[:agg] = [m[:agg1].to_i(10),
                              m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
+              if m[:away1] && m[:away2]               
+                 score[:away] = [m[:away1].to_i(10),
+                                 m[:away2].to_i(10)]
+              elsif m[:away]    ## fallback if no away score; check away flag
+                 score[:away] = true
+              end  
+
               ## add aet flag true/false
               score[:aet] = true   if m[:aet]
 

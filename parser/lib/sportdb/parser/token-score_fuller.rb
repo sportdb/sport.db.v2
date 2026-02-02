@@ -86,6 +86,35 @@ SCORE_FULLER_AGG_WIN =  _mk_score_fuller_agg( win: true )
 SCORE_FULLER_P     =  _mk_score_fuller_p( win: false )  
 SCORE_FULLER_P_WIN =  _mk_score_fuller_p( win: true )
 
+SCORE_FULLER_AWAY_WIN  = %Q<
+                 (?:
+                  (?<away>
+                    ############
+                    ## opt 1)  with win
+                    (?:
+                        (?: win [ ] )?
+                        (?: (?<away1>\\d{1,2}) - (?<away2>\\d{1,2}) [ ] )?
+                         on [ ] away [ ] goals?     # goal or goals
+                    )
+                    |        
+                    #####
+                    ## opt 2)  "classic" (post)
+                    (?:
+                       (?: (?<away1>\\d{1,2}) - (?<away2>\\d{1,2}) [ ] )?
+                          [ ]* away  
+                    )
+                    |
+                    #####
+                    ## opt 3) up-front (pre)
+                    (?:
+                          away 
+                       (?:  [ ]
+                            (?<away1>\\d{1,2}) - (?<away2>\\d{1,2})
+                       )?   
+                    )
+                 ))                   
+            >
+ 
 
 
 SCORE_FULLER_HT_OPT   =   %Q<
@@ -234,6 +263,32 @@ SCORE_FULLER_MORE__FT_AGG__RE = %r{
              #{SCORE_FULLER__FT_AGG}
         )}ix
 
+####
+#  ft + agg + away
+#     2-1 (3-3 on aggregate, win on away goals)
+#     2-1 (3-3 on aggregate, win 2-1 on away goals)
+
+SCORE_FULLER__FT_AGG_AWAY = %Q<
+             \\(
+                #{SCORE_FULLER_HT_OPT} 
+                #{SCORE_FULLER_AGG}
+                   [ ]*,[ ]*
+                 #{SCORE_FULLER_AWAY_WIN}
+             \\)
+>
+
+SCORE_FULLER__FT_AGG_AWAY__RE  =  %r{
+        (?<score_fuller>
+           \b   
+            (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
+            [ ]+
+             #{SCORE_FULLER__FT_AGG_AWAY}
+        )}ix
+
+SCORE_FULLER_MORE__FT_AGG_AWAY__RE = %r{
+        (?<score_fuller_more>
+             #{SCORE_FULLER__FT_AGG_AWAY}
+        )}ix
 
 
 #####################
@@ -271,19 +326,21 @@ SCORE_FULLER_MORE__ET_AGG_P__RE = %r{
 #  note: order matters - first come-first matched/served
 
 SCORE_FULLER_RE = Regexp.union(
-  SCORE_FULLER__ET_P__RE,     ## e.g.  2-2 (aet, win 5-3 on pens)
-  SCORE_FULLER__ET__RE,       ## e.g.  2-3 (aet)
-  SCORE_FULLER__FT_P__RE,     ## e.g.  2-2 (win 5-3 on pens)
-  SCORE_FULLER__FT_AGG__RE,   ## e.g.  2-3 (win 5-4 on aggregate)
-  SCORE_FULLER__ET_AGG_P__RE, ## e.g.  2-1 (aet, 3-3 on aggregate, win 5-2 on pens)
-)
+  SCORE_FULLER__ET_P__RE,        ## e.g.  2-2 (aet, win 5-3 on pens)
+  SCORE_FULLER__ET__RE,          ## e.g.  2-3 (aet)
+  SCORE_FULLER__FT_P__RE,        ## e.g.  2-2 (win 5-3 on pens)
+  SCORE_FULLER__FT_AGG__RE,      ## e.g.  2-3 (win 5-4 on aggregate)
+  SCORE_FULLER__FT_AGG_AWAY__RE, ## e.g.  2-1 (3-3 on aggreate, win 2-1 on away goals)
+  SCORE_FULLER__ET_AGG_P__RE,    ## e.g.  2-1 (aet, 3-3 on aggregate, win 5-2 on pens)
+  )
 
 SCORE_FULLER_MORE_RE = Regexp.union(
-  SCORE_FULLER_MORE__ET_P__RE,     ## e.g. (aet, win 5-3 on pens)
-  SCORE_FULLER_MORE__ET__RE,       ## e.g. (aet)
-  SCORE_FULLER_MORE__FT_P__RE,     ## e.g. (win 5-3 on pens)
-  SCORE_FULLER_MORE__FT_AGG__RE,    ## e.g. (win 5-4 on aggregate)
-  SCORE_FULLER_MORE__ET_AGG_P__RE,  ## e.g. (aet, 3-3 on aggregate, win 5-2 on pens)
+  SCORE_FULLER_MORE__ET_P__RE,        ## e.g. (aet, win 5-3 on pens)
+  SCORE_FULLER_MORE__ET__RE,          ## e.g. (aet)
+  SCORE_FULLER_MORE__FT_P__RE,        ## e.g. (win 5-3 on pens)
+  SCORE_FULLER_MORE__FT_AGG__RE,      ## e.g. (win 5-4 on aggregate)
+  SCORE_FULLER_MORE__FT_AGG_AWAY__RE, ## e.g. (3-3 on aggreate, win 2-1 on away goals)
+  SCORE_FULLER_MORE__ET_AGG_P__RE,    ## e.g. (aet, 3-3 on aggregate, win 5-2 on pens)
 )
 
 

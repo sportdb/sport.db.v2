@@ -37,6 +37,15 @@ VALID_TEAMS = prepare(<<TXT)
 758 Boyz            # Sint Maarten
 07 Vestur           # Faroe Islands 
 3FB Toliara         # Madagascar
+1899 Hoffenheim     # Germany
+1860 München
+1. FC Köln
+1. FC Nürnberg
+1. FC Heidenheim
+1. FC Magdeburg
+1. FC Saarbrücken
+1. FC K'lautern
+
 
 B1                  # St Lucia
 B36 Torshavn        # Faroe Islands
@@ -64,10 +73,20 @@ UN Kaerjeng 97      # Luxembourg
 U.N. Kaerjeng '97   # Luxembourg
 U Craiova 1948      # Romania
 Dnipro-1            # Ukraine
+Mainz 05            # Germany
+Schalke 04         
+Darmstadt 98
+Hannover 96
+Altona 93
+SSV Ulm 1846
+
+
 
 Connect 767 East Central      # Dominica
 Metalist 1925 Kharkiv   # Ukraine
 Militar 6 Setembro    # Sao Tome & Principe
+Hannover 96 II        # Germany
+Mainz 05 II
 
 CDC Q7          # Djibouti
 Panda B52       # DR Congo
@@ -115,17 +134,22 @@ Al Zawra'a          # Iraq
 Ma'an               # Jordan
 Al Ahli San'a       # Yemen
 Doc's United          # Anguilla
-Nott'm Forest             # England
+Nott'm Forest         # England
 O'Higgins            # Chile
 
-B. M'gladbach             # Germany
+B. M'gladbach           # Germany
+M'gladbach                  
+U'haching
+
+
+Brighton & Hove A.        # England
 Ilaoa & To'omata          # American Samoa
+
 Etoile de Morne-a-l'Eau   # Guadeloupe
 
 
 ## more
 Rapid Wien
-1860 München
 1860 Munich
 
 Achilles'29 II
