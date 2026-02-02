@@ -131,7 +131,33 @@ SCORE_FULLER_FT_OPT =  %Q<
                               )?  ## note - make optional
                             >
 
-      
+
+#############
+#     4-4 (HT 2-1)                            
+#           or
+#    Team A  4-1  Team B  (HT 2-1) 
+
+SCORE_FULLER__HT = %Q<
+             \\(  HT [ ]
+                  (?<ht1>\\d{1,2}) - (?<ht2>\\d{1,2}) 
+             \\)
+>
+
+SCORE_FULLER__HT_FT__RE  =  %r{
+        (?<score_fuller>
+           \b   
+            (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
+            [ ]+
+             #{SCORE_FULLER__HT}
+        )}ix
+
+SCORE_FULLER_MORE__HT_FT__RE = %r{
+        (?<score_fuller_more>
+             #{SCORE_FULLER__HT}
+        )}ix
+
+
+
 
 ############
 #        4-4 (aet)
@@ -326,6 +352,7 @@ SCORE_FULLER_MORE__ET_AGG_P__RE = %r{
 #  note: order matters - first come-first matched/served
 
 SCORE_FULLER_RE = Regexp.union(
+  SCORE_FULLER__HT_FT__RE,       ## e.g.  3-2 (HT 2-1)
   SCORE_FULLER__ET_P__RE,        ## e.g.  2-2 (aet, win 5-3 on pens)
   SCORE_FULLER__ET__RE,          ## e.g.  2-3 (aet)
   SCORE_FULLER__FT_P__RE,        ## e.g.  2-2 (win 5-3 on pens)
@@ -335,6 +362,7 @@ SCORE_FULLER_RE = Regexp.union(
   )
 
 SCORE_FULLER_MORE_RE = Regexp.union(
+  SCORE_FULLER_MORE__HT_FT__RE,       ## e.g. (HT 2-1)
   SCORE_FULLER_MORE__ET_P__RE,        ## e.g. (aet, win 5-3 on pens)
   SCORE_FULLER_MORE__ET__RE,          ## e.g. (aet)
   SCORE_FULLER_MORE__FT_P__RE,        ## e.g. (win 5-3 on pens)
