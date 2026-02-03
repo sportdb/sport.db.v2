@@ -116,9 +116,40 @@ April 6
 ▪ Final
 
 May 22
-   20:45   FC Bayern Munich (GER)  0-2  Inter Milan (ITA)  @ Santiago Bernabéu Stadium, Madrid  #(att: 73490)
+   20:45   FC Bayern Munich (GER)  0-2  Inter Milan (ITA)  @ Santiago Bernabéu, Madrid  #(att: 73490)
                (Diego Milito 35,70)
+             
                
+##########
+### try different style  with MatchHeader
+###   only use country code e.g. (GER), (ENG) for first time
+
+▪ Quarter-finals, 1st leg
+March 30 20:45 @ Allianz Arena, Munich   #(att: 66000)
+   Bayern Munich (GER)  2-1  Manchester United (ENG)   
+      (Franck Ribéry 77, Ivica Olić 90+2;
+       Wayne Rooney 2)
+# March 31 20:45  (19:45 BST/UTC+1) 
+March 31 20:45 @ Emirates Stadium, London  #(att: 59572)
+   Arsenal FC (ENG)  2-2  FC Barcelona (ESP)  
+      (Theo Walcott 69, Cesc Fàbregas 85pen;
+      Zlatan Ibrahimović 46,59)
+
+▪ Quarter-finals, 2nd leg
+# April 7 20:45 (19:45 BST/UTC+1) 
+April 6 20:45 @ Camp Nou, Barcelona  #(att: 93330)     
+   FC Barcelona   4-1   Arsenal FC   (win 6-3 on aggregate)
+      (Lionel Messi 21,37,42,88;
+      Nicklas Bendtner 18)
+April 7 20:45  @ Old Trafford, Manchester   #(att: 74482)
+   Manchester United  3-2  Bayern Munich  (agg 4-4, win 1-2 on away goals)  
+      (Darron Gibson 3, Nani 7,41;
+       Ivica Olić 43, Arjen Robben 74)    
+  
+▪ Final
+May 22 20:45 @ Santiago Bernabéu, Madrid  #(att: 73490)  
+  FC Bayern Munich   0-2  Inter Milan   
+      (Diego Milito 35,70)
 
 
 
@@ -145,6 +176,114 @@ Bayern München 2-1 Real Madrid  (HT 1-0)
 Chelsea 1-0 Barcelona  (HT 1-0)
 Barcelona 2-2 Chelsea  (HT 2-1, AGG 2-3)
 Real Madrid 2-1 Bayern München  (HT 2-1, FT 2-1, AET, AGG 3-3, PEN 1-3)
+
+###
+#  via wikipedia
+#      https://en.wikipedia.org/wiki/2011–12_UEFA_Champions_League
+#      https://en.wikipedia.org/wiki/2011–12_UEFA_Champions_League_knockout_phase
+#
+#   Times are CET/CEST, as listed by UEFA 
+#     (local times, if different, are in parentheses).
+
+
+▪ Semi-finals 
+
+April 17
+   20:45   FC Bayern Munich (GER)  2-1  Real Madrid CF (ESP)  @ Allianz Arena, Munich  #(att: 66000)
+             (Franck Ribéry 17, Mario Gómez 90;
+              Mesut Özil 53)
+April 25
+   20:45   Real Madrid (ESP)   2-1 a.e.t., 1-3 pen.   Bayern Munich (GER)  @ Santiago Bernabéu, Madrid #(att: 71654)
+            (Cristiano Ronald 6pen,14;
+             Arjen Robben 27pen)
+      # [3-3 on aggregate, win 1-3 on penalties]
+      # [aet, 3-3 on aggregate, win 1-3 on penalties]
+
+# |penalties1 =
+# *[[Cristiano Ronaldo|Ronaldo]] {{penmiss}}
+# *[[Kaká]] {{penmiss}}
+# *[[Xabi Alonso|Alonso]] {{pengoal}}
+# *[[Sergio Ramos|Ramos]] {{penmiss}}
+# |penaltyscore = 1–3
+# |penalties2 =
+# *{{pengoal}} [[David Alaba|Alaba]]
+# *{{pengoal}} [[Mario Gómez|Gómez]]
+# *{{penmiss}} [[Toni Kroos|Kroos]]
+# *{{penmiss}} [[Philipp Lahm|Lahm]]
+# *{{pengoal}} [[Bastian Schweinsteiger|Schweinsteiger]]
+
+April 18
+  20:45 (19:45 UTC+1)  Chelsea F.C. (ENG)  1-0  FC Barcelona (ESP)   @ Stamford Bridge, London  #(att: 38039)
+                        (Didier Drogba 45+2)                  
+April 24
+  20:45               Barcelona (ESP)   2-2     Chelsea (ENG)   @ Camp Nou, Barcelona  #(att: 95845)
+                       (Sergio Busquets 35, Andrés Iniesta 43;
+                        Ramires 45+1, Fernando Torres 90+1)
+   # [win 2-3 on aggregate]
+
+▪ Final
+
+May 5
+  20:45     FC Bayern Munich (GER)   1-1 a.e.t, 3-4 pen.  Chelsea F.C. (ENG)  @ Allianz Arena, Munich  #(att: 62500)
+               (Thomas Müller 83; Didier Drogba 88)
+                 
+# |penalties1 =
+# *[[Philipp Lahm|Lahm]] {{pengoal}}
+# *[[Mario Gómez|Gómez]] {{pengoal}}
+# *[[Manuel Neuer|Neuer]] {{pengoal}}
+# *[[Ivica Olić|Olić]] {{penmiss}}
+# *[[Bastian Schweinsteiger|Schweinsteiger]] {{penmiss}}
+# |penaltyscore = 3–4
+# |penalties2 =
+# *{{penmiss}} [[Juan Mata|Mata]]
+# *{{pengoal}} [[David Luiz]]
+# *{{pengoal}} [[Frank Lampard|Lampard]]
+# *{{pengoal}} [[Ashley Cole|Cole]]
+# *{{pengoal}} [[Didier Drogba|Drogba]]
+
+
+
+
+
+
+##########
+### try different style
+
+
+##  todo/fix
+##     make header with geo its own production/parser rule
+##               only can use once
+##           change to   MatchHeader from generic (reuseable) DateHeader!!!
+
+▪ Semi-finals, 1st leg
+April 17 20:45   @ Allianz Arena, Munich  #(att: 66000)
+  Bayern Munich (GER)  2-1  Real Madrid (ESP)  
+             (Franck Ribéry 17, Mario Gómez 90;
+              Mesut Özil 53)
+##  April 18 20:45 (19:45 UTC+1)  -- fix - add time_with_timezone too -why? why not?
+April 18 20:45 @ Stamford Bridge, London  #(att: 38039)
+  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+      (Didier Drogba 45+2)                  
+
+▪ Semi-finals, 2nd leg
+April 24 20:45 @ Camp Nou, Barcelona  #(att: 95845)              
+    FC Barcelona         2-2  Chelsea FC  (win 2-3 on aggregate)
+      (Sergio Busquets 35, Andrés Iniesta 43;
+       Ramires 45+1, Fernando Torres 90+1)
+April 25 20:45   @ Santiago Bernabéu, Madrid #(att: 71654)
+   Real Madrid   2-1  Bayern Munich  (aet, 3-3 on agg, win 1-3 on pens)  
+            (Cristiano Ronald 6pen,14;
+             Arjen Robben 27pen)
+
+▪ Final   
+May 5 20:45 @ Allianz Arena, Munich  #(att: 62500)     
+    FC Bayern Munich    1-1 Chelsea FC  (aet, win 3-4 on pens) 
+        (Thomas Müller 83; Didier Drogba 88)
+
+
+## TODO
+##  add rsssf  as a comment
+##    uses (compact) "two-leg" style
 
 
 
