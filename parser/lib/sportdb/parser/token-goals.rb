@@ -41,7 +41,8 @@ GOAL_NONE_RE = %r{ (?<goals_none>
 
 GOAL_MINUTE_RE = %r{
      (?<goal_minute>
-       (?<=[ (])	 # positive lookbehind for space or opening ( e.g. (61') required
+       (?<=[ ,(])	 # positive lookbehind for space or opening ( e.g. (61')
+                     #                             or [Messi] 21,37,42,88 required
                      #    todo - add more lookbehinds e.g.  ,) etc. - why? why not?
              (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
                 (?:

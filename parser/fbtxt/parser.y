@@ -335,7 +335,11 @@ class RaccMatchParser
           
        ### e.g.  time only e.g. 15.00,  or weekday with time only e.g. Fr 15.00
        more_date_opts
-             : TIME            {   result = { time: val[0][1]}  }
+             : TIME                      {   result = { time: val[0][1]}  }
+             | TIME TIME_WITH_TIMEZONE   {
+                                             result = { time:        val[0][1],
+                                                        time_local:  val[1][1] }
+                                         }
            # | DATE            {   result = { date: val[0][1]}  }
            # | DATETIME        {   result = {}.merge( val[0][1] )  }
 
@@ -413,15 +417,18 @@ class RaccMatchParser
                      | TEAM SCORE TEAM SCORE_FULLER_MORE
                           {
                             trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
-                            score = if val[3][1][:aet]  ## check aet flag present? 
+                            score = nil
+                            score =  if val[3][1][:aet]  ## check aet flag present? 
+                                       ## note - remove/delete aet flag
+                                       val[3][1].delete( :aet )
                                        { et: val[1][1][:score] }
-                                    else   ## assume full-time (ft)
+                                     else   ## assume full-time (ft)
                                        { ft: val[1][1][:score] }
-                                    end 
+                                     end 
                            result = {  team1: val[0],
                                       team2: val[2],
                                       score: score.merge( val[3][1] )
-                                    }
+                                    }                                    
                           }
                      | TEAM SCORE_FULL TEAM
                          {

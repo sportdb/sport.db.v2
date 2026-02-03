@@ -195,7 +195,8 @@ end
 
 
 
-MatchLine   = Struct.new( :ord, :date, :time, :wday,
+MatchLine   = Struct.new( :ord, :date, :time, :time_local,
+                          :wday,
                           :team1, :team2, 
                           :score, :score_note,
                           :status,  

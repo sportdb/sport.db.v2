@@ -13,9 +13,29 @@ class Lexer
 TIME_RE = %r{
     (?<time>  \b
         (?:   (?<hour>\d{1,2})
-                 (?: :|\.|h )
+                   [:.h] 
               (?<minute>\d{2})) 
               \b
+    )
+}ix
+
+## check - naming use shorter TIME_TZ or TIME_WITH_TZ or such - why? why not?
+TIME_WITH_TIMEZONE_RE = %r{
+    (?<time_with_timezone>   \(
+        (?:   (?<hour>\d{1,2})
+                   [:.h]
+              (?<minute>\d{2}))
+                  [ ]
+              (?<timezone>
+             ## optional "local" timezone name eg. BRT or CEST etc.
+              (?:  [a-z]+
+                     /
+               )?
+              [a-z]+
+              [+-]
+              \d{1,4}   ## e.g. 0 or 00 or 0000
+              ) 
+      \)
     )
 }ix
 
@@ -59,6 +79,7 @@ RE = Regexp.union(
                     DURATION_RE,  # note - duration MUST match before date
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
+                     TIME_WITH_TIMEZONE_RE,
                     SCORE_FULL_RE, 
                     SCORE_FULLER_RE,
                     SCORE_FULLER_MORE_RE,

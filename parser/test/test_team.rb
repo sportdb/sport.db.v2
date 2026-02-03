@@ -8,6 +8,8 @@ require_relative 'helper'
 class TestTeam < Minitest::Test
 
 
+
+#  todo/fix  replace with read_data() from cocos - why? why not?
 def self.prepare( txt )
    names = []
    txt.each_line do |line|
@@ -64,6 +66,9 @@ Zvijezda-09         # Bosnia & H
 CSKA 1948           # Bulgaria
 Istra 1961          # Croatia
 Bohemians 1905      # Czech Republic
+Tukums 2000         # Latvia
+Iberia 1999         # Georgia
+Kolkheti-1913       # Georgia
 Manchester 62       # Gibraltar
 College 1975        # Gibraltar
 Differdange 03      # Luxembourg
@@ -106,7 +111,6 @@ EB/Streymur        # Faroe Islands
 
 X-Roads Warriors    # Bermuda
 
-Universidad O&M     # Doninican Republic
 
 L.A. Starz          # Dominica
 N.E. Revolution     # USA
@@ -141,6 +145,9 @@ B. M'gladbach           # Germany
 M'gladbach                  
 U'haching
 
+
+Universidad O&M     # Dominican Republic
+O&M                 # Dominican Republic
 
 Brighton & Hove A.        # England
 Ilaoa & To'omata          # American Samoa

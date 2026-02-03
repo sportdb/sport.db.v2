@@ -98,7 +98,7 @@ GEO_TEXT_RE = %r{
 #    or  (utc-2) and (cest/utc-2) too - why? why not?
  
 TIMEZONE_RE = %r{
-   (?<timezone>
+  (?<timezone>
       \(
            ## optional "local" timezone name eg. BRT or CEST etc.
            (?:  [a-z]+
