@@ -311,8 +311,8 @@ class RaccMatchParser
         match_header_date     ## note - only two option allowed (no "standalone" TIME etc.)
                : DATE            {   result = { date: val[0][1]}  }
                | DATETIME        {   result = {}.merge( val[0][1] ) }
-               | DATETIME TIME_WITH_TIMEZONE   {
-                                     result = { time_local: val[1][1].merge( val[0][1] ) }
+               | DATETIME TIME_LOCAL  {
+                                     result = { time_local: val[1][1] }.merge( val[0][1] ) 
                                  }
 
 
@@ -349,7 +349,7 @@ class RaccMatchParser
        ### e.g.  time only e.g. 15.00,  or weekday with time only e.g. Fr 15.00
        more_date_opts
              : TIME                      {   result = { time: val[0][1]}  }
-             | TIME TIME_WITH_TIMEZONE   {
+             | TIME TIME_LOCAL   {
                                              result = { time:        val[0][1],
                                                         time_local:  val[1][1] }
                                          }

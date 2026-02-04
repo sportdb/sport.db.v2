@@ -99,7 +99,7 @@ April 7
    20:45 (19:45 BST/UTC+1)  Manchester United (ENG)  3-2  Bayern Munich (GER)  @ Old Trafford, Manchester   #(att: 74482)
                (Darron Gibson 3, Nani 7,41;
                 Ivica Olić 43, Arjen Robben 74)
-    # [4-4 on aggregate, win 1-2 on away goals]
+    # [4-4 on aggregate; Bayern Munich won on away goals]
      
 
 March 31
@@ -110,7 +110,7 @@ April 6
    20:45      Barcelona (ESP)   4-1   Arsenal (ENG)  @ Camp Nou, Barcelona  #(att: 93330)
                 (Lionel Messi 21,37,42,88;
                   Nicklas Bendtner 18)
-    # [win 6-3 on aggregate]
+    # [Barcelona won 6-3 on aggregate]
 
 
 ▪ Final
@@ -152,9 +152,6 @@ May 22 20:45 @ Santiago Bernabéu, Madrid  #(att: 73490)
 
 ##########
 ### try alt(ernate) country code style
-##
-##  todo/fix    change to TIME_LOCAL e.g. timezone optional ???
-# 
 
 ▪ Quarter-finals, 1st leg
 March 30 20:45         Bayern Munich › GER  2-1  Manchester United › ENG   
@@ -171,6 +168,11 @@ March 31 20:45 (19:45) Arsenal FC, Eng     2-2  FC Barcelona, Esp
 April 6 20:45 (19:45) FC Barcelona, ESP       4-1   Arsenal FC, ENG   (win 6-3 on aggregate)
 April 7 20:45         Manchester United, Eng  3-2  Bayern Munich, Ger  (agg 4-4, win 1-2 on away goals)  
 
+
+
+## TODO
+##  add rsssf  as a comment
+##    uses (compact) "two-leg" style
 
 
 
@@ -218,15 +220,19 @@ April 25
    20:45   Real Madrid (ESP)   2-1 a.e.t., 1-3 pen.   Bayern Munich (GER)  @ Santiago Bernabéu, Madrid #(att: 71654)
             (Cristiano Ronald 6pen,14;
              Arjen Robben 27pen)
-      # [3-3 on aggregate, win 1-3 on penalties]
-      # [aet, 3-3 on aggregate, win 1-3 on penalties]
+  Penalties:  Cristiano Ronaldo (miss), Kaká (miss), Xabi Alonso,
+              Sergio Ramos (miss);
+              David Alaba, Mario Gómez, Toni Kroos (miss),
+              Philipp Lahm (miss), Bastian Schweinsteiger
+  # [3-3 on aggregate; Bayern Munich won 3-1 on penalties]
+  
 
 # |penalties1 =
 # *[[Cristiano Ronaldo|Ronaldo]] {{penmiss}}
 # *[[Kaká]] {{penmiss}}
 # *[[Xabi Alonso|Alonso]] {{pengoal}}
 # *[[Sergio Ramos|Ramos]] {{penmiss}}
-# |penaltyscore = 1–3
+# |penaltyscore = 1-3
 # |penalties2 =
 # *{{pengoal}} [[David Alaba|Alaba]]
 # *{{pengoal}} [[Mario Gómez|Gómez]]
@@ -241,13 +247,17 @@ April 24
   20:45               Barcelona (ESP)   2-2     Chelsea (ENG)   @ Camp Nou, Barcelona  #(att: 95845)
                        (Sergio Busquets 35, Andrés Iniesta 43;
                         Ramires 45+1, Fernando Torres 90+1)
-   # [win 2-3 on aggregate]
+   # [Chelsea won 3-2 on aggregate]
 
 ▪ Final
 
 May 5
   20:45     FC Bayern Munich (GER)   1-1 a.e.t, 3-4 pen.  Chelsea F.C. (ENG)  @ Allianz Arena, Munich  #(att: 62500)
                (Thomas Müller 83; Didier Drogba 88)
+Penalties:  Philipp Lahm, Mario Gómez, Manuel Neuer, Ivica Olić (miss),
+            Bastian Schweinsteiger (miss);
+            Juan Mata (miss), David Luiz, Frank Lampard,
+            Ashley Cole, Didier Drogba
                  
 # |penalties1 =
 # *[[Philipp Lahm|Lahm]] {{pengoal}}
@@ -255,7 +265,7 @@ May 5
 # *[[Manuel Neuer|Neuer]] {{pengoal}}
 # *[[Ivica Olić|Olić]] {{penmiss}}
 # *[[Bastian Schweinsteiger|Schweinsteiger]] {{penmiss}}
-# |penaltyscore = 3–4
+# |penaltyscore = 3-4
 # |penalties2 =
 # *{{penmiss}} [[Juan Mata|Mata]]
 # *{{pengoal}} [[David Luiz]]
@@ -263,9 +273,7 @@ May 5
 # *{{pengoal}} [[Ashley Cole|Cole]]
 # *{{pengoal}} [[Didier Drogba|Drogba]]
 
-
-
-
+            
 
 
 ##########
@@ -300,6 +308,16 @@ April 25 20:45   @ Santiago Bernabéu, Madrid #(att: 71654)
 May 5 20:45 @ Allianz Arena, Munich  #(att: 62500)     
     FC Bayern Munich    1-1 Chelsea FC  (aet, win 3-4 on pens) 
         (Thomas Müller 83; Didier Drogba 88)
+
+
+###
+#  try alternate "inline" local time style instead of  20:45 (19:45 UTC+1)
+April 18 19:45 (UTC+1) @ Stamford Bridge, London  #(att: 38039)
+   Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+
+April 18 19:45 (UTC+1)        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+April 18 20:45 (19:45 UTC+1)  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+
 
 
 ## TODO

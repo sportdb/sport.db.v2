@@ -10,19 +10,37 @@ class Lexer
 #
 #    check - only support h e.g. 18h30  or 18H30 too - why? why not?
 # e.g. 18.30 (or 18:30 or 18h30)
+#   note - optional timezone possible e.g.
+#        18.30 (UTC+1)  or 18.30 (BST/UTC+1)  or such!!!
 TIME_RE = %r{
     (?<time>  \b
         (?:   (?<hour>\d{1,2})
                    [:.h] 
-              (?<minute>\d{2})) 
-              \b
+              (?<minute>\d{2}))
+                  \b       ## can use word boundry assert inline here?
+              (?:
+                  ## require space - why? why not
+                   [ ]
+                    \(
+                      (?<timezone>
+                         ## optional "local" timezone name eg. BRT or CEST etc.
+                          (?:  [a-z]+
+                                 /
+                           )?
+                            [a-z]+
+                            [+-]
+                            \d{1,4}   ## e.g. 0 or 00 or 0000
+                      )
+                    \)
+              )?
     )
 }ix
 
-## check - naming use shorter TIME_TZ or TIME_WITH_TZ or such - why? why not?
-##   note - timezone is optional!  e.g. (19:30) works too
-TIME_WITH_TIMEZONE_RE = %r{
-    (?<time_with_timezone>   \(
+
+##    local time e.g (19.30 UTC+1) or (19.30 BSC/UTC+1) or 
+##   note - timezone is optional!  e.g. (19.30) works too
+TIME_LOCAL_RE = %r{
+    (?<time_local>   \(
         (?:   (?<hour>\d{1,2})
                    [:.h]
               (?<minute>\d{2}))
@@ -82,7 +100,7 @@ RE = Regexp.union(
                     DURATION_RE,  # note - duration MUST match before date
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
-                     TIME_WITH_TIMEZONE_RE,
+                     TIME_LOCAL_RE,
                     SCORE_FULL_RE, 
                     SCORE_FULLER_RE,
                     SCORE_FULLER_MORE_RE,

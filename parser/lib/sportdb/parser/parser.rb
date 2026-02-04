@@ -345,7 +345,7 @@ racc_token_table = {
   :DATE => 34,
   :DURATION => 35,
   :DATETIME => 36,
-  :TIME_WITH_TIMEZONE => 37,
+  :TIME_LOCAL => 37,
   :ROUND_OUTLINE => 38,
   :TIME => 39,
   :STATUS => 40,
@@ -422,7 +422,7 @@ Racc_token_to_s_table = [
   "DATE",
   "DURATION",
   "DATETIME",
-  "TIME_WITH_TIMEZONE",
+  "TIME_LOCAL",
   "ROUND_OUTLINE",
   "TIME",
   "STATUS",
@@ -997,7 +997,7 @@ module_eval(<<'.,.,', 'parser.y', 312)
 
 module_eval(<<'.,.,', 'parser.y', 314)
   def _reduce_84(val, _values, result)
-                                         result = { time_local: val[1][1].merge( val[0][1] ) }
+                                         result = { time_local: val[1][1] }.merge( val[0][1] ) 
 
     result
   end
