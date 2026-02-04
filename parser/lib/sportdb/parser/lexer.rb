@@ -672,21 +672,28 @@ def _tokenize_line( line )
              [:ORD, [m[:num], { value: m[:value].to_i(10) } ]]
         elsif m[:score_legs]
               legs = {}
+              
               ### leg1
               score = {}
               score[:ft] = [m[:leg1_ft1].to_i(10),
-                            m[:leg1_ft2].to_i(10)]  if m[:leg1_ft1] && m[:leg1_ft2]
+                            m[:leg1_ft2].to_i(10)] 
               legs['leg1'] = score
+              
               ### leg2
               score = {}
               score[:ft] = [m[:leg2_ft1].to_i(10),
                             m[:leg2_ft2].to_i(10)]  if m[:leg2_ft1] && m[:leg2_ft2]
+              score[:et] = [m[:leg2_et1].to_i(10),
+                            m[:leg2_et2].to_i(10)]  if m[:leg2_et1] && m[:leg2_et2]
+              score[:p]  = [m[:leg2_p1].to_i(10),
+                            m[:leg2_p2].to_i(10)]  if m[:leg2_p1] && m[:leg2_p2]
               legs['leg2'] = score
               
               ## check for (opt) aggregate - keep on "top-level"
               legs[:agg] = [m[:agg1].to_i(10),
                             m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
-  
+              legs[:away] = true  if m[:away]  
+              
               ## note - for debugging keep (pass along) "literal" score
               [:SCORE_LEGS, [m[:score_legs], legs]]
         elsif m[:score_full]

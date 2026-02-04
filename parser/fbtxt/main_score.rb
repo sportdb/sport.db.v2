@@ -178,14 +178,14 @@ April 7 20:45         Manchester United, Eng  3-2  Bayern Munich, Ger  (agg 4-4,
 
 ▪ Quarter-Finals 
 Mar 30 & Apr 7
-  Bayern München (Ger) v Manchester United (Eng)   2-1 2-3  ## (agg 4-4, win on away goals)
+  Bayern München (Ger) v Manchester United (Eng)   2-1 2-3 (agg 4-4, win on away goals)
 Mar 31 & Apr 6
   Arsenal (Eng)        v FC Barcelona (Esp)        2-2 1-4 (agg 3-6)
 
 ▪ Final 
 May 22 @ Santiago Bernabeu, Madrid
   Internazionale (Ita) v Bayern München (Ger)      2-0
-    (Milito 35', Milito 70')
+    (Milito 35',70')
 
 
 
@@ -292,12 +292,6 @@ Penalties:  Philipp Lahm, Mario Gómez, Manuel Neuer, Ivica Olić (miss),
 ##########
 ### try different style
 
-
-##  todo/fix
-##     make header with geo its own production/parser rule
-##               only can use once
-##           change to   MatchHeader from generic (reuseable) DateHeader!!!
-
 ▪ Semi-finals, 1st leg
 April 17 20:45   @ Allianz Arena, Munich  #(att: 66000)
   Bayern Munich (GER)  2-1  Real Madrid (ESP)  
@@ -333,14 +327,28 @@ April 18 20:45 (19:45 UTC+1)  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
 
 
 
-## TODO
-##  add rsssf  as a comment
-##    uses (compact) "two-leg" style
+####
+#  via rsssf
+#     https://www.rsssf.org/ec/ec20112.html
+#
+#   note - try/use SCORE_LEGS, DATE_LEGS "compact" style
+
+▪ Semi-Finals 
+Apr 17 & 25
+   Bayern München (Ger)  v Real Madrid (Esp)    2-1, 1-2 aet (agg 3-3, win 3-1 on pens)
+Apr 28 & 24
+  Chelsea (Eng)         v FC Barcelona (Esp)   1-0, 2-2     (agg 3-2)
+
+▪ Final 
+May 19 @ Allianz Arena, München    #(att: 66000)
+  Bayern München (Ger)  v Chelsea (Eng)       1-1 aet, 3-4 pen
+    (Müller 83'; Drogba 89')
+  Penalties:  Lahm, Gomez, Neuer, Olic (miss), Schweinsteiger (miss);
+              Mata (miss), David Luiz, Lampard, Cole, Drogba
 
 
-
-#######
-## champs 2012/13
+###
+# more styles
 
 ▪ Final
 May 19 @ Allianz Arena, München
