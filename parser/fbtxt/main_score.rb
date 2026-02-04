@@ -170,14 +170,27 @@ April 7 20:45         Manchester United, Eng  3-2  Bayern Munich, Ger  (agg 4-4,
 
 
 
-## TODO
-##  add rsssf  as a comment
-##    uses (compact) "two-leg" style
+####
+#  via rsssf
+#     https://www.rsssf.org/ec/ec200910.html
+#
+#   note - try/use SCORE_LEGS, DATE_LEGS "compact" style
+
+▪ Quarter-Finals 
+Mar 30 & Apr 7
+  Bayern München (Ger) v Manchester United (Eng)   2-1 2-3  ## (agg 4-4, win on away goals)
+Mar 31 & Apr 6
+  Arsenal (Eng)        v FC Barcelona (Esp)        2-2 1-4 (agg 3-6)
+
+▪ Final 
+May 22 @ Santiago Bernabeu, Madrid
+  Internazionale (Ita) v Bayern München (Ger)      2-0
+    (Milito 35', Milito 70')
 
 
 
 
-#######
+#####################################################
 ## champs 2011/12
 
 ▪ Semi-finals - 1st Leg

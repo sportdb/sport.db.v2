@@ -131,6 +131,27 @@ DATE_I_RE = %r{
 )}ix
 
 
+### todo/fix - add (opt) day_name later
+##             add (opt) year later
+# e.g. Aug/9 & Aug/10 
+#   or Aug 9 & Aug 10
+### note - allow shortcut e.g. Aug 9 & 10
+DATE_LEGS_I_RE = %r{
+(?<date_legs>
+ \b
+     (?<month_name1>#{MONTH_NAMES})
+         (?: \/|[ ] )
+     (?<day1>\d{1,2})
+    [ ] & [ ]
+     (?:
+        (?<month_name2>#{MONTH_NAMES})
+         (?: \/|[ ] )
+      )?  ## note - make 2nd month_name optional 
+     (?<day2>\d{1,2})
+  \b
+)}ix
+
+
 # e.g. 3 June  or 10 June
 DATE_II_RE = %r{
 (?<date>
@@ -194,6 +215,9 @@ DATE_RE = Regexp.union(
    DATE_III_RE,
    DATE_IIII_RE,    ## e.g. 8.8. or 8.13.79 or 08.14.1973 
 )
+
+## todo - add more format style here; change to Regexp.union later!!!
+DATE_LEGS_RE  =    DATE_LEGS_I_RE
 
 
 ##

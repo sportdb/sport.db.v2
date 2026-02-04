@@ -29,8 +29,11 @@ class RaccMatchParser
           | round_def
           | round_outline   
           | date_header 
-          | match_header
+          | match_line_with_header
           | match_line
+          ## add support for "compact" match legs (1st leg, 2nd leg, aggregate)
+          | date_header_legs
+          | match_line_legs
  
           ## check - goal_lines MUST follow match_line - why? why not?     
           | goal_lines     
@@ -297,13 +300,46 @@ class RaccMatchParser
                      @tree <<  DateHeader.new( **kwargs )  
                   }
             
+        date_header_legs
+             :     DATE_LEGS  NEWLINE
+                  {
+                     kwargs =  val[0][1]  
+                     @tree <<  DateHeaderLegs.new( **kwargs )                      
+                  }
+
+         ###
+         #  note - match_line_with_header 
+         #     support less variants (no geo/date/time) in match line (already in header)
+         #             use match_line_header to syntax check via parser
+         match_line_with_header 
+               :  match_header  match_line_header
+                  {
+                     ## todo/fix - add header flag (header: true)
+                     ##    used downstream for scope / e.g. DateHeader merge/inheritance or such                     
+                      kwargs = { header: true }.merge( val[0], val[1] )
+                      @tree << MatchLine.new( **kwargs )  
+                  }
+
+         match_line_header    
+               :  match  more_match_header_opts 
+                  { 
+                      result = {}.merge( val[0], val[1] )
+                  }
+     
+        more_match_header_opts
+             : STATUS NEWLINE      ## note - for now status must be BEFORE geo_opts!!
+                 {
+                      ## todo - add possible status_notes too!!! 
+                      result = { status: val[0][1][:status] }
+                 }
+             | NOTE NEWLINE        { result = { note: val[0] } }
+             | NEWLINE             { result = {} }
+
+
+
         ### note - match_header MUST incl. geo tree!!!
        match_header       
-              :     match_header_body   NEWLINE
-                  {
-                     kwargs = val[0] 
-                     @tree << MatchHeader.new( **kwargs )  
-                  }
+            :     match_header_body   NEWLINE  {  result = val[0]  }
             
          match_header_body              
                : match_header_date geo_opts   {  result = {}.merge( val[0], val[1] ) }
@@ -325,6 +361,15 @@ class RaccMatchParser
                               }
 
 
+     ### experimental "compact" leg-style match format
+     ##     no date/time in match line REQUIRES date_legs_header for now
+     ##             (otherwise) date unknown!!
+        match_line_legs
+              : match_fixture  SCORE_LEGS  NEWLINE
+                {
+                      kwargs = { score: val[1][1] }.merge( val[0] )
+                      @tree << MatchLineLegs.new( **kwargs )             
+                }
 
         match_line
               :   match_opts  match  more_match_opts

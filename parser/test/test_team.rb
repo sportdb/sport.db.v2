@@ -79,6 +79,7 @@ U.N. Kaerjeng '97   # Luxembourg
 U Craiova 1948      # Romania
 Dnipro-1            # Ukraine
 Mainz 05            # Germany
+Bayer 04
 Schalke 04         
 Darmstadt 98
 Hannover 96

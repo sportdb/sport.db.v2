@@ -148,15 +148,11 @@ DateHeader = Struct.new( :date ) do
   end
 end
 
-
-MatchHeader = Struct.new( :date, :time, :time_local, :geo, :timezone ) do
+DateHeaderLegs = Struct.new( :date1, :date2 ) do
   def pretty_print( printer )
-    printer.text( "<MatchHeader " )
-    printer.text( "date=#{self.date.pretty_inspect}" )
-    printer.text( " time=#{self.time.pretty_inspect}" )          if self.time
-    printer.text( " time_local=#{self.time_local.pretty_inspect}" ) if self.time_local
-    printer.text( " geo=#{self.geo.pretty_inspect}" )            if self.geo
-    printer.text( " timezone=#{self.timezone}")             if self.timezone
+    printer.text( "<DateHeaderLegs " )
+    printer.text( "leg1=#{self.date1.pretty_inspect}" )
+    printer.text( " leg2=#{self.date2.pretty_inspect}" )
     printer.text( ">")
   end
 end
@@ -207,7 +203,27 @@ end
 
 
 
-MatchLine   = Struct.new( :ord, :date, :time, :time_local,
+MatchLineLegs   = Struct.new( :team1, :team2, 
+                              :score )  do   ## change to geos - why? why not?
+ def pretty_print( printer )
+    printer.text( "<MatchLineLegs " )
+    printer.text( "#{self.team1} v #{self.team2}")
+    printer.breakable
+
+    members.zip(values) do |name, value|
+      next if [:team1, :team2].include?( name )
+      next if value.nil?
+      
+      printer.text( "#{name}=#{value.pretty_inspect}" )
+    end    
+
+    printer.text( ">" )
+  end  
+end
+
+
+MatchLine   = Struct.new( :header,
+                          :ord, :date, :time, :time_local,
                           :wday,
                           :team1, :team2, 
                           :score, :score_note,

@@ -98,9 +98,11 @@ RE = Regexp.union(
                     SCORE_NOTE_RE,
                     NOTE_RE,
                     DURATION_RE,  # note - duration MUST match before date
+                    DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
                      TIME_LOCAL_RE,
+                    SCORE_LEGS_RE,
                     SCORE_FULL_RE, 
                     SCORE_FULLER_RE,
                     SCORE_FULLER_MORE_RE,

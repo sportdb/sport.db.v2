@@ -636,6 +636,22 @@ def _tokenize_line( line )
             date[:wday] = DAY_MAP[ m[:day_name].downcase ]   if m[:day_name]
             ## note - for debugging keep (pass along) "literal" date
             [:DATE, [m[:date], date]]
+        elsif m[:date_legs]
+            legs = {}
+ ## map month names
+ ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
+            date = {}
+            date[:m] = MONTH_MAP[ m[:month_name1].downcase ]
+            date[:d]  = m[:day1].to_i(10)   
+            legs[:date1] = date
+     
+            date = {}
+            date[:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
+            date[:d]  = m[:day2].to_i(10)   
+            legs[:date2] = date
+
+            ## note - for debugging keep (pass along) "literal" date
+            [:DATE_LEGS, [m[:date_legs], legs]]
         elsif m[:duration]
             ## todo/check/fix - if end: works for kwargs!!!!!
             duration = { start: {}, end: {}}
@@ -654,6 +670,25 @@ def _tokenize_line( line )
         elsif m[:num]   ## fix - change to ord (for ordinal number!!!)
               ## note -  strip enclosing () and convert to integer
              [:ORD, [m[:num], { value: m[:value].to_i(10) } ]]
+        elsif m[:score_legs]
+              legs = {}
+              ### leg1
+              score = {}
+              score[:ft] = [m[:leg1_ft1].to_i(10),
+                            m[:leg1_ft2].to_i(10)]  if m[:leg1_ft1] && m[:leg1_ft2]
+              legs['leg1'] = score
+              ### leg2
+              score = {}
+              score[:ft] = [m[:leg2_ft1].to_i(10),
+                            m[:leg2_ft2].to_i(10)]  if m[:leg2_ft1] && m[:leg2_ft2]
+              legs['leg2'] = score
+              
+              ## check for (opt) aggregate - keep on "top-level"
+              legs[:agg] = [m[:agg1].to_i(10),
+                            m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
+  
+              ## note - for debugging keep (pass along) "literal" score
+              [:SCORE_LEGS, [m[:score_legs], legs]]
         elsif m[:score_full]
               score = {}
               score[:p] = [m[:p1].to_i(10),
