@@ -140,16 +140,29 @@ RoundDef   = Struct.new( :name, :date, :duration )  do
   end
 end
 
-DateHeader = Struct.new( :date, :time, :geo, :timezone ) do
+DateHeader = Struct.new( :date, :time ) do
   def pretty_print( printer )
     printer.text( "<DateHeader " )
     printer.text( "#{self.date.pretty_inspect}" )
     printer.text( " time=#{self.time.pretty_inspect}" )          if self.time
+    printer.text( ">")
+  end
+end
+
+
+MatchHeader = Struct.new( :date, :time, :time_local, :geo, :timezone ) do
+  def pretty_print( printer )
+    printer.text( "<MatchHeader " )
+    printer.text( "#{self.date.pretty_inspect}" )
+    printer.text( " time=#{self.time.pretty_inspect}" )          if self.time
+    printer.text( " time_local=#{self.time_local.pretty_inspect}" ) if self.time_local
     printer.text( " geo=#{self.geo.pretty_inspect}" )            if self.geo
     printer.text( " timezone=#{self.timezone}")             if self.timezone
     printer.text( ">")
   end
 end
+
+
 
 GroupHeader = Struct.new( :name ) do
   def pretty_print( printer )

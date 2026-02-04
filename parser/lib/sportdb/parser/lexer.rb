@@ -600,9 +600,13 @@ def _tokenize_line( line )
                  raise ArgumentError, "parse error - time >#{m[:time]}< out-of-range"
               end
         elsif m[:time_with_timezone]
+              time = {}
               hour     =   m[:hour].to_i(10)  ## allow 08/07/etc.
               minute   = m[:minute].to_i(10)
-              timezone = m[:timezone]
+
+              time[:h] = hour
+              time[:m] = minute
+              time[:timezone] = m[:timezone]    if m[:timezone] 
 
               ## check if valid -  0:00 - 24:00
               ##   check if 24:00 possible? or only 0:00 (23:59)
@@ -610,7 +614,7 @@ def _tokenize_line( line )
                  (minute >=0 && minute <= 59)
                ## note - for debugging keep (pass along) "literal" time
                ##   might use/add support for am/pm later
-               [:TIME_WITH_TIMEZONE, [m[:time_with_timezone], {h:hour,m:minute,timezone:timezone}]]
+               [:TIME_WITH_TIMEZONE, [m[:time_with_timezone], time]]
               else
                  raise ArgumentError, "parse error - time >#{m[:time]}< out-of-range"
               end           

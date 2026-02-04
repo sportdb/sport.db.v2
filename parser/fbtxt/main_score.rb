@@ -1,6 +1,6 @@
 ####
 #  to run use:
-#    $ ruby ./main_score.rb  (in /fbtxt)
+#    $ ruby ./main_score.rb         (in /fbtxt)
 
 
 ##
@@ -129,19 +129,17 @@ March 30 20:45 @ Allianz Arena, Munich   #(att: 66000)
    Bayern Munich (GER)  2-1  Manchester United (ENG)   
       (Franck Ribéry 77, Ivica Olić 90+2;
        Wayne Rooney 2)
-# March 31 20:45  (19:45 BST/UTC+1) 
-March 31 20:45 @ Emirates Stadium, London  #(att: 59572)
+March 31 20:45 (19:45 BST/UTC+1) @ Emirates Stadium, London  #(att: 59572)
    Arsenal FC (ENG)  2-2  FC Barcelona (ESP)  
       (Theo Walcott 69, Cesc Fàbregas 85pen;
-      Zlatan Ibrahimović 46,59)
+       Zlatan Ibrahimović 46,59)
 
 ▪ Quarter-finals, 2nd leg
-# April 7 20:45 (19:45 BST/UTC+1) 
 April 6 20:45 @ Camp Nou, Barcelona  #(att: 93330)     
    FC Barcelona   4-1   Arsenal FC   (win 6-3 on aggregate)
       (Lionel Messi 21,37,42,88;
-      Nicklas Bendtner 18)
-April 7 20:45  @ Old Trafford, Manchester   #(att: 74482)
+       Nicklas Bendtner 18)
+April 7 20:45 (19:45 BST/UTC+1) @ Old Trafford, Manchester   #(att: 74482)
    Manchester United  3-2  Bayern Munich  (agg 4-4, win 1-2 on away goals)  
       (Darron Gibson 3, Nani 7,41;
        Ivica Olić 43, Arjen Robben 74)    
@@ -150,6 +148,30 @@ April 7 20:45  @ Old Trafford, Manchester   #(att: 74482)
 May 22 20:45 @ Santiago Bernabéu, Madrid  #(att: 73490)  
   FC Bayern Munich   0-2  Inter Milan   
       (Diego Milito 35,70)
+
+
+##########
+### try alt(ernate) country code style
+##
+##  todo/fix    change to TIME_LOCAL e.g. timezone optional ???
+# 
+
+▪ Quarter-finals, 1st leg
+March 30 20:45         Bayern Munich › GER  2-1  Manchester United › ENG   
+March 31 20:45 (19:45) Arsenal FC › Eng  2-2  FC Barcelona›ESP  
+▪ Quarter-finals, 2nd leg
+April 6 20:45 (19:45) FC Barcelona › ESP       4-1   Arsenal FC › Eng   (win 6-3 on aggregate)
+April 7 20:45         Manchester United › ENG  3-2  Bayern Munich › Ger  (agg 4-4, win 1-2 on away goals)  
+
+### with comma - why? why not?
+▪ Quarter-finals, 1st leg
+March 30 20:45         Bayern Munich, GER  2-1  Manchester United, ENG   
+March 31 20:45 (19:45) Arsenal FC, Eng     2-2  FC Barcelona, Esp  
+▪ Quarter-finals, 2nd leg
+April 6 20:45 (19:45) FC Barcelona, ESP       4-1   Arsenal FC, ENG   (win 6-3 on aggregate)
+April 7 20:45         Manchester United, Eng  3-2  Bayern Munich, Ger  (agg 4-4, win 1-2 on away goals)  
+
+
 
 
 
@@ -260,8 +282,7 @@ April 17 20:45   @ Allianz Arena, Munich  #(att: 66000)
   Bayern Munich (GER)  2-1  Real Madrid (ESP)  
              (Franck Ribéry 17, Mario Gómez 90;
               Mesut Özil 53)
-##  April 18 20:45 (19:45 UTC+1)  -- fix - add time_with_timezone too -why? why not?
-April 18 20:45 @ Stamford Bridge, London  #(att: 38039)
+April 18 20:45 (19:45 UTC+1) @ Stamford Bridge, London  #(att: 38039)
   Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
       (Didier Drogba 45+2)                  
 

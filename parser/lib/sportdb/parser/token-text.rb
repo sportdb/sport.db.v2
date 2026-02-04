@@ -154,13 +154,24 @@ TEXT_RE = %r{
                \)
             )?
              (?:
-               [ ]+   ## allow more than once space - why? why not?
+                ######
+                # check for country code (cc)
+                #       e.g. (AUT) or ,AUT or AUT
+                (?:
+               [ ]+   ## allow more than one space - why? why not?
                   \(  (?! aet\)
                        )    ## note - auto-exclude reserved (aet)  from SCORE_FULLER_MORE!!!
                      (?:
                        [A-Z]{1,5}
                      )
                   \)
+                )
+                  |
+                (?:
+                    [ ]*[,›>][ ]*
+                        [A-Z]{1,5}
+                     \b
+                )
              )?
             ## add lookahead/lookbehind
            ##    must be space!!!

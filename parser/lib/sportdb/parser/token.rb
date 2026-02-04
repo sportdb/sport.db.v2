@@ -20,21 +20,24 @@ TIME_RE = %r{
 }ix
 
 ## check - naming use shorter TIME_TZ or TIME_WITH_TZ or such - why? why not?
+##   note - timezone is optional!  e.g. (19:30) works too
 TIME_WITH_TIMEZONE_RE = %r{
     (?<time_with_timezone>   \(
         (?:   (?<hour>\d{1,2})
                    [:.h]
               (?<minute>\d{2}))
-                  [ ]
-              (?<timezone>
-             ## optional "local" timezone name eg. BRT or CEST etc.
-              (?:  [a-z]+
-                     /
-               )?
-              [a-z]+
-              [+-]
-              \d{1,4}   ## e.g. 0 or 00 or 0000
-              ) 
+                (?:
+                    [ ]
+                 (?<timezone>
+                   ## optional "local" timezone name eg. BRT or CEST etc.
+                    (?:  [a-z]+
+                       /
+                    )?
+                   [a-z]+
+                   [+-]
+                   \d{1,4}   ## e.g. 0 or 00 or 0000
+                 )
+              )?  # note - make timezone  optional!!!
       \)
     )
 }ix

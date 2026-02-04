@@ -29,6 +29,7 @@ class RaccMatchParser
           | round_def
           | round_outline   
           | date_header 
+          | match_header
           | match_line
  
           ## check - goal_lines MUST follow match_line - why? why not?     
@@ -287,22 +288,32 @@ class RaccMatchParser
                          |  DURATION     { result = { duration: val[0][1] } }
 
 
+        ## note - only one option (DATE) allowed for "standalone" header now
+        ##            use match header (with geo tree) 
         date_header
-              :     date_header_body   NEWLINE
+              :     DATE  NEWLINE
                   {
-                     kwargs = {}.merge( val[0] )
+                     kwargs = { date: val[0][1]  }
                      @tree <<  DateHeader.new( **kwargs )  
                   }
             
-         date_header_body  
-               : date_header_date            
-               | date_header_date geo_opts   {  result = {}.merge( val[0], val[1] ) }
+        ### note - match_header MUST incl. geo tree!!!
+       match_header       
+              :     match_header_body   NEWLINE
+                  {
+                     kwargs = val[0] 
+                     @tree << MatchHeader.new( **kwargs )  
+                  }
+            
+         match_header_body              
+               : match_header_date geo_opts   {  result = {}.merge( val[0], val[1] ) }
 
-        date_header_date     ## note - only two option allowed (no "standalone" TIME etc.)
+        match_header_date     ## note - only two option allowed (no "standalone" TIME etc.)
                : DATE            {   result = { date: val[0][1]}  }
                | DATETIME        {   result = {}.merge( val[0][1] ) }
-
-
+               | DATETIME TIME_WITH_TIMEZONE   {
+                                     result = { time_local: val[1][1].merge( val[0][1] ) }
+                                 }
 
 
 ####
@@ -329,7 +340,9 @@ class RaccMatchParser
          
 
         match_opts
-             :  date_header_body    ## note: same as (inline) date header but WITHOUT newline!!!
+             # :  date_header_body    ## note: same as (inline) date header but WITHOUT newline!!!
+             : match_header_date
+             | match_header_date geo_opts {  result = val[0].merge( val[1]) }
              |  more_date_opts      
              |  more_date_opts geo_opts { result = val[0].merge( val[1]) }
           
@@ -340,9 +353,7 @@ class RaccMatchParser
                                              result = { time:        val[0][1],
                                                         time_local:  val[1][1] }
                                          }
-           # | DATE            {   result = { date: val[0][1]}  }
-           # | DATETIME        {   result = {}.merge( val[0][1] )  }
-
+      
 
         ##
         ## todo/fix - NOTE is ignored for now; add to parse tree!!!
