@@ -64,3 +64,10 @@ read into structs that can than get exported to JSON or CSV.
           - keep et: [] for extra time score only (NOT incl. full-time)
                       that is,  ft+et = aet  e.g.  [1,1] + [1,0] = [2,1]
                       
+- add sudden death/golden goal option for extra time
+  - asdet  (after sudden death extra time)
+  - agget  (after golden goal extra time)
+  - aet/gg (after extra time/golden goal)
+
+ 
+  

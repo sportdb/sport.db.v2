@@ -369,6 +369,43 @@ Bayern München   3-4 pen 1-1 aet (1-1, 0-0)  Chelsea
 Bayern München   3-4 pen. 1-1 a.e.t.   Chelsea 
 
 
+###
+#  check golden goal (sudden death) and silver goal in extra time
+
+Germany          2-1 Czech Republic   (aet)
+Germany          2-1 Czech Republic   (aet/gg)
+Germany          2-1 Czech Republic   (a.e.t./g.g.)
+Germany          2-1 Czech Republic   (a.e.t/g.g)
+Germany          2-1 Czech Republic   (agget)
+Germany          2-1 Czech Republic   (asdet)      
+
+Germany          v Czech Republic   2-1 (aet/gg)
+Germany          v Czech Republic   2-1 (a.e.t./g.g.)
+Germany          v Czech Republic   2-1 (a.e.t/g.g)
+Germany          v Czech Republic   2-1 (agget)
+Germany          v Czech Republic   2-1 (asdet)      
+
+
+France             2-1 Italy           (aet)
+France             2-1 Italy           (aet/gg)
+
+
+Greece             1-0 Czech Republic   (aet/sg) 
+Greece             1-0 Czech Republic   (a.e.t./s.g.) 
+Greece             1-0 Czech Republic   (asget) 
+
+
+
+France             2-1 aet/gg Italy          
+France             2-1aet/gg Italy          
+France             2-1 a.e.t./g.g. Italy          
+France             2-1 agget Italy          
+France             2-1 asdet Italy          
+
+France             2-1 aet/gg (1-1, 1-0) Italy          
+France             2-1 aet/gg (1-1,) Italy          
+France             2-1 aet/gg (1-1) Italy          
+
 
 TXT
 

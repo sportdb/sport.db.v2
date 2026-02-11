@@ -2,6 +2,8 @@ module SportDb
 class Lexer
 
 
+   
+
     ## todo/check: use ‹› (unicode chars) to mark optional parts in regex constant name - why? why not?
 
     #####
@@ -17,8 +19,16 @@ class Lexer
     #
     P_EN  =  '(?: pen\.? | p\.? )'     # e.g. p., p, pen, pen., etc.
 
-    ## fix - change ET_EN  to AET_EN !!!
+    ## fix - change ET_EN  to AET_EN!!! - why? why not?
     ET_EN =  '(?: aet | a\.e\.t\.? )'     # note: make last . optional (e.g a.e.t) allowed too
+    # AET_EN = ET_EN
+
+    ####
+    ## after (golden goal/sudden death) extra time   - add more options/styles - why? why not?
+    AETGG_EN  = '(?: aet/gg | a\.e\.t\.?/g\.g\.? | agget | asdet )'
+    ## after (silver goal) extra time
+    AETSG_EN  = '(?: aet/sg | a\.e\.t\.?/s\.g\.? | asget  )'
+    
     AGG_EN = '(?: agg\.?  )'   ## aggregate e..g  4-4 agg etc.
   
 
@@ -39,6 +49,45 @@ class Lexer
                           [ ]? #{ET_EN}
                   >
     SCORE_LOOKAHEAD = '(?= [ ,\]] | $)'
+
+    
+    ####
+    ## after extra-time with golden goal/sudden death & silver goal rule
+    ##        note - golden goal & silver goal EXCLUDE penalties!!!
+    ##
+    ##  4-3 a.e.t/g.g.
+    ##  4-3 aet/gg
+    ##  4-3agget   -or-   4-3 asdet
+    ##  2-1 aet/sg
+    ##   -or-
+    ##   4-3 aet/gg (3-3, 2-1)
+    SCORE__ET_GG_SG__RE = %r{
+        (?<score_full>
+           \b
+           (?<et1>\d{1,2}) - (?<et2>\d{1,2})
+                          [ ]? (?:
+                                   (?<aetgg> #{AETGG_EN})
+                                      |
+                                   (?<aetsg> #{AETSG_EN})
+                                )
+           ### note:
+           ## add optional full-time, half-time score
+             (?:
+                 [ ]+
+                 \(
+                    [ ]*
+                   (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
+                      [ ]*
+                    (?:
+                       , [ ]*
+                       (?: (?<ht1>\d{1,2}) - (?<ht2>\d{1,2})
+                         [ ]*
+                      )?
+                   )? # note: make half time (HT) score optional for now
+                 \)
+             )?                     
+            #{SCORE_LOOKAHEAD}
+    )}ix
 
 
     ##  note: allow SPECIAL cases WITHOUT full time scores (just a.e.t or pen. + a.e.t.)
@@ -215,6 +264,7 @@ class Lexer
 #  note: order matters; first come-first matched/served
 
 SCORE_FULL_RE = Regexp.union(
+  SCORE__ET_GG_SG__RE,       # e.g. 3-1 aet/gg  
   SCORE__P_ET_FT_HT_V2__RE,  # e.g. 5-1 pen. (2-2, 1-1, 1-0)  
   SCORE__ET_FT_HT_P__RE,    # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen. 
   SCORE__P_ET_FT_HT__RE,    # e.g. 5-1 pen. 2-2 a.e.t. (1-1, 1-0)

@@ -163,6 +163,10 @@ SCORE_FULLER_MORE__HT_FT__RE = %r{
 #        4-4 (aet)
 #        4-4 (a.e.t.)
 #        or
+#   add golden goal/sudden death and silver goal e.g.
+#        5-4 (aet/gg)            - note: adds golden (goal) flag
+#        5-4 (a.e.t./g.g.)       - note: adds silver (goal) flag
+#
 #     Team A  4-4  Team B  (aet)
 #     Team A  4-4  Team B  (a.e.t.)
 #
@@ -175,7 +179,13 @@ SCORE_FULLER__ET = %Q<
              \\(
                 #{SCORE_FULLER_HT_OPT} 
                 #{SCORE_FULLER_FT_OPT} 
-                (?<aet> #{ET_EN})
+                (?:
+                  (?<aetgg> #{AETGG_EN})
+                   |
+                  (?<aetsg> #{AETSG_EN}) 
+                   |
+                  (?<aet> #{ET_EN})
+                 )
              \\)
 >
 

@@ -716,6 +716,10 @@ def _tokenize_line( line )
                  score[:away] = true
               end  
 
+              ## add golden/silver flags
+              score[:golden] = true   if m[:aetgg]  ## golden goal (gg)/sudden death (sd)
+              score[:silver] = true   if m[:aetsg]  ## silver goal (sg)
+
             ## note - for debugging keep (pass along) "literal" score
             [:SCORE_FULL, [m[:score_full], score]]
         elsif m[:score_fuller]
@@ -738,7 +742,11 @@ def _tokenize_line( line )
               end  
 
               ## add aet flag true/false
-              # score[:aet] = true   if m[:aet]
+              # score[:aet] = true   if m[:aet] || m[:aetgg] || m[:aetsg]
+              
+              ## add golden/silver flags
+              score[:golden] = true   if m[:aetgg]  ## golden goal (gg)/sudden death (sd)
+              score[:silver] = true   if m[:aetsg]  ## silver goal (sg)
 
             ## note - for debugging keep (pass along) "literal" score
             [:SCORE_FULLER, [m[:score_fuller], score]]
@@ -765,7 +773,10 @@ def _tokenize_line( line )
               end  
 
               ## add aet flag true/false
-              score[:aet] = true   if m[:aet]
+              score[:aet] = true   if m[:aet] || m[:aetgg] || m[:aetsg]
+              ## add golden/silver flags
+              score[:golden] = true   if m[:aetgg]  ## golden goal (gg)/sudden death (sd)
+              score[:silver] = true   if m[:aetsg]  ## silver goal (sg)
 
             ## note - for debugging keep (pass along) "literal" score
             [:SCORE_FULLER_MORE, [m[:score_fuller_more], score]]
