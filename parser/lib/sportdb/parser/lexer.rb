@@ -537,6 +537,12 @@ def _tokenize_line( line )
               minute[:og]  = true    if m[:og]
               minute[:pen] = true    if m[:pen]
              [:GOAL_MINUTE, [m[:goal_minute], minute]]
+         elsif m[:goal_count]
+              count = {}
+              count[:count] = m[:value].to_i(10)        if m[:value]
+              count[:og]    = m[:og_value] ? m[:og_value].to_i(10) : 1      if m[:og]   ## check flag
+              count[:pen]   = m[:pen_value] ? m[:pen_value].to_i(10) : 1    if m[:pen]  ## check flag
+              [:GOAL_COUNT, [m[:goal_count], count]]
          elsif m[:sym]
             sym = m[:sym]
             ## return symbols "inline" as is - why? why not?

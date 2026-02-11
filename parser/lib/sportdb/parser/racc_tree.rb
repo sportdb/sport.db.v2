@@ -282,15 +282,20 @@ GoalLine    = Struct.new( :goals1, :goals2 ) do
   end  
 end
 
-Goal        = Struct.new( :player, :minutes ) do
+
+Goal        = Struct.new( :player, :minutes, :count ) do
   def to_s
     buf = String.new
     buf << "#{self.player}"
-    if minutes.nil? || minutes.empty?
-      ## add nothing if no minutes available/present
+    if count
+       buf << (" " + count.pretty_inspect + ",")
     else
-      buf << " "
-      buf << minutes.map { |min| min.to_s }.join(' ')
+      if minutes.nil? || minutes.empty?
+        ## add nothing if no minutes available/present
+      else
+        buf << " "
+        buf << minutes.map { |min| min.to_s }.join(' ')
+      end
     end
     buf
   end

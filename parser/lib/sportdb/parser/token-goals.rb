@@ -31,13 +31,53 @@ GOAL_NONE_RE = %r{ (?<goals_none>
 
 
 
+## e.g.  (2)
+##       (2/p), (2/pen.), (3/2p), (3/2 pen.)  
+##       (p), (pen.) (2 pen.), (2p)               
+##       (og), (o.g.), (2og), (2 o.g.)
+##
+##  note - start counting at 2 for penalties and own goals!!!
+##                 no 0/1 possible for now
+
+GOAL_COUNT_RE = %r{
+   (?<goal_count>
+      \(
+        (?:
+          ## opt penalties
+            (?<pen>
+              (?:  (?<pen_value> [2-9]) [ ]? )?
+                 (?:pen|p)\.?
+           )
+            |
+          ## opt own goals (og)
+            (?<og>
+             (?: (?<og_value> [2-9]) [ ]? )?
+                (?:og|o\.g\.) 
+            )          
+            |
+          ## opt fallback - classic count/number
+          (?:  (?<value> [1-9])
+                ## check for option penalties
+                (?<pen>
+                     /
+                     (?: (?<pen_value> [2-9]) [ ]? )?
+                     (?:pen|p)\.?
+                )?
+           )
+         )  
+      \)
+)}ix
+
+
 ##   goal types
 # (pen.) or (pen) or (p.) or (p)
 ## (o.g.) or (og)
 ##   todo/check - keep case-insensitive 
 ##                   or allow OG or P or PEN or
 ##                   only lower case - why? why not?
-
+##
+##  add (gg) for golden goal - why? why not?
+##  add (sg) for silver goal - why? why not??
 
 GOAL_MINUTE_RE = %r{
      (?<goal_minute>
@@ -90,11 +130,13 @@ GOAL_RE = Regexp.union(
     GOAL_BASICS_RE,
     GOAL_NONE_RE,
     GOAL_MINUTE_RE,
+    GOAL_COUNT_RE,
    ## MINUTE_NA_RE,   ## note - add/allow not/available (n/a,na) minutes hack for now
    ## GOAL_OG_RE, GOAL_PEN_RE,
    ## SCORE_RE,  ## add back in v2 (level 3) or such!!
     PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
 )
+
 
 =begin
 ## note - leave out n/a minute in goals - make minutes optional!!!

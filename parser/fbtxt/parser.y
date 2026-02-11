@@ -37,7 +37,7 @@ class RaccMatchParser
  
           ## check - goal_lines MUST follow match_line - why? why not?     
           | goal_lines     
-          | goal_lines_alt   ## allow differnt style/variant 
+         ### | goal_lines_alt   ## allow differnt style/variant 
  
           | BLANK        ##  was empty_line
              { trace( "REDUCE BLANK" ) } 
@@ -606,36 +606,35 @@ class RaccMatchParser
      #    (_ Higuaín 2 (1 pen); Kane, Eriksen)
 
 
-        goal_lines_alt : goal_lines_alt_body NEWLINE
-                      {
-                         kwargs = val[0]
-                         @tree << GoalLine.new( **kwargs )
-                      }
-                
-
-        goal_lines_alt_body : goals_alt                 {  result = { goals1: val[0],
-                                                              goals2: [] } 
-                                                }
-                        | GOALS_NONE goals_alt           {  result = { goals1: [],
-                                                              goals2: val[1] } 
-                                                }
-                        | goals_alt goals_sep goals_alt  {  result = { goals1: val[0],
-                                                              goals2: val[2] }
-                                                }
-
-         goal_sep   : ','           ## note: separator REQUIRED!!!
-                    | ',' NEWLINE
-
-         goals_alt   : goal_alt                      { result = val }
-                     | goals_alt goal_sep goal_alt   { result.push( val[2])  }
-               
-         goal_alt    : PLAYER  
-                    {  
-                        ## note - for minutes pass-in empty array!!!
-                       result = Goal.new( player: val[0], minutes: [] )   
-                    }
+#        goal_lines_alt : goal_lines_alt_body NEWLINE
+#                      {
+#                         kwargs = val[0]
+#                         @tree << GoalLine.new( **kwargs )
+#                      }
+#                
+#
+#        goal_lines_alt_body : goals_alt                 {  result = { goals1: val[0],
+#                                                              goals2: [] } 
+#                                                }
+#                        | GOALS_NONE goals_alt           {  result = { goals1: [],
+#                                                              goals2: val[1] } 
+#                                                }
+#                        | goals_alt goals_sep goals_alt  {  result = { goals1: val[0],
+#                                                              goals2: val[2] }
+#                                                }#
+#
+#         goal_sep   : ','           ## note: separator REQUIRED!!!
+#                    | ',' NEWLINE
+#
+#         goals_alt   : goal_alt                      { result = val }
+#                     | goals_alt goal_sep goal_alt   { result.push( val[2])  }
+#               
+#         goal_alt    : PLAYER  
+#                    {  
+#                        ## note - for minutes pass-in empty array!!!
+#                       result = Goal.new( player: val[0], minutes: [] )   
+#                    }
          
-
 
 
         goal_lines : goal_lines_body NEWLINE
@@ -670,13 +669,33 @@ class RaccMatchParser
                              | GOAL_MINUTE_SEP   
 
          goals   : goal                      { result = val }
-                 | goals goal_sep_opt goal   { result.push( val[2])  }
-               
+                  | goals goal_sep_opt goal   { result.push( val[2])  }
+
+         #####
+         ## todo -  make comma required for player only 
+         ##        (that is, no minutes or count)
+
+
          goal    : PLAYER goal_minutes 
                     {  
                        result = Goal.new( player:  val[0],
                                           minutes: val[1] )   
                     }
+                 | PLAYER GOAL_COUNT
+                     {
+                        ### todo/check:
+                        ##    auto convert/expand 
+                        ##    count to minutes - why? why not?
+                        result = Goal.new( player: val[0],
+                                           count:  val[1][1] )
+                     }
+                 | PLAYER
+                     {
+                        result = Goal.new( player: val[0],
+                                           minutes: [] )
+                     }
+                 
+
          goal_minutes  : goal_minute   {  result = val }
                        | goal_minutes goal_minute_sep_opt goal_minute  {  result.push( val[2])  }
 
