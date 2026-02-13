@@ -38,6 +38,7 @@ puts
 
 
 SportDb::MatchParser.debug = true
+SportDb::MatchTree.debug = true
 
 
 start = Date.new( 2024, 6, 1 )

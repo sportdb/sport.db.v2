@@ -15,7 +15,7 @@ require 'sportdb/quick'
 OPENFOOTBALL_PATH = '../../../openfootball'
 
 
-## SportDb::MatchParser.debug = true
+SportDb::MatchTree.debug = true
 
 
 # path = "#{OPENFOOTBALL_PATH}/euro/2024--germany/euro.txt"
