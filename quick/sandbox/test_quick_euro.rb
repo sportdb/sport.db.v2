@@ -21,6 +21,7 @@ SportDb::QuickMatchReader.debug = true
 
 
 path =  "#{OPENFOOTBALL_PATH}/euro/2024--germany/euro.txt"
+## path =  "#{OPENFOOTBALL_PATH}/euro/2028--united_kingdom-ireland/euro.txt"
 
 matches = SportDb::QuickMatchReader.read( path )
 ## pp matches

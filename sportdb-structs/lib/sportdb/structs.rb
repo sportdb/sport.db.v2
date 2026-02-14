@@ -1,7 +1,12 @@
 ## 3rd party gems
 require 'alphabets'       # unaccent, downcase_i18n, variants, ...
 require 'season/formats'  # Season.parse, ...
-require 'score/formats'
+
+
+##   note - remove score class/gem for now
+##            too early for multi-lang support and more
+## require 'score/formats'
+##
 
 require 'cocos'    # pull-in for read_csv & more
 

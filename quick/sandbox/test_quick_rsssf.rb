@@ -19,6 +19,7 @@ SportDb::MatchTree.debug = true
 
 
 path =  "#{OPENFOOTBALL_PATH}/euro/rsssf/60e.txt"
+# path =  "#{OPENFOOTBALL_PATH}/euro/rsssf/2024e.txt"
 
 matches = SportDb::QuickMatchReader.read( path )
 ## pp matches

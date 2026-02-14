@@ -20,7 +20,8 @@ class MatchTree
   end
  
 
-  def _build_date( m:, d:, y:, start:  )
+
+  def _build_date( m:, d:, y:, yy:, wday:,   start:  )
    ## quick debug hack
    if m == 2 && d == 29
       puts "quick check  feb/29 dates"
@@ -28,6 +29,16 @@ class MatchTree
       pp start
    end
 
+
+    ####
+    ## support two digit shortcut for year 
+    if yy
+      ###
+      ## for now assume 00,01 to 30 is 2000,2001 to 2030
+      ##   and          31 to 99   is  1931 to 1999
+      y =   yy <= 30 ?  2000+yy : 1900+yy
+    end     
+      
 
     if y.nil?   ## try to calculate year
       if @last_year   ## use new formula
@@ -49,7 +60,12 @@ class MatchTree
       @last_year = y
     end
 
-      Date.new( y,m,d )  ## y,m,d
+      date = Date.new( y,m,d )  ## y,m,d
+
+      ### todo/fix
+      ###  check/validate  wday here
+
+      date
   end
 
 
@@ -169,15 +185,22 @@ class MatchTree
         start_date = end_date = _build_date( m: node.date[:m],
                                              d: node.date[:d],
                                              y: node.date[:y],
+                                             yy: node.date[:yy],
+                                             wday: node.date[:wday],
                                               start: @start)
     elsif node.duration
       start_date  = _build_date( m: node.duration[:start][:m],
                                  d: node.duration[:start][:d],
                                  y: node.duration[:start][:y],
+                                 yy: node.duration[:start][:yy],
+                                 wday: node.duration[:start][:wday],
                                    start: @start)
       end_date    = _build_date( m: node.duration[:end][:m],
                                  d: node.duration[:end][:d],
-                                 y: node.duration[:end][:y],
+                                 y: node.duration[:end][:y],                                         
+                                yy: node.duration[:end][:yy],
+                                wday: node.duration[:end][:wday],
+
                                    start: @start)
     else
        puts "!! PARSE ERROR - expected date or duration for round def; got:"
@@ -290,6 +313,8 @@ class MatchTree
     date = _build_date( m: node.date[:m],
                         d: node.date[:d],
                         y: node.date[:y],
+                        yy: node.date[:yy],
+                        wday: node.date[:wday],
                         start: @start )
 
     logger.debug( "    date: #{date} with start: #{@start}")
@@ -337,9 +362,16 @@ class MatchTree
    if goals2.empty? && !goals1.empty?
          
      match = @matches[-1]
-     if (match.score1 && match.score1et.nil? && match.score1 == 0 ) ||
-        (match.score1 && match.score1et      && match.score1 == 0 && match.score1et == 0)
-         ## "parallel assignment (or multiple assignment") - swap values in single line
+
+     ##
+     ## todo/fix
+     ##   move upstream
+     ##    use score1_zero? or such - why? why not?
+     if (match.score.is_a?(Array) && match.score[0] == 0 ) ||
+        (match.score.is_a?(Hash)  && match.score[:et] && match.score[:et][0] == 0) ||
+        (match.score.is_a?(Hash)  && match.score[:et].nil? && 
+                                     match.score[:ft] && match.score[:ft][0] == 0)
+        ## "parallel assignment (or multiple assignment") - swap values in single line
         goals2, goals1 = goals1, goals2
      end
    end
@@ -410,6 +442,8 @@ class GoalStruct
     date =  _build_date( m: node.date[:m],
                          d: node.date[:d],
                          y: node.date[:y],
+                         yy: node.date[:yy],
+                         wday: node.date[:wday],
                          start: @start )   if node.date
 
     ## note - there's no time (-only) type in ruby
@@ -425,28 +459,22 @@ class GoalStruct
     ##     or use new Score.build( ht:, ft:, ) or such - why? why not?
     ## pp score              
     score  = nil
-    if node.score 
-      if node.score.is_a?(Array)
-        ## assume "undefined" score 
-        ##   is always ft for now
-        ##
-        ##    fix/todo - add more checks later!!!
-        ##     or better change score "upstream"
-        ##     to hash or array too!!!
-        ht = [nil,nil]
-        ft = node.score 
-        values = [*ht, *ft]
-        score = Score.new( *values )
-      else  ## (default) assume Hash 
-        ht = node.score[:ht] || [nil,nil]
-        ft = node.score[:ft] || [nil,nil]
-        et = node.score[:et] || [nil,nil]
-        p  = node.score[:p]  || [nil,nil]
-        values = [*ht, *ft, *et, *p]
-        ## pp values
-        score = Score.new( *values )
-      end
-    end
+    score = node.score   if node.score 
+    
+    ## if node.score.is_a?(Array)
+    ##    ## assume "undefined" score 
+    ##    score = node.score
+    ##  else  ## (default) assume Hash 
+    ##     # ht = node.score[:ht] || [nil,nil]
+    ##     # ft = node.score[:ft] || [nil,nil]
+    ##     # et = node.score[:et] || [nil,nil]
+    ##     # p  = node.score[:p]  || [nil,nil]
+    ##     # values = [*ht, *ft, *et, *p]
+    ##     # pp values
+    ##     ## pp node.score
+    ##    score = node.score
+    ##  end
+    ## end
  
 
     status = nil
@@ -568,6 +596,10 @@ class GoalStruct
        timezone = node.timezone   if node.timezone
     end
 
+    ## attendance
+    att = nil
+    att =  node.att   if node.att
+
 
     @matches << Import::Match.new( num:      num,
                                    date:     date_str,
@@ -579,7 +611,8 @@ class GoalStruct
                                    group:    group ? group.name : nil,  ## note: for now always use string (assume unique canonical name for event)
                                    status:   status,
                                    ground:   ground,
-                                   timezone: timezone )
+                                   timezone: timezone,
+                                   att:      att )
     ### todo: cache team lookups in hash?
   end
 end # class MatchTree

@@ -64,6 +64,12 @@ def tokenize_with_errors
                    "  "   ## replace with two spaces
                  end
 
+        line = line.gsub( /[–]/ ) do |_|
+                  ## report error here
+                  ## todo/add error here
+                  puts "!! WARN - auto-fix; replacing unicode dash ascii dash (-) in line #{line.inspect}"
+                   '-'   ## replace with ascii dash (-)
+                  end
 
         ## line = line.rstrip   ## note - MUST remove/strip trailing newline (spaces optional)!!!
         line = line.strip   ## note - strip leading AND trailing whitespaces

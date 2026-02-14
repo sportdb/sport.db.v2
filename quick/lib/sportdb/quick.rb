@@ -1,4 +1,4 @@
-require 'sportdb/structs'  # deps:  score-foramts
+require 'sportdb/structs'  # deps:   cocos  (for csv support)
                            #         season-formats
                            #         alphabets
 require 'sportdb/parser'   # deps:   cocos

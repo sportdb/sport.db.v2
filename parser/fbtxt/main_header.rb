@@ -23,7 +23,7 @@ Soviet Union     2-1  Yugoslavia      (aet)
   (Metreveli 49, Ponedelnik 114; Galic 41)
 
 
-  
+
 ## check for extended geo names
 ##    e.g. Dublin (Dalymount Park)
 
@@ -42,6 +42,17 @@ Romania           3-0  Turkey
 
 03.12.1958 @ Athinai (OAKA - Maroussi)
 Greece            1-1  France
+
+
+###
+#  check (inline) geo 
+
+25.03.23 @ Glasgow        Scotland           3-0 Cyprus
+25.03.23 @ Málaga         Spain              3-0 Norway
+28.03.23 @ Batumi         Georgia            1-1 Norway
+28.03.23 @ Glasgow        Scotland           2-0 Spain
+
+
 
 TXT
 
