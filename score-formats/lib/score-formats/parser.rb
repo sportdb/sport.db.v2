@@ -21,7 +21,7 @@ class ScoreParser
     
     @formats.each do |format|
       re = format[0]
-      if m(m = re.match( line ))
+      if (m = re.match( line ))
       return  parse_matchdata(m)
       end
     end
