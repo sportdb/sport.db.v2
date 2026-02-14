@@ -93,6 +93,23 @@ BASICS_RE = %r{
 
 
 
+###
+## add att(endance) e.g.  att: 18000
+##
+##    A v B 2-1  att: 18000
+
+ATTENDANCE_RE = %r{
+    (?<attendance>
+     \b
+        att: [ ]*
+         (?<value>
+              [1-9]
+              (?: _? \d+ )*
+         )
+     \b
+)}ix
+
+
 RE = Regexp.union(
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
                     SCORE_NOTE_RE,
@@ -102,6 +119,7 @@ RE = Regexp.union(
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
                      TIME_LOCAL_RE,
+                    ATTENDANCE_RE,   # note - allow att: for now inline in matches too - why? why not? 
                     SCORE_LEGS_RE,
                     SCORE_FULL_RE, 
                     SCORE_FULLER_RE,
@@ -136,12 +154,17 @@ ROUND_OUTLINE_RE = %r{   \A
 ## check for headings 
 ##    e.g.  = heading 1
 ##          == heading 2  etc.
-
+##          =Eurochampionship=
+##    note  -  no spaces required (same as in wikipedia!!)
+##             same as in wikipedia support six (6) levels
+##
 ##  note - use \A (instead of ^) - \A strictly matches the start of the string.
+
+
 HEADING_RE = %r{   \A
                            [ ]*  ## ignore leading spaces (if any)
-                         (?<heading_marker> ={1,5} ) 
-                           [ ]+
+                         (?<heading_marker> ={1,6} ) 
+                           [ ]*
                             (?<heading>
                                ## must start with letter - why? why not?
                                ###   1st round
@@ -151,7 +174,7 @@ HEADING_RE = %r{   \A
                            [ ]*  ## ignore trailing spaces (if any)
                             (?: =* )  ## allow any trailing heading markers
                            [ ]*  ## ignore trailing spaces (if any)
-                         $
+                         \z
                        }ix
 
 

@@ -105,8 +105,13 @@ class MatchTree
           on_match_line( node )
       elsif node.is_a? RaccMatchParser::GoalLine
           on_goal_line( node )
-      elsif node.is_a? RaccMatchParser::LineupLine
-           ## skip lineup for now
+      elsif node.is_a?( RaccMatchParser::LineupLine ) ||
+            node.is_a?( RaccMatchParser::RefereeLine )
+           ## skip lineup, referee props for now
+      elsif node.is_a?( RaccMatchParser::Heading1 ) ||
+            node.is_a?( RaccMatchParser::Heading2 ) ||
+            node.is_a?( RaccMatchParser::Heading3 )
+          ###  skip headings (1/2/3) for now
       else
         ## report error
         msg = "!! WARN - unknown node (parse tree type) - #{node.class.name}" 
@@ -321,6 +326,23 @@ class MatchTree
    
     pp [goals1,goals2]     if debug?
 
+
+## special rule
+##    if goals 2 empty check if score for team 1 is zero 
+##                           and team 2 is NOT zero than 
+##                                make goals1 goald2!!
+##   e.g. Norway 0-1  Austria
+##                   (Hof 32)
+
+   if goals2.empty? && !goals1.empty?
+         
+     match = @matches[-1]
+     if (match.score1 && match.score1et.nil? && match.score1 == 0 ) ||
+        (match.score1 && match.score1et      && match.score1 == 0 && match.score1et == 0)
+         ## "parallel assignment (or multiple assignment") - swap values in single line
+        goals2, goals1 = goals1, goals2
+     end
+   end
 
 ## wrap in struct andd add/append to match
 =begin

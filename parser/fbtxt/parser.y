@@ -342,7 +342,29 @@ class RaccMatchParser
             :     match_header_body   NEWLINE  {  result = val[0]  }
             
          match_header_body              
-               : match_header_date geo_opts   {  result = {}.merge( val[0], val[1] ) }
+               : match_header_date geo_opts opt_inline_attendance   
+                   { 
+                      result = {}.merge( val[0], val[1], val[2] ) 
+                   }
+               
+
+         ## todo/fix - allow (inline) attendance in match w/o header too
+         ##              for now match header required
+         ##
+         ##  note - use "hack" with INLINE_ATTENDANCE_SEP (a.k.a comma (,))
+         ##           to help with shift/reduce conflict
+         opt_inline_attendance
+              :    {  result = {}  }    ## empty; make rule optinal, returns {}
+              |   INLINE_ATTENDANCE   
+                    { 
+                       result = { att: val[0][1][:value] }
+                    }
+              |  INLINE_ATTENDANCE_SEP  INLINE_ATTENDANCE  
+              ## |  ','  INLINE_ATTENDANCE  
+                    { 
+                       result = { att: val[1][1][:value] }
+                    }
+
 
         match_header_date     ## note - only two option allowed (no "standalone" TIME etc.)
                : DATE            {   result = { date: val[0][1]}  }
@@ -428,11 +450,16 @@ class RaccMatchParser
         ##       @ München 
         ##       @ Luzhniki Stadium, Moscow (UTC+3)
         geo_opts : '@' geo_values           { result = { geo: val[1] } }
-                 | '@' geo_values TIMEZONE  { result = { geo: val[1], timezone: val[2] } }
+         
+         ###  note -  timezone for now moved to time use  13.00 (UTC+3) and such
+         ##               maybe add back later for the geo table def lines
+         ###       | '@' geo_values TIMEZONE  { result = { geo: val[1], timezone: val[2] } }
 
         geo_values
                :  GEO                         {  result = val }
                |  geo_values ',' GEO          {  result.push( val[2] )  }      
+
+
 
 
          match  :   match_result

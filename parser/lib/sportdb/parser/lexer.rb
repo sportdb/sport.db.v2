@@ -51,6 +51,20 @@ def tokenize_with_errors
     ##  note - KEEP empty lines (get turned into BLANK token!!!!)
 
     @txt.each_line do |line|
+
+       ##
+       ##  first check for tabs
+       ##    add error/warn
+       ##    for auto-fix - replace tabs with two spaces
+ 
+        line = line.gsub( "\t" ) do |_|
+                  ## report error here
+                  ## todo/add error here
+                  puts "!! WARN - auto-fix; replacing tab (\\t) with two spaces in line #{line.inspect}"
+                   "  "   ## replace with two spaces
+                 end
+
+
         ## line = line.rstrip   ## note - MUST remove/strip trailing newline (spaces optional)!!!
         line = line.strip   ## note - strip leading AND trailing whitespaces
                             ## note - trailing whitespace may incl. \n or \r\n!!!
@@ -145,6 +159,14 @@ def tokenize_with_errors
              _ = buf.next  ## eat-up goal_minute_sep a.k.a. comma (,)
                            ##   and replace with dedicated sep(arator)
              nodes << [:GOAL_MINUTE_SEP,"<|GOAL_MINUTE_SEP|>"]
+         elsif buf.match?( :',', :INLINE_ATTENDANCE )
+             ## note  - allow optional comma before inline attendance  
+             ## help parser with comma shift/reduce conflict
+             ##   change ',' to INLINE_ATTENDANCE_SEP !!!
+             nodes << [:INLINE_ATTENDANCE_SEP, "<|INLINE_ATTENDANCE_SEP|>"]
+             _ = buf.next  ## eat-up inline_attendance_sep a.k.a. comma (,)
+                           ##   and replace with dedicated sep(arator)
+             nodes << buf.next   ## pass through inline_attendance 
           else
              ## pass through
              nodes << buf.next
@@ -324,8 +346,11 @@ def _tokenize_line( line )
                nil    ## skip (single) space
            elsif m[:text]
                [:GEO, m[:text]]   ## keep pos - why? why not?
-           elsif m[:timezone]
-               [:TIMEZONE, m[:timezone]]
+        ##  note - timezone for now moved out of geo
+        ##              (use after TIME or use TIME_LOCAL w/ optional TIMEZONE)
+        ##                TIMEZONE_RE, 
+        #   elsif m[:timezone]
+        #       [:TIMEZONE, m[:timezone]]
            elsif m[:sym]
               sym = m[:sym]
               ## return symbols "inline" as is - why? why not?
@@ -581,6 +606,11 @@ def _tokenize_line( line )
           else
              [:STATUS, [m[:status], {status: m[:status] } ]]
           end
+        elsif m[:attendance]
+             att = {} 
+             att[:value] = m[:value].gsub( '_', '' ).to_i(10)
+             ## note - for token id use INLINE_ATTENDANCE  (ATTENDANCE in use for prop!!!) 
+            [:INLINE_ATTENDANCE, [m[:attendance], att ]]
         elsif m[:note]
             ###  todo/check:
             ##      use value hash - why? why not? or simplify to:

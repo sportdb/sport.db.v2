@@ -230,7 +230,8 @@ MatchLine   = Struct.new( :header,
                           :status,  
                           :geo,
                           :timezone,
-                          :note )  do   ## change to geos - why? why not?
+                          :note,
+                          :att )  do   ## change to geos - why? why not?
 
   def pretty_print( printer )
     printer.text( "<MatchLine " )

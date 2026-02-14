@@ -40,9 +40,9 @@ GEO_TEXT_RE = %r{
                ##    for single spaces only (and _/ MUST not be surround by spaces) 
 
               (?: 
-                  [ ]?   # only single spaces allowed inline!!!  
+                  [ ]?   # only single (inline) space allowed - double spaces are breaks!!!  
                   (?:
-                     \p{L} | \d | [.&'°]
+                     \p{L} | \d  | [.&'°]
                       |
                      (?: (?<! [ ])  ## no space allowed before (but possible after)
                           [-]
@@ -54,6 +54,22 @@ GEO_TEXT_RE = %r{
                      )
                   )+
               )*
+
+              ## for now allow auto-add optional
+              ##   parenthesis enclosed closed text
+              ##   e.g. Dublin (Dalymount Park)
+              ##        Bucuresti (23 August)
+              ##        Paris (Parc des Princes)
+              ##        Ost-Berlin (Walter-Ulbricht)
+              ##        Athinai (OAKA - Maroussi)  
+              (?:
+                    [ ]
+                    \(
+                        [^()\[\],;:›<>]+    ## todo - add more special chars
+                                            ##   maybe list only allowed ones??
+                                            ##   make pattern more strict - why? why not?
+                    \)
+              )?
          
               ## must NOT end with space or dash(-)
               ##  todo/fix - possible in regex here
@@ -124,7 +140,9 @@ GEO_BASICS_RE = %r{
 
 
 GEO_RE = Regexp.union(
-                    TIMEZONE_RE,
+    ##  note - timezone for now moved out of geo
+    ##              (use after TIME or use TIME_LOCAL w/ optional TIMEZONE)
+    ##                TIMEZONE_RE, 
                     GEO_BASICS_RE, 
                     GEO_TEXT_RE,
                     ANY_RE,
