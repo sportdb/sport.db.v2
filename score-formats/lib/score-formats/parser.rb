@@ -26,8 +26,11 @@ class ScoreParser
       end
     end
 
-    raise ArgumentError, "Invalid score; no format match found for line: >#{line}<" if score.nil?
-
+    if(score.nil?)
+      raise ArgumentError, "Invalid score; no format match found for line: >#{line}<" 
+    end
+    
+    score
   end # method parse
 
 
@@ -52,8 +55,7 @@ class ScoreParser
     @formats.each do |format|
       re  = format[0]
       tag = format[1]
-      m = re.match( line )
-      if m
+      if (m = re.match( line ))
         score = parse_matchdata( m )
         line.sub!( m[0], tag )
         break
@@ -61,7 +63,11 @@ class ScoreParser
       # no match; continue; try next regex pattern
     end
 
-    score  # note: nil if no match found
+    if(score.nil?)
+      raise ArgumentError, "Invalid score; no format match found for line: >#{line}<"
+    end
+
+    score
   end # method find!
 
 private
