@@ -16,24 +16,21 @@ class ScoreParser
 
   def parse( line )
 
-     ##########
-     ## todo/fix/check: add unicode to regular dash conversion - why? why not?
-     ##  e.g. – becomes -  (yes, the letters a different!!!)
-     #############
-
-    score = nil
+    #Convert unicode dashes to regular dash (e.g. en dash, em dash...)
+    line = line.tr( '–—', '--' )  
+    
     @formats.each do |format|
       re = format[0]
-      m = re.match( line )
-      if m
-        score = parse_matchdata( m )
-        break
+      if (m = re.match( line ))
+      return  parse_matchdata(m)
       end
-      # no match; continue; try next regex pattern
     end
 
-    ## todo/fix - raise ArgumentError - invalid score; no format match found
-    score  # note: nil if no match found
+    if(score.nil?)
+      raise ArgumentError, "Invalid score; no format match found for line: >#{line}<" 
+    end
+    
+    score
   end # method parse
 
 
@@ -58,8 +55,7 @@ class ScoreParser
     @formats.each do |format|
       re  = format[0]
       tag = format[1]
-      m = re.match( line )
-      if m
+      if (m = re.match( line ))
         score = parse_matchdata( m )
         line.sub!( m[0], tag )
         break
@@ -67,7 +63,11 @@ class ScoreParser
       # no match; continue; try next regex pattern
     end
 
-    score  # note: nil if no match found
+    if(score.nil?)
+      raise ArgumentError, "Invalid score; no format match found for line: >#{line}<"
+    end
+
+    score
   end # method find!
 
 private
