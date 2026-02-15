@@ -27,7 +27,7 @@ class ScoreParser
     end
 
     if(score.nil?)
-      raise ArgumentError, "Invalid score; no format match found for line: >#{line}<" 
+      raise ArgumentError, "Invalid score; no format match found for line: >#{line.inspect}<" 
     end
     
     score
@@ -57,14 +57,14 @@ class ScoreParser
       tag = format[1]
       if (m = re.match( line ))
         score = parse_matchdata( m )
-        line.sub!( m[0], tag )
+        line.sub!(m[0], tag )
         break
       end
       # no match; continue; try next regex pattern
     end
 
     if(score.nil?)
-      raise ArgumentError, "Invalid score; no format match found for line: >#{line}<"
+      raise ArgumentError, "Invalid score; no format match found for line: >#{line.inspect}<"
     end
 
     score
