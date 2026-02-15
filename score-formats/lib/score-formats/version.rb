@@ -1,16 +1,30 @@
 
 module ScoreFormats
-  MAJOR = 0    ## todo: namespace inside version or something - why? why not??
-  MINOR = 2
-  PATCH = 0
-  VERSION = [MAJOR,MINOR,PATCH].join('.')
+  ## namespace inside version or something
+  module Version
+    def self.major
+      0   
+    end
+
+    def self.minor
+      2
+    end
+
+    def self.patch
+      0
+    end
+
+    def self.version_string
+      [major,minor,patch].join('.')
+    end
+  end
 
   def self.version
-    VERSION
+    Version.version_string
   end
 
   def self.banner
-    "score-formats/#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
+    "score-formats/#{version} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
   end
 
   def self.root
