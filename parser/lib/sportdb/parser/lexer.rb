@@ -50,8 +50,19 @@ def tokenize_with_errors
     ##
     ##  note - KEEP empty lines (get turned into BLANK token!!!!)
 
-    @txt.each_line do |line|
 
+    ###
+    ## quick hack for now
+    ##   remove  html-style comments <!-- -->
+    ##           (incl. multi-line)  with two spaces
+    ##       will mess-up lineno tracking!!!
+    ##    fix later to have function lineno & colno!!!
+
+    txt = @txt.gsub( , '  ' )
+
+
+
+    txt.each_line do |line|
        ##
        ##  first check for tabs
        ##    add error/warn

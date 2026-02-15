@@ -70,4 +70,14 @@ read into structs that can than get exported to JSON or CSV.
   - aet/gg (after extra time/golden goal)
 
  
+----
+more todos
+
+- [ ]  add football boxes (matches) from <https://en.wikipedia.org/wiki/1871–72_FA_Cup>  incl. w/o from, byes and more!!!
+- [ ] add rsssf samples for
+        - <https://www.rsssf.org/tablese/engcup1873.html>
+        - <https://github.com/rsssf/brazil/blob/master/2010/1-seriea.txt>
+        - <https://github.com/rsssf/deutschland/blob/master/archive/1960s/1963-64/1-bundesliga.txt>
   
+
+
