@@ -64,7 +64,7 @@ class QuickMatchReader
 
     ## note - source file MUST always start with heading 1 for now
     tree   = []
-    parser = RaccMatchParser.new( @txt )   ## use own parser instance (not shared) - why? why not?
+    parser = RaccMatchParser.new( @txt, debug: debug? )   ## use own parser instance (not shared) - why? why not?
     tree = parser.parse
    
 

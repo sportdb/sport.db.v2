@@ -203,6 +203,22 @@ end
 
 
 
+MatchLineBye   = Struct.new( :team ) do
+ def pretty_print( printer )
+    printer.text( "<MatchLineBye " )
+    printer.text( "#{self.team} bye")
+    printer.text( ">" )
+  end  
+end
+
+MatchLineWalkover   = Struct.new( :team1, :team2 ) do
+ def pretty_print( printer )
+    printer.text( "<MatchLineWalkover " )
+    printer.text( "#{self.team1} w/o #{self.team2}")
+    printer.text( ">" )
+  end  
+end
+
 MatchLineLegs   = Struct.new( :team1, :team2, 
                               :score )  do   ## change to geos - why? why not?
  def pretty_print( printer )

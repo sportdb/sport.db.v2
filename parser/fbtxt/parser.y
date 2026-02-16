@@ -404,6 +404,19 @@ class RaccMatchParser
                       kwargs = {}.merge( val[0], val[1] )
                       @tree << MatchLine.new( **kwargs )
                   }
+              ### todo/fix:  allow/add (inline) note too e.g. [Bury went bankrupt] etc.!!
+              |   TEAM INLINE_BYE  NEWLINE    ## e.g.  Queen's Park   bye     
+                    {
+                      kwargs = { team: val[0] }
+                      @tree << MatchLineBye.new( **kwargs )
+                    }
+              ### todo/fix:  allow/add (inline) note too!!
+              |   TEAM INLINE_WO TEAM  NEWLINE   ## e.g.  Oxford University  w/o  Queen's Park 
+                   {
+                      kwargs = { team1: val[0],
+                                 team2: val[2] }
+                      @tree << MatchLineWalkover.new( **kwargs )
+                   }
          
 
         match_opts

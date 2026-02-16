@@ -39,6 +39,13 @@ def initialize( lines, debug: false )
 end
 
 
+HTML_COMMENT_RE = %r{  <!--
+                            .*?   ## note - use non-greedy/lazy *? match
+                         --> 
+                       }xm      ## note - turn on multi-line match (for dot (.))
+
+
+
 def tokenize_with_errors
     tokens_by_line = []   ## note: add tokens line-by-line (flatten later)
     errors         = []   ## keep a list of errors - why? why not?
@@ -57,9 +64,7 @@ def tokenize_with_errors
     ##           (incl. multi-line)  with two spaces
     ##       will mess-up lineno tracking!!!
     ##    fix later to have function lineno & colno!!!
-
-    txt = @txt.gsub( , '  ' )
-
+    txt = @txt.gsub( HTML_COMMENT_RE, '  ' )
 
 
     txt.each_line do |line|
@@ -623,6 +628,10 @@ def _tokenize_line( line )
           else
              [:STATUS, [m[:status], {status: m[:status] } ]]
           end
+        elsif m[:inline_wo]   ## w/o - walkout  (match status)
+            [:INLINE_WO, m[:inline_wo]]
+        elsif m[:inline_bye]  ## bye  (match status)
+            [:INLINE_BYE, m[:inline_bye]]
         elsif m[:attendance]
              att = {} 
              att[:value] = m[:value].gsub( '_', '' ).to_i(10)

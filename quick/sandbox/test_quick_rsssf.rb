@@ -18,8 +18,11 @@ OPENFOOTBALL_PATH = '../../../openfootball'
 SportDb::MatchTree.debug = true
 
 
-path =  "#{OPENFOOTBALL_PATH}/euro/rsssf/60e.txt"
+# path =  "#{OPENFOOTBALL_PATH}/euro/rsssf/60e.txt"
 # path =  "#{OPENFOOTBALL_PATH}/euro/rsssf/2024e.txt"
+# path =  "#{OPENFOOTBALL_PATH}/england/rsssf/engcup1873.txt"
+# path =  "#{OPENFOOTBALL_PATH}/england/rsssf/eng2025-premierleague.txt"
+path =  "#{OPENFOOTBALL_PATH}/england/rsssf/eng2024-playoffs.txt"
 
 matches = SportDb::QuickMatchReader.read( path )
 ## pp matches

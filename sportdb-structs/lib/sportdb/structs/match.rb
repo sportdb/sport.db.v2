@@ -168,7 +168,7 @@ class Match
     ##
     ##  move winner calc to score class - why? why not?
     if @score 
-      if @score.is_a?( Array )
+      if @score.is_a?( Array ) && !@score.empty?
         if @score[0] > @score[1]
           @winner = 1
         elsif @score[1] > @score[0]
@@ -232,24 +232,32 @@ def as_json
     data['time'] = @time  if @time
   end
 
+
   data['team1'] =  @team1.is_a?( String ) ? @team1 : @team1.name
-  data['team2'] =  @team2.is_a?( String ) ? @team2 : @team2.name
+
+  ## note - for match status bye  team2 is nil!!! 
+  ##           e.g.     Queen's Park       bye
+  ##                    Wanderers          bye   
+  ##   todo/check - keep bye as a match - why? why not?
+  ##                      has no date/time & venue & score etc.
+  if @team2
+    data['team2'] =  @team2.is_a?( String ) ? @team2 : @team2.name
+  end
 
   ## note - score might be 
   ##           1) array e.g. [0,1]
-  ##           2) hash  e.g. { ft: [0,1] } etc.      
-  data['score'] = if @score.is_a?(Hash)
-                     # note: make sure hash keys are always strings
-                     @score.transform_keys(&:to_s)
-                  elsif @score.is_a?(Array)
-                     ## note: 
-                     ##   for now always assume full-time (ft)
-                     ##     in future check for score note or such
-                     ##      to  use "plain" array or such - why? why not?   
-                     { 'ft' => @score }
-                  else  ## assume nil   
-                     {}
-                  end
+  ##           2) hash  e.g. { ft: [0,1] } etc.   
+  ##  note - w/o (walkout)  do NOT add empty score   
+  if @score.is_a?(Hash)
+      # note: make sure hash keys are always strings
+      data['score'] = @score.transform_keys(&:to_s)
+  elsif @score.is_a?(Array)
+      ## note: 
+      ##   for now always assume full-time (ft)
+      ##     in future check for score note or such
+      ##      to  use "plain" array or such - why? why not?   
+      data['score'] = { 'ft' => @score }   if !@score.empty?
+  end
 
                   
   ## data['score']['ht'] = [@score1i,   @score2i]     if @score1i && @score2i

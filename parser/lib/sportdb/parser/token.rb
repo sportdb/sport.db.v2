@@ -110,8 +110,26 @@ ATTENDANCE_RE = %r{
 )}ix
 
 
+## "inline" match status e.g.
+##  Clapham Rovers     w/o  Hitchin            
+##  Queen's Park       bye
+         
+INLINE_WO_RE = %r{
+                   (?<inline_wo>
+                       \b w/o \b
+               )}x   ## add support for upcase W/O or W-0 too - why? why not?
+
+INLINE_BYE_RE = %r{ 
+                  (?<inline_bye>
+                      \b bye \b
+               )}x   ## add support for upcase BYE - why? why not?
+
+
+
 RE = Regexp.union(
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
+                    INLINE_WO_RE,   ## (inline) match status - w/o (walkout)
+                    INLINE_BYE_RE,  ## (inline) match status - bye (advance to next round)
                     SCORE_NOTE_RE,
                     NOTE_RE,
                     DURATION_RE,  # note - duration MUST match before date
