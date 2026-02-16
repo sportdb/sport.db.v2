@@ -158,12 +158,12 @@ TEXT_RE = %r{
                 # check for country code (cc)
                 #       e.g. (AUT) or ,AUT or AUT
                 (?:
-               [ ]+   ## allow more than one space - why? why not?
+               [ ]   ## note - do NOT allow more than one space!!! - why? why not?
                   \(  (?! aet | agget | asdet | asget \)
                        )    ## note - auto-exclude reserved (aet)  from SCORE_FULLER_MORE!!!
                             ##     plus golden goal (gg)/sudden death (sd), silver goal (sg)
                      (?:
-                       [A-Z]{1,5}
+                       [A-Z]{1,5}   
                      )
                   \)
                 )

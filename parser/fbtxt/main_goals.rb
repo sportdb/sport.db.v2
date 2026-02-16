@@ -78,6 +78,42 @@ txt = <<-TXT
 #                  (Lionel Messi (4); ? (1))  
 #                  (Lionel Messi (4); ? (2))  
 
+
+##
+## try alternate dash (-) separator !!!
+
+(Metzger 83 - Krämer 29, 88, Cichy 33, Rahn 37)
+(Metzger  - Krämer (2), Cichy, Rahn)
+
+(Brunnenmeier 17 - Gerwien 74)
+(Brunnenmeier - Gerwien)
+
+(Schämer 40p - Neumann 38p)
+(Schämer 40 p - Neumann 38 p)
+
+
+
+###
+#  try "inline" style
+
+Werder      3-2 Dortmund    (Soya 34, Schütz 36, Klöckner 50; Konietzka 1, 90)
+Werder      3-2 Dortmund    (Soya 34, Schütz 36, Klöckner 50; 
+                             Konietzka 1, 90)
+
+
+Hertha      1-1 Nürnberg    (Schimmöller 63p; Morlock 40)
+Münster     1-1 Hamburger   (Dörr 70; Dörfel 86)
+Frankfurt   1-1 K'lautern   (Schämer 40p; Neumann 38p)
+Karlsruher  1-4 Meidericher (Metzger 83 - Krämer 29, 88, Cichy 33, Rahn 37)
+S'brücken   0-2 1. FC Köln  (Overath 22, C.Müller 43)
+TSV 1860    1-1 B'schweig   (Brunnenmeier 17 - Gerwien 74)
+Schalke     2-0 Stuttgart   (Koslowski 37, Gerhardt 42)
+
+S'brücken   v 1. FC Köln  0-2  (Overath 22, C.Müller 43)
+TSV 1860    v B'schweig   1-1  (Brunnenmeier 17 - Gerwien 74)
+Schalke     v Stuttgart   2-0  (Koslowski 37, Gerhardt 42)
+
+
 TXT
 
 

@@ -580,6 +580,8 @@ def _tokenize_line( line )
               nil    ## skip space(s)
          elsif m[:goals_none]    ## note - eats-up semicolon!! e.g. -; or - ;
              [:GOALS_NONE, "<|GOALS_NONE|>"]
+         elsif m[:goal_sep_alt]
+             [:GOAL_SEP_ALT, "<|GOAL_SEP_ALT|>" ]   ## e.g. dash (-) WITH leading & trailing space required    
          elsif m[:prop_name]    ## note - change prop_name to player
              [:PLAYER, m[:name]] 
          elsif m[:goal_minute]
@@ -734,10 +736,9 @@ def _tokenize_line( line )
             ## note - for debugging keep (pass along) "literal" duration
             [:DURATION, [m[:duration], duration]]
  
-        ### todo/fix - removed from lexer - remove here too!!!
-        elsif m[:num]   ## fix - change to ord (for ordinal number!!!)
+        elsif m[:ord]   ## note -  ord (for ordinal number!!!) e.g match number (1), (42), etc.
               ## note -  strip enclosing () and convert to integer
-             [:ORD, [m[:num], { value: m[:value].to_i(10) } ]]
+             [:ORD, [m[:ord], { value: m[:value].to_i(10) } ]]
         elsif m[:score_legs]
               legs = {}
               
@@ -883,10 +884,14 @@ def _tokenize_line( line )
           when '|' then [:'|']
           when '[' then [:'[']
           when ']' then [:']']
-          when '-' then [:'-']        # level 1 OR (classic) dash
-          when '--'   then [:'--']    # level 2
-          when '---'  then [:'---']   # level 3
-          when '----' then [:'----']  # level 4
+          when '-' then [:'-']    
+          when '('    ## enter goal scorer mode on "free-floating" open paranthesis!!!
+             puts "  ENTER GOAL_RE MODE"   if debug?
+             @re = GOAL_RE
+              ## note - eat-up ( for now; do NOT pass along as token
+              ##       pass along "virutal" INLINE GOALS - why? why not?
+              [:INLINE_GOALS, "<|INLINE_GOALS|>"]
+          when ')' then [:')']
           else
             puts "!!! TOKENIZE ERROR (sym) - ignore sym >#{sym}<"
             nil  ## ignore others (e.g. brackets [])

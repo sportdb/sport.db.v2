@@ -394,15 +394,31 @@ class RaccMatchParser
                 }
 
         match_line
-              :   match_opts  match  more_match_opts
+              :   match_opts  match  more_match_opts NEWLINE
                     {     
                        kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
                     }
-              |   match  more_match_opts 
+              |   match_fixture  more_match_opts NEWLINE
                   { 
                       kwargs = {}.merge( val[0], val[1] )
                       @tree << MatchLine.new( **kwargs )
+                  }
+              |   match_result  more_match_opts NEWLINE
+                  { 
+                      kwargs = {}.merge( val[0], val[1] )
+                      @tree << MatchLine.new( **kwargs )
+                  }
+               ###############
+               ### note - for now inline goals only for "compact" match results
+               ###           make more flexible (allow leading date/time etc. too)
+               |   match_result  INLINE_GOALS  goal_lines_body NEWLINE
+                  { 
+                      kwargs = {}.merge( val[0] )
+                      @tree << MatchLine.new( **kwargs )
+
+                      kwargs = val[2]
+                      @tree << GoalLine.new( **kwargs ) 
                   }
               ### todo/fix:  allow/add (inline) note too e.g. [Bury went bankrupt] etc.!!
               |   TEAM INLINE_BYE  NEWLINE    ## e.g.  Queen's Park   bye     
@@ -420,12 +436,14 @@ class RaccMatchParser
          
 
         match_opts
-             # :  date_header_body    ## note: same as (inline) date header but WITHOUT newline!!!
              : match_header_date
              | match_header_date geo_opts {  result = val[0].merge( val[1]) }
              |  more_date_opts      
              |  more_date_opts geo_opts { result = val[0].merge( val[1]) }
-          
+           # |  date_header_body    ## note: same as (inline) date header but WITHOUT newline!!!
+         
+
+
        ### e.g.  time only e.g. 15.00,  or weekday with time only e.g. Fr 15.00
        more_date_opts
              : TIME                      {   result = { time: val[0][1]}  }
@@ -444,20 +462,20 @@ class RaccMatchParser
         ##        e.g. [nb: xxxxxx] or such
 
         more_match_opts
-             : STATUS NEWLINE      ## note - for now status must be BEFORE geo_opts!!
+             :   { result = {} }   ## empty; optional
+             | STATUS       ## note - for now status must be BEFORE geo_opts!!
                  {
                       ## todo - add possible status_notes too!!! 
                       result = { status: val[0][1][:status] }
                  }
-             | STATUS geo_opts NEWLINE      
+             | STATUS geo_opts       
                  { 
                      result = { status: val[0][1][:status] }.merge( val[1] ) 
                  }
-             | geo_opts NEWLINE             { result = {}.merge( val[0] ) }
-             | geo_opts NOTE NEWLINE        { result = { note: val[1] }.merge( val[0] ) }
-             | NOTE NEWLINE                 { result = { note: val[0] } }
-             | NEWLINE                      { result = {} }
-
+             | geo_opts              { result = {}.merge( val[0] ) }
+             | geo_opts NOTE         { result = { note: val[1] }.merge( val[0] ) }
+             | NOTE                  { result = { note: val[0] } }
+          
 
         ## e.g.  @ Parc des Princes, Paris
         ##       @ München 
@@ -697,6 +715,7 @@ class RaccMatchParser
      
         goals_sep    : ';'
                      | ';' NEWLINE
+                     | GOAL_SEP_ALT   ## note - dash (-) with leading & trailing spaces required
                        
 
          goal_sep_opt   :  {}        ## none; optional!!

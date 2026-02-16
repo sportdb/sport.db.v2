@@ -64,9 +64,9 @@ TIME_LOCAL_RE = %r{
 
 
 BASICS_RE = %r{
-    ## e.g. (51) or (1) etc.  - limit digits of number???
-    ##  todo/fix - change num  to ord (for ordinal number)!!!!!
-    (?<num> \(  (?<value>\d+) \) )
+    ## e.g. (51) or (1) etc.  - limit digits of number - why? why not???
+    ##  ord (for ordinal number)
+    (?<ord> \(  (?<value>\d+) \) )
        |
     (?<vs>
        (?<=[ ])	# positive lookbehind for space
@@ -80,15 +80,7 @@ BASICS_RE = %r{
     (?<spaces> [ ]{2,}) |
     (?<space>  [ ])
         |
-    (?<sym>  (?<=^|[ ])  ## positive lookahead 
-                  (?: ----|
-                      ---|
-                      --
-                  )
-             (?=[ ])   ## positive lookahead
-    )
-        |
-    (?<sym> [;,/@|\[\]-] )
+    (?<sym> [,;/@|()\[\]-] )   ### note: add parantheses too e.g () - why? why not?
 }ix
 
 

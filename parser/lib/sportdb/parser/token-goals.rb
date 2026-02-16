@@ -13,7 +13,7 @@ GOAL_BASICS_RE = %r{
     (?<space>  [ ])
         |
     (?<sym>  
-        [;,)]   ## add (-) dash too - why? why not?   
+        [;,)]   ##  add (-) dash too - why? why not?   
     )   
 }ix
 
@@ -24,11 +24,31 @@ GOAL_LINE_RE = %r{
                      \A\(
                  }x
 
+
+###
+##  e.g.  (-; Metzger)
 GOAL_NONE_RE = %r{ (?<goals_none>
                         -[ ]*;
                     )
                  }x
 
+###
+#  note - alternate goal separator dash (-) MUST have leading and trailing space!!!
+#    e.g.   (Metzger 83 - Krämer 29, 88, Cichy 33, Rahn 37)
+#    e.g.   (Metzger - Krämer (2), Cichy, Rahn)
+#            (Brunnenmeier 17 - Gerwien 74)
+#            (Brunnenmeier - Gerwien)
+#    that is,  NOT allowed  
+#    e.g.   (Metzger 83-Krämer 29, 88, Cichy 33, Rahn 37)
+#            (Brunnenmeier 17-Gerwien 74)
+#            (Brunnenmeier-Gerwien) 
+
+GOAL_SEP_ALT_RE = %r{
+          (?<goal_sep_alt>
+              (?<=[ ])   ## positive lookbehind - space required
+              -
+              (?=[ ])    ## positive lookahead - speace required
+             )}x
 
 
 ## e.g.  (2)
@@ -135,6 +155,8 @@ GOAL_RE = Regexp.union(
    ## GOAL_OG_RE, GOAL_PEN_RE,
    ## SCORE_RE,  ## add back in v2 (level 3) or such!!
     PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
+    GOAL_SEP_ALT_RE,
+    ## todo/fix - add GOAL_ANY_RE !!!!
 )
 
 
