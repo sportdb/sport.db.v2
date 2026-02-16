@@ -66,6 +66,12 @@ def tokenize_with_errors
     ##    fix later to have function lineno & colno!!!
     txt = @txt.gsub( HTML_COMMENT_RE, '  ' )
 
+    ###
+    ## add more "native" multi-line comment-styles
+    ##  e.g.    #[[ ... ]]  or  #<<< .. >>> or #<< .. >>
+    ##                 or such - why? why not?
+
+
 
     txt.each_line do |line|
        ##

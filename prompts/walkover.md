@@ -75,3 +75,15 @@ The Fallout: UEFA rejected Spanish proposals to play at a neutral venue. Spain w
 
 
 
+---
+
+## q: what is the abbrevation w/o spelled out?
+
+In sports, the abbreviation **w/o** (or sometimes **WO)** is spelled out as **Walkover**. 
+
+### Origin and Usage
+
+- **Historical Origin**: The term originates from 19th-century horse racing. If only one horse appeared for a race, it was still required to "walk over" the finish line to be officially declared the winner.
+- **Modern Definition:** It now refers to any situation where a win is awarded to one side because the opponent is unable or unwilling to compete, such as through a forfeit, disqualification, or failure to show up.
+- **Alternative Spelling:** While w/o is a common technical abbreviation in results tables, it is also frequently written as W.O. or the single word Walkover. 
+
