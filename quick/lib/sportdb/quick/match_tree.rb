@@ -440,7 +440,7 @@ class GoalStruct
 
     ## collect (possible) nodes by type
     num    = nil
-    num = node.ord   if node.ord
+    num = node.num   if node.num
         
     date   = nil
     date =  _build_date( m: node.date[:m],
@@ -457,6 +457,17 @@ class GoalStruct
     time   = nil                       
     time   =  ('%d:%02d' % [node.time[:h], node.time[:m]])  if node.time
  
+
+    ## todo/fix - 
+    ##   keep  time & time_local as pairs for @last_time/@last_time_local
+    ##    - check for timezone
+    ##      incl. timezone in time (string) - why? why not?
+    time_local = nil
+    if node.time_local
+      time_local  =  ('%d:%02d' % [node.time_local[:h], node.time_local[:m]])  
+      time_local +=  ' '+node.time_local[:timezone]    if node.time_local[:timezone] 
+    end
+  
 
     ### todo/fix
     ##    add keywords (e.g. ht, ft or such) to Score.new - why? why not?
@@ -585,11 +596,13 @@ class GoalStruct
     end
 =end
 
-    time_str = nil
-    date_str = nil
+    time_str       = nil
+    time_local_str = nil
+    date_str       = nil
 
-    date_str = date.strftime('%Y-%m-%d')  if date
-    time_str = time    if date && time
+    date_str       = date.strftime('%Y-%m-%d')  if date
+    time_str       = time           if date && time
+    time_local_str = time_local     if date && time_local
 
 
     ground   = nil
@@ -605,9 +618,10 @@ class GoalStruct
     att =  node.att   if node.att
 
 
-    @matches << Import::Match.new( num:      num,
-                                   date:     date_str,
-                                   time:     time_str,
+    @matches << Import::Match.new( num:        num,
+                                   date:       date_str,
+                                   time:       time_str,
+                                   time_local: time_local_str,
                                    team1:    team1,  ## note: for now always use mapping value e.g. rec (NOT string e.g. team1.name)
                                    team2:    team2,  ## note: for now always use mapping value e.g. rec (NOT string e.g. team2.name)
                                    score:    score,

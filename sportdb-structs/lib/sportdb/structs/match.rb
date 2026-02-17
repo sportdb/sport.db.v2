@@ -17,6 +17,7 @@ class Match
   attr_reader :num,
               :date,
               :time,
+              :time_local,
               :team1,     :team2,      ## todo/fix: use team1_name, team2_name or similar - for compat with db activerecord version? why? why not?
               :score,  
               :winner,    # return 1,2,0   1 => team1, 2 => team2, 0 => draw/tie
@@ -85,8 +86,9 @@ class Match
     @num      = kwargs[:num]     if kwargs.has_key?( :num )
 
     ## note: check with has_key?  because value might be nil!!!
-    @date     = kwargs[:date]     if kwargs.has_key?( :date )
-    @time     = kwargs[:time]     if kwargs.has_key?( :time )
+    @date       = kwargs[:date]        if kwargs.has_key?( :date )
+    @time       = kwargs[:time]        if kwargs.has_key?( :time )
+    @time_local = kwargs[:time_local]  if kwargs.has_key?( :time_local )
 
     ## todo/fix: use team1_name, team2_name or similar - for compat with db activerecord version? why? why not?
     @team1    = kwargs[:team1]    if kwargs.has_key?( :team1 )
@@ -229,7 +231,8 @@ def as_json
     ## assume 2020-09-19 date format!!
     data['date']  = @date.is_a?( String ) ? @date : @date.strftime('%Y-%m-%d')
 
-    data['time'] = @time  if @time
+    data['time']        = @time           if @time
+    data['time_local']  = @time_local     if @time_local
   end
 
 

@@ -393,6 +393,8 @@ class RaccMatchParser
                       @tree << MatchLineLegs.new( **kwargs )             
                 }
 
+
+
         match_line
               :   match_opts  match  more_match_opts NEWLINE
                     {     
@@ -404,6 +406,14 @@ class RaccMatchParser
                       kwargs = {}.merge( val[0], val[1] )
                       @tree << MatchLine.new( **kwargs )
                   }
+              ### todo/fix - make (leading) optional ord(inal) match number
+              ##               less a hack - use opt_ord rule or such!!!!    
+              |   ord  match_fixture  more_match_opts NEWLINE
+                  { 
+                      kwargs = {}.merge( val[0], val[1], val[2] )
+                      @tree << MatchLine.new( **kwargs )
+                  }
+                   
               |   match_result  more_match_opts NEWLINE
                   { 
                       kwargs = {}.merge( val[0], val[1] )
@@ -433,13 +443,24 @@ class RaccMatchParser
                                  team2: val[2] }
                       @tree << MatchLineWalkover.new( **kwargs )
                    }
-         
+
+        ## optional ord(inal) match number e.g (1), (42), etc.
+        # opt_ord
+        #   :        {  result = {}  }   /* empty; optional */
+        #   | ORD    {  result = { num: val[0][1][:value] } }
+
+        ord : ORD   {  result = { num: val[0][1][:value] } }
+       
 
         match_opts
              : match_header_date
              | match_header_date geo_opts {  result = val[0].merge( val[1]) }
              |  more_date_opts      
              |  more_date_opts geo_opts { result = val[0].merge( val[1]) }
+             | ord match_header_date          { result = {}.merge( val[0], val[1] )  }
+             | ord match_header_date geo_opts { result = {}.merge( val[0], val[1], val[2] ) }
+             | ord more_date_opts             { result = {}.merge( val[0], val[1] )  }
+             | ord more_date_opts geo_opts    { result = {}.merge( val[0], val[1], val[2] ) }
            # |  date_header_body    ## note: same as (inline) date header but WITHOUT newline!!!
          
 

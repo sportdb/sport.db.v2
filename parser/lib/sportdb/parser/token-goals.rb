@@ -20,8 +20,12 @@ GOAL_BASICS_RE = %r{
 
 ## note - assume lines starting with opening ( are goal lines!!!!
 ##  note - use \A (instead of ^) - \A strictly matches the start of the string.
+##
+##   note -  check for negative lookahead
+##                 to exclude ord (numbers) e.g.  (1), (42), etc.!!!
 GOAL_LINE_RE = %r{
                      \A\(
+                       (?! \d+ \))	 # negative lookahead	
                  }x
 
 

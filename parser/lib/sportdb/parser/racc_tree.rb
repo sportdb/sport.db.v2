@@ -239,7 +239,7 @@ end
 
 
 MatchLine   = Struct.new( :header,
-                          :ord, :date, :time, :time_local,
+                          :num, :date, :time, :time_local,
                           :wday,
                           :team1, :team2, 
                           :score, :score_note,
