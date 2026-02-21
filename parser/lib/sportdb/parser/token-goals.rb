@@ -46,12 +46,17 @@ GOAL_NONE_RE = %r{ (?<goals_none>
 #    e.g.   (Metzger 83-Krämer 29, 88, Cichy 33, Rahn 37)
 #            (Brunnenmeier 17-Gerwien 74)
 #            (Brunnenmeier-Gerwien) 
+#
+#   note - allow split by - e.g.
+#     Frankfurt   4-2 Schalke     (Kreß 45, Solz 55, Trimhold 58, Huberts 73 p -
+#                                  Berz 7, Herrmann 74)
+
 
 GOAL_SEP_ALT_RE = %r{
           (?<goal_sep_alt>
               (?<=[ ])   ## positive lookbehind - space required
               -
-              (?=[ ])    ## positive lookahead - speace required
+              (?=[ ]|\z)    ## positive lookahead - speace required
              )}x
 
 

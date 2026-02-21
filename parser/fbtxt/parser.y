@@ -716,9 +716,11 @@ class RaccMatchParser
          
 
 
-        goal_lines : goal_lines_body NEWLINE
+        ##
+        ## note - GOALS token is virtual - basically opening-paranthesis `(` for now
+        goal_lines : GOALS goal_lines_body NEWLINE
                       {
-                         kwargs = val[0]
+                         kwargs = val[1]
                          @tree << GoalLine.new( **kwargs )
                       }
                 
@@ -737,6 +739,7 @@ class RaccMatchParser
         goals_sep    : ';'
                      | ';' NEWLINE
                      | GOAL_SEP_ALT   ## note - dash (-) with leading & trailing spaces required
+                     | GOAL_SEP_ALT NEWLINE
                        
 
          goal_sep_opt   :  {}        ## none; optional!!

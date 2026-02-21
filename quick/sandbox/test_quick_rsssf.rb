@@ -22,7 +22,14 @@ SportDb::MatchTree.debug = true
 # path =  "#{OPENFOOTBALL_PATH}/euro/rsssf/2024e.txt"
 # path =  "#{OPENFOOTBALL_PATH}/england/rsssf/engcup1873.txt"
 # path =  "#{OPENFOOTBALL_PATH}/england/rsssf/eng2025-premierleague.txt"
-path =  "#{OPENFOOTBALL_PATH}/england/rsssf/eng2024-playoffs.txt"
+# path =  "#{OPENFOOTBALL_PATH}/england/rsssf/eng2024-playoffs.txt"
+# path =  "#{OPENFOOTBALL_PATH}/deutschland/rsssf/duit64.txt"
+# path =  "#{OPENFOOTBALL_PATH}/deutschland/rsssf/duit65.txt"
+# path =  "#{OPENFOOTBALL_PATH}/deutschland/rsssf/duit2025.txt"
+# path =  "#{OPENFOOTBALL_PATH}/austria/rsssf/oost2025.txt"
+# path =  "#{OPENFOOTBALL_PATH}/austria/rsssf/oost2025_cup.txt"
+path =  "#{OPENFOOTBALL_PATH}/austria/rsssf/oost01.txt"
+
 
 matches = SportDb::QuickMatchReader.read( path )
 ## pp matches

@@ -311,13 +311,16 @@ def _tokenize_line( line )
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
-    elsif (m =GOAL_LINE_RE.match( line ))   ## line starting with ( - assume
+    elsif (m = GOAL_LINE_RE.match( line ))   ## line starting with ( - assume
       ##  switch context to GOAL_RE (goalline(s)
       ##   split token (automagically) into two!! - player AND minute!!!
       @re = GOAL_RE
       puts "  ENTER GOAL_RE MODE"   if debug?
 
-      ## note - eat-up ( for now; do NOT pass along as token
+      tokens << [:GOALS, "<|GOALS|>"]
+
+      ## note - eat-up ( for now
+      ##   pass along "virtual" GOALS token (see INLINE_GOALS for the starting goal line inline)     
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos      
     end
