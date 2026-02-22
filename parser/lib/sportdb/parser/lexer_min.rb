@@ -288,8 +288,6 @@ def _tokenize_line( line )
             ##      use value hash - why? why not? or simplify to:
             ## [:NOTE, [m[:note], {note: m[:note] } ]]
              [:NOTE, m[:note]] 
-        elsif m[:score_note]
-             [:SCORE_NOTE, m[:score_note]]
         elsif m[:time]
               ## unify to iso-format
               ###   12.40 => 12:40

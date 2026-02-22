@@ -45,6 +45,15 @@ HTML_COMMENT_RE = %r{  <!--
                        }xm      ## note - turn on multi-line match (for dot (.))
 
 
+##
+##  note - [] block may NOT incl. square brackets
+##       what about comments (e.g. #)?                       
+##    todo/check - rename to NOTE_BLOCK or TEXT_BLOCK or ??? 
+BLOCK_RE = %r{  \[
+                      [^\[\]\#]*?  ## note - use non-greedy/lazy *? match
+                  \]
+                        }xm  ## note - turn on multi-line match (for dot(.))
+
 
 def tokenize_with_errors
     tokens_by_line = []   ## note: add tokens line-by-line (flatten later)
@@ -70,6 +79,29 @@ def tokenize_with_errors
     ## add more "native" multi-line comment-styles
     ##  e.g.    #[[ ... ]]  or  #<<< .. >>> or #<< .. >>
     ##                 or such - why? why not?
+
+
+    #####
+    ## (another) quick hack for now
+    ##   turn multi-line note blocks into 
+    ##             single-line note blocks
+    ##             by changing newline (\n) to ⏎ (unicode U+23CE)
+    ##              or why not  to ___ ?
+    ##
+    ##  unicode options for return/arrows:
+    ##   -  ↵ (U+21B5): Downwards Arrow With Corner Leftwards. 
+    ##                This is the most common "carriage return" symbol.
+    ##   -  ⏎ (U+23CE): Return Symbol. 
+    ##               Specifically designated as the keyboard's "Return" key symbol, 
+    ##                often used in user interfaces.
+
+    txt = txt.gsub( BLOCK_RE ) do |m|
+       if m.include?( "\n" )   ## check for newlines (\n) and replace
+         m.gsub( "\n", '↵' )
+       else
+         m 
+       end 
+    end
 
 
 
@@ -653,8 +685,6 @@ def _tokenize_line( line )
             ##      use value hash - why? why not? or simplify to:
             ## [:NOTE, [m[:note], {note: m[:note] } ]]
              [:NOTE, m[:note]] 
-        elsif m[:score_note]
-             [:SCORE_NOTE, m[:score_note]]
         elsif m[:time]
               ## unify to iso-format
               ###   12.40 => 12:40

@@ -112,7 +112,9 @@ DAY_MAP   = build_map( DAY_LINES, downcase: true )
 
 ## todo - add more date variants !!!! why? why not?
 
-# e.g. Fri Aug/9  or Fri Aug 9
+
+# e.g.  Fri Aug 9
+##      note - Fri Aug/9  no longer supported!!!   
 DATE_I_RE = %r{
 (?<date>
   \b
@@ -121,7 +123,7 @@ DATE_I_RE = %r{
           [ ]
      )?
      (?<month_name>#{MONTH_NAMES})
-         (?: \/|[ ] )
+          [ ] 
      (?<day>\d{1,2})
      ## optional year
      (  [ ]
@@ -133,19 +135,18 @@ DATE_I_RE = %r{
 
 ### todo/fix - add (opt) day_name later
 ##             add (opt) year later
-# e.g. Aug/9 & Aug/10 
-#   or Aug 9 & Aug 10
+# e.g.  Aug 9 & Aug 10
 ### note - allow shortcut e.g. Aug 9 & 10
 DATE_LEGS_I_RE = %r{
 (?<date_legs>
  \b
      (?<month_name1>#{MONTH_NAMES})
-         (?: \/|[ ] )
+          [ ] 
      (?<day1>\d{1,2})
     [ ] & [ ]
      (?:
         (?<month_name2>#{MONTH_NAMES})
-         (?: \/|[ ] )
+          [ ] 
       )?  ## note - make 2nd month_name optional 
      (?<day2>\d{1,2})
   \b
@@ -260,21 +261,21 @@ end
 #  check for plus (+) if dates are next to each other (t+1) - why? why not?
 
 #
-#  Sun Jun/23 - Wed Jun/26   -- YES
-#  Jun/23 - Jun/26           -- YES
-#  Jun/25 - 26        - why? why not???  - YES - see blow variant iii!!!
+#  Sun Jun 23 - Wed Jun 26   -- YES
+#  Jun 23 - Jun 26           -- YES
+#  Jun 25 - 26        - why? why not???  - YES - see blow variant iii!!!
 
-#  Tue Jun/25 + Wed Jun/26   -- NO
-#  Jun/25 + Jun/26           -- NO
-#  Jun/25 .. 26        - why? why not???
-#  Jun/25 to 26        - why? why not???
-#  Jun/25 + 26        - add - why? why not???
-#  Sun-Wed Jun/23-26  -  add - why? why not???
-#  Wed+Thu Jun/26+27 2024  -  add - why? why not???
+#  Tue Jun 25 + Wed Jun 26   -- NO
+#  Jun 25 + Jun 26           -- NO
+#  Jun 25 .. 26        - why? why not???
+#  Jun 25 to 26        - why? why not???
+#  Jun 25 + 26        - add - why? why not???
+#  Sun-Wed Jun 23-26  -  add - why? why not???
+#  Wed+Thu Jun 26+27 2024  -  add - why? why not???
 #
 #  maybe use comma and plus for list of dates
-#    Tue Jun/25, Wed Jun/26, Thu Jun/27  ??
-#    Tue Jun/25 + Wed Jun/26 + Thu Jun/27  ??
+#    Tue Jun 25, Wed Jun 26, Thu Jun 27  ??
+#    Tue Jun 25 + Wed Jun 26 + Thu Jun 27  ??
 #
 #   add back optional comma (before) year - why? why not?
 #
@@ -297,7 +298,7 @@ DURATION_I_RE =  %r{
       [ ]
    )?
    (?<month_name1>#{MONTH_NAMES})
-      (?: \/|[ ] )
+      [ ] 
    (?<day1>\d{1,2})
    ## optional year
    (  ,?   # optional comma
@@ -313,7 +314,7 @@ DURATION_I_RE =  %r{
       [ ]
    )?
    (?<month_name2>#{MONTH_NAMES})
-      (?: \/|[ ] )
+      [ ] 
    (?<day2>\d{1,2})
    ## optional year
    (  ,?   # optional comma
@@ -376,7 +377,6 @@ XXX_DURATION_II_RE =  %r{
 #     August 16-18, 2011     
 #     September 13-15, 2011
 #      October 18-20, 2011
-#      March/6-8, 2012
 #      March 6-8 2012
 #      March 6-8
 #     
@@ -388,7 +388,7 @@ DURATION_II_RE =  %r{
     \b
    (?:
        (?<month_name1>#{MONTH_NAMES})
-           [ /]
+           [ ]
         (?<day1>\d{1,2})
              -
         (?<day2>\d{1,2})

@@ -34,6 +34,10 @@ class RaccMatchParser
           ## add support for "compact" match legs (1st leg, 2nd leg, aggregate)
           | date_header_legs
           | match_line_legs
+
+          ## todo/fix - change (inline) NOTE to INLINE_NOTE
+          ##              and only use NOTE for "standalone" NOTE (lines)
+          | note_line   
  
           ## check - goal_lines MUST follow match_line - why? why not?     
           | goal_lines     
@@ -258,6 +262,9 @@ class RaccMatchParser
            | H3 NEWLINE   {  @tree << Heading3.new( text: val[0])  }
            
 
+        note_line
+            : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0]) }
+
         ######  
         # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland   
         group_def
@@ -394,6 +401,10 @@ class RaccMatchParser
                 }
 
 
+        opt_inline_note
+            :            {  result = {} }  ## optional; empty
+            | NOTE       {  result = { note: val[0] } }
+
 
         match_line
               :   match_opts  match  more_match_opts NEWLINE
@@ -431,16 +442,16 @@ class RaccMatchParser
                       @tree << GoalLine.new( **kwargs ) 
                   }
               ### todo/fix:  allow/add (inline) note too e.g. [Bury went bankrupt] etc.!!
-              |   TEAM INLINE_BYE  NEWLINE    ## e.g.  Queen's Park   bye     
+              |   TEAM INLINE_BYE opt_inline_note  NEWLINE    ## e.g.  Queen's Park   bye     
                     {
-                      kwargs = { team: val[0] }
+                      kwargs = { team: val[0] }.merge( val[2] )
                       @tree << MatchLineBye.new( **kwargs )
                     }
               ### todo/fix:  allow/add (inline) note too!!
-              |   TEAM INLINE_WO TEAM  NEWLINE   ## e.g.  Oxford University  w/o  Queen's Park 
+              |   TEAM INLINE_WO TEAM opt_inline_note  NEWLINE   ## e.g.  Oxford University  w/o  Queen's Park 
                    {
                       kwargs = { team1: val[0],
-                                 team2: val[2] }
+                                 team2: val[2] }.merge( val[3] )
                       @tree << MatchLineWalkover.new( **kwargs )
                    }
 
@@ -473,15 +484,11 @@ class RaccMatchParser
                                                         time_local:  val[1][1] }
                                          }
       
-
+        
+        ## note - you cannot use both STATUS and NOTE - why? why not?
         ##
-        ## todo/fix - NOTE is ignored for now; add to parse tree!!!
-        ##    assume NOTE is always (MUST BE) LAST option for now 
-        ##      AND  you cannot use both STATUS and NOTE - why? why not?
-        ##
-        ##   allow/add lines with NOTE only - why? why not?
-        ##        e.g. [nb: xxxxxx] or such
-
+        ##  todo/check - allow attendance w/o geo_tree - why? why not?
+    
         more_match_opts
              :   { result = {} }   ## empty; optional
              | STATUS       ## note - for now status must be BEFORE geo_opts!!
@@ -489,18 +496,20 @@ class RaccMatchParser
                       ## todo - add possible status_notes too!!! 
                       result = { status: val[0][1][:status] }
                  }
-             | STATUS geo_opts       
+             | STATUS geo_opts opt_inline_attendance       
                  { 
-                     result = { status: val[0][1][:status] }.merge( val[1] ) 
+                     result = { status: val[0][1][:status] }.merge( val[1], val[2] ) 
                  }
-             | geo_opts              { result = {}.merge( val[0] ) }
-             | geo_opts NOTE         { result = { note: val[1] }.merge( val[0] ) }
-             | NOTE                  { result = { note: val[0] } }
+             | geo_opts opt_inline_attendance opt_inline_note  
+                 { 
+                   result = {}.merge( val[0], val[1], val[2] ) 
+                 }
+             | NOTE   { result = { note: val[0] } }
           
+
 
         ## e.g.  @ Parc des Princes, Paris
         ##       @ München 
-        ##       @ Luzhniki Stadium, Moscow (UTC+3)
         geo_opts : '@' geo_values           { result = { geo: val[1] } }
          
          ###  note -  timezone for now moved to time use  13.00 (UTC+3) and such
@@ -535,8 +544,6 @@ class RaccMatchParser
                                   ##       only after  Team1 v Team2 !!
                    
       
-        ## note - "inline" SCORE_NOTE-style is NOT allowed/supported
-        ##                 only basic (SCORE) and more (SCORE_MORE)
         match_result :  TEAM  SCORE  TEAM      
                          {
                            trace( "REDUCE => match_result : TEAM SCORE TEAM" )
@@ -585,13 +592,6 @@ class RaccMatchParser
                           trace( "REDUCE  => match_result : match_fixture score" )
                           result = { score: val[1][1] }.merge( val[0] )  
                           ## pp result
-                        }
-                     |  match_fixture  SCORE_NOTE     ## e.g. 1-1 [aet, 4-5 on penalties]
-                        {
-                           ## todo/fix - pass along (experimental) SCORE_NOTE!!
-                           trace( "REDUCE  => match_result : match_fixture SCORE_NOTE" )
-                           result = {}.merge( val[0] )  
-                           ## pp result
                         }
                                         
    

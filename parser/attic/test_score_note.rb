@@ -63,17 +63,4 @@ end
 
 
 
-puts "bye"
-
-__END__
-
-==> 1-1 [ aet ]
-!! note NOT matching
-
-==> 1-1 [wins on away goals]
-!! note NOT matching
-==> 1-1 [wins on aggregate]
-!! note NOT matching
-==> 1-1 [2-2 on aggregate; wins 2-4 on penalties]
-!! note NOT matching
 

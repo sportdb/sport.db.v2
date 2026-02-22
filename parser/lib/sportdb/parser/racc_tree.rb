@@ -182,6 +182,14 @@ RoundOutline = Struct.new( :outline ) do
   end
 end
 
+NoteLine = Struct.new( :text ) do
+  def pretty_print( printer )
+    printer.text( "<NoteLine #{self.text}>" )
+  end
+end
+
+
+
 ## todo/check - use a generic Heading instead of Heading1/2/3 - why? why not?
 Heading1 = Struct.new( :text ) do
   def pretty_print( printer )
@@ -203,18 +211,20 @@ end
 
 
 
-MatchLineBye   = Struct.new( :team ) do
+MatchLineBye   = Struct.new( :team, :note ) do
  def pretty_print( printer )
     printer.text( "<MatchLineBye " )
     printer.text( "#{self.team} bye")
+    printer.text( " note=#{self.note.pretty_inspect}" )  if self.note
     printer.text( ">" )
   end  
 end
 
-MatchLineWalkover   = Struct.new( :team1, :team2 ) do
+MatchLineWalkover   = Struct.new( :team1, :team2, :note ) do
  def pretty_print( printer )
     printer.text( "<MatchLineWalkover " )
     printer.text( "#{self.team1} w/o #{self.team2}")
+    printer.text( " note=#{self.note.pretty_inspect}" )  if self.note
     printer.text( ">" )
   end  
 end
@@ -242,7 +252,7 @@ MatchLine   = Struct.new( :header,
                           :num, :date, :time, :time_local,
                           :wday,
                           :team1, :team2, 
-                          :score, :score_note,
+                          :score,
                           :status,  
                           :geo,
                           :timezone,

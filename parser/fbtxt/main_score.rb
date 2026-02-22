@@ -46,44 +46,45 @@ Manchester United 3-2 Bayern München  (HT 3-1, AGG 4-4, AWAY 1-2)
 
 # Phase, Round, First leg + Second leg
 
-# Qualifying, First qualifying round  |  30 June – 1 July 2009, 7–8 July 2009
-# -,          Second qualifying round |  14–15 July 2009,  21–22 July 2009
-# -,          Third qualifying round  |  28–29 July 2009, 4–5 August 2009
-# Play-off,   Play-off round          |  18–19 August 2009, 25–26 August 2009
-# Group stage,  Matchday 1            |  15–16 September 2009
-# -,            Matchday 2            |  29–30 September 2009
-# -,            Matchday 3            | 20–21 October 2009
-# -,            Matchday 4            | 3–4 November 2009
-# -,            Matchday 5            | 24–25 November 2009
-# -,            Matchday 6            | 8–9 December 2009
-# Knockout phase, Round of 16         | 16–17 & 23–24 February 2010, 9–10 & 16–17 March 2010
-# -,              Quarter-finals      | 30–31 March 2010, 6–7 April 2010
-# -,              Semi-finals         | 20–21 April 2010, 27–28 April 2010
-# -,              Final               | 22 May 2010
+# ▪ Qualifying, First qualifying round  |  30 June – 1 July 2009, 7–8 July 2009
+# ▪ -,          Second qualifying round |  14–15 July 2009,  21–22 July 2009
+# ▪ -,          Third qualifying round  |  28–29 July 2009, 4–5 August 2009
+# ▪ Play-off,   Play-off round          |  18–19 August 2009, 25–26 August 2009
+# ▪ Group stage,  Matchday 1            |  15–16 September 2009
+# ▪ -,            Matchday 2            |  29–30 September 2009
+# ▪ -,            Matchday 3            | 20–21 October 2009
+# ▪ -,            Matchday 4            | 3–4 November 2009
+# ▪ -,            Matchday 5            | 24–25 November 2009
+# ▪ -,            Matchday 6            | 8–9 December 2009
+# ▪ Knockout phase, Round of 16         | 16–17 & 23–24 February 2010, 9–10 & 16–17 March 2010
+# ▪              -, Quarter-finals      | 30–31 March 2010, 6–7 April 2010
+# ▪              -, Semi-finals         | 20–21 April 2010, 27–28 April 2010
+# ▪              -, Final               | 22 May 2010
 
 # -or-
 
-# First qualifying round, 1st leg   |	30.06/01.07.2009
-# First qualifying round, 2nd leg   |	07/08.07.2009
-# Second qualifying round, 1st leg  |	14/15.07.2009
-# Second qualifying round, 2nd leg	| 21/22.07.2009
-# Third qualifying round, 1st leg	  |	28/29.07.2009
-# Third qualifying round, 2nd leg	  |	04/05.08.2009
-# Play-off round, 1st leg	          |	18/19.08.2009
-# Play-off round, 2nd leg	          |	25/26.08.2009
-# Group stage, Matchday 1           |	15/16.09.2009
-# Group stage, Matchday 2           | 29/30.09.2009
-# Group stage, Matchday 3	          | 20/21.10.2009
-# Group stage, Matchday 4	          | 03/04.11.2009
-# Group stage, Matchday 5	          | 24/25.11.2009
-# Group stage, Matchday 6	          | 08/09.12.2009
-# First knockout round, 1st leg	    | 16/17 & 23/24.02.2010
-# First knockout round, 2nd leg     | 09/10 & 16/17.03.2010
-# Quarter-finals, 1st leg	          |	30/31.03.2010
-# Quarter-finals, 2nd leg	          |	06/07.04.2010
-# Semi-finals, 1st leg	            |	20/21.04.2010
-# Semi-finals, 2nd leg	            |	27/28.04.2010
-# Final                            	| 22.05.2010
+# ▪ First qualifying round, 1st leg   |	30.06/01.07.2009
+# ▪ First qualifying round, 2nd leg   |	07/08.07.2009
+# ▪ Second qualifying round, 1st leg  |	14/15.07.2009
+# ▪ Second qualifying round, 2nd leg	| 21/22.07.2009
+# ▪ Third qualifying round, 1st leg	  |	28/29.07.2009
+# ▪ Third qualifying round, 2nd leg	  |	04/05.08.2009
+# ▪ Play-off round, 1st leg	          |	18/19.08.2009
+# ▪ Play-off round, 2nd leg	          |	25/26.08.2009
+# ▪ Group stage, Matchday 1           |	15/16.09.2009
+# ▪ Group stage, Matchday 2           | 29/30.09.2009
+# ▪ Group stage, Matchday 3	          | 20/21.10.2009
+# ▪ Group stage, Matchday 4	          | 03/04.11.2009
+# ▪ Group stage, Matchday 5	          | 24/25.11.2009
+# ▪ Group stage, Matchday 6	          | 08/09.12.2009
+# ▪ First knockout round, 1st leg	    | 16/17 & 23/24.02.2010
+# ▪ First knockout round, 2nd leg     | 09/10 & 16/17.03.2010
+# ▪ Quarter-finals, 1st leg	          |	30/31.03.2010
+# ▪ Quarter-finals, 2nd leg	          |	06/07.04.2010
+# ▪ Semi-finals, 1st leg	            |	20/21.04.2010
+# ▪ Semi-finals, 2nd leg	            |	27/28.04.2010
+# ▪ Final                            	| 22.05.2010
+
 
 
 # Times are CET/CEST, as listed by UEFA
@@ -92,31 +93,31 @@ Manchester United 3-2 Bayern München  (HT 3-1, AGG 4-4, AWAY 1-2)
 ▪ Quarter-finals
 
 March 30
-  20:45   FC Bayern Munich (GER)  2-1  Manchester United F.C. (ENG)   @ Allianz Arena, Munich   #(att: 66000)
+  20:45   FC Bayern Munich (GER)  2-1  Manchester United F.C. (ENG)   @ Allianz Arena, Munich    att: 66000
             (Franck Ribéry 77, Ivica Olić 90+2;
              Wayne Rooney 2)
 April 7
-   20:45 (19:45 BST/UTC+1)  Manchester United (ENG)  3-2  Bayern Munich (GER)  @ Old Trafford, Manchester   #(att: 74482)
+   20:45 (19:45 BST/UTC+1)  Manchester United (ENG)  3-2  Bayern Munich (GER)  @ Old Trafford, Manchester    att: 74482
                (Darron Gibson 3, Nani 7,41;
                 Ivica Olić 43, Arjen Robben 74)
-    # [4-4 on aggregate; Bayern Munich won on away goals]
+     [4-4 on aggregate; Bayern Munich won on away goals]
      
 
 March 31
-   20:45  (19:45 BST/UTC+1) Arsenal F.C. (ENG)  2-2  FC Barcelona (ESP)  @ Emirates Stadium, London  #(att: 59572)
+   20:45  (19:45 BST/UTC+1) Arsenal F.C. (ENG)  2-2  FC Barcelona (ESP)  @ Emirates Stadium, London   att: 59572
               (Theo Walcott 69, Cesc Fàbregas 85pen;
                Zlatan Ibrahimović 46,59)
 April 6
-   20:45      Barcelona (ESP)   4-1   Arsenal (ENG)  @ Camp Nou, Barcelona  #(att: 93330)
+   20:45      Barcelona (ESP)   4-1   Arsenal (ENG)  @ Camp Nou, Barcelona,   att: 93330
                 (Lionel Messi 21,37,42,88;
                   Nicklas Bendtner 18)
-    # [Barcelona won 6-3 on aggregate]
+     [Barcelona won 6-3 on aggregate]
 
 
 ▪ Final
 
 May 22
-   20:45   FC Bayern Munich (GER)  0-2  Inter Milan (ITA)  @ Santiago Bernabéu, Madrid  #(att: 73490)
+   20:45   FC Bayern Munich (GER)  0-2  Inter Milan (ITA)  @ Santiago Bernabéu, Madrid,  att: 73490
                (Diego Milito 35,70)
              
                
@@ -125,27 +126,27 @@ May 22
 ###   only use country code e.g. (GER), (ENG) for first time
 
 ▪ Quarter-finals, 1st leg
-March 30 20:45 @ Allianz Arena, Munich   #(att: 66000)
+March 30 20:45 @ Allianz Arena, Munich   att: 66000
    Bayern Munich (GER)  2-1  Manchester United (ENG)   
       (Franck Ribéry 77, Ivica Olić 90+2;
        Wayne Rooney 2)
-March 31 20:45 (19:45 BST/UTC+1) @ Emirates Stadium, London  #(att: 59572)
+March 31 20:45 (19:45 BST/UTC+1) @ Emirates Stadium, London   att: 59572
    Arsenal FC (ENG)  2-2  FC Barcelona (ESP)  
       (Theo Walcott 69, Cesc Fàbregas 85pen;
        Zlatan Ibrahimović 46,59)
 
 ▪ Quarter-finals, 2nd leg
-April 6 20:45 @ Camp Nou, Barcelona  #(att: 93330)     
+April 6 20:45 @ Camp Nou, Barcelona    att: 93330     
    FC Barcelona   4-1   Arsenal FC   (win 6-3 on aggregate)
       (Lionel Messi 21,37,42,88;
        Nicklas Bendtner 18)
-April 7 20:45 (19:45 BST/UTC+1) @ Old Trafford, Manchester   #(att: 74482)
+April 7 20:45 (19:45 BST/UTC+1) @ Old Trafford, Manchester    att: 74482
    Manchester United  3-2  Bayern Munich  (agg 4-4, win 1-2 on away goals)  
       (Darron Gibson 3, Nani 7,41;
        Ivica Olić 43, Arjen Robben 74)    
   
 ▪ Final
-May 22 20:45 @ Santiago Bernabéu, Madrid  #(att: 73490)  
+May 22 20:45 @ Santiago Bernabéu, Madrid    att: 73490  
   FC Bayern Munich   0-2  Inter Milan   
       (Diego Milito 35,70)
 
@@ -226,18 +227,18 @@ Real Madrid 2-1 Bayern München  (HT 2-1, FT 2-1, AET, AGG 3-3, PEN 1-3)
 ▪ Semi-finals 
 
 April 17
-   20:45   FC Bayern Munich (GER)  2-1  Real Madrid CF (ESP)  @ Allianz Arena, Munich  #(att: 66000)
+   20:45   FC Bayern Munich (GER)  2-1  Real Madrid CF (ESP)  @ Allianz Arena, Munich  att: 66000
              (Franck Ribéry 17, Mario Gómez 90;
               Mesut Özil 53)
 April 25
-   20:45   Real Madrid (ESP)   2-1 a.e.t., 1-3 pen.   Bayern Munich (GER)  @ Santiago Bernabéu, Madrid #(att: 71654)
+   20:45   Real Madrid (ESP)   2-1 a.e.t., 1-3 pen.   Bayern Munich (GER)  @ Santiago Bernabéu, Madrid  att: 71654
             (Cristiano Ronald 6pen,14;
              Arjen Robben 27pen)
   Penalties:  Cristiano Ronaldo (miss), Kaká (miss), Xabi Alonso,
               Sergio Ramos (miss);
               David Alaba, Mario Gómez, Toni Kroos (miss),
               Philipp Lahm (miss), Bastian Schweinsteiger
-  # [3-3 on aggregate; Bayern Munich won 3-1 on penalties]
+    [3-3 on aggregate; Bayern Munich won 3-1 on penalties]
   
 
 # |penalties1 =
@@ -254,18 +255,18 @@ April 25
 # *{{pengoal}} [[Bastian Schweinsteiger|Schweinsteiger]]
 
 April 18
-  20:45 (19:45 UTC+1)  Chelsea F.C. (ENG)  1-0  FC Barcelona (ESP)   @ Stamford Bridge, London  #(att: 38039)
+  20:45 (19:45 UTC+1)  Chelsea F.C. (ENG)  1-0  FC Barcelona (ESP)   @ Stamford Bridge, London   att: 38039
                         (Didier Drogba 45+2)                  
 April 24
-  20:45               Barcelona (ESP)   2-2     Chelsea (ENG)   @ Camp Nou, Barcelona  #(att: 95845)
+  20:45               Barcelona (ESP)   2-2     Chelsea (ENG)   @ Camp Nou, Barcelona   att: 95845
                        (Sergio Busquets 35, Andrés Iniesta 43;
                         Ramires 45+1, Fernando Torres 90+1)
-   # [Chelsea won 3-2 on aggregate]
+    [Chelsea won 3-2 on aggregate]
 
 ▪ Final
 
 May 5
-  20:45     FC Bayern Munich (GER)   1-1 a.e.t, 3-4 pen.  Chelsea F.C. (ENG)  @ Allianz Arena, Munich  #(att: 62500)
+  20:45     FC Bayern Munich (GER)   1-1 a.e.t, 3-4 pen.  Chelsea F.C. (ENG)  @ Allianz Arena, Munich   att: 62500
                (Thomas Müller 83; Didier Drogba 88)
 Penalties:  Philipp Lahm, Mario Gómez, Manuel Neuer, Ivica Olić (miss),
             Bastian Schweinsteiger (miss);
@@ -293,36 +294,38 @@ Penalties:  Philipp Lahm, Mario Gómez, Manuel Neuer, Ivica Olić (miss),
 ### try different style
 
 ▪ Semi-finals, 1st leg
-April 17 20:45   @ Allianz Arena, Munich  #(att: 66000)
+April 17 20:45   @ Allianz Arena, Munich    att: 66000
   Bayern Munich (GER)  2-1  Real Madrid (ESP)  
              (Franck Ribéry 17, Mario Gómez 90;
               Mesut Özil 53)
-April 18 20:45 (19:45 UTC+1) @ Stamford Bridge, London  #(att: 38039)
+April 18 20:45 (19:45 UTC+1) @ Stamford Bridge, London    att: 38039
   Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
       (Didier Drogba 45+2)                  
 
 ▪ Semi-finals, 2nd leg
-April 24 20:45 @ Camp Nou, Barcelona  #(att: 95845)              
+April 24 20:45 @ Camp Nou, Barcelona    att: 95845              
     FC Barcelona         2-2  Chelsea FC  (win 2-3 on aggregate)
       (Sergio Busquets 35, Andrés Iniesta 43;
        Ramires 45+1, Fernando Torres 90+1)
-April 25 20:45   @ Santiago Bernabéu, Madrid #(att: 71654)
+April 25 20:45   @ Santiago Bernabéu, Madrid   att: 71654
    Real Madrid   2-1  Bayern Munich  (aet, 3-3 on agg, win 1-3 on pens)  
             (Cristiano Ronald 6pen,14;
              Arjen Robben 27pen)
 
 ▪ Final   
-May 5 20:45 @ Allianz Arena, Munich  #(att: 62500)     
+May 5 20:45 @ Allianz Arena, Munich   att: 62500     
     FC Bayern Munich    1-1 Chelsea FC  (aet, win 3-4 on pens) 
         (Thomas Müller 83; Didier Drogba 88)
 
 
 ###
 #  try alternate "inline" local time style instead of  20:45 (19:45 UTC+1)
-April 18 19:45 (UTC+1) @ Stamford Bridge, London  #(att: 38039)
+April 18 19:45 UTC+1 @ Stamford Bridge, London   att: 38039
    Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
 
-April 18 19:45 (UTC+1)        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+April 18 19:45 UTC+1        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+April 18 19:45 UTC+01        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+April 18 19:45 UTC+0100        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
 April 18 20:45 (19:45 UTC+1)  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
 
 
@@ -340,7 +343,7 @@ Apr 28 & 24
   Chelsea (Eng)         v FC Barcelona (Esp)   1-0, 2-2     (agg 3-2)
 
 ▪ Final 
-May 19 @ Allianz Arena, München    #(att: 66000)
+May 19 @ Allianz Arena, München     att: 66000
   Bayern München (Ger)  v Chelsea (Eng)       1-1 aet, 3-4 pen
     (Müller 83'; Drogba 89')
   Penalties:  Lahm, Gomez, Neuer, Olic (miss), Schweinsteiger (miss);

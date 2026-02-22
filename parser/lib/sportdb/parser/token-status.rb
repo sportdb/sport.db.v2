@@ -44,27 +44,33 @@ STATUS_RE = %r{
             |
         
             ###################
-            ## opt 2 - short from only (no note/comments)
+            ## opt 2 - short form only (no note/comments)
             (?<status>
-               cancelled|canceled|can\.
-                 |
-               abandoned|abd\.
-                 |
                postponed
                  |
-               awarded|awd\.
+               cancelled|canceled|can\.
                  |
                walkover|w/o      ## add o/w too - why? why not?
-                 |
-               replay
-                 |
-               annulled
                  |
                suspended    ### todo/fix - add status upstream - why? why not?
                             ###  move to note(s) - do NOT interpret as status - why? why not?
                  |
-               verified     ### todo/fix - add status upstream (same as ??) - why? why not? 
+               abandoned|abd\.
+                 |
+               awarded|awd\.
+                 |
+               verified     ### todo/fix - add status upstream (same as awarded??) - why? why not? 
                             ###  move to note(s) - do NOT interpret as status - why? why not?
+                            ##   check - verified bascially a synonym for awarded - yes/no?
+                            ##  q:  what's the difference of the match stati
+                            ##            awarded 2-0 and verified 2-0 ???
+                 |
+               annulled   ### add void/voided as an alternative - why? why not?
+                 |
+               replay    ### todo/fix - keep replay - why? why not?
+                         ###   prefer replay in round e.g. 
+                         ##       ▪ Round 17, Replay
+                         ##       ▪ Semi-finals, Replays
             )
       )
     \]

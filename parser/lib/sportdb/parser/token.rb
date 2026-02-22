@@ -9,56 +9,68 @@ class Lexer
 #    add support for 6:30pm 8:20am etc. - why? why not?
 #
 #    check - only support h e.g. 18h30  or 18H30 too - why? why not?
-# e.g. 18.30 (or 18:30 or 18h30)
+# e.g. 18:30 (or 18h30)
 #   note - optional timezone possible e.g.
-#        18.30 (UTC+1)  or 18.30 (BST/UTC+1)  or such!!!
+#        18:30 UTC+1   or 18:30 BST/UTC+1  or such!!!
+#        18:30 UTC+01  or 18:30 BST/UTC+01
+#       
+#
+#  note  18.30 no longer supported - MUST use 18:30 or 18h30 !!!
+
 TIME_RE = %r{
     (?<time>  \b
         (?:   (?<hour>\d{1,2})
-                   [:.h] 
-              (?<minute>\d{2}))
-                  \b       ## can use word boundry assert inline here?
-              (?:
-                  ## require space - why? why not
-                   [ ]
-                    \(
-                      (?<timezone>
-                         ## optional "local" timezone name eg. BRT or CEST etc.
-                          (?:  [a-z]+
-                                 /
-                           )?
-                            [a-z]+
-                            [+-]
-                            \d{1,4}   ## e.g. 0 or 00 or 0000
-                      )
-                    \)
-              )?
-    )
-}ix
+                   [:h] 
+              (?<minute>\d{2})
+                 
+                 #### optional (inline) timezone
+                 ##    note - non-utc timezone MUST be hard-coded (added) here!!!
+                 ##     avoids eating-up team names (separated by one space)
+                 ##            e.g.  18:30 MEX v MEX 
+                 (?:
+                    [ ]  ## require space - why? why not
+                     (?<timezone>
+                        (?: 
+                          (?: BST|CEST|CEST|EEST) 
+                               (?: /
+                                   UTC[+-]\d{1,4}
+                               )?
+                          )
+                          |
+                          (?: UTC[+-]\d{1,4})
+                     )
+                 )?
+          )
+        \b  
+    )}ix
 
 
-##    local time e.g (19.30 UTC+1) or (19.30 BSC/UTC+1) or 
-##   note - timezone is optional!  e.g. (19.30) works too
+##    local time e.g (19:30 UTC+1) or (19:30 BST/UTC+1) or 
+##   note - timezone is optional!  e.g. (19:30) works too
 TIME_LOCAL_RE = %r{
-    (?<time_local>   \(
+    (?<time_local>   
+         \(
         (?:   (?<hour>\d{1,2})
-                   [:.h]
-              (?<minute>\d{2}))
+                   [:h]
+              (?<minute>\d{2})
+                
+                ####
+                ## optional "local" timezone name eg. BRT or CEST etc.
                 (?:
-                    [ ]
-                 (?<timezone>
-                   ## optional "local" timezone name eg. BRT or CEST etc.
-                    (?:  [a-z]+
-                       /
-                    )?
-                   [a-z]+
-                   [+-]
-                   \d{1,4}   ## e.g. 0 or 00 or 0000
-                 )
-              )?  # note - make timezone  optional!!!
+                    [ ] ## require space - why? why not
+                   (?<timezone>
+                      (?:  [A-Z]{3,4}
+                           (?: /
+                                   UTC[+-]\d{1,4}
+                           )? 
+                      )
+                      |    
+                      (?: UTC[+-]\d{1,4})   ## e.g. 0 or 00 or 0000
+                  )
+               )?  # note - make timezone  optional!!!
+          )
       \)
-    )
-}ix
+)}ix
 
 
 
@@ -122,8 +134,7 @@ RE = Regexp.union(
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
                     INLINE_WO_RE,   ## (inline) match status - w/o (walkout)
                     INLINE_BYE_RE,  ## (inline) match status - bye (advance to next round)
-                    SCORE_NOTE_RE,
-                    NOTE_RE,
+                    NOTE_RE,  ### fix - change to INLINE_NOTE !!!
                     DURATION_RE,  # note - duration MUST match before date
                     DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
@@ -146,7 +157,7 @@ RE = Regexp.union(
 ##  note - use \A (instead of ^) - \A strictly matches the start of the string.
 ROUND_OUTLINE_RE = %r{   \A
                            [ ]*  ## ignore leading spaces (if any)
-                         (?: [▪▸»]|>> )    ## BLACK SMALL SQUARE, BLACK RIGHT-POINTING SMALL TRIANGLE  
+                         (?: [▪]|:: )    ## BLACK SMALL SQUARE  
                            [ ]+
                             (?<round_outline>
                                ## must start with letter - why? why not?
@@ -155,7 +166,7 @@ ROUND_OUTLINE_RE = %r{   \A
                                .+?   ## use non-greedy 
                             )
                            [ ]*  ## ignore trailing spaces (if any) 
-                         $
+                          \z
                        }ix
 
 
