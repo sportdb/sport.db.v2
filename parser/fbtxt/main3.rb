@@ -29,22 +29,12 @@ Rapid Wien - Austria Wien   [cancelled]   @ Gerhard-Hanappi-Stadion, Wien
 
 
 ###
-#  try geo with timezone
-
- Denmark  0-0  France   @ Arena Amazônia, Manaus  
- Denmark  0-0  France   @ Arena Amazônia, Manaus (UTC-4)
- Denmark  0-0  France   @ Arena Amazônia (UTC-4)
- Denmark  0-0  France   @ Manaus (UTC-4)
- Denmark v France   @ Manaus (UTC-4)
- 
-
-###
 #   check big free-standing V in text e.g.
 
 Rivière du Rempart  2-3  Petite Rivière Noire    @ New George V Stadium, Curepipe
  
 ▪ Final
-Sun Jul/19
+Sun Jul 19
   Petite Rivière Noire  2-0  Pamplemousses    @ New George V Stadium, Curepipe
 
   Petite Rivière Noire v Pamplemousses    @ New George V Stadium, Curepipe
@@ -52,19 +42,19 @@ Sun Jul/19
 ###
 #  more round names from australia
 ▪ Elimination finals
-Fri May/3
+Fri May 3
   Melbourne Victory         3-1  Wellington Phoenix
-Sun May/5
+Sun May 5
   Adelaide United           1-0 a.e.t.  Melbourne City FC
 
 ▪ Semi-finals
-Fri May/10
+Fri May 10
   Perth Glory              5-4 pen. 3-3 a.e.t.  Adelaide United
-Sun May/12
+Sun May 12
   Sydney FC                 6-1  Melbourne Victory
 
 ▪ Grand Final
-Sun May/19
+Sun May 19
   Perth Glory              1-4 pen. 0-0 a.e.t.  Sydney FC
 
   Perth Glory  v Sydney FC   1-4 pen. 0-0 a.e.t.  

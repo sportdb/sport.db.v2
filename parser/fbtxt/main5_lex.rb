@@ -19,7 +19,7 @@ require 'sportdb/parser'
 
 txt = <<-TXT
 
-[Sat Jun 3]
+Sat Jun 3
   Republic of St. Pauli - Gibraltar  1-2   @ Hamburg, Germany
  
   Northern Cyprus - Zanzibar  0-0   @ Hamburg, Germany   
@@ -27,15 +27,14 @@ txt = <<-TXT
   Austria - Rapid
   
   xxx
+  yyyy  (Wu Xi 54')
+  zzzz  (Sun Ke   68')
 
-#  yyyy  Wu Xi 54'
-#  zzzz  Sun Ke   68'
+  (Wirtz 0' Musiala,  Havertz 45+1' (pen.) Wu Xi 54' Sun Ke 68'; 
+     Rüdiger 87' (o.g.))
 
-  Wirtz 0' Musiala ??' Havertz 45+1' (pen.) Wu Xi 54' Sun Ke 68'; 
-     Rüdiger 87' (o.g.)
-
- [Wirtz 0' Musiala ??' Havertz 45+1' (pen.) Wu Xi 54' Sun Ke 68'; 
-     Rüdiger 87' (o.g.)]
+  (Wirtz, Musiala, Havertz (pen.), Wu Xi, Sun Ke; 
+     Rüdiger (og))
 
 
 ### try props
@@ -55,6 +54,8 @@ TXT
   if errors.size > 0
      puts "!! #{errors.size} tokenize error(s):"
      pp errors
+  else
+     puts "--  OK - no tokenize errors found"
   end
 
 

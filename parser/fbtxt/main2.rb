@@ -14,7 +14,7 @@ txt = <<-TXT
 
 ▪ Group A
 
- Fri Jun/14 21:00         Germany   5-1 (3-0)  Scotland     @ München Fußball Arena, München
+ Fri Jun 14 21:00         Germany   5-1 (3-0)  Scotland     @ München Fußball Arena, München
         (Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.))
 
   Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt - Andrich [Y] (46' Groß),
@@ -24,7 +24,7 @@ txt = <<-TXT
               McTominay, McGregor (67' Gilmour), Robertson - Christie (82' Shankland),
               Adams (46' Hanley), McGinn (67' McLean)
 
- Sat Jun/15 15:00         Hungary   1-3 (0-2)   Switzerland  @ Köln Stadion, Köln
+ Sat Jun 15 15:00         Hungary   1-3 (0-2)   Switzerland  @ Köln Stadion, Köln
            (Varga 66'; Duah 12' Aebischer 45' Embolo 90+3')
 
   Hungary:     Gulacsi - Lang (46' Bolla [Y]), Orban, Szalai [Y] (79' Dardai) - Fiola,

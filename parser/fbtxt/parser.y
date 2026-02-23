@@ -60,199 +60,6 @@ class RaccMatchParser
          ### use   error NEWLINE - why? why not?
          ##           will (re)sync on NEWLINE?
 
-    
-
-
-        attendance_line  : PROP_ATTENDANCE  PROP_NUM  PROP_END NEWLINE
-                              {
-                                 @tree << AttendanceLine.new( att: val[1][1][:value] )
-                              }
-
-        ## note - allow inline attendance prop in same line
-        referee_line   :  PROP_REFEREE  referee  attendance_opt PROP_END NEWLINE
-                            {
-                               kwargs = val[1] 
-                               @tree << RefereeLine.new( **kwargs ) 
-                            }
-
-       attendance_opt   : /* empty */   
-                        | ';' ATTENDANCE  PROP_NUM
-                           { 
-                                 @tree << AttendanceLine.new( att: val[2][1][:value] )
-                           }
-                  
-
-        referee  :      PROP_NAME
-                         {  result = { name: val[0]} }
-                 |      PROP_NAME  ENCLOSED_NAME  
-                         {  result = { name: val[0], country: val[1] } }   
-                 
-
-        penalties_lines : PROP_PENALTIES penalties_body PROP_END NEWLINE
-                            {
-                               @tree << PenaltiesLine.new( penalties: val[1] )                                                            
-                            }
-
-        penalties_body  :  penalty                             {  result = [val[0]]  }  
-                        |  penalties_body penalty_sep penalty  {  result << val[2]  }
-
-  
-        penalty_sep     :  ','
-                        |  ',' NEWLINE
-                        |  ';'
-                        |  ';' NEWLINE
-
-        penalty         :  SCORE PROP_NAME 
-                              {
-                                 result = Penalty.new( score: val[0][1][:score],
-                                                       name: val[1] )
-                              }
-                        |  SCORE PROP_NAME ENCLOSED_NAME
-                               {
-                                 result = Penalty.new( score: val[0][1][:score],
-                                                       name: val[1],
-                                                       note: val[2] )
-                               }
-                        | PROP_NAME
-                               {
-                                 result = Penalty.new( name: val[0] )                                
-                               }
-                        |  PROP_NAME ENCLOSED_NAME        ## e.g. (save), (post), etc
-                               {
-                                 result = Penalty.new( name: val[0],
-                                                       note: val[1] )                                
-                               }
-
-
-        yellowcard_lines : PROP_YELLOWCARDS card_body PROP_END NEWLINE 
-                             {
-                               @tree << CardsLine.new( type: 'Y', bookings: val[1] )                               
-                             }
-        redcard_lines    : PROP_REDCARDS card_body PROP_END NEWLINE
-                             {
-                               @tree << CardsLine.new( type: 'R', bookings: val[1] )                    
-                             }
-
-         ## use player_booking or such 
-         ##   note - ignores possible team separator (;) for now 
-         ##               returns/ builds all-in-one "flat" list/array
-         card_body :  player_w_minute
-                        {   result = [val[0]]  }
-                   |  card_body card_sep player_w_minute
-                        {  result << val[2]  }
-
-         card_sep  :  ','
-                   |  ';'
-                   |  ';' NEWLINE  
-
-         player_w_minute : PROP_NAME
-                              { result = Booking.new( name: val[0] )  }
-                         | PROP_NAME MINUTE  
-                              { result = Booking.new( name: val[0], minute: val[1][1] )  }
-
-
-
-        ## change PROP to LINEUP_TEAM
-        ## change PROP_NAME to NAME or LINEUP_NAME
-       lineup_lines  : PROP lineup coach_opt PROP_END NEWLINE     ## fix add NEWLINE here too!!!
-                        {  
-                          kwargs = { team:    val[0],
-                                     lineup:  val[1]  }.merge( val[2] ) 
-                          @tree << LineupLine.new( **kwargs ) 
-                        }
-
-       coach_opt   : /* empty */   
-                           { result = {}  }
-                   | ';' COACH  PROP_NAME
-                           {  result = { coach: val[2] } }
-                   | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-                           {  result = { coach: val[3] } }
- 
-       lineup :   lineup_name       
-                    { result = [[val[0]]] }
-              |   lineup lineup_sep lineup_name
-                    {
-                       ## if lineup_sep is -  start a new sub array!!
-                       if val[1] == '-'
-                          result << [val[2]]
-                       else
-                          result[-1] << val[2]
-                       end
-                    }
-
-
-       lineup_sep  :  ','
-                     | ',' NEWLINE  { result = val[0]   }
-                     | '-' 
-                     | '-' NEWLINE  { result = val[0]   }
-                     
-
-      lineup_name    :    PROP_NAME  lineup_card_opts  lineup_sub_opts   
-                           {
-                              kwargs = { name: val[0] }.merge( val[1] ).merge( val[2] )
-                              result = Lineup.new( **kwargs )
-                           }
-
-       lineup_card_opts      : /* empty */   { result = {} }
-                             |  card         { result = { card: val[0] } }
-
-
-        ##  allow nested subs e.g. 
-        ##     Clément Lenglet 
-        ##          (Kingsley Coman 46' 
-        ##             (Marcus Thuram 111'))
-        ##
-        ##  note -  lineup_name MINUTE is NOT working as expected, expects  
-        ##     Clément Lenglet 
-        ##          ( Kingsley Coman 
-        ##              ( Marcus Thuram 111' ) 
-        ##            46'
-        ##          ) 
-        ##   thus use a "special" hand-coded recursive rule
-
-
-         lineup_sub_opts : /* empty */   { result = {} }
-                         | '(' PROP_NAME  lineup_card_opts  MINUTE  lineup_sub_opts ')'    
-                          {
-                              kwargs = { name: val[1] }.merge( val[2] ).merge( val[4] )
-                              sub    = Sub.new( sub:    Lineup.new( **kwargs ),
-                                                minute: Minute.new(val[3][1]) 
-                                              )
-                              result = { sub: sub }
-                          }
-                       |  '(' lineup_name ')'    ## allow subs without minutes too
-                           {
-                              sub = Sub.new( sub: val[1] )
-                              result = { sub: sub }
-                           }      
-                  ## allow both styles? minute first or last? keep - why? why not?
-                    |   '(' MINUTE lineup_name ')'    
-                          {
-                              sub = Sub.new( sub:    val[2],
-                                             minute: Minute.new(val[1][1]) 
-                                            )
-                              result = { sub: sub }
-                          }
-
-
-
-       card         :   '[' card_body ']'
-                          {
-                              kwargs = val[1]
-                              result = Card.new( **kwargs )
-                          }
-       
-       card_body    :     card_type
-                           { result = { name: val[0] } } 
-         ## todo/fix - use goal_minute and minute (w/o pen/og etc.)                          
-                    |     card_type MINUTE
-                           { result = { name: val[0],
-                                        minute: Minute.new(val[1][1]) } 
-                           }
-                     
-
-       card_type    :  YELLOW_CARD | RED_CARD 
-
 
 
 
@@ -292,7 +99,8 @@ class RaccMatchParser
         ##                          NOT tokens separated by comma(,) or dash(-) 
         round_outline :    ROUND_OUTLINE NEWLINE
                               { 
-                                  @tree << RoundOutline.new( outline: val[0] )
+                                  kwargs = val[0][1]
+                                  @tree << RoundOutline.new( **kwargs )
                               }
 
         #####
@@ -314,7 +122,7 @@ class RaccMatchParser
                       ## auto-add RoundOutline here - why? why not?
                       ##    or handle "implicit" round_outline
                       ##     in tree walker?
-                      @tree << RoundOutline.new( outline: val[0] )
+                      @tree << RoundOutline.new( outline: val[0], level: 1 )
                   }
 
 
@@ -805,6 +613,202 @@ class RaccMatchParser
                              result = Minute.new( **kwargs )  
                           }
                                       
+
+
+##########################################################################
+##     level 2 support for properties - line-up, penalties, etc.
+
+
+        attendance_line  : PROP_ATTENDANCE  PROP_NUM  PROP_END NEWLINE
+                              {
+                                 @tree << AttendanceLine.new( att: val[1][1][:value] )
+                              }
+
+        ## note - allow inline attendance prop in same line
+        referee_line   :  PROP_REFEREE  referee  attendance_opt PROP_END NEWLINE
+                            {
+                               kwargs = val[1] 
+                               @tree << RefereeLine.new( **kwargs ) 
+                            }
+
+       attendance_opt   : /* empty */   
+                        | ';' ATTENDANCE  PROP_NUM
+                           { 
+                                 @tree << AttendanceLine.new( att: val[2][1][:value] )
+                           }
+                  
+
+        referee  :      PROP_NAME
+                         {  result = { name: val[0]} }
+                 |      PROP_NAME  ENCLOSED_NAME  
+                         {  result = { name: val[0], country: val[1] } }   
+                 
+
+        penalties_lines : PROP_PENALTIES penalties_body PROP_END NEWLINE
+                            {
+                               @tree << PenaltiesLine.new( penalties: val[1] )                                                            
+                            }
+
+        penalties_body  :  penalty                             {  result = [val[0]]  }  
+                        |  penalties_body penalty_sep penalty  {  result << val[2]  }
+
+  
+        penalty_sep     :  ','
+                        |  ',' NEWLINE
+                        |  ';'
+                        |  ';' NEWLINE
+
+        penalty         :  SCORE PROP_NAME 
+                              {
+                                 result = Penalty.new( score: val[0][1][:score],
+                                                       name: val[1] )
+                              }
+                        |  SCORE PROP_NAME ENCLOSED_NAME
+                               {
+                                 result = Penalty.new( score: val[0][1][:score],
+                                                       name: val[1],
+                                                       note: val[2] )
+                               }
+                        | PROP_NAME
+                               {
+                                 result = Penalty.new( name: val[0] )                                
+                               }
+                        |  PROP_NAME ENCLOSED_NAME        ## e.g. (save), (post), etc
+                               {
+                                 result = Penalty.new( name: val[0],
+                                                       note: val[1] )                                
+                               }
+
+
+        yellowcard_lines : PROP_YELLOWCARDS card_body PROP_END NEWLINE 
+                             {
+                               @tree << CardsLine.new( type: 'Y', bookings: val[1] )                               
+                             }
+        redcard_lines    : PROP_REDCARDS card_body PROP_END NEWLINE
+                             {
+                               @tree << CardsLine.new( type: 'R', bookings: val[1] )                    
+                             }
+
+         ## use player_booking or such 
+         ##   note - ignores possible team separator (;) for now 
+         ##               returns/ builds all-in-one "flat" list/array
+         card_body :  player_w_minute
+                        {   result = [val[0]]  }
+                   |  card_body card_sep player_w_minute
+                        {  result << val[2]  }
+
+         card_sep  :  ','
+                   |  ';'
+                   |  ';' NEWLINE  
+
+         player_w_minute : PROP_NAME
+                              { result = Booking.new( name: val[0] )  }
+                         | PROP_NAME MINUTE  
+                              { result = Booking.new( name: val[0], minute: val[1][1] )  }
+
+
+
+        ## change PROP to LINEUP_TEAM
+        ## change PROP_NAME to NAME or LINEUP_NAME
+       lineup_lines  : PROP lineup coach_opt PROP_END NEWLINE     ## fix add NEWLINE here too!!!
+                        {  
+                          kwargs = { team:    val[0],
+                                     lineup:  val[1]  }.merge( val[2] ) 
+                          @tree << LineupLine.new( **kwargs ) 
+                        }
+
+       coach_opt   : /* empty */   
+                           { result = {}  }
+                   | ';' COACH  PROP_NAME
+                           {  result = { coach: val[2] } }
+                   | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
+                           {  result = { coach: val[3] } }
  
+       lineup :   lineup_name       
+                    { result = [[val[0]]] }
+              |   lineup lineup_sep lineup_name
+                    {
+                       ## if lineup_sep is -  start a new sub array!!
+                       if val[1] == '-'
+                          result << [val[2]]
+                       else
+                          result[-1] << val[2]
+                       end
+                    }
+
+
+       lineup_sep  :  ','
+                     | ',' NEWLINE  { result = val[0]   }
+                     | '-' 
+                     | '-' NEWLINE  { result = val[0]   }
+                     
+
+      lineup_name    :    PROP_NAME  lineup_card_opts  lineup_sub_opts   
+                           {
+                              kwargs = { name: val[0] }.merge( val[1] ).merge( val[2] )
+                              result = Lineup.new( **kwargs )
+                           }
+
+       lineup_card_opts      : /* empty */   { result = {} }
+                             |  card         { result = { card: val[0] } }
+
+
+        ##  allow nested subs e.g. 
+        ##     Clément Lenglet 
+        ##          (Kingsley Coman 46' 
+        ##             (Marcus Thuram 111'))
+        ##
+        ##  note -  lineup_name MINUTE is NOT working as expected, expects  
+        ##     Clément Lenglet 
+        ##          ( Kingsley Coman 
+        ##              ( Marcus Thuram 111' ) 
+        ##            46'
+        ##          ) 
+        ##   thus use a "special" hand-coded recursive rule
+
+
+         lineup_sub_opts : /* empty */   { result = {} }
+                         | '(' PROP_NAME  lineup_card_opts  MINUTE  lineup_sub_opts ')'    
+                          {
+                              kwargs = { name: val[1] }.merge( val[2] ).merge( val[4] )
+                              sub    = Sub.new( sub:    Lineup.new( **kwargs ),
+                                                minute: Minute.new(val[3][1]) 
+                                              )
+                              result = { sub: sub }
+                          }
+                       |  '(' lineup_name ')'    ## allow subs without minutes too
+                           {
+                              sub = Sub.new( sub: val[1] )
+                              result = { sub: sub }
+                           }      
+                  ## allow both styles? minute first or last? keep - why? why not?
+                    |   '(' MINUTE lineup_name ')'    
+                          {
+                              sub = Sub.new( sub:    val[2],
+                                             minute: Minute.new(val[1][1]) 
+                                            )
+                              result = { sub: sub }
+                          }
+
+
+
+       card         :   '[' card_body ']'
+                          {
+                              kwargs = val[1]
+                              result = Card.new( **kwargs )
+                          }
+       
+       card_body    :     card_type
+                           { result = { name: val[0] } } 
+         ## todo/fix - use goal_minute and minute (w/o pen/og etc.)                          
+                    |     card_type MINUTE
+                           { result = { name: val[0],
+                                        minute: Minute.new(val[1][1]) } 
+                           }
+                     
+
+       card_type    :  YELLOW_CARD | RED_CARD 
+
+
 end
 

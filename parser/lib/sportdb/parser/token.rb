@@ -4,76 +4,6 @@ module SportDb
 class Lexer
 
 
-##
-#  keep 18h30 - why? why not?
-#    add support for 6:30pm 8:20am etc. - why? why not?
-#
-#    check - only support h e.g. 18h30  or 18H30 too - why? why not?
-# e.g. 18:30 (or 18h30)
-#   note - optional timezone possible e.g.
-#        18:30 UTC+1   or 18:30 BST/UTC+1  or such!!!
-#        18:30 UTC+01  or 18:30 BST/UTC+01
-#       
-#
-#  note  18.30 no longer supported - MUST use 18:30 or 18h30 !!!
-
-TIME_RE = %r{
-    (?<time>  \b
-        (?:   (?<hour>\d{1,2})
-                   [:h] 
-              (?<minute>\d{2})
-                 
-                 #### optional (inline) timezone
-                 ##    note - non-utc timezone MUST be hard-coded (added) here!!!
-                 ##     avoids eating-up team names (separated by one space)
-                 ##            e.g.  18:30 MEX v MEX 
-                 (?:
-                    [ ]  ## require space - why? why not
-                     (?<timezone>
-                        (?: 
-                          (?: BST|CEST|CEST|EEST) 
-                               (?: /
-                                   UTC[+-]\d{1,4}
-                               )?
-                          )
-                          |
-                          (?: UTC[+-]\d{1,4})
-                     )
-                 )?
-          )
-        \b  
-    )}ix
-
-
-##    local time e.g (19:30 UTC+1) or (19:30 BST/UTC+1) or 
-##   note - timezone is optional!  e.g. (19:30) works too
-TIME_LOCAL_RE = %r{
-    (?<time_local>   
-         \(
-        (?:   (?<hour>\d{1,2})
-                   [:h]
-              (?<minute>\d{2})
-                
-                ####
-                ## optional "local" timezone name eg. BRT or CEST etc.
-                (?:
-                    [ ] ## require space - why? why not
-                   (?<timezone>
-                      (?:  [A-Z]{3,4}
-                           (?: /
-                                   UTC[+-]\d{1,4}
-                           )? 
-                      )
-                      |    
-                      (?: UTC[+-]\d{1,4})   ## e.g. 0 or 00 or 0000
-                  )
-               )?  # note - make timezone  optional!!!
-          )
-      \)
-)}ix
-
-
-
 
 BASICS_RE = %r{
     ## e.g. (51) or (1) etc.  - limit digits of number - why? why not???
@@ -129,6 +59,11 @@ INLINE_BYE_RE = %r{
                )}x   ## add support for upcase BYE - why? why not?
 
 
+## "top-level" regex used for:
+##    - date_header
+##    - match_header & match_line_more
+##    - match_line
+
 
 RE = Regexp.union(
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
@@ -150,88 +85,6 @@ RE = Regexp.union(
                    ANY_RE,
                       )
 
-
-####
-# 
-##  note - use \A (instead of ^) - \A strictly matches the start of the string.
-ROUND_OUTLINE_RE = %r{   \A
-                           [ ]*  ## ignore leading spaces (if any)
-                         (?: [▪]|:: )    ## BLACK SMALL SQUARE  
-                           [ ]+
-                            (?<round_outline>
-                               ## must start with letter - why? why not?
-                               ###   1st round
-                               ##  allow numbers e.g. Group A - 1 
-                               ##   
-                               ##  note - CANNOT incl. :| !!!
-                               ##   used for markers for defs/definitions
-                               [^:|]+?   ## use non-greedy 
-                            )
-                           [ ]*  ## ignore trailing spaces (if any) 
-                          \z
-                       }ix
-
-ROUND_DEF_OUTLINE_RE = %r{   \A
-                           [ ]*  ## ignore leading spaces (if any)
-                          (?: [▪]|:: )    ## BLACK SMALL SQUARE  
-                           [ ]+
-                            (?<round_outline>
-                               [^:|]+?   ## use non-greedy 
-                            )
-                           [ ]*  ## ignore trailing spaces (if any) 
-                          ###   possitive lookahead MUST be : OR | 
-                           (?= [:|] 
-                               [ ])  ## note: requires space for now after [:|] - keep - why? why not?	
-                      }ix
-
-
-ROUND_DEF_BASICS_RE = %r{
-    (?<spaces> [ ]{2,}) |
-    (?<space>  [ ])
-        |
-    (?<sym> [:|,] )    ### note - add comma (,) as optional separator  
-}ix
-
-ROUND_DEF_RE = Regexp.union(  ROUND_DEF_BASICS_RE, 
-                              DURATION_RE,  # note - duration MUST match before date
-                              DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
-                              ANY_RE,
-                           )
-      
-
-###
-#   check for start of group def line e.g.
-#       Group A  | ...
-#       Group 1  : ....
-#       Group A2 | ....
-##  note - use \A (instead of ^) - \A strictly matches the start of the string.
-GROUP_DEF_LINE_RE =  %r{  \A
-                     [ ]*  ## ignore leading spaces (if any)
-                     (?<group_def>
-                         Group
-                          [ ]
-                          [a-z0-9]+   ## todo/check - allow dot (.) too e.g. 1.A etc.- why? why not?         
-                     )
-                     ###   possitive lookahead MUST be : OR | 
-                     (?= [ ]*
-                         [:|] 
-                         [ ])  ## note: requires space for now after [:|] - keep - why? why not?	
-                  }ix 
-
-GROUP_DEF_BASICS_RE = %r{
-    (?<spaces> [ ]{2,}) |
-    (?<space>  [ ])
-        |
-    (?<sym> [:|,] )    ### note - add comma (,) as optional separator  
-}ix
-
-
-GROUP_DEF_RE = Regexp.union(  GROUP_DEF_BASICS_RE, 
-                              TEXT_RE,
-                              ANY_RE,
-                           )
-      
-     
 
 
 ###

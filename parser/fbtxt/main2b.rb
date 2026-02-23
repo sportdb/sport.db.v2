@@ -12,11 +12,11 @@ require 'sportdb/parser'
 
 txt = <<-TXT
 
-Group A
+▪ Group A
 
   Fri Jun 14 21:00  @ München Fußball Arena, München        
- (1)  Germany  v  Scotland   5-1 (3-0)     
-        Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.)
+   Germany  v  Scotland   5-1 (3-0)     
+        (Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.))
 
   Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt - Andrich [Y] (Groß 46'),
               Kroos (Can 80') - Musiala (Müller 74'), Gündogan, Wirtz (Sane 63') - 
@@ -26,8 +26,8 @@ Group A
               Adams (Hanley 46'), McGinn (McLean 67')
 
  Sat Jun 15 15:00  @ Köln Stadion, Köln
- (2)  Hungary   v   Switzerland  1-3 (0-2)  
-          Varga 66'; Duah 12' Aebischer 45' Embolo 90+3'
+   Hungary   v   Switzerland  1-3 (0-2)  
+          (Varga 66'; Duah 12' Aebischer 45' Embolo 90+3')
 
   Hungary:     Gulacsi - Lang (Bolla [Y] 46'), Orban, Szalai [Y] (Dardai 79') - Fiola,
                Nagy (Kleinheisler 67'), Schäfer, Kerkez (Adam 79') - 
@@ -39,11 +39,16 @@ Group A
 TXT
 
 
-
-  parser = RaccMatchParser.new( txt )
-  tree = parser.parse
+  parser = RaccMatchParser.new( txt, debug: true )
+  tree, errors = parser.parse_with_errors
   pp tree
 
+  if errors.size > 0
+     puts "!! #{errors.size} parse error(s):"
+     pp errors
+  else
+     puts "--  OK - no parse errors found"
+  end
 
 
 puts "bye"

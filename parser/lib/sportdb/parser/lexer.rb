@@ -309,8 +309,15 @@ def _tokenize_line( line )
       pos = offsets[1]    ## update pos
     elsif (m = ROUND_OUTLINE_RE.match( line ))
       puts "   ROUND_OUTLINE"  if debug?
+      ## note - derive round level from no of (leading) markers
+      ##             e.g. ▪/:: is 1, ▪▪/::: is 2, ▪▪▪/:::: is 3, etc.
+      ##       note  - ascii-style starts with double ::, thus, autodecrement by one!
+      round_level = m[:round_marker].size
+      round_level -= 1  if m[:round_marker].start_with?( '::' ) 
 
-      tokens << [:ROUND_OUTLINE, m[:round_outline]]
+      tokens << [:ROUND_OUTLINE, [m[:round_outline], 
+                      { outline: m[:round_outline] , 
+                        level: round_level}]]
 
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
       offsets = [m.begin(0), m.end(0)]

@@ -60,6 +60,66 @@ Greece            1-1  France
 #  @ Glasgow        Scotland           2-0 Spain
 
 
+###
+#  check round additions
+
+▪ Championship, Promotion Playoff 
+▪▪ Semifinals 
+▪▪▪ First Legs        
+May 12
+  Norwich       0-0 Leeds         
+  West Bromwich 0-0 Southampton   
+
+▪▪▪ Second Legs 
+May 16
+  Leeds         4-0 Norwich       
+May 17
+  Southampton   3-1 West Bromwich 
+
+▪▪ Final
+May 26
+  Leeds         0-1 Southampton   
+
+
+▪ Division 1, Promotion Playoff 
+▪▪ Semifinals 
+▪▪▪ First Legs 
+May 3
+  Barnsley      1-3 Bolton        
+May 4
+  Oxford        1-1 Peterborough  
+
+▪▪▪ Second Legs 
+May 7
+  Bolton        2-3 Barnsley      
+May 8
+  Peterborough  1-1 Oxford        
+
+▪▪ Final 
+May 18
+  Bolton        0-2 Oxford        
+
+
+####
+# try alternate ascii-style
+:: Championship, Promotion Playoff 
+::: Semifinals 
+:::: First Legs        
+May 12
+  Norwich       0-0 Leeds         
+  West Bromwich 0-0 Southampton   
+
+:::: Second Legs 
+May 16
+  Leeds         4-0 Norwich       
+May 17
+  Southampton   3-1 West Bromwich 
+
+::: Final
+May 26
+  Leeds         0-1 Southampton   
+
+
 TXT
 
 

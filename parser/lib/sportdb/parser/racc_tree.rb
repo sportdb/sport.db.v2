@@ -159,28 +159,12 @@ end
 
 
 
-GroupHeader = Struct.new( :name ) do
+RoundOutline = Struct.new( :outline, :level ) do
   def pretty_print( printer )
-    printer.text( "<GroupHeader " )
-    printer.text( "#{self.name}>" )
+    printer.text( "<RoundOutline #{self.outline}, level=#{self.level}>" )
   end
 end
 
-RoundHeader = Struct.new( :names, :group ) do
-  def pretty_print( printer )
-    printer.text( "<RoundHeader " )
-    printer.text( "#{self.names.join(', ')}" )
-    printer.text( " group=#{self.group}")    if self.group
-    printer.text( ">" )
-  end
-end
-
-
-RoundOutline = Struct.new( :outline ) do
-  def pretty_print( printer )
-    printer.text( "<RoundOutline #{self.outline}>" )
-  end
-end
 
 NoteLine = Struct.new( :text ) do
   def pretty_print( printer )
