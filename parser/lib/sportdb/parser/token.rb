@@ -135,7 +135,6 @@ RE = Regexp.union(
                     INLINE_WO_RE,   ## (inline) match status - w/o (walkout)
                     INLINE_BYE_RE,  ## (inline) match status - bye (advance to next round)
                     NOTE_RE,  ### fix - change to INLINE_NOTE !!!
-                    DURATION_RE,  # note - duration MUST match before date
                     DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
@@ -163,12 +162,76 @@ ROUND_OUTLINE_RE = %r{   \A
                                ## must start with letter - why? why not?
                                ###   1st round
                                ##  allow numbers e.g. Group A - 1 
-                               .+?   ## use non-greedy 
+                               ##   
+                               ##  note - CANNOT incl. :| !!!
+                               ##   used for markers for defs/definitions
+                               [^:|]+?   ## use non-greedy 
                             )
                            [ ]*  ## ignore trailing spaces (if any) 
                           \z
                        }ix
 
+ROUND_DEF_OUTLINE_RE = %r{   \A
+                           [ ]*  ## ignore leading spaces (if any)
+                          (?: [▪]|:: )    ## BLACK SMALL SQUARE  
+                           [ ]+
+                            (?<round_outline>
+                               [^:|]+?   ## use non-greedy 
+                            )
+                           [ ]*  ## ignore trailing spaces (if any) 
+                          ###   possitive lookahead MUST be : OR | 
+                           (?= [:|] 
+                               [ ])  ## note: requires space for now after [:|] - keep - why? why not?	
+                      }ix
+
+
+ROUND_DEF_BASICS_RE = %r{
+    (?<spaces> [ ]{2,}) |
+    (?<space>  [ ])
+        |
+    (?<sym> [:|,] )    ### note - add comma (,) as optional separator  
+}ix
+
+ROUND_DEF_RE = Regexp.union(  ROUND_DEF_BASICS_RE, 
+                              DURATION_RE,  # note - duration MUST match before date
+                              DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
+                              ANY_RE,
+                           )
+      
+
+###
+#   check for start of group def line e.g.
+#       Group A  | ...
+#       Group 1  : ....
+#       Group A2 | ....
+##  note - use \A (instead of ^) - \A strictly matches the start of the string.
+GROUP_DEF_LINE_RE =  %r{  \A
+                     [ ]*  ## ignore leading spaces (if any)
+                     (?<group_def>
+                         Group
+                          [ ]
+                          [a-z0-9]+   ## todo/check - allow dot (.) too e.g. 1.A etc.- why? why not?         
+                     )
+                     ###   possitive lookahead MUST be : OR | 
+                     (?= [ ]*
+                         [:|] 
+                         [ ])  ## note: requires space for now after [:|] - keep - why? why not?	
+                  }ix 
+
+GROUP_DEF_BASICS_RE = %r{
+    (?<spaces> [ ]{2,}) |
+    (?<space>  [ ])
+        |
+    (?<sym> [:|,] )    ### note - add comma (,) as optional separator  
+}ix
+
+
+GROUP_DEF_RE = Regexp.union(  GROUP_DEF_BASICS_RE, 
+                              TEXT_RE,
+                              ANY_RE,
+                           )
+      
+     
 
 
 ###

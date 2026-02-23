@@ -141,32 +141,9 @@ def tokenize_with_errors
     end # each line
 
 
-    tokens_by_line = tokens_by_line.map do |tokens|
-        #############
-        ## pass 1
-        ##   replace all texts with keyword matches
-        ##     (e.g. group, round, leg, etc.)
-        ##
-        ##   note - let is_round? get first (before is_group?)
-        ##            will match group stage  as round (NOT group)
-        tokens = tokens.map do |t|        
-                    if t[0] == :TEXT
-                       text = t[1]
-                       t =  if is_round?( text ) 
-                               [:ROUND, text]   
-                            elsif is_group?( text )
-                               [:GROUP, text]
-                             else
-                               ## note: was - t  ## pass through as-is (1:1)
-                               [:TEAM, text]
-                             end
-                    end
-                   t
-                 end
 
-   
+    tokens_by_line = tokens_by_line.map do |tokens|  
         #################
-        ## pass 2                  
         ##    transform tokens (using simple patterns) 
         ##      to help along the (racc look ahead 1 - LA1) parser       
         nodes = []
@@ -174,32 +151,9 @@ def tokenize_with_errors
         buf = Tokens.new( tokens )
         ## pp buf
 
-
     loop do
           break if buf.eos?
 
-          if buf.pos == 0   ## MUST start line
-            ## check for
-            ##    group def or round def
-            if buf.match?( :ROUND, :'|' )    ## assume round def (change round to round_def)
-                      nodes << [:ROUND_DEF, buf.next[1]]
-                      nodes << buf.next 
-                      nodes += buf.collect
-                      break
-            end
-            if buf.match?( :GROUP, :'|' )    ## assume group def (change group to group_def)
-                      nodes << [:GROUP_DEF, buf.next[1]]
-                      nodes << buf.next 
-                      nodes += buf.collect 
-                      break
-            end
-          end
-
-
-   #   note - now handled (upstream) with GOAL_RE mode!!!
-   #       if buf.match?( :TEXT, :MINUTE )
-   #          nodes << [:PLAYER, buf.next[1]]
-   #          nodes << buf.next
           if buf.match?( :DATE, :TIME )   ## merge DATE TIME into DATETIME
                date = buf.next[1]
                time = buf.next[1]
@@ -290,9 +244,18 @@ def _tokenize_line( line )
     ###   for now goals only possible for start of line!!
     ###        fix - remove optional [] - why? why not?  
   
-    ##  start with prop key (match will switch into prop mode!!!)
-    ##   - fix - remove leading spaces in regex (upstream) - why? why not?
-    if (m = PROP_KEY_RE.match( line ))
+    if (m = GROUP_DEF_LINE_RE.match( line ))
+      puts "  ENTER GROUP_DEF_RE MODE"   if debug?
+      @re = GROUP_DEF_RE   
+
+      tokens << [:GROUP_DEF, m[:group_def]]
+
+      offsets = [m.begin(0), m.end(0)]
+      pos = offsets[1]    ## update pos
+    elsif (m = PROP_KEY_RE.match( line ))
+      ##  start with prop key (match will switch into prop mode!!!)
+      ##   - fix - remove leading spaces in regex (upstream) - why? why not?
+      ##
       ###  switch into new mode
       ##  switch context  to PROP_RE
         puts "  ENTER PROP_RE MODE"   if debug?
@@ -333,6 +296,15 @@ def _tokenize_line( line )
       tokens << [:"H#{heading_level}", m[:heading]]
 
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
+      offsets = [m.begin(0), m.end(0)]
+      pos = offsets[1]    ## update pos
+    elsif (m = ROUND_DEF_OUTLINE_RE.match( line ))
+      puts "   ENTER ROUND_DEF_RE MODE"  if debug?
+      @re = ROUND_DEF_RE   
+
+      ## note - return ROUND_DEF NOT  ROUND_OUTLINE token
+      tokens << [:ROUND_DEF, m[:round_outline]]
+
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
     elsif (m = ROUND_OUTLINE_RE.match( line ))
@@ -395,7 +367,89 @@ def _tokenize_line( line )
     ##         for VAL use "text" or ["text", { opts }]  array
 
 
-  t = if @re == GEO_RE
+  t = if @re == ROUND_DEF_RE 
+           if m[:spaces] || m[:space] 
+               nil    ## skip spaces
+           elsif m[:date]
+            date = {}
+         ## map month names
+         ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
+            date[:y]  = m[:year].to_i(10)  if m[:year]
+            ## check - use y too for two-digit year or keep separate - why? why not?
+            date[:yy] = m[:yy].to_i(10)    if m[:yy]    ## two digit year (e.g. 25 or 78 etc.)
+            date[:m] = m[:month].to_i(10)  if m[:month]
+            date[:m] = MONTH_MAP[ m[:month_name].downcase ]   if m[:month_name]
+            date[:d]  = m[:day].to_i(10)   if m[:day]
+            date[:wday] = DAY_MAP[ m[:day_name].downcase ]   if m[:day_name]
+            ## note - for debugging keep (pass along) "literal" date
+            [:DATE, [m[:date], date]]
+          elsif m[:duration]
+            ## todo/check/fix - if end: works for kwargs!!!!!
+            duration = { start: {}, end: {}}
+            duration[:start][:y] = m[:year1].to_i(10)  if m[:year1]
+            duration[:start][:m] = MONTH_MAP[ m[:month_name1].downcase ]   if m[:month_name1]
+            duration[:start][:d]  = m[:day1].to_i(10)   if m[:day1]
+            duration[:start][:wday] = DAY_MAP[ m[:day_name1].downcase ]   if m[:day_name1]
+            duration[:end][:y] = m[:year2].to_i(10)  if m[:year2]
+            duration[:end][:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
+            duration[:end][:d]  = m[:day2].to_i(10)   if m[:day2]
+            duration[:end][:wday] = DAY_MAP[ m[:day_name2].downcase ]   if m[:day_name2]
+            ## note - for debugging keep (pass along) "literal" duration
+            [:DURATION, [m[:duration], duration]] 
+          elsif m[:sym]
+              sym = m[:sym]
+              case sym
+              when '|' then  [:'|']
+              when ':' then  [:':']
+              when ',' then  [:',']
+              else
+                puts "!!! TOKENIZE ERROR (sym) - ignore sym >#{sym}<"
+                nil  ## ignore others (e.g. brackets [])
+              end
+           elsif m[:any]
+              ## todo/check log error
+               msg = "parse error (tokenize round_def) - skipping any match>#{m[:any]}< @#{offsets[0]},#{offsets[1]} in line >#{line}<"
+               puts "!! WARN - #{msg}"
+  
+               errors << msg
+               log( "!! WARN - #{msg}" )
+       
+               nil   
+            else
+              ## report error/raise expection
+               puts "!!! TOKENIZE ERROR - no match found"
+               nil 
+            end
+      elsif @re == GROUP_DEF_RE
+           if m[:spaces] || m[:space] 
+               nil    ## skip spaces
+           elsif m[:text]
+               [:TEAM, m[:text]]  
+           elsif m[:sym]
+              sym = m[:sym]
+              case sym
+              when '|' then  [:'|']
+              when ':' then  [:':']
+              when ',' then  [:',']
+              else
+                puts "!!! TOKENIZE ERROR (sym) - ignore sym >#{sym}<"
+                nil  ## ignore others (e.g. brackets [])
+              end
+           elsif m[:any]
+              ## todo/check log error
+               msg = "parse error (tokenize group_def) - skipping any match>#{m[:any]}< @#{offsets[0]},#{offsets[1]} in line >#{line}<"
+               puts "!! WARN - #{msg}"
+  
+               errors << msg
+               log( "!! WARN - #{msg}" )
+       
+               nil   
+            else
+              ## report error/raise expection
+               puts "!!! TOKENIZE ERROR - no match found"
+               nil 
+            end
+       elsif @re == GEO_RE
            ### note - possibly end inline geo on [ (and others?? in the future
            ## note: break on double spaces e.g.
            ## e.g. Jul/16 @ Arena Auf Schalke, Gelsenkirchen  Serbia 0-1 England    
@@ -661,7 +715,8 @@ def _tokenize_line( line )
         if m[:space] || m[:spaces]
            nil   ## skip space(s)
         elsif m[:text]
-          [:TEXT, m[:text]]   ## keep pos - why? why not?
+          ##  note - top-level (for now always) assumes TEAM for TEXT match!!
+          [:TEAM, m[:text]]   ## keep pos - why? why not?
         elsif m[:status]   ## (match) status e.g. cancelled, awarded, etc.
           ## todo/check - add text (or status) 
           #     to opts hash {} by default (for value)
@@ -754,21 +809,7 @@ def _tokenize_line( line )
             legs[:date2] = date
 
             ## note - for debugging keep (pass along) "literal" date
-            [:DATE_LEGS, [m[:date_legs], legs]]
-        elsif m[:duration]
-            ## todo/check/fix - if end: works for kwargs!!!!!
-            duration = { start: {}, end: {}}
-            duration[:start][:y] = m[:year1].to_i(10)  if m[:year1]
-            duration[:start][:m] = MONTH_MAP[ m[:month_name1].downcase ]   if m[:month_name1]
-            duration[:start][:d]  = m[:day1].to_i(10)   if m[:day1]
-            duration[:start][:wday] = DAY_MAP[ m[:day_name1].downcase ]   if m[:day_name1]
-            duration[:end][:y] = m[:year2].to_i(10)  if m[:year2]
-            duration[:end][:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
-            duration[:end][:d]  = m[:day2].to_i(10)   if m[:day2]
-            duration[:end][:wday] = DAY_MAP[ m[:day_name2].downcase ]   if m[:day_name2]
-            ## note - for debugging keep (pass along) "literal" duration
-            [:DURATION, [m[:duration], duration]]
- 
+            [:DATE_LEGS, [m[:date_legs], legs]] 
         elsif m[:ord]   ## note -  ord (for ordinal number!!!) e.g match number (1), (42), etc.
               ## note -  strip enclosing () and convert to integer
              [:ORD, [m[:ord], { value: m[:value].to_i(10) } ]]
@@ -974,6 +1015,9 @@ def _tokenize_line( line )
      puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
      @re = RE 
    end
+ 
+   @re = RE  if @re == GROUP_DEF_RE   ### ALWAYS switch back to top level mode
+   @re = RE  if @re == ROUND_DEF_RE
 
    ##
    ## if in prop mode continue if   last token is [,-]

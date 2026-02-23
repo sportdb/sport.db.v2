@@ -52,6 +52,12 @@ Greece            1-1  France
 28.03.23 @ Batumi         Georgia            1-1 Norway
 28.03.23 @ Glasgow        Scotland           2-0 Spain
 
+###
+#  todo/fix - allow match line starting w/ geo too - why? why not?
+#  @ Glasgow        Scotland           3-0 Cyprus
+#  @ Málaga         Spain              3-0 Norway
+#  @ Batumi         Georgia            1-1 Norway
+#  @ Glasgow        Scotland           2-0 Spain
 
 
 TXT
