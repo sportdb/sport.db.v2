@@ -39,6 +39,8 @@ class RaccMatchParser
           ##              and only use NOTE for "standalone" NOTE (lines)
           | note_line   
  
+          | table_line
+ 
           ## check - goal_lines MUST follow match_line - why? why not?     
           | goal_lines     
          ### | goal_lines_alt   ## allow differnt style/variant 
@@ -67,7 +69,12 @@ class RaccMatchParser
            : H1 NEWLINE   {  @tree << Heading1.new( text: val[0])  }
            | H2 NEWLINE   {  @tree << Heading2.new( text: val[0])  }
            | H3 NEWLINE   {  @tree << Heading3.new( text: val[0])  }
-           
+
+        table_line
+           : TABLE_HEADING NEWLINE { @tree << TableHeading.new( text: val[0]) }
+           | TABLE_LINE NEWLINE    { @tree << TableLine.new( text: val[0]) }
+           | TABLE_NOTE NEWLINE    { @tree << TableNote.new( text: val[0]) }
+
 
         note_line
             : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0]) }

@@ -54,6 +54,12 @@ BLOCK_RE = %r{  \[
                   \]
                         }xm  ## note - turn on multi-line match (for dot(.))
 
+##  
+##  replace "escaped" newline with non-newline char e.g. '↵'
+LINE_CONTINUATION_RE = %r{
+                           \\[ ]* \n
+                        }x
+
 
 def tokenize_with_errors
     tokens_by_line = []   ## note: add tokens line-by-line (flatten later)
@@ -73,12 +79,32 @@ def tokenize_with_errors
     ##           (incl. multi-line)  with two spaces
     ##       will mess-up lineno tracking!!!
     ##    fix later to have function lineno & colno!!!
-    txt = @txt.gsub( HTML_COMMENT_RE, '  ' )
-
+    txt = @txt.gsub( HTML_COMMENT_RE ) do |m|
+                        puts " [debug] preproc html comment:"
+                        puts m
+                        '  ' 
+                   end
     ###
     ## add more "native" multi-line comment-styles
     ##  e.g.    #[[ ... ]]  or  #<<< .. >>> or #<< .. >>
     ##                 or such - why? why not?
+
+
+   ##
+   ## e.g. used in (multi-line) TableNote  
+   ##  1.SOUTH KOREA   6  5  1  0 22- 1 16  [0-0]
+   ##  2.LEBANON       6  3  1  2 11- 8 10  [0-2, 0-0]
+   ##  3.Turkmenistan  6  3  0  3  8-11  9  [3-1]
+   ##  4.Sri Lanka     6  0  0  6  2-23  0  [0-1]
+   ##  -.North Korea   withdrew after playing 5 matches due to safety concerns in \
+   ##                  connection with the Covid-19 pandemic; all results annulled
+
+   txt = txt.gsub( LINE_CONTINUATION_RE ) do |_|
+            puts " [debug] preproc line continuation"
+              ## todo/check: replace with two spaces insead of ↵ - why? why not?
+               '↵' 
+         end 
+
 
 
     #####
@@ -97,6 +123,9 @@ def tokenize_with_errors
 
     txt = txt.gsub( BLOCK_RE ) do |m|
        if m.include?( "\n" )   ## check for newlines (\n) and replace
+         puts " [debug] preproc (multi-line) block:"
+         puts m
+         ## todo/check: replace with two spaces insead of ↵ - why? why not?
          m.gsub( "\n", '↵' )
        else
          m 
@@ -104,6 +133,7 @@ def tokenize_with_errors
     end
 
 
+         
 
     txt.each_line do |line|
        ##
@@ -244,7 +274,17 @@ def _tokenize_line( line )
     ###   for now goals only possible for start of line!!
     ###        fix - remove optional [] - why? why not?  
   
-    if (m = GROUP_DEF_LINE_RE.match( line ))
+    if (m = TABLE_RE.match(line))
+      ## note - eat-up complete line and return!
+      if m[:table_heading]
+        tokens << [:TABLE_HEADING, m[:table_heading]]
+      elsif m[:table_note]
+        tokens << [:TABLE_NOTE, m[:table_note]]
+      else  ## assume table (line) e.g. m[:table]
+        tokens << [:TABLE_LINE, line]
+      end 
+      return [tokens, errors]
+    elsif (m = GROUP_DEF_LINE_RE.match( line ))
       puts "  ENTER GROUP_DEF_RE MODE"   if debug?
       @re = GROUP_DEF_RE   
 

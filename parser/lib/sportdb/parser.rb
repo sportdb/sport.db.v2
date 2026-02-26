@@ -30,6 +30,7 @@ require_relative 'parser/token-geo'
 require_relative 'parser/token-goals'
 require_relative 'parser/token-group'
 require_relative 'parser/token-round'
+require_relative 'parser/token-table'
 require_relative 'parser/token'
 
 ### add token ("private") parse helpers  e.g.  _parse_team() etc.

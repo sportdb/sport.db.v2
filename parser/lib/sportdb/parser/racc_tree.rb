@@ -173,6 +173,26 @@ NoteLine = Struct.new( :text ) do
 end
 
 
+##  todo/check - rename TableHeading to TableHeader - why? why not?
+TableHeading = Struct.new( :text ) do
+  def pretty_print( printer )
+    printer.text( "<TableHeading #{self.text}>" )
+  end
+end
+
+TableLine = Struct.new( :text ) do
+  def pretty_print( printer )
+    printer.text( "<TableLine #{self.text}>" )
+  end
+end
+
+TableNote = Struct.new( :text ) do
+  def pretty_print( printer )
+    printer.text( "<TableNote #{self.text}>" )
+  end
+end
+
+
 
 ## todo/check - use a generic Heading instead of Heading1/2/3 - why? why not?
 Heading1 = Struct.new( :text ) do
