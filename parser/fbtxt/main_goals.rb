@@ -29,6 +29,19 @@ txt = <<-TXT
 
                   (Diego Milito 35,70)
 
+##
+##  try h(eader) and f(ree kick)
+                  (Diego Milito 35h,70f)
+
+                  ##
+## try 92+ for 90+2                 
+        (Franck Ribéry 77 Ivica Olić 92+;
+             Wayne Rooney 2)
+
+## try seconds
+   (Wayne Rooney 2 (92 secs))
+
+
 ####
 ## try style with no minutes (optional count)                  
 
@@ -41,15 +54,20 @@ txt = <<-TXT
             (Lionel Messi (4/p); Nicklas Bendtner)
             (Lionel Messi (4/2p); Nicklas Bendtner)
            (Lionel Messi (4/2 pen.); Nicklas Bendtner)
+           (Lionel Messi (4,2p); Nicklas Bendtner)
+           (Lionel Messi (4, 2 pens); Nicklas Bendtner)
 
             (Diego Milito (2))
+            (Diego Milito (o))
             (Diego Milito (og))
             (Diego Milito (2og))
-             (Diego Milito (2 o.g.))
+             (Diego Milito (2 ogs))
+          (Diego Milito (2 o.g.))
 
             (Lionel Messi (4); N.N.)
             (Lionel Messi (4); N.N. (2))
 
+            
 
 ###
 #  allow mix'n'match for now  (that is, 

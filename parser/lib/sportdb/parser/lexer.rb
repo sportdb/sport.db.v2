@@ -721,18 +721,10 @@ def _tokenize_line( line )
          elsif m[:prop_name]    ## note - change prop_name to player
              [:PLAYER, m[:name]] 
          elsif m[:goal_minute]
-              minute = {}
-              minute[:m]      = m[:value].to_i(10)
-              minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-             ## note - for debugging keep (pass along) "literal" minute
-              minute[:og]  = true    if m[:og]
-              minute[:pen] = true    if m[:pen]
+              minute = _build_goal_minute( m )
              [:GOAL_MINUTE, [m[:goal_minute], minute]]
          elsif m[:goal_count]
-              count = {}
-              count[:count] = m[:value].to_i(10)        if m[:value]
-              count[:og]    = m[:og_value] ? m[:og_value].to_i(10) : 1      if m[:og]   ## check flag
-              count[:pen]   = m[:pen_value] ? m[:pen_value].to_i(10) : 1    if m[:pen]  ## check flag
+              count = _build_goal_count( m ) 
               [:GOAL_COUNT, [m[:goal_count], count]]
          elsif m[:sym]
             sym = m[:sym]

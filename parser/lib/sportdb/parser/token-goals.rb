@@ -25,7 +25,8 @@ GOAL_BASICS_RE = %r{
 ##                 to exclude ord (numbers) e.g.  (1), (42), etc.!!!
 GOAL_LINE_RE = %r{
                      \A\(
-                       (?! \d+ \))	 # negative lookahead	
+                       # check negative lookahead
+                       (?! \d+ \))	 	
                  }x
 
 
@@ -61,12 +62,14 @@ GOAL_SEP_ALT_RE = %r{
 
 
 ## e.g.  (2)
-##       (2/p), (2/pen.), (3/2p), (3/2 pen.)  
+##       (2/p), (2/pen.), (3/2p), (3/ 2 pen.) 
+##      -or-  (2,1pen), (3, 2 pens)
+## 
 ##       (p), (pen.) (2 pen.), (2p)               
-##       (og), (o.g.), (2og), (2 o.g.)
+##       (og), (o.g.), 
+##        (2og), (2 o.g.), (2ogs)
+#
 ##
-##  note - start counting at 2 for penalties and own goals!!!
-##                 no 0/1 possible for now
 
 GOAL_COUNT_RE = %r{
    (?<goal_count>
@@ -74,23 +77,23 @@ GOAL_COUNT_RE = %r{
         (?:
           ## opt penalties
             (?<pen>
-              (?:  (?<pen_value> [2-9]) [ ]? )?
-                 (?:pen|p)\.?
+              (?:  (?<pen_value> \d{1,2}) [ ]? )?
+                 (?:pens|pen\.?|p)
            )
             |
           ## opt own goals (og)
             (?<og>
-             (?: (?<og_value> [2-9]) [ ]? )?
-                (?:og|o\.g\.) 
+             (?: (?<og_value> \d{1,2}) [ ]? )?
+                (?:ogs?|o\.g\.|o) 
             )          
             |
           ## opt fallback - classic count/number
           (?:  (?<value> [1-9])
                 ## check for option penalties
                 (?<pen>
-                     /
-                     (?: (?<pen_value> [2-9]) [ ]? )?
-                     (?:pen|p)\.?
+                     [,/] [ ]*
+                     (?: (?<pen_value> \d{1,2}) [ ]? )?
+                     (?:pens|pen\.?|p)
                 )?
            )
          )  
@@ -110,43 +113,47 @@ GOAL_COUNT_RE = %r{
 
 GOAL_MINUTE_RE = %r{
      (?<goal_minute>
-       (?<=[ ,(])	 # positive lookbehind for space or opening ( e.g. (61')
-                     #                             or [Messi] 21,37,42,88 required
-                     #    todo - add more lookbehinds e.g.  ,) etc. - why? why not?
+               \b
              (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
-                (?:
-                     ## with minute marker inline
-                     (?:
-                         '?    ## optional minute marker
-                         (?: \+
-                            (?<value2>\d{1,3})   
-                         )?          
-                     )
-                     |
-                     (?:
-                         (?: \+
-                            (?<value2>\d{1,3})   
-                         )?          
-                         '  ## "old-style/legacy" minute marker at the end e.g. 45+1'
-                            ##    use 45'+1 (or 45+1) instead!!!                
-                     )
-                )   
+                '?    ## optional minute marker
+                
+             (?: (?<plus>\+)  ## note - allow 46+,94+,97+ etc. too for now - why? why not?
+                 (?: (?<value2>\d{1,3})   
+                      '?    ## optional minute marker
+                 )?
+             )?          
+                   
         ## note - add goal minute qualifiers here inline!!! 
         (?:
-            (?: [ ]? (?<og>   (?: \((?:og|o\.g\.)\))   ## allow (og)
+            (?: [ ]? (?<og>   (?: \((?:og|o\.g\.|o)\))   ## allow (og)
                                    |
-                              (?: (?:og|o\.g\.))      ## allow plain og
+                              (?: (?:og|o\.g\.|o))      ## allow plain og
                       )
             )
             |
-            (?: [ ]? (?<pen>  (?: \((?:pen|p)\.?\))   ## allow ()
+            (?: [ ]? (?<pen>  (?: \((?:pen\.?|p)\))   ## allow ()
                                    |
-                              (?: (?:pen|p)\.?)
+                              (?: (?:pen\.?|p))
                       )    
             )
+            |
+            ## add experimental h(eader) qualifier
+            (?: [ ]? (?<h> \( h \) | h ))
+            |
+            ## add experimental f(ree kick) qualifier
+            (?: [ ]? (?<f> \( f \) | f ))
+        )?
+
+        ##  add experimental seconds
+        ##    e.g. (95 secs) or (95sec) etc. 
+        (?: [ ]*  \(
+                      (?<secs>\d{1,3})
+                         [ ]?secs?
+                   \) 
         )?
      )
-     ## note - check lookahead here
+
+     ## note - check positive lookahead 
      (?=[ ,;)]|$)   
 }ix
 
@@ -181,6 +188,83 @@ PROP_GOAL_RE =  Regexp.union(
 )
 =end
 
+
+
+
+def self._parse_goal_minute( str )  
+    ## note - strip - leading/trailing spaces
+    m = GOAL_MINUTE_RE.match( str.strip )
+    if m && m.pre_match == '' && m.post_match == ''
+      _build_goal_minute( m )
+    elsif  m
+        ## note - match BUT not anchored to start and end-of-string!!!
+        ##  report, error somehow??
+      nil   
+    else
+      nil  ## no match - return nil
+    end
+end
+
+def self._build_goal_minute( m )
+    minute = {}
+    value =  m[:value].to_i(10)   ## always required
+
+    if m[:plus] && m[:value2].nil?  ## check for 47+, 93+
+        if value < 90        # assume 1st half (45+xx)
+          minute[:m]      = 45
+          minute[:offset] = value - 45
+        elsif value < 105    # assume 2nd half (90+xx)
+          minute[:m]      = 90
+          minute[:offset] = value - 90
+        elsif value < 120    # assume extra time, 1nd half (105+xx)
+          minute[:m]      = 105
+          minute[:offset] = value - 105
+        else                 # assume extra time, 2nd half (120+xx)
+          minute[:m]      = 120
+          minute[:offset] = value - 120
+        end
+    else
+      minute[:m] = value
+    end
     
+    minute[:offset] = m[:value2].to_i(10)   if m[:value2]
+    
+    minute[:og]  = true    if m[:og]
+    minute[:pen] = true    if m[:pen]
+    minute[:freekick] = true    if m[:f]
+    minute[:header] = true    if m[:h]
+  
+    minute[:secs] = m[:secs].to_i(10)   if m[:secs]
+  
+    minute
+end
+def _build_goal_minute( m ) self.class._build_goal_minute( m ); end
+    
+
+
+def self._parse_goal_count( str )  
+    ## note - strip - leading/trailing spaces
+    m = GOAL_COUNT_RE.match( str.strip )
+    if m && m.pre_match == '' && m.post_match == ''
+      _build_goal_count( m )
+    elsif  m
+        ## note - match BUT not anchored to start and end-of-string!!!
+        ##  report, error somehow??
+      nil   
+    else
+      nil  ## no match - return nil
+    end
+end
+
+def self._build_goal_count( m )
+    count = {}
+    count[:count] = m[:value].to_i(10)        if m[:value]
+    count[:og]    = m[:og_value] ? m[:og_value].to_i(10) : 1      if m[:og]   ## check flag
+    count[:pen]   = m[:pen_value] ? m[:pen_value].to_i(10) : 1    if m[:pen]  ## check flag
+    count
+end
+def _build_goal_count( m ) self.class._build_goal_count( m ); end
+
+
 end  # class Lexer
 end # module SportDb

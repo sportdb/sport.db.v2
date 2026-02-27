@@ -341,7 +341,13 @@ end
 ##
 ##  fix - move :og, :pen  to Goal if possible - why? why not?
 ##  or change to GoalMinute ???
-Minute      = Struct.new( :m, :offset, :og, :pen )  do
+##
+##  fix!!! split into GoalMinute and Minute
+##            goal_minute incl. :og, :pen, :freekick, :header,
+##                     seconds etc.
+Minute      = Struct.new( :m, :offset, 
+                          :og, :pen, :header, :freekick,
+                          :secs )  do
     def to_s
       buf = String.new
       buf << "#{self.m}"
@@ -349,6 +355,9 @@ Minute      = Struct.new( :m, :offset, :og, :pen )  do
       buf << "+#{self.offset}"  if self.offset 
       buf << " (og)"   if self.og
       buf << " (pen)"  if self.pen
+      buf << " (f)"  if self.freekick
+      buf << " (h)"  if self.header
+      buf << " (#{self.secs} secs)"   if self.secs
       buf
     end
  
