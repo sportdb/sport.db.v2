@@ -58,13 +58,7 @@ txt = <<-TXT
                  connection with the Covid-19 pandemic; all results annulled
 NB: annulled results against North Korea between square brackets  
 
-                    
-  1.BRAZIL            3  7- 2   7
-  2.MEXICO            3  4- 1   7
-  3.Croatia           3  6- 6   3
-  4.Cameroon          3  1- 9   0 
-
-
+        
 
   1. ARG^         3  6  3 0 0    10-4
   2. CHI          3  4  2 0 1     5-3
@@ -80,14 +74,14 @@ NB: annulled results against North Korea between square brackets
 ##  use NB: / NOTE:  for "generic" notes NOT attached to matches
 
 
-NB: Wales, Poland and Portugal qualified
+  NB: Wales, Poland and Portugal qualified
 
 NB: 5th placed team qualify for playoff against AFC 5th placed team (Australia)
 
-NB: Senegal, Cameroon, Ghana, Morocco and Tunisia qualified
+ NB  : Senegal, Cameroon, Ghana, Morocco and Tunisia qualified
 
 
-NB: the first stage also served as qualifying stage for the 2023 Asian Cup
+NOTE: the first stage also served as qualifying stage for the 2023 Asian Cup
      (with the losers being eliminated)
 
 NB: the second stage also served as qualifying stage for the 2023 Asian Cup
@@ -97,7 +91,8 @@ NB: the second stage also served as qualifying stage for the 2023 Asian Cup
     the others entering a playoff round)
 
 
-NB: annulled results against North Korea between square brackets  
+NOTE   :  annulled results against North Korea between square brackets  
+
 
 NB: Group winners and the five best runners-up teams qualified for third round.
     Qatar (first placed team) did not participate to third round.

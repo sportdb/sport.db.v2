@@ -172,6 +172,12 @@ NoteLine = Struct.new( :text ) do
   end
 end
 
+NotaBene = Struct.new( :text ) do
+  def pretty_print( printer )
+    printer.text( "<NotaBene #{self.text}>" )
+  end
+end
+
 
 ##  todo/check - rename TableHeading to TableHeader - why? why not?
 TableHeading = Struct.new( :text ) do

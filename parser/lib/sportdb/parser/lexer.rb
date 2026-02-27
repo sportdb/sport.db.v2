@@ -49,10 +49,25 @@ HTML_COMMENT_RE = %r{  <!--
 ##  note - [] block may NOT incl. square brackets
 ##       what about comments (e.g. #)?                       
 ##    todo/check - rename to NOTE_BLOCK or TEXT_BLOCK or ??? 
-BLOCK_RE = %r{  \[
+PREPROC_BLOCK_RE = %r{  \[
                       [^\[\]\#]*?  ## note - use non-greedy/lazy *? match
                   \]
                         }xm  ## note - turn on multi-line match (for dot(.))
+
+
+##
+## check for "literal"  (multi-line) note blocks
+##   eg.  nb:  or note:          
+##   space required after double colon - why? why not?              
+PREPROC_NOTA_BENE_RE = %r{
+         ^  
+    [ ]* (?: nb | note) [ ]* : [ ]+
+       .+?  ## non-greedy 
+   
+    ## positive lookahead
+    ##    note - must end with blank line or end-of-file/document   
+      (?=  \n[ ]*\n | \z )   
+}xim
 
 ##  
 ##  replace "escaped" newline with non-newline char e.g. '↵'
@@ -90,6 +105,19 @@ def tokenize_with_errors
     ##                 or such - why? why not?
 
 
+   txt = txt.gsub( PREPROC_NOTA_BENE_RE ) do |m|
+       if m.include?( "\n" )   ## check for newlines (\n) and replace
+         puts " [debug] preproc (multi-line) note/nota bene block:"
+         puts m
+         ## todo/check: replace with two spaces insead of ↵ - why? why not?
+         m.gsub( "\n", '↵' )
+       else
+         m 
+       end 
+    end
+
+
+
    ##
    ## e.g. used in (multi-line) TableNote  
    ##  1.SOUTH KOREA   6  5  1  0 22- 1 16  [0-0]
@@ -121,7 +149,7 @@ def tokenize_with_errors
     ##               Specifically designated as the keyboard's "Return" key symbol, 
     ##                often used in user interfaces.
 
-    txt = txt.gsub( BLOCK_RE ) do |m|
+    txt = txt.gsub( PREPROC_BLOCK_RE ) do |m|
        if m.include?( "\n" )   ## check for newlines (\n) and replace
          puts " [debug] preproc (multi-line) block:"
          puts m
@@ -133,9 +161,13 @@ def tokenize_with_errors
     end
 
 
-         
+    ####
+    ## quick hack - keep re state/mode between tokenize calls!!!
+    @re  ||= RE     ## note - switch between RE & INSIDE_RE
+  
 
     txt.each_line do |line|
+
        ##
        ##  first check for tabs
        ##    add error/warn
@@ -162,13 +194,57 @@ def tokenize_with_errors
         next if line.start_with?('#')   ###  skip comments
        
         line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
-       
 
-        more_tokens, more_errors = _tokenize_line( line )
+
+        puts "line: >#{line}<"    if debug?
+
+        ######
+        ### special case for empty line (aka BLANK)
+        if line.empty?
+           ## note - blank always resets parser mode to std/top-level!!!
+           @re = RE
+           tokens_by_line << [[:BLANK, '<|BLANK|>']]
+        elsif (m = HEADING_RE.match(line))
+           ## note - heading always resets parser mode to std/top-level!!!
+           @re = RE
+           puts "   HEADING"  if debug?
+           ## note - derive heading level from no of (leading) markers
+           ##             e.g. = is 1, == is 2, == is 3, etc.
+           heading_level = m[:heading_marker].size 
+           tokens_by_line << [[:"H#{heading_level}", m[:heading]]]
+        elsif (m = NOTA_BENE_RE.match(line))
+           ## note - nota bene always resets parser mode to std/top-level!!!
+           @re = RE
+           tokens_by_line << [[:NOTA_BENE, m[:nota_bene]]]
+        elsif @re == RE && (m = TABLE_RE.match(line))
+            @re = TABLE_MORE_RE  ## switch into table mode
+            if m[:table_heading]
+              tokens_by_line << [[:TABLE_HEADING, m[:table_heading]]]
+            else  ## assume table (line) e.g. m[:table]
+              tokens_by_line << [[:TABLE_LINE, line]]
+            end 
+        elsif @re == TABLE_MORE_RE
+            ### todo/fix - check if no match and report/add error!!
+            ##        for now (ummatched) line gets auto-added as table line!!!
+            ##
+            ##   note - MUST be followed by blank line (or nota bene/heading)
+            ##            to switch back into to top-level!!!! 
+            m = TABLE_MORE_RE.match(line)
+            if m[:table_note]
+              tokens_by_line << [[:TABLE_NOTE, m[:table_note]]]
+            else  ## assume table (line) e.g. m[:table]
+              tokens_by_line << [[:TABLE_LINE, line]]
+            end 
+        else
+
+          more_tokens, more_errors = _tokenize_line( line )
         
-        tokens_by_line  << more_tokens   
-        errors          += more_errors
+          tokens_by_line  << more_tokens   
+          errors          += more_errors
+        end
     end # each line
+
+
 
 
 
@@ -244,18 +320,6 @@ def _tokenize_line( line )
   tokens = []
   errors = []   ## keep a list of errors - why? why not?
 
-  puts "line: >#{line}<"    if debug?
-
-
-   ### special case for empty line (aka BLANK)
-   if line.empty?
-       ## note - blank always resets parser mode to std/top-level!!!
-       @re = RE
-
-       tokens << [:BLANK, '<|BLANK|>']
-       return [tokens, errors]
-   end
-
 
   pos = 0
   ## track last offsets - to report error on no match
@@ -273,18 +337,7 @@ def _tokenize_line( line )
     ### check for modes once (per line) here to speed-up parsing
     ###   for now goals only possible for start of line!!
     ###        fix - remove optional [] - why? why not?  
-  
-    if (m = TABLE_RE.match(line))
-      ## note - eat-up complete line and return!
-      if m[:table_heading]
-        tokens << [:TABLE_HEADING, m[:table_heading]]
-      elsif m[:table_note]
-        tokens << [:TABLE_NOTE, m[:table_note]]
-      else  ## assume table (line) e.g. m[:table]
-        tokens << [:TABLE_LINE, line]
-      end 
-      return [tokens, errors]
-    elsif (m = GROUP_DEF_LINE_RE.match( line ))
+    if (m = GROUP_DEF_LINE_RE.match( line ))
       puts "  ENTER GROUP_DEF_RE MODE"   if debug?
       @re = GROUP_DEF_RE   
 
@@ -328,16 +381,6 @@ def _tokenize_line( line )
 
         offsets = [m.begin(0), m.end(0)]
         pos = offsets[1]    ## update pos
-    elsif (m = HEADING_RE.match(line))
-      puts "   HEADING"  if debug?
-      ## note - derive heading level from no of (leading) markers
-      ##             e.g. = is 1, == is 2, == is 3, etc.
-      heading_level = m[:heading_marker].size 
-      tokens << [:"H#{heading_level}", m[:heading]]
-
-      ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
     elsif (m = ROUND_DEF_OUTLINE_RE.match( line ))
       puts "   ENTER ROUND_DEF_RE MODE"  if debug?
       @re = ROUND_DEF_RE   

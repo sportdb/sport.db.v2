@@ -37,7 +37,8 @@ class RaccMatchParser
 
           ## todo/fix - change (inline) NOTE to INLINE_NOTE
           ##              and only use NOTE for "standalone" NOTE (lines)
-          | note_line   
+          | note_line  
+          | nota_bene 
  
           | table_line
  
@@ -78,6 +79,10 @@ class RaccMatchParser
 
         note_line
             : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0]) }
+      
+        nota_bene
+            : NOTA_BENE NEWLINE    { @tree << NotaBene.new( text: val[0]) }
+
 
         ######  
         # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland   

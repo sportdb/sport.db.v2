@@ -92,27 +92,26 @@ TABLE_II_RE = %r{
         )}ix
 
 
-## todo/check - compact version in use? collect "real-world" samples!!!
-##        Pld GF-GA Pts         |  d d-d d
-## 
-TABLE_III_RE = %r{
-        (?<table>\b 
-             \d{1,2} [ ]+                        # Pld
-             (?: \d{1,3} - [ ]* \d{1,3} [ ]+)    # GF-GA
-             \d{1,3}                             # Pts   
-              \b 
-        )}ix
-
 
 #############################################
 # map tables
 #  note: order matters; first come-first matched/served
+
+##  possible start lines for a table
+##    excludes NOTE
+##    and RULER (e.g. --- or) or such in the future
 TABLE_RE = Regexp.union(
-    TABLE_NOTE_RE,
     TABLE_HEADING_I_RE,
     TABLE_I_RE,
     TABLE_II_RE,
-    TABLE_III_RE,
+)
+
+## all possible continuation for a table
+##   excludes HEADING
+TABLE_MORE_RE = Regexp.union(
+    TABLE_NOTE_RE,
+    TABLE_I_RE,
+    TABLE_II_RE,
 )
 
 
