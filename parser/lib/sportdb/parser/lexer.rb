@@ -407,6 +407,15 @@ def _tokenize_line( line )
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
+    elsif (m = GOAL_LINE_ALT_RE.match( line ))
+      @re = GOAL_ALT_RE
+      puts "  ENTER GOAL_ALT_RE MODE"   if debug?
+
+      tokens << [:GOALS_ALT, "<|GOALS_ALT|>"]
+
+      ## note - eat-up ( for now; pass along "virtual" GOALS_ALT token 
+      offsets = [m.begin(0), m.end(0)]
+      pos = offsets[1]    ## update pos      
     elsif (m = GOAL_LINE_RE.match( line ))   ## line starting with ( - assume
       ##  switch context to GOAL_RE (goalline(s)
       ##   split token (automagically) into two!! - player AND minute!!!
@@ -754,6 +763,47 @@ def _tokenize_line( line )
          else
             ## report error
             puts "!!! TOKENIZE ERROR (PROP_PENALTIES_RE) - no match found"
+            nil 
+         end
+      elsif @re == GOAL_ALT_RE 
+         if m[:space] || m[:spaces]
+              nil    ## skip space(s)
+         elsif m[:prop_name]    ## note - change prop_name to player
+             [:PLAYER, m[:name]] 
+         elsif m[:goal_minute]
+              minute = _build_goal_minute( m )
+             [:GOAL_MINUTE, [m[:goal_minute], minute]]
+         elsif m[:goal_type]
+              goal_type = _build_goal_type( m )
+             [:GOAL_TYPE, [m[:goal_type], goal_type]]
+         elsif m[:score]
+            score = {}
+             ##  note - score is "generic"
+            ##      might be full-time (ft) or
+            ##         after extra-time (aet) or such
+            ##         or even undecided/unknown
+            ##    thus, use score1/score2 and NOT ft1/ft2
+            score[:score] = [m[:score1].to_i(10),
+                             m[:score2].to_i(10)]  
+            ## note - for debugging keep (pass along) "literal" score
+            [:SCORE, [m[:score], score]]
+         elsif m[:sym]
+            sym = m[:sym]
+            ## return symbols "inline" as is - why? why not?
+            ## (?<sym>[;,@|\[\]-])
+ 
+            case sym
+            when ',' then [:',']
+            when ')'  ## leave goal mode!!
+                puts "  LEAVE GOAL_ALT_RE MODE"   if debug?
+                @re = RE
+                nil
+            else
+              nil  ## ignore others (e.g. brackets [])
+            end
+         else
+            ## report error
+            puts "!!! TOKENIZE ERROR (GOAL_ALT_RE) - no match found"
             nil 
          end
       elsif @re == GOAL_RE 

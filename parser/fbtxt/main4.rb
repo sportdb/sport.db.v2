@@ -92,10 +92,19 @@ Sun Jul 14   @ Olympiastadion
 
 
 ######
-#  try alternate goal format  - to be done!!!!
+#  try alternate goal format
   Austria - Rapid  3-1
     (1-0 Player 4'  2-0 Player 45+1' (pen.)  2-1 Player 50'  3-1 Player 55' (og)) 
 
+   (1-0 Player 4',
+    2-0 Player 45+1' (pen.),
+    2-1 Player 50',  
+    3-1 Player 55' (og)) 
+
+    (1-0 Player,
+     2-0 Player (pen.),
+     2-1 Player,  
+     3-1 Player (og)) 
 
 TXT
 

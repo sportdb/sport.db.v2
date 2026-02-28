@@ -44,7 +44,8 @@ class RaccMatchParser
  
           ## check - goal_lines MUST follow match_line - why? why not?     
           | goal_lines     
-         ### | goal_lines_alt   ## allow differnt style/variant 
+          | goal_lines_alt   ## allow differnt style/variant e.g. 1-0 Player
+                             ##  starting with score 
  
           | BLANK        ##  was empty_line
              { trace( "REDUCE BLANK" ) } 
@@ -249,6 +250,16 @@ class RaccMatchParser
                        kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
                     }
+
+              ### todo/fix - match_line starting with @ geo_opts
+              ##                allow more options
+              |   geo_opts match  NEWLINE
+                   {
+                       kwargs = {}.merge( val[0], val[1] )
+                       @tree << MatchLine.new( **kwargs )
+                   }
+
+                   
               |   match_fixture  more_match_opts NEWLINE
                   { 
                       kwargs = {}.merge( val[0], val[1] )
@@ -430,7 +441,8 @@ class RaccMatchParser
                           result = { score: val[1][1] }.merge( val[0] )  
                           ## pp result
                         }
-                                        
+
+
    
         #######
         ## e.g. (Wirtz 10' Musiala 19' Havertz 45'+1 (pen)  Füllkrug 68' Can 90'+3;  
@@ -444,113 +456,20 @@ class RaccMatchParser
         ##    (Higuaín 2, 9p; Kane 35 Eriksen 71)
  
         #
-        # note: allow newlines between goals
-        #   for now possible after ;  and after , (if player with ALL goal_minutes)
+        # note:  newlines allowed between goals
+        #   for now possible after goals separator ; and -   
+        #    (Higuaín 2, 9p; 
+        #     Kane 35 Eriksen 71)
+        #    (Higuaín 2, 9p - 
+        #      Kane 35 Eriksen 71)
         #
-
-
-
-        ###
-        ##   todo/fix add multi-line too!!
-        ##
-        ##  fix - for optional WITHOUT minutes
-        #             make possible (og) and (pen) too!!! - missing fo now
-#        goal_lines_alt : goals_alt NEWLINE
-#                           {
-#                             @tree << GoalLineAlt.new( goals: val[0] )
-#                           }
-#
-#        goals_alt   :  goal_alt
-#                        { result = val }
-#                    |  goals_alt goal_alt_sep goal_alt  ## allow optional comma sep
-#                        { result.push( val[2])  } 
-#                    |  goals_alt goal_alt
-#                        { result.push( val[1])  }
-#                 
-#        goal_alt_sep :  ','
-#                     |  ',' NEWLINE    ## allow multiline goallines!!!
-#
-#
-#        goal_alt    :  SCORE PLAYER     ## note - minute is optinal in alt goalline style!!!
-#                        {
-#                           result = GoalAlt.new( score:   val[0],
-#                                                 player:  val[1] )
-#                        }   
-#                    |  SCORE PLAYER minute
-#                        {
-#                           result = GoalAlt.new( score:  val[0],
-#                                                 player: val[1],
-#                                                 minute: val[2] )
-#                        }   
-#
-
-
-     ###
-     #  merge  goal_lines_alt into goal_lines (or keep separate)    why? why not?
-     #
-     #  e.g.
-     #     (E. Hazard,  R. Lukaku,  Batshuayi; Bronn, Khazri)
-     #     (R. Lukaku, Batshuayi)          
-     #
-     #    todo: add  (pen.) or (og.) too - why? why not?
-     #    todo:  find some real-world examples
-     #           and add goal count e.g.   R. Lukaku 2 or such - why? why not?
-     #          what syntax to use use for one (regular) goal and one penalty, for example?
-     #
-     #    (Higuaín x2 (1 pen); Kane, Eriksen)
-     #    (Higuaín x2; Kane (pen), Eriksen (og))
-     #    (Higuaín ×2)
-     #      or
-     #    (Higuaín 2x (1 pen); Kane, Eriksen)    ???
-     #    (Higuaín 2x; Kane (pen), Eriksen (og))  ???
-     #      or
-     #    (Higuaín (2/1 pen); Kane, Eriksen)    ???
-     #    (Higuaín (2/ 1 pen); Kane, Eriksen)    ???
-     #    (Higuaín (2); Kane (pen), Eriksen (og))  ???
-     #
-     #    (Higuaín (2); Kane, Eriksen)  ???
-     #    (Higuaín; Kane (2), Eriksen)  ???
-     #
-     #   note:
-     #    (Higuaín 2)    is ambigious
-     #      2 might be    MINUTE or GOAL_COUNT!!!
-     #    (> Higuaín 2)
-     #    (! Higuaín 2)
-     #    (* Higuaín 2)  - use goal format marker */?/!/_ or such - why? why not?
-     #                         if ambigous ??
-     #    (? Higuaín 2 (1 pen); Kane, Eriksen)
-     #    (_ Higuaín 2 (1 pen); Kane, Eriksen)
-
-
-#        goal_lines_alt : goal_lines_alt_body NEWLINE
-#                      {
-#                         kwargs = val[0]
-#                         @tree << GoalLine.new( **kwargs )
-#                      }
-#                
-#
-#        goal_lines_alt_body : goals_alt                 {  result = { goals1: val[0],
-#                                                              goals2: [] } 
-#                                                }
-#                        | GOALS_NONE goals_alt           {  result = { goals1: [],
-#                                                              goals2: val[1] } 
-#                                                }
-#                        | goals_alt goals_sep goals_alt  {  result = { goals1: val[0],
-#                                                              goals2: val[2] }
-#                                                }#
-#
-#         goal_sep   : ','           ## note: separator REQUIRED!!!
-#                    | ',' NEWLINE
-#
-#         goals_alt   : goal_alt                      { result = val }
-#                     | goals_alt goal_sep goal_alt   { result.push( val[2])  }
-#               
-#         goal_alt    : PLAYER  
-#                    {  
-#                        ## note - for minutes pass-in empty array!!!
-#                       result = Goal.new( player: val[0], minutes: [] )   
-#                    }
-         
+        #         and after goal separator ,
+        #      (Wirtz 10, Musiala 19, Havertz 45+1p,
+        #       Füllkrug 68, Can 90+3;  
+        #        Rüdiger 87og)
+        #
+        #     BUT now allowed in-between comma-separated minutes!!!
+        #
 
 
         ##
@@ -579,22 +498,16 @@ class RaccMatchParser
                      | GOAL_SEP_ALT NEWLINE
                        
 
-         goal_sep_opt   :  {}        ## none; optional!!
+         opt_goal_sep   :  {}        ## none; optional!!
                         | ','
                         | ',' NEWLINE
 
-         ## note - hacky: lexer MUST change comma 
-         ##                  between GOAL_MINUTES to GOAL_MINUTE_SEP!!
-         goal_minute_sep_opt : {}    ## none; optional!!!
-                             | GOAL_MINUTE_SEP   
-
          goals   : goal                      { result = val }
-                  | goals goal_sep_opt goal   { result.push( val[2])  }
+                 | goals opt_goal_sep  goal  { result.push( val[2])  }
 
          #####
          ## todo -  make comma required for player only 
          ##        (that is, no minutes or count)
-
 
          goal    : PLAYER goal_minutes 
                     {  
@@ -606,6 +519,7 @@ class RaccMatchParser
                         ### todo/check:
                         ##    auto convert/expand 
                         ##    count to minutes - why? why not?
+                        ##  todo/fix - pass in empty minutes ary [] - why? why not?
                         result = Goal.new( player: val[0],
                                            count:  val[1][1] )
                      }
@@ -616,15 +530,75 @@ class RaccMatchParser
                      }
                  
 
+         ## note - hacky: lexer MUST change comma 
+         ##                  between GOAL_MINUTES to GOAL_MINUTE_SEP!!
+         opt_goal_minute_sep : {}    ## none; optional!!!
+                             | GOAL_MINUTE_SEP   
+
          goal_minutes  : goal_minute   {  result = val }
-                       | goal_minutes goal_minute_sep_opt goal_minute  {  result.push( val[2])  }
+                       | goal_minutes opt_goal_minute_sep goal_minute   {  result.push( val[2])  }
 
          goal_minute : GOAL_MINUTE
                           {
                              kwargs = {}.merge( val[0][1] )
-                             result = Minute.new( **kwargs )  
+                             result = GoalMinute.new( **kwargs )  
                           }
                                       
+
+##########
+##   alternate goal lines starting with score e.g.
+##
+##    (1-0 Messi     23'(pen.), 
+##     2-0 Di María  36',
+##     2-1 Mbappé    80'(pen.),
+##     2-2 Mbappé    81', 
+##     3-2 Messi    108', 
+##     3-3 Mbappé   118'(pen.))
+
+        goal_lines_alt : GOALS_ALT goals_alt NEWLINE
+                           {
+                             @tree << GoalLineAlt.new( goals: val[1] )
+                           }
+
+        goals_alt   :  goal_alt
+                        { result = val }
+                       ## note - allow optional comma sep (or comma sep w/ newline)
+                    |  goals_alt  opt_goal_alt_sep  goal_alt   
+                        { result.push( val[2])  } 
+                    
+                 
+        opt_goal_alt_sep :  {}   ## none; optional!!
+                         |  ','
+                         |  ',' NEWLINE    ## allow multiline goallines!!!
+
+
+        goal_alt    :  SCORE PLAYER     ## note - minute is optinal in alt goalline style!!!
+                        {
+                           result = GoalAlt.new( score:   val[0][1][:score],
+                                                 player:  val[1] )
+                        }   
+                    |  SCORE PLAYER GOAL_MINUTE
+                        {
+                           kwargs = {}.merge( val[2][1] )
+                           goal_minute = GoalMinute.new( **kwargs )
+                           minute    = goal_minute.to_minute
+                           goal_type = goal_minute.to_goal_type 
+
+                           result = GoalAlt.new( score:  val[0][1][:score],
+                                                 player: val[1],
+                                                 minute: minute,
+                                                 goal_type: goal_type )
+                        } 
+                   |  SCORE PLAYER GOAL_TYPE  
+                       {
+                           kwargs = {}.merge( val[2][1] )
+                           goal_type = GoalType.new( **kwargs )
+
+                           result = GoalAlt.new( score:  val[0][1][:score],
+                                                 player: val[1],
+                                                 goal_type: goal_type )
+                       }
+
 
 
 ##########################################################################
@@ -811,8 +785,7 @@ class RaccMatchParser
                           }
        
        card_body    :     card_type
-                           { result = { name: val[0] } } 
-         ## todo/fix - use goal_minute and minute (w/o pen/og etc.)                          
+                           { result = { name: val[0] } }                           
                     |     card_type MINUTE
                            { result = { name: val[0],
                                         minute: Minute.new(val[1][1]) } 

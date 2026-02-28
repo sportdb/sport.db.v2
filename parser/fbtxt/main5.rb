@@ -32,7 +32,7 @@ Sat Jun 3
 08.08.1979  @ San Cristóbal, Pueblo Nuevo   att: 14000 
   VEN - CHI   1-1 (0-0)
 
-## 1-0 Carvajal 70',  1-1 Peredo 81'
+  (1-0 Carvajal 70',  1-1 Peredo 81')
 
 ##   César Pagano PER 
 
@@ -47,6 +47,8 @@ CHI: Osbén - González, Valenzuela, Soto, Escobar - Rivas (Quiroz), Dubó, Neir
 02.08.79  @ Río de Janeiro, Maracaná   att: 130000 
   BRA v ARG  2-1 (1-1) 
 
+  (1-0 Zico 2', 1-1 Coscia 29', 2-1 Tita 54')
+
 ## Edison Pérez PER 
 
 BRA: Leão - Toninho, Amaral, Edinho, Pedrinho - Carpeggiani, Zenon (Batista), Tita -
@@ -57,22 +59,18 @@ ARG: Vidallé - Barbas, Van Tuyne, Passarella, Bordón - Gáspari, Larraquy, Gai
 
 ################     
 ## try alt goal line style
-##   to be done!!!
-
-(1-0 Zico 2', 1-1 Coscia 29', 2-1 Tita 54')
 
 ## try with (og), (pen) and multi-line
-(1-0 Zico 2' (pen), 1-1 Coscia 45+1' (og), 
+(1-0 Zico 2' (pen), 
+ 1-1 Coscia 45+1' (og), 
  2-1 Tita 54')
-
 
 ## try without minutes
 (1-0 Zico  1-1 Coscia  2-1 Tita)
-
-
-## make possible - FIX/FIX/FIX/TODO/TODO/TODO - why? why not?
-#   --- move (og) (pen) to parse tree  og, pen as boolean flags - why? why not?
 (1-0 Zico  1-1 Coscia (pen)  2-1 Tita (og)) 
+(1-0 Zico,  
+ 1-1 Coscia (pen),  
+ 2-1 Tita (og)) 
 
 
 TXT

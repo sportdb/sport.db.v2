@@ -8,6 +8,14 @@ class Lexer
 ##  note - must be enclosed in ()!!! 
 ##          todo - add () in basics - why? why not?
 
+
+
+##
+##  todo/fix - split up BASICS!!!
+##      break out SPACES_RE  for general reuse!!!
+##       makes it easier to  use "custom" symbols (<sym>) 
+
+
 GOAL_BASICS_RE = %r{
     (?<spaces> [ ]{2,}) |
     (?<space>  [ ])
@@ -25,9 +33,30 @@ GOAL_BASICS_RE = %r{
 ##                 to exclude ord (numbers) e.g.  (1), (42), etc.!!!
 GOAL_LINE_RE = %r{
                      \A\(
-                       # check negative lookahead
-                       (?! \d+ \))	 	
-                 }x
+                       # check NEGATIVE lookahead
+                       (?! 
+                             ##  exclude ord
+                             (?: \d+ \))  
+                                 |
+                            ## exclude score - goal_line_alt!!!
+                             (?: [ ]* \b
+                                        \d-\d   ## score e.g. 1-0
+                                      \b  )   
+                       )	 	
+                 }xi
+
+
+###
+##  check for goal line (alternate syntax)
+##    (1-0 Player, 1-1 Player, ...)       
+#    must start off with score          
+GOAL_LINE_ALT_RE = %r{
+                     \A\(
+                       # check POSITIVE lookahead
+                       (?= [ ]* \b 
+                                 \d-\d    ## score e.g. 0-1 
+                                  \b )	 	
+                 }xi
 
 
 ###
@@ -172,7 +201,37 @@ GOAL_RE = Regexp.union(
    ## SCORE_RE,  ## add back in v2 (level 3) or such!!
     PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
     GOAL_SEP_ALT_RE,
-    ## todo/fix - add GOAL_ANY_RE !!!!
+    ## todo/fix - add ANY_RE !!!!
+)
+
+
+
+GOAL_TYPE_RE = %r{
+     (?<goal_type>
+               \(
+                 (?:
+                      (?<og>  og|o\.g\.|o )  
+                         |
+                      (?<pen> pen\.?|p )  
+                         |
+                     ## add experimental h(eader) qualifier
+                      (?<h>  h )
+                         |
+                     ## add experimental f(ree kick) qualifier
+                       (?<f>  f )
+                  )
+                \)
+)}xi
+
+
+
+GOAL_ALT_RE = Regexp.union(
+    GOAL_BASICS_RE,
+    SCORE_RE,        ## e.g.  1-0, 0-1, etc.
+    GOAL_MINUTE_RE,
+    GOAL_TYPE_RE,
+    PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
+    ## todo/fix - add ANY_RE !!!!
 )
 
 
@@ -264,6 +323,21 @@ def self._build_goal_count( m )
     count
 end
 def _build_goal_count( m ) self.class._build_goal_count( m ); end
+
+
+
+
+def self._build_goal_type( m )
+    goal = {}
+    goal[:og]       = true  if m[:og]
+    goal[:pen]      = true  if m[:pen]
+    goal[:freekick] = true  if m[:f]
+    goal[:header]   = true  if m[:h]
+    goal
+end
+def _build_goal_type( m ) self.class._build_goal_type( m ); end
+
+
 
 
 end  # class Lexer

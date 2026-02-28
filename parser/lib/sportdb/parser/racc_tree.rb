@@ -267,12 +267,10 @@ end
 
 MatchLine   = Struct.new( :header,
                           :num, :date, :time, :time_local,
-                          :wday,
                           :team1, :team2, 
                           :score,
                           :status,  
                           :geo,
-                          :timezone,
                           :note,
                           :att )  do   ## change to geos - why? why not?
 
@@ -293,29 +291,6 @@ MatchLine   = Struct.new( :header,
 
 end
 
-## check - use a different name e.g. GoalLineScore or such - why? why not?
-GoalLineAlt = Struct.new( :goals ) do
-  def pretty_print( printer )
-    printer.text( "<GoalLineAlt " )
-    printer.text( "goals=" + self.goals.pretty_inspect + ">" )
-  end  
-end
-
-GoalAlt   = Struct.new( :score, :player, :minute ) do
-  def to_s
-    buf = String.new
-    buf << "#{score} "
-    buf << "#{self.player}"
-    buf << " #{self.minute}"  if self.minute
-    buf
-  end
-
-  def pretty_print( printer )
-    printer.text( to_s )
-  end  
-end
-
-
 
 GoalLine    = Struct.new( :goals1, :goals2 ) do
   def pretty_print( printer )
@@ -326,6 +301,9 @@ GoalLine    = Struct.new( :goals1, :goals2 ) do
   end  
 end
 
+
+###
+##  change/rename Goal to GoalScorer  - why? why not?
 
 Goal        = Struct.new( :player, :minutes, :count ) do
   def to_s
@@ -351,6 +329,40 @@ Goal        = Struct.new( :player, :minutes, :count ) do
 end
 
 
+## check - use a different name e.g. GoalLineScore or such - why? why not?
+GoalLineAlt = Struct.new( :goals ) do
+  def pretty_print( printer )
+    printer.text( "<GoalLineAlt " )
+    printer.text( "goals=" + self.goals.pretty_inspect + ">" )
+  end  
+end
+
+
+##
+##   score and player REQUIRED
+##   note - (goal) minute is optional
+##          if no minute goal type is optional e.g. "standalone" (p), (og), etc.
+
+GoalAlt   = Struct.new( :score, :player, :minute, :goal_type ) do
+  def to_s
+    buf = String.new
+    buf << "#{self.score[0]}-#{self.score[1]}"  
+    buf << " #{self.player}"
+    buf << " #{self.minute}"     if self.minute
+    buf << " #{self.goal_type}"  if self.goal_type
+    buf
+  end
+
+  def pretty_print( printer )
+    printer.text( to_s )
+  end  
+end
+
+
+
+##   FIX/FIX/FIX
+##   split into Minute and
+##             GoalMinute  (Minute+GoalType)
 ##
 ##  fix - move :og, :pen  to Goal if possible - why? why not?
 ##  or change to GoalMinute ???
@@ -358,9 +370,12 @@ end
 ##  fix!!! split into GoalMinute and Minute
 ##            goal_minute incl. :og, :pen, :freekick, :header,
 ##                     seconds etc.
-Minute      = Struct.new( :m, :offset, 
-                          :og, :pen, :header, :freekick,
-                          :secs )  do
+##
+##  GoalMinute = Minute + GoalType !!!
+
+GoalMinute      = Struct.new( :m, :offset, :secs,
+                             :og, :pen, :header, :freekick,
+                         )  do
     def to_s
       buf = String.new
       buf << "#{self.m}"
@@ -371,6 +386,57 @@ Minute      = Struct.new( :m, :offset,
       buf << " (f)"  if self.freekick
       buf << " (h)"  if self.header
       buf << " (#{self.secs} secs)"   if self.secs
+      buf
+    end
+ 
+    def pretty_print( printer ) 
+       printer.text( to_s ) 
+    end  
+
+    ### quick hack:
+    ### split struct into  Minute+GoalType structs
+    def to_minute
+        Minute.new( m:      self.m, 
+                    offset: self.offset,
+                    secs:   self.secs )
+    end
+
+    def to_goal_type
+        if self.og || self.pen || self.header || self.freekick   
+          GoalType.new( og:       self.og, 
+                        pen:      self.pen, 
+                        header:   self.header,
+                        freekick: self.freekick )
+        else
+           nil   ## note - return nil; if no goal type present!!
+        end
+    end
+end
+
+
+GoalType  = Struct.new( :og, :pen, :header, :freekick )  do
+    def to_s
+      buf = String.new
+      buf << "(og)"   if self.og
+      buf << "(pen)"  if self.pen
+      buf << "(f)"    if self.freekick
+      buf << "(h)"    if self.header
+      buf
+    end
+ 
+    def pretty_print( printer ) 
+       printer.text( to_s ) 
+    end  
+end
+
+
+Minute      = Struct.new( :m, :offset, :secs )  do
+    def to_s
+      buf = String.new
+      buf << "#{self.m}"
+      buf << "'"
+      buf << "+#{self.offset}"      if self.offset 
+      buf << "/#{self.secs} secs"   if self.secs
       buf
     end
  
