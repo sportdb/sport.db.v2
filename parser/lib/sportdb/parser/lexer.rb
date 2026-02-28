@@ -232,6 +232,8 @@ def tokenize_with_errors
             m = TABLE_MORE_RE.match(line)
             if m[:table_note]
               tokens_by_line << [[:TABLE_NOTE, m[:table_note]]]
+            elsif m[:table_divider]
+              tokens_by_line << [[:TABLE_DIVIDER, m[:table_divider]]]
             else  ## assume table (line) e.g. m[:table]
               tokens_by_line << [[:TABLE_LINE, line]]
             end 

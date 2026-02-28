@@ -75,7 +75,7 @@ class RaccMatchParser
            : TABLE_HEADING NEWLINE { @tree << TableHeading.new( text: val[0]) }
            | TABLE_LINE NEWLINE    { @tree << TableLine.new( text: val[0]) }
            | TABLE_NOTE NEWLINE    { @tree << TableNote.new( text: val[0]) }
-
+           | TABLE_DIVIDER NEWLINE { @tree << TableDivider.new( text: val[0]) }
 
         note_line
             : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0]) }

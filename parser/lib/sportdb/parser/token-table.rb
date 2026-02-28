@@ -23,6 +23,11 @@ class Lexer
 ##  3.Croatia           3  1  0  2   6- 6  3
 ##  4.Cameroon          3  0  0  3   1- 9  0 
 
+##  add more headings?? e.g.
+##    Final Table:
+##
+
+
 TABLE_HEADING_I_RE = %r{
        \A
         [ ]*  ## ignore leading spaces (if any)
@@ -38,7 +43,31 @@ TABLE_HEADING_I_RE = %r{
          )
         [ ]*  ## ignore trailing spaces (if any) 
         \z
-   }ix
+   }xi
+
+
+##
+##  "solid"-style
+##     -----------------------------------------------------
+##  "dashed"-style ??
+##     - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+TABLE_DIVIDER_RE = %r{
+            \A
+        [ ]*  ## ignore leading spaces (if any)
+            (?<table_divider>
+                (?:  ---   ## note - require three dashes minimum (---)
+                      [-]* 
+                )  
+                  |
+                (?: - [ ]+ - [ ]+ -  ## note - require three dashes minimum (- - -)
+                      (?: [ ]+ -)*   ##   todo/check - restrict spaces to 2 or 3 or such - why? why not?
+                )  
+            )
+        [ ]*  ## ignore trailing spaces (if any) 
+            \z
+      }xi
 
 
 ####
@@ -60,7 +89,7 @@ TABLE_NOTE_RE = %r{
          )
         [ ]*  ## ignore trailing spaces (if any) 
         \z
-}ix
+}xi
 
 TABLE_I_RE = %r{
         (?<table>\b 
@@ -71,7 +100,7 @@ TABLE_I_RE = %r{
              (?: \d{1,3} - [ ]* \d{1,3} [ ]+ )   # GF-GA
              \d{1,3}                             # Pts   
               \b 
-        )}ix
+        )}xi
 
 ##      Pld Pts W D L GF-GA   |  d d d d d d-d
 ##
@@ -89,7 +118,7 @@ TABLE_II_RE = %r{
              \d{1,2} [ ]+                        # L
              (?: \d{1,3} - [ ]* \d{1,3})   # GF-GA
               \b 
-        )}ix
+        )}xi
 
 
 
@@ -110,6 +139,7 @@ TABLE_RE = Regexp.union(
 ##   excludes HEADING
 TABLE_MORE_RE = Regexp.union(
     TABLE_NOTE_RE,
+    TABLE_DIVIDER_RE,
     TABLE_I_RE,
     TABLE_II_RE,
 )

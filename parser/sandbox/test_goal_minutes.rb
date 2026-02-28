@@ -16,6 +16,9 @@ txt =<<TXT
  45'+1
  45+1'
  45'+1'
+ 111'
+ 119
+ 120'+8
 
 ## try classic goal types
  24'p

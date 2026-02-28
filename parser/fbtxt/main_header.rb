@@ -120,6 +120,23 @@ May 26
   Leeds         0-1 Southampton   
 
 
+###
+##  try with (optional) trailing markers  
+
+▪ Division 1, Promotion Playoff ▪ 
+▪▪ Semifinals ▪▪ 
+▪▪▪ First Legs ▪▪▪▪▪ 
+▪▪▪ Second Legs ▪▪
+▪▪ Final ▪▪▪▪▪▪▪▪▪▪▪▪ 
+
+:: Championship, Promotion Playoff ::::: 
+::: Semifinals  :::::
+:::: First Legs ::::    
+:::: Second Legs :: 
+::: Final ::::::
+
+
+
 TXT
 
 

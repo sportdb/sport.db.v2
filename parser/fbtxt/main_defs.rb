@@ -67,6 +67,27 @@ Group 4  |   Uruguay  Bolivia  France
 ▪ Final Round : July 9-16
 
 
+## check match schedule with rounds
+##    todo - add support for date list (more than one date or duration!!!)
+
+▪ Round 19 | Mar 31/Apr 1
+▪ Round 20 | Apr 6-8, Apr 24              ## or Apr 6-8, 24 ???
+▪ Round 21 | Apr 14-16, Apr 24, May 8
+▪ Round 22 | Apr 21/22, Apr 24, May 29    ## or Apr 21&22 or 21+22
+▪ Round 23 | Apr 28
+▪ Round 24 | May 1
+▪ Round 25 | May 4-6
+▪ Round 26 | May 10-13
+▪ Round 27 | May 18-20
+▪ Round 28 | May 23/24
+▪ Round 29 | May 26/27                   ## May 26,27 ??
+▪ Round 30 | May 31-Jun 2
+
+## mark out of order dates in rounds - why? why not?
+##   e.g.   ca. Apr 18  
+▪ Round 19  | Mar 24/25,  ca. Apr 18
+
+
 TXT
 
 
