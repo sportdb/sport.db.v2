@@ -862,8 +862,12 @@ def _tokenize_line( line )
           end
         elsif m[:inline_wo]   ## w/o - walkout  (match status)
             [:INLINE_WO, m[:inline_wo]]
+        elsif m[:inline_np]   ## n/p - not played (match status)
+            [:INLINE_NP, m[:inline_np]]         
         elsif m[:inline_bye]  ## bye  (match status)
             [:INLINE_BYE, m[:inline_bye]]
+        elsif m[:inline_abd]  ## abd/abd. - abandoned (match status)
+            [:INLINE_ABD, m[:inline_abd]]
         elsif m[:attendance]
              att = {} 
              att[:value] = m[:value].gsub( '_', '' ).to_i(10)
@@ -1068,6 +1072,15 @@ def _tokenize_line( line )
                              m[:score2].to_i(10)]  
          ## note - for debugging keep (pass along) "literal" score
           [:SCORE, [m[:score], score]]
+        elsif m[:score_awd]   ## score awarded (awd/awd.)
+            score = {}
+            ### note - use "generic" score for now
+            ##         to match  A 3-0 B [awarded] etc.
+            score[:score] = [m[:score1].to_i(10),
+                             m[:score2].to_i(10)]  
+            ## add score[:awarded] = true ???
+            ##    or only use match status to avoid duplicate?
+            [:SCORE_AWD, [m[:score_awd], score]]
       elsif m[:minute]
               minute = {}
               minute[:m]      = m[:value].to_i(10)

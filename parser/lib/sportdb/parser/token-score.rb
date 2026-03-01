@@ -279,6 +279,23 @@ SCORE_FULL_RE = Regexp.union(
   ### SCORE__FT__RE,           # e.g. 1-1  -- note - must go last!!!
 )
 
+
+###
+##
+##  add support for score awarded (inline style)
+##    3-0 awd  3-0 awd. 3-0awd
+##    0-1 awd etc.
+SCORE_AWD_RE  = %r{
+            (?<score_awd>
+              \b
+               (?<score1>\d{1,2}) - (?<score2>\d{1,2})
+                 [ ]?
+                  awd\.?
+               ## POSITIVE lookahead - requires space
+               (?= [ ])
+             )}ix  
+
+
 #####
 ##      2-1
 ###

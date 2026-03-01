@@ -266,11 +266,19 @@ MatchLineLegs   = Struct.new( :team1, :team2,
 end
 
 
+#
+#  note: use two status attributes for now
+#         1) inline_status and 2) (note_)status
+#              for now  e.g.  A abd. B     vs   A  v B [abadoned] 
+#                             A 3-0 awd B  vs   A  3-0 B [awarded]
+#   note - BOTH might be present at the same time
+
+
 MatchLine   = Struct.new( :header,
                           :num, :date, :time, :time_local,
                           :team1, :team2, 
                           :score,
-                          :status,  
+                          :status,  :status_inline,
                           :geo,
                           :note,
                           :att )  do   ## change to geos - why? why not?

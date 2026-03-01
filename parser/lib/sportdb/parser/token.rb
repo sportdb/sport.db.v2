@@ -59,6 +59,24 @@ INLINE_BYE_RE = %r{
                )}x   ## add support for upcase BYE - why? why not?
 
 
+###
+#   A n/p  B    (note - basically a inline short form of  A v B [cancelled] )
+INLINE_NP_RE = %r{
+                   (?<inline_np>
+                       \b n/p \b
+               )}x   ## add support for upcase N/P too - why? why not?
+
+
+###
+#  abd/abd.   [abandoned]
+INLINE_ABD_RE = %r{
+                   (?<inline_abd>
+                       \b abd\.? 
+                  ## POSITIVE lookahead - requires space
+                         (?= [ ])
+               )}x
+
+
 ## "top-level" regex used for:
 ##    - date_header
 ##    - match_header & match_line_more
@@ -68,7 +86,9 @@ INLINE_BYE_RE = %r{
 RE = Regexp.union(
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
                     INLINE_WO_RE,   ## (inline) match status - w/o (walkout)
+                    INLINE_NP_RE,   ## (inline) match status - n/p (not played)
                     INLINE_BYE_RE,  ## (inline) match status - bye (advance to next round)
+                    INLINE_ABD_RE,  ## (inline) match status - abd/abd. (abandoned)
                     NOTE_RE,  ### fix - change to INLINE_NOTE !!!
                     DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
@@ -79,6 +99,7 @@ RE = Regexp.union(
                     SCORE_FULL_RE, 
                     SCORE_FULLER_RE,
                     SCORE_FULLER_MORE_RE,
+                    SCORE_AWD_RE,   #  (inline) score awarded e.g. 3-0 awd or 0-1 awd. etc.
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
                     BASICS_RE, 
                    TEXT_RE,

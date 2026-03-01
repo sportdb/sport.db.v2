@@ -270,7 +270,7 @@ class RaccMatchParser
 
         match_line
               :   match_opts  match  more_match_opts NEWLINE
-                    {     
+                    {      
                        kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
                     }
@@ -375,6 +375,7 @@ class RaccMatchParser
 
          match  :   match_result
                 |   match_fixture 
+                |   match_fixture_not_played    ## note - uses n/p as match separator
 
          match_bye 
               :   TEAM INLINE_BYE       ## e.g.  Queen's Park   bye     
@@ -389,6 +390,10 @@ class RaccMatchParser
                                  team2: val[2] }
                    }
 
+
+         match_sep :  '-' | VS
+            ## note - does NOT include SCORE; use SCORE terminal "in-place" if needed
+
          match_fixture :  TEAM match_sep TEAM
                            {
                                trace( "RECUDE match_fixture" )
@@ -396,8 +401,18 @@ class RaccMatchParser
                                           team2: val[2] }   
                            }
 
-         match_sep :  '-' | VS
-            ## note - does NOT include SCORE; use SCORE terminal "in-place" if needed
+        match_fixture_not_played :  TEAM INLINE_NP TEAM
+                           {
+                               ## note - auto-add (match) status cancelled - why? why not?
+                               ##   A n/p B   short (inline) form of =>
+                               ##   A v B [cancelled]
+
+                               result = { team1: val[0],
+                                          team2: val[2],
+                                          status_inline: 'cancelled' }   
+                           }
+
+
   
 
          score_full_or_fuller   
@@ -412,13 +427,24 @@ class RaccMatchParser
                            trace( "REDUCE => match_result : TEAM SCORE TEAM" )
  
                           ## note - use/keep generic score (as array!! NOT hash!!!)
-                          
-                           result = { team1: val[0],
-                                      team2: val[2],
+                           result = { team1: val[0], team2: val[2],
                                       score: val[1][1][:score]  ## note - as array e.g. [1,1] !!
                                     }   
                            ## pp result
                         }
+                     | TEAM SCORE_AWD TEAM
+                          {
+                           result = { team1: val[0], team2: val[2],
+                                      score: val[1][1],
+                                      status_inline: 'awarded'
+                                    }                          
+                          }
+                     | TEAM INLINE_ABD TEAM
+                          {
+                           result = { team1: val[0], team2: val[2], 
+                                      status_inline: 'abandoned' 
+                                    }                          
+                          }
                      | TEAM SCORE TEAM SCORE_FULLER_MORE
                           {
                             trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )

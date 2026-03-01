@@ -86,10 +86,16 @@ TEXT_RE = %r{
                     '[s] [ ] \p{L}+
                )
 
-              (?:(?:  (?:[ ]   # only single spaces allowed inline!!! 
-                        (?! (?-i: vs?[ ])
-                          )    ## note - exclude (v[ ]/vs[ ])
-                               ##    AND switch to case-sensitive (via -i!!!)
+
+              (?:(?:  (?:[ ]   # only single spaces allowed inline!!!
+                          ## note - exclude (v[ ]/vs[ ])
+                          ##    AND switch to case-sensitive (via -i!!!)
+                        (?! (?-i: vs?[ ] | 
+                                   n/p[ ] | 
+                                   w/o [ ] | 
+                                   abd\.? [ ] |
+                                   bye (?:[ ]|$))
+                          )    
                       )
                       |     
                      [/-]   ## must NOT be surrounded by spaces 
