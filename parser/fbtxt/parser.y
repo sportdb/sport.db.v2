@@ -138,18 +138,51 @@ class RaccMatchParser
                       @tree << RoundOutline.new( outline: val[0], level: 1 )
                   }
 
-
-        round_date_opts  :   DATE        { result = { date: val[0][1] } } 
+       round_date_opts  :   DATE        { result = { date: val[0][1] } } 
                          |  DURATION     { result = { duration: val[0][1] } }
+
+
+
+##############
+#  date & time rules / productions
+    date
+      :   DATE    { result = { date: val[0][1] } }
+      |   YEAR       ## to be done - add
+    
+    datetime
+      :   DATETIME              { result = {}.merge( val[0][1] ) }
+      |   DATETIME TIME_LOCAL   {
+                                  result = { time_local: val[1][1] }.merge( val[0][1] ) 
+                                }
+
+    time 
+      :   TIME                  {   result = { time:        val[0][1]}  }
+      |   TIME TIME_LOCAL       {   result = { time:        val[0][1],
+                                               time_local:  val[1][1] }
+                                }
+
+     ## note - does NOT incl. time only
+     ##   todo/check - rename to date_or_datetime - why? why not?
+    date_clause  
+      :  date
+      |  datetime
+
+
+    opt_date   ## rename to opt_date_datetime_time or such - why? why not?
+      :         {  result = {} }  ## optional; empty
+      ## | date
+      ## | datetime
+      | date_clause    #  note: is same as date | datetime
+      | time     
+
 
 
         ## note - only one option (DATE) allowed for "standalone" header now
         ##            use match header (with geo tree) 
         date_header
-              :     DATE  NEWLINE
+              :     date  NEWLINE
                   {
-                     kwargs = { date: val[0][1]  }
-                     @tree <<  DateHeader.new( **kwargs )  
+                     @tree <<  DateHeader.new( **val[0] )  
                   }
             
         date_header_legs
@@ -189,12 +222,9 @@ class RaccMatchParser
 
 
 
-        ### note - match_header MUST incl. geo tree!!!
+       ### note - match_header MUST incl. geo tree!!!
        match_header       
-            :     match_header_body   NEWLINE  {  result = val[0]  }
-            
-         match_header_body              
-               : match_header_date geo_opts opt_inline_attendance   
+            :     date_clause geo_opts opt_inline_attendance  NEWLINE 
                    { 
                       result = {}.merge( val[0], val[1], val[2] ) 
                    }
@@ -218,12 +248,6 @@ class RaccMatchParser
                     }
 
 
-        match_header_date     ## note - only two option allowed (no "standalone" TIME etc.)
-               : DATE            {   result = { date: val[0][1]}  }
-               | DATETIME        {   result = {}.merge( val[0][1] ) }
-               | DATETIME TIME_LOCAL  {
-                                     result = { time_local: val[1][1] }.merge( val[0][1] ) 
-                                 }
 
 
 
@@ -250,37 +274,28 @@ class RaccMatchParser
                        kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
                     }
-
-              ### todo/fix - match_line starting with @ geo_opts
-              ##                allow more options
-              |   geo_opts match  NEWLINE
-                   {
+              |  match  more_match_opts NEWLINE
+                    {     
                        kwargs = {}.merge( val[0], val[1] )
                        @tree << MatchLine.new( **kwargs )
-                   }
+                    }
+          
+              |  match_bye  opt_inline_note  NEWLINE
+                      {
+                         kwargs = {}.merge( val[0], val[1] )
+                         @tree << MatchLineBye.new( **kwargs ) 
+                      }
+              |  match_walkover  opt_inline_note   NEWLINE
+                     {
+                         kwargs = {}.merge( val[0], val[1] )
+                         @tree << MatchLineWalkover.new( **kwargs )
+                     }
 
-                   
-              |   match_fixture  more_match_opts NEWLINE
-                  { 
-                      kwargs = {}.merge( val[0], val[1] )
-                      @tree << MatchLine.new( **kwargs )
-                  }
-              ### todo/fix - make (leading) optional ord(inal) match number
-              ##               less a hack - use opt_ord rule or such!!!!    
-              |   ord  match_fixture  more_match_opts NEWLINE
-                  { 
-                      kwargs = {}.merge( val[0], val[1], val[2] )
-                      @tree << MatchLine.new( **kwargs )
-                  }
-                   
-              |   match_result  more_match_opts NEWLINE
-                  { 
-                      kwargs = {}.merge( val[0], val[1] )
-                      @tree << MatchLine.new( **kwargs )
-                  }
+
                ###############
                ### note - for now inline goals only for "compact" match results
                ###           make more flexible (allow leading date/time etc. too)
+               ###   plus allow  match status/note - why? why not?
                |   match_result  INLINE_GOALS  goal_lines_body NEWLINE
                   { 
                       kwargs = {}.merge( val[0] )
@@ -289,50 +304,32 @@ class RaccMatchParser
                       kwargs = val[2]
                       @tree << GoalLine.new( **kwargs ) 
                   }
-              ### todo/fix:  allow/add (inline) note too e.g. [Bury went bankrupt] etc.!!
-              |   TEAM INLINE_BYE opt_inline_note  NEWLINE    ## e.g.  Queen's Park   bye     
-                    {
-                      kwargs = { team: val[0] }.merge( val[2] )
-                      @tree << MatchLineBye.new( **kwargs )
-                    }
-              ### todo/fix:  allow/add (inline) note too!!
-              |   TEAM INLINE_WO TEAM opt_inline_note  NEWLINE   ## e.g.  Oxford University  w/o  Queen's Park 
-                   {
-                      kwargs = { team1: val[0],
-                                 team2: val[2] }.merge( val[3] )
-                      @tree << MatchLineWalkover.new( **kwargs )
-                   }
+
+
+
 
         ## optional ord(inal) match number e.g (1), (42), etc.
-        # opt_ord
-        #   :        {  result = {}  }   /* empty; optional */
-        #   | ORD    {  result = { num: val[0][1][:value] } }
+ #       opt_ord
+ #          :        {  result = {}  }     ## empty; optional 
+ #          | ord
 
-        ord : ORD   {  result = { num: val[0][1][:value] } }
+        ord 
+           : ORD    {  result = { num: val[0][1][:value] } }
        
 
         match_opts
-             : match_header_date
-             | match_header_date geo_opts {  result = val[0].merge( val[1]) }
-             |  more_date_opts      
-             |  more_date_opts geo_opts { result = val[0].merge( val[1]) }
-             | ord match_header_date          { result = {}.merge( val[0], val[1] )  }
-             | ord match_header_date geo_opts { result = {}.merge( val[0], val[1], val[2] ) }
-             | ord more_date_opts             { result = {}.merge( val[0], val[1] )  }
-             | ord more_date_opts geo_opts    { result = {}.merge( val[0], val[1], val[2] ) }
-           # |  date_header_body    ## note: same as (inline) date header but WITHOUT newline!!!
-         
+             : ord  opt_date opt_geo {
+                                     result = {}.merge( val[0], val[1], val[2] )
+                                }    
+             | date_clause  opt_geo   {
+                                     result = {}.merge( val[0], val[1] )
+                                } 
+             | time   opt_geo   {
+                                     result = {}.merge( val[0], val[1] )
+                                } 
+             | geo_opts         
+             
 
-
-       ### e.g.  time only e.g. 15.00,  or weekday with time only e.g. Fr 15.00
-       more_date_opts
-             : TIME                      {   result = { time: val[0][1]}  }
-             | TIME TIME_LOCAL   {
-                                             result = { time:        val[0][1],
-                                                        time_local:  val[1][1] }
-                                         }
-      
-        
         ## note - you cannot use both STATUS and NOTE - why? why not?
         ##
         ##  todo/check - allow attendance w/o geo_tree - why? why not?
@@ -356,6 +353,11 @@ class RaccMatchParser
           
 
 
+        opt_geo  
+             :   { result = {} }   ## empty; optional
+             |  geo_opts
+
+
         ## e.g.  @ Parc des Princes, Paris
         ##       @ München 
         geo_opts : '@' geo_values           { result = { geo: val[1] } }
@@ -373,7 +375,20 @@ class RaccMatchParser
 
          match  :   match_result
                 |   match_fixture 
-                    
+
+         match_bye 
+              :   TEAM INLINE_BYE       ## e.g.  Queen's Park   bye     
+                    {
+                      result = { team: val[0] }
+                    }
+        
+         match_walkover
+              :   TEAM INLINE_WO TEAM    ## e.g.  Oxford University  w/o  Queen's Park 
+                   {
+                      result = { team1: val[0],
+                                 team2: val[2] }
+                   }
+
          match_fixture :  TEAM match_sep TEAM
                            {
                                trace( "RECUDE match_fixture" )

@@ -134,16 +134,17 @@ RoundDef   = Struct.new( :name, :date, :duration )  do
   def pretty_print( printer )
     printer.text( "<RoundDef " )
     printer.text( self.name )
-    printer.text( " date=" + self.date.pretty_inspect ) if date
-    printer.text( " duration=" + self.duration.pretty_inspect ) if duration
+    printer.text( " date=" + self.date.pretty_inspect ) if self.date
+    printer.text( " duration=" + self.duration.pretty_inspect ) if self.duration
     printer.text( ">" )
   end
 end
 
-DateHeader = Struct.new( :date ) do
+DateHeader = Struct.new( :date, :year ) do
   def pretty_print( printer )
     printer.text( "<DateHeader " )
-    printer.text( "#{self.date.pretty_inspect}" )
+    printer.text( "#{self.date.pretty_inspect}" )  if self.date
+    printer.text( "#{self.year.pretty_inspect}" )  if self.year
     printer.text( ">")
   end
 end
