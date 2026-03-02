@@ -171,9 +171,13 @@ TEXT_RE = %r{
                 #       e.g. (AUT) or ,AUT or AUT
                 (?:
                [ ]   ## note - do NOT allow more than one space!!! - why? why not?
-                  \(  (?! aet | agget | asdet | asget \)
-                       )    ## note - auto-exclude reserved (aet)  from SCORE_FULLER_MORE!!!
-                            ##     plus golden goal (gg)/sudden death (sd), silver goal (sg)
+                   \( 
+                       ## note - auto-exclude reserved (aet)  from SCORE_FULLER_MORE!!!
+                       ##     plus golden goal (gg)/sudden death (sd), silver goal (sg)
+                       ##    (ht), (ft)  
+                       (?! (?: aet | agget | asdet | asget | ht | ft )
+                             \)
+                       )    
                      (?:
                        [A-Z]{1,5}   
                      )

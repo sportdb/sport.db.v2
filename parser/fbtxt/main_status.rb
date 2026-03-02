@@ -100,7 +100,7 @@ Chichester City bye
 
   
 ###
-## check (inline) canc/canc.  (cancelled/canceled)
+## check (inline) canc/canc.  (canceled/cancelled)
 
 SW Bregenz   canc Liefering      
 SW Bregenz   canc. Liefering      

@@ -17,7 +17,9 @@ class Lexer
     #                        always use (simply) pen, p, agg 
     #                      (also) remove  a.e.t. / a.e.t option - why? why not?
     #
-    P_EN  =  '(?: pen\.? | p\.? )'     # e.g. p., p, pen, pen., etc.
+    ##  UPDATE mar/2026:  addd pens too - keep - why? why not?
+    ##                     (4-3 pens)
+    P_EN  =  '(?: pens | pen\.? | p\.? )'     # e.g. p., p, pen, pen., etc.
 
     ## fix - change ET_EN  to AET_EN!!! - why? why not?
     ET_EN =  '(?: aet | a\.e\.t\.? )'     # note: make last . optional (e.g a.e.t) allowed too

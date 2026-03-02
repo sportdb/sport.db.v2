@@ -1062,8 +1062,11 @@ def _tokenize_line( line )
                  score[:away] = true
               end  
 
-              ## add aet flag true/false
-              score[:aet] = true   if m[:aet] || m[:aetgg] || m[:aetsg]
+              ## add flag in score for et/ft/ht
+              score[:score] = 'et'   if m[:aet] || m[:aetgg] || m[:aetsg]
+              score[:score] = 'ft'   if m[:ft]
+              score[:score] = 'ht'   if m[:ht]
+
               ## add golden/silver flags
               score[:golden] = true   if m[:aetgg]  ## golden goal (gg)/sudden death (sd)
               score[:silver] = true   if m[:aetsg]  ## silver goal (sg)

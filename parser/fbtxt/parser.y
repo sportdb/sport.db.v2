@@ -405,21 +405,22 @@ class RaccMatchParser
                                           team2: val[2] }   
                            }
 
+### todo/fix - change to match_fixture_canceled !!!!
 match_fixture_not_played : TEAM INLINE_NP TEAM
                             {
-                               ## note - auto-add (match) status cancelled - why? why not?
+                               ## note - auto-add (match) status canceled - why? why not?
                                ##   A n/p B   short (inline) form of =>
-                               ##   A v B [cancelled]
+                               ##   A v B [canceled]
 
                                result = { team1: val[0],
                                           team2: val[2],
-                                          status_inline: 'cancelled' }   
+                                          status_inline: 'canceled' }   
                              }
                           | TEAM INLINE_CANC TEAM
                              {
                                result = { team1: val[0],
                                           team2: val[2],
-                                          status_inline: 'cancelled' }   
+                                          status_inline: 'canceled' }   
                             }
 
  match_fixture_postponed  :  TEAM INLINE_PPD TEAM
@@ -477,13 +478,22 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                           {
                             trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
                             score = nil
-                            score =  if val[3][1][:aet]  ## check aet flag present? 
-                                       ## note - remove/delete aet flag
-                                       val[3][1].delete( :aet )
-                                       { et: val[1][1][:score] }
+                            score =  if val[3][1][:score] && 
+                                        val[3][1][:score]=='et'   ## check aet flag present? 
+                                         val[3][1].delete( :score )  ## note - remove/delete  flag
+                                           { et: val[1][1][:score] }
+                                     elsif val[3][1][:score] && 
+                                           val[3][1][:score]=='ht' ## check ht flag present?
+                                         val[3][1].delete( :score ) ## note - remove/delete flag
+                                           { ht: val[1][1][:score] }      
+                                     elsif val[3][1][:score] && 
+                                           val[3][1][:score]=='ft'  ## check ft flag present?
+                                         val[3][1].delete( :score )  ## note - remove/delete flag
+                                           { ft: val[1][1][:score] }
                                      else   ## assume full-time (ft)
-                                       { ft: val[1][1][:score] }
+                                            { ft: val[1][1][:score] }
                                      end 
+
                            result = {  team1: val[0],
                                       team2: val[2],
                                       score: score.merge( val[3][1] )

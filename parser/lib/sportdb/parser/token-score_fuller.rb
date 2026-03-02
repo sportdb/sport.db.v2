@@ -371,7 +371,25 @@ SCORE_FULLER_RE = Regexp.union(
   SCORE_FULLER__ET_AGG_P__RE,    ## e.g.  2-1 (aet, 3-3 on aggregate, win 5-2 on pens)
   )
 
+
+
+##
+##  add support for "stand-alone"  (HT) and (FT) - keep why? why not?
+SCORE_FULLER_MORE__HT__RE = %r{
+        (?<score_fuller_more>
+            \( (?<ht> ht ) \)
+        )}ix
+
+SCORE_FULLER_MORE__FT__RE = %r{
+        (?<score_fuller_more>
+             \( (?<ft> ft ) \)  
+        )}ix
+
+
+
 SCORE_FULLER_MORE_RE = Regexp.union(
+  SCORE_FULLER_MORE__FT__RE,          ## e.g. (ft)
+  SCORE_FULLER_MORE__HT__RE,          ## e.g. (ht)
   SCORE_FULLER_MORE__HT_FT__RE,       ## e.g. (HT 2-1)
   SCORE_FULLER_MORE__ET_P__RE,        ## e.g. (aet, win 5-3 on pens)
   SCORE_FULLER_MORE__ET__RE,          ## e.g. (aet)
