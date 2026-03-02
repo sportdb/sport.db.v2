@@ -375,7 +375,11 @@ class RaccMatchParser
 
          match  :   match_result
                 |   match_fixture 
-                |   match_fixture_not_played    ## note - uses n/p as match separator
+                ### note - match_fixtures with (match) status - do not use with scores
+                ##                       e.g. Rapid v Austria 3-1
+                |   match_fixture_not_played    ## note - uses n/p or canc/canc. as match separator
+                |   match_fixture_postponed     ## note - uses ppd/ppd. or postp/postp. as match separator
+                                                
 
          match_bye 
               :   TEAM INLINE_BYE       ## e.g.  Queen's Park   bye     
@@ -401,8 +405,8 @@ class RaccMatchParser
                                           team2: val[2] }   
                            }
 
-        match_fixture_not_played :  TEAM INLINE_NP TEAM
-                           {
+match_fixture_not_played : TEAM INLINE_NP TEAM
+                            {
                                ## note - auto-add (match) status cancelled - why? why not?
                                ##   A n/p B   short (inline) form of =>
                                ##   A v B [cancelled]
@@ -410,11 +414,22 @@ class RaccMatchParser
                                result = { team1: val[0],
                                           team2: val[2],
                                           status_inline: 'cancelled' }   
-                           }
+                             }
+                          | TEAM INLINE_CANC TEAM
+                             {
+                               result = { team1: val[0],
+                                          team2: val[2],
+                                          status_inline: 'cancelled' }   
+                            }
 
+ match_fixture_postponed  :  TEAM INLINE_PPD TEAM
+                             {
+                               result = { team1: val[0],
+                                          team2: val[2],
+                                          status_inline: 'postponed' }   
+                            }
 
-  
-
+   
          score_full_or_fuller   
                 : SCORE_FULL      ## full format    1-1 (0-1)
                                   ##             or 2-1 a.e.t. etc.
@@ -445,6 +460,19 @@ class RaccMatchParser
                                       status_inline: 'abandoned' 
                                     }                          
                           }
+                     | TEAM INLINE_SUSP TEAM
+                          {
+                           result = { team1: val[0], team2: val[2], 
+                                      status_inline: 'suspended' 
+                                    }                          
+                          }
+                    | TEAM INLINE_AWD TEAM
+                          {
+                           result = { team1: val[0], team2: val[2], 
+                                      status_inline: 'awarded' 
+                                    }                          
+                          }
+
                      | TEAM SCORE TEAM SCORE_FULLER_MORE
                           {
                             trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )

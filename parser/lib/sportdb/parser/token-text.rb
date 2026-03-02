@@ -90,10 +90,16 @@ TEXT_RE = %r{
               (?:(?:  (?:[ ]   # only single spaces allowed inline!!!
                           ## note - exclude (v[ ]/vs[ ])
                           ##    AND switch to case-sensitive (via -i!!!)
-                        (?! (?-i: vs?[ ] | 
-                                   n/p[ ] | 
+                        (?! (?-i: vs? [ ] | 
+                                   n/p [ ] | 
                                    w/o [ ] | 
                                    abd\.? [ ] |
+                                   aban\.? [ ] |
+                                   susp\.? [ ] |
+                                   ppd\.? [ ] |
+                                   postp\.? [ ] |
+                                   awd\.? [ ] |
+                                   canc\.? [ ] |
                                    bye (?:[ ]|$))
                           )    
                       )

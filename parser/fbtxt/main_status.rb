@@ -26,6 +26,16 @@ SW Bregenz 0-1awd Liefering
 SW Bregenz 0-1awd. Liefering      
 SW Bregenz 0-1 awd. Liefering      
 
+###
+## check (inline) awd/awd.  (awarded)   w/o score
+
+SW Bregenz   awd Liefering      
+SW Bregenz   awd. Liefering      
+SW Bregenz awd Liefering      
+SW Bregenz awd. Liefering      
+
+
+
 
 Schwarz-Weiß     1-4 Austria W             [annulled]
 
@@ -67,7 +77,7 @@ Chichester City bye
 
 
 ###
-##  check (inline)  abd/abd.  (abandoned)
+##  check (inline)  abd/abd. or aban/aban.  (abandoned)
 
   Liefering        abd Juniors OÖ       [abandoned at 0-0 in 15' due to heavy snowfall]
   Amstetten        abd BW Linz          [abandoned at 0-1 in 37' due to heavy snowfall]
@@ -82,7 +92,44 @@ Chichester City bye
   Amstetten abd BW Linz        
   Liefering abd. Juniors OÖ 
   Amstetten abd. BW Linz        
- 
+
+  Liefering aban Juniors OÖ 
+  Amstetten aban BW Linz        
+  Liefering aban. Juniors OÖ 
+  Amstetten aban. BW Linz        
+
+  
+###
+## check (inline) canc/canc.  (cancelled/canceled)
+
+SW Bregenz   canc Liefering      
+SW Bregenz   canc. Liefering      
+SW Bregenz canc Liefering      
+SW Bregenz canc. Liefering      
+
+
+###
+## check (inline) susp/susp.  (suspended)
+
+SW Bregenz   susp Liefering      
+SW Bregenz   susp. Liefering      
+SW Bregenz susp Liefering      
+SW Bregenz susp. Liefering      
+
+
+###
+## check (inline) ppd/ppd. or postp/postp.  (postponed)
+
+SW Bregenz   ppd Liefering      
+SW Bregenz   ppd. Liefering      
+SW Bregenz ppd Liefering      
+SW Bregenz ppd. Liefering      
+
+SW Bregenz   postp Liefering      
+SW Bregenz   postp. Liefering      
+SW Bregenz postp Liefering      
+SW Bregenz postp. Liefering      
+
 
 TXT
 

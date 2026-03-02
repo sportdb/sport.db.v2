@@ -68,13 +68,57 @@ INLINE_NP_RE = %r{
 
 
 ###
-#  abd/abd.   [abandoned]
+#  abd/abd. or aban/aban.  [abandoned]
 INLINE_ABD_RE = %r{
                    (?<inline_abd>
-                       \b abd\.? 
+                       \b (?: abd\.? |
+                              aban\.?
+                          ) 
                   ## POSITIVE lookahead - requires space
                          (?= [ ])
                )}x
+
+####
+#  susp/susp.  [suspended]
+INLINE_SUSP_RE = %r{
+                   (?<inline_susp>
+                       \b susp\.? 
+                  ## POSITIVE lookahead - requires space
+                         (?= [ ])
+               )}x
+
+
+####
+# ppd/ppd. or postp/postp.   [postponed]               
+INLINE_PPD_RE = %r{
+                   (?<inline_ppd>
+                       \b (?: ppd\.? |
+                              postp\.?
+                           ) 
+                  ## POSITIVE lookahead - requires space
+                         (?= [ ])
+               )}x
+
+####
+#  awd/awd.                [awarded]
+#   note - recommendation is to allways include score
+#            thus, use/prefer SCORE_AWD e.g. 0-3 awd
+INLINE_AWD_RE =  %r{
+                   (?<inline_awd>
+                       \b awd\.? 
+                  ## POSITIVE lookahead - requires space
+                         (?= [ ])
+               )}x
+
+###
+#  canc/canc.           [cancelled]
+INLINE_CANC_RE =  %r{
+                   (?<inline_canc>
+                       \b canc\.? 
+                  ## POSITIVE lookahead - requires space
+                         (?= [ ])
+               )}x
+
 
 
 ## "top-level" regex used for:
@@ -85,10 +129,16 @@ INLINE_ABD_RE = %r{
 
 RE = Regexp.union(
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
-                    INLINE_WO_RE,   ## (inline) match status - w/o (walkout)
-                    INLINE_NP_RE,   ## (inline) match status - n/p (not played)
-                    INLINE_BYE_RE,  ## (inline) match status - bye (advance to next round)
-                    INLINE_ABD_RE,  ## (inline) match status - abd/abd. (abandoned)
+
+                    INLINE_WO_RE,    ## (inline) match status - w/o (walkout)
+                    INLINE_NP_RE,    ## (inline) match status - n/p (not played)
+                    INLINE_BYE_RE,   ## (inline) match status - bye (advance to next round)
+                    INLINE_ABD_RE,   ## (inline) match status - abd/abd. (abandoned)
+                    INLINE_SUSP_RE,  ## (inline) match status - susp/susp.  (suspended)
+                    INLINE_PPD_RE,   ## (inline) match status - ppd/ppd. or postp/postp. (postponed)            
+                    INLINE_AWD_RE,   ## (inline) match status - awd/awd. (awarded)
+                    INLINE_CANC_RE,  ## (inline) match status - canc/canc. (cancelled/canceled)
+                   
                     NOTE_RE,  ### fix - change to INLINE_NOTE !!!
                     DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)

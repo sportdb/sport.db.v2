@@ -166,11 +166,11 @@ GOAL_MINUTE_RE = %r{
                       )    
             )
             |
-            ## add experimental h(eader) qualifier
-            (?: [ ]? (?<h> \( h \) | h ))
+            ## add experimental header qualifier
+            (?: [ ]? (?<hdr> \( (?:hdr\.?|h ) \) | (?: hdr\.?|h ) ))
             |
-            ## add experimental f(ree kick) qualifier
-            (?: [ ]? (?<f> \( f \) | f ))
+            ## add experimental free kick qualifier
+            (?: [ ]? (?<fk> \( (?:fk\.?|f ) \) | (?: fk\.?|f) ))
         )?
 
         ##  add experimental seconds
@@ -214,11 +214,11 @@ GOAL_TYPE_RE = %r{
                          |
                       (?<pen> pen\.?|p )  
                          |
-                     ## add experimental h(eader) qualifier
-                      (?<h>  h )
+                     ## add experimental header qualifier
+                      (?<hdr>  hdr\.?|h )
                          |
-                     ## add experimental f(ree kick) qualifier
-                       (?<f>  f )
+                     ## add experimental free kick qualifier
+                       (?<fk>  fk\.?|f )
                   )
                 \)
 )}xi
@@ -288,10 +288,10 @@ def self._build_goal_minute( m )
     
     minute[:offset] = m[:value2].to_i(10)   if m[:value2]
     
-    minute[:og]  = true    if m[:og]
-    minute[:pen] = true    if m[:pen]
-    minute[:freekick] = true    if m[:f]
-    minute[:header] = true    if m[:h]
+    minute[:og]  = true       if m[:og]
+    minute[:pen] = true       if m[:pen]
+    minute[:freekick] = true  if m[:fk]
+    minute[:header] = true    if m[:hdr]
   
     minute[:secs] = m[:secs].to_i(10)   if m[:secs]
   
@@ -331,8 +331,8 @@ def self._build_goal_type( m )
     goal = {}
     goal[:og]       = true  if m[:og]
     goal[:pen]      = true  if m[:pen]
-    goal[:freekick] = true  if m[:f]
-    goal[:header]   = true  if m[:h]
+    goal[:freekick] = true  if m[:fk]
+    goal[:header]   = true  if m[:hdr]
     goal
 end
 def _build_goal_type( m ) self.class._build_goal_type( m ); end

@@ -860,7 +860,7 @@ def _tokenize_line( line )
           else
              [:STATUS, [m[:status], {status: m[:status] } ]]
           end
-        elsif m[:inline_wo]   ## w/o - walkout  (match status)
+        elsif m[:inline_wo]   ## w/o - walkover  (match status)
             [:INLINE_WO, m[:inline_wo]]
         elsif m[:inline_np]   ## n/p - not played (match status)
             [:INLINE_NP, m[:inline_np]]         
@@ -868,6 +868,15 @@ def _tokenize_line( line )
             [:INLINE_BYE, m[:inline_bye]]
         elsif m[:inline_abd]  ## abd/abd. - abandoned (match status)
             [:INLINE_ABD, m[:inline_abd]]
+        elsif m[:inline_susp]  ## susp/susp. - suspended (match status)
+            [:INLINE_SUSP, m[:inline_susp]]
+        elsif m[:inline_ppd]  ## ppd/ppd. or postp/postp. - postponed (match status)
+            [:INLINE_PPD, m[:inline_ppd]]
+        elsif m[:inline_awd]  ## awd/awd. - awarded (match status)
+            [:INLINE_AWD, m[:inline_awd]]
+        elsif m[:inline_canc]  ## canc/canc. - cancelled/canceled (match status)
+            [:INLINE_CANC, m[:inline_canc]]
+
         elsif m[:attendance]
              att = {} 
              att[:value] = m[:value].gsub( '_', '' ).to_i(10)
