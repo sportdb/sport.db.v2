@@ -278,7 +278,7 @@ MatchLine   = Struct.new( :header,
                           :num, :date, :time, :time_local,
                           :team1, :team2, 
                           :score,
-                          :status,  :status_inline,
+                          :status,  :status_inline, :status_note,
                           :geo,
                           :note,
                           :att )  do   ## change to geos - why? why not?

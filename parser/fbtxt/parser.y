@@ -213,9 +213,8 @@ class RaccMatchParser
      
         more_match_header_opts
              : STATUS NEWLINE      ## note - for now status must be BEFORE geo_opts!!
-                 {
-                      ## todo - add possible status_notes too!!! 
-                      result = { status: val[0][1][:status] }
+                 { 
+                      result = {}.merge( val[0][1] )
                  }
              | NOTE NEWLINE        { result = { note: val[0] } }
              | NEWLINE             { result = {} }
@@ -338,12 +337,11 @@ class RaccMatchParser
              :   { result = {} }   ## empty; optional
              | STATUS       ## note - for now status must be BEFORE geo_opts!!
                  {
-                      ## todo - add possible status_notes too!!! 
-                      result = { status: val[0][1][:status] }
+                      result = {}.merge( val[0][1] ) 
                  }
              | STATUS geo_opts opt_inline_attendance       
                  { 
-                     result = { status: val[0][1][:status] }.merge( val[1], val[2] ) 
+                     result = {}.merge( val[0][1], val[1], val[2] ) 
                  }
              | geo_opts opt_inline_attendance opt_inline_note  
                  { 

@@ -16,31 +16,26 @@ txt = <<-TXT
 ## Common Result Formats (Inline Between Teams)
 ## Standard Score Format
 
-Arsenal 2-1 Chelsea
-Barcelona 0-0 Real Madrid
+Arsenal 2-1 Chelsea                         ## YES - Bingo!
+Barcelona 0-0 Real Madrid                   ## YES - Bingo!
 
 
 ## With Status Inline
 
-Arsenal 2-1 Chelsea  (FT)
-Barcelona 1-1 Real Madrid  (HT)
-Juventus 2-2 Inter   (AET)
-Liverpool 1-1 Man City   (4-3 pens)
+Arsenal 2-1 Chelsea  (FT)                   ## YES - Bingo!
+Barcelona 1-1 Real Madrid  (HT)             ## YES - Bingo!
+Juventus 2-2 Inter   (AET)                  ## YES - Bingo!
+Liverpool 1-1 Man City   (4-3 pens)         ## YES - Bingo!
 
-
-Arsenal 2-1 Chelsea (FT)
-Barcelona 1-1 Real Madrid (HT)
-Juventus 2-2 Inter (AET)
-Liverpool 1-1 Man City (4-3 pens)
 
 ## Live Format
 
 # note -   live (fuller) score markers (65') and (90+3') NOT supported in Football.TXT
 #          change to "generic" (match) inline note  [65'] and [90+3']
 
-## Arsenal 1-0 Chelsea (65')    -- XXXX change (65') to [65']
+## Arsenal 1-0 Chelsea (65')    --- XXXX change (65') to [65']
 Barcelona 0-0 Real Madrid (HT)
-## PSG 2-1 Marseille (90+3')    -- XXXX change (90+3') to [90+3']
+## PSG 2-1 Marseille (90+3')    --- XXXX change (90+3') to [90+3']
 
 Arsenal 1-0 Chelsea [65']
 Barcelona 0-0 Real Madrid (HT)
@@ -49,18 +44,26 @@ PSG 2-1 Marseille [90+3']
 
 ## Postponed / Cancelled Format
 
-## note - match status in paranthesis NOT supported in Football.TXT
-##           change to square bracket note or inline
+## note - match status in parenthesis () NOT supported in Football.TXT
+##           change to square bracket note [] or inline
 
-## Arsenal vs Chelsea (PPD)
-## Barcelona vs Real Madrid (Postp)
-## Juventus vs Inter (Canc)
+## Arsenal vs Chelsea (PPD)           --- XXXX change (PPD) to [PPD]   or  ppd./PPD inline
+## Barcelona vs Real Madrid (Postp)   --- XXXX change (Postp) to [Postp] or postp./POSTP inline
+## Juventus vs Inter (Canc)           --- XXXX change (Canc) to [Canc] or  canc./CANC inline
 
-Arsenal   ppd   Chelsea 
-Barcelona postp Real Madrid 
-Juventus  canc  Inter 
+Arsenal   v Chelsea      [PPD] 
+Barcelona v Real Madrid  [Postp]
+Juventus  v Inter        [Canc]
 
 # -or-
+
+### note - mixed-case for inline match status NOT possible
+##                e.g. Canc, Postp, 
+##        only ppd/ppd./PPD  or
+##             postp/postp./POSTP or
+##             canc/canc./CANC
+##  why?  "camel-case" reserved for team names! (Canc, Postp, Aban)
+##                    or v/vs/VS   (Vs, V)
 
 Arsenal   ppd.   Chelsea 
 Barcelona postp. Real Madrid 
@@ -68,15 +71,27 @@ Juventus  canc.  Inter
 
 # -or-
 
+Arsenal   ppd   Chelsea 
+Barcelona postp Real Madrid 
+Juventus  canc  Inter 
+
+# -or-
+
 Arsenal ppd Chelsea 
 Barcelona postp Real Madrid 
 Juventus canc Inter 
 
+# -or
+
+Arsenal PPD Chelsea 
+Barcelona POSTP Real Madrid 
+Juventus CANC Inter 
+
 # -or-
 
-Arsenal   v Chelsea      [postponed] 
-Barcelona v Real Madrid  [postponed]
-Juventus  v Inter        [canceled]
+Arsenal   v Chelsea      [Postponed] 
+Barcelona v Real Madrid  [Postponed]
+Juventus  v Inter        [Canceled]
 
 
 ## Compact Plain Text Examples (League Style)
@@ -85,16 +100,16 @@ Juventus  v Inter        [canceled]
 ##       and league is usually a (document) header/heading 
 
 ## EPL – Matchday 12
-Arsenal 2-1 Chelsea (FT)
-Man City 3-0 Tottenham (FT)
-## Liverpool vs Brighton (PPD)
+Arsenal 2-1 Chelsea (FT)         ## YES - Bingo!
+Man City 3-0 Tottenham (FT)      ## YES - Bingo!
+## Liverpool vs Brighton (PPD)  --- XXXX change (PPD) to [PPD]   or  ppd./PPD inline
 
 
 =EPL=
 ▪ Matchday 12
 Arsenal 2-1 Chelsea (FT)
 Man City 3-0 Tottenham (FT)
-Liverpool vs Brighton [postponed]
+Liverpool vs Brighton [PPD]
 
 ## -or-
 
@@ -106,20 +121,21 @@ Liverpool ppd. Brighton
 
 ## or ultra-compact
 
-ARS 2-1 CHE (FT)
-MCI 3-0 TOT (FT)
-## LIV vs BHA (PPD)
+ARS 2-1 CHE (FT)        ## YES - Bingo!
+MCI 3-0 TOT (FT)        ## YES - Bingo!
+## LIV vs BHA (PPD)    --- XXXX change (PPD) to [PPD]   or  ppd./PPD inline
 
 
 ARS 2-1 CHE (FT)
 MCI 3-0 TOT (FT)
-LIV vs BHA [postponed]
+LIV vs BHA [PPD]
 
 ## -or-
 
 ARS 2-1 CHE 
 MCI 3-0 TOT 
-LIV ppd. BHA 
+LIV P-P BHA 
+
 
 
 ## Using N/P (Not Played)
@@ -128,47 +144,57 @@ LIV ppd. BHA
 ##    use [canceled] for  status note style
 ## Arsenal vs Chelsea (N/P)
 
-
 Arsenal n/p Chelsea 
+Arsenal N/P Chelsea 
 
 
 ## Walkover (W/O) — When & How to Use It
 ## Minimal
 
 Arsenal w/o Chelsea
+Arsenal W/O Chelsea
+Arsenal v Chelsea   [W/O]
+Arsenal v Chelsea   [WO]
+Arsenal v Chelsea   [Walkover]
 
 
 ## Clearer
-## note - in Football.TXT   w/o has no support for inline score
-##           use awared instead
 
 ## Arsenal 3-0 Chelsea (WO)
 
+Arsenal 3-0 Chelsea   [WO]
+Arsenal 3-0 Chelsea   [W/O]
+
 Arsenal 3-0 Chelsea  [awarded - walkout]
-## -or- 
 Arsenal 3-0 awd. Chelsea  [awarded - walkout]
-## -or-
 Arsenal 3-0 awd. Chelsea
 
 
 ## Even clearer (database-friendly)
 ##  Arsenal 3-0 Chelsea (WO – Chelsea withdrew)
 
-Arsenal 3-0 Chelsea (awarded, walkout - Chelsea withdrew)
+Arsenal 3-0 Chelsea [WO - Chelsea withdrew]
+Arsenal 3-0 Chelsea [W/O - Chelsea withdrew]
+
+Arsenal 3-0 Chelsea [awarded; walkout - Chelsea withdrew]
+Arsenal 3-0 awd. Chelsea [walkout - Chelsea withdrew]
+
 
 ## Should You Include Date & Venue?
 ## YES — if the fixture was officially scheduled
 
-##  in Football.TXT for now use awarded/cancelled 
-##     to incl. date & venue
-##  in match header use the geo marker (@) for stadium
-
+## note - in Football.TXT 
+##   use the geo marker (@) for stadium in match header
 
 ## 12.03.2026 – Emirates Stadium
 ## Arsenal 3-0 Chelsea (WO)
 
 12.03.2026 @ Emirates Stadium
+Arsenal 3-0 Chelsea    [WO]
+
+12.03.2026 @ Emirates Stadium
 Arsenal 3-0 Chelsea    [awarded]
+
 
 ## When NOT to include date/venue
 ## Arsenal vs Chelsea (Cancelled – competition void)
@@ -182,17 +208,13 @@ Arsenal vs Chelsea  [cancelled - competition void]
 ## PSG 1-0 Marseille (Abd – crowd trouble)
 ## PSG 1-0 Marseille (Abd – result stands)
 
-###
-## fix/fix/fix - add sups/abd/canc/ etc. to match status notes too
-###
-
 PSG 1-0 Marseille [Susp - 72']
 PSG 1-0 Marseille [Abd - crowd trouble]
 PSG 1-0 Marseille [Abd - result stands]
 
-PSG 1-0 Marseille [suspended - 72']
-PSG 1-0 Marseille [abandoned - crowd trouble]
-PSG 1-0 Marseille [abandoned - result stands]
+PSG 1-0 Marseille [Suspended - 72']
+PSG 1-0 Marseille [Abandoned - crowd trouble]
+PSG 1-0 Marseille [Abandoned - result stands]
 
 
 ## After Extra Time / Penalties
@@ -235,10 +257,10 @@ Arsenal 3-0 awd. Chelsea
 Arsenal 2-1 Chelsea (FT)
  
 12.03.2026 @ Emirates Stadium
-Arsenal 3-0 Chelsea [awarded]
+Arsenal 3-0 Chelsea [WO]
 
 12.03.2026 @ Emirates Stadium
-Arsenal vs Chelsea  [postponed]
+Arsenal vs Chelsea  [PPD]
 
 ## -or-
 
@@ -346,12 +368,10 @@ Arsenal ppd. Chelsea
 ▪ Quarter-finals - First leg
 
 
-##
-##  FIX/FIX/FIX - check CET timezone !!!
+12 March 2026, 21:00 CET @ London, Arsenal Stadium
+Arsenal FC 2-2 Chelsea FC (AET, 4-3 pens)
 
-## 12 March 2026, 21:00 CET @ London, Arsenal Stadium
-## 12 March 2026 21:00 CET @ London, Arsenal Stadium
-12 March 2026 21:00 @ London, Arsenal Stadium
+12 March 2026 21:00 CET @ London, Arsenal Stadium
 Arsenal FC 2-2 Chelsea FC (AET, 4-3 pens)
 
 
@@ -483,11 +503,8 @@ Arsenal 0-3 awd. Chelsea
 ## Expunged Match
 ##   2026-02-01 | EPL | MD22 | London (Emirates Stadium) | Arsenal 2–0 Chelsea | VOID | result expunged after club removal
 
+2026-02-01 @ London (Emirates Stadium)   Arsenal 2-0 Chelsea [void - result expunged after club removal]
 2026-02-01 @ London (Emirates Stadium)   Arsenal 2-0 Chelsea [annulled - result expunged after club removal]
-
-##
-## FIX/FIX/FIX  - add void as an alias for annulled!!!!  
-## 2026-02-01 @ London (Emirates Stadium)   Arsenal 2-0 Chelsea [void - result expunged after club removal]
 
 
 TXT

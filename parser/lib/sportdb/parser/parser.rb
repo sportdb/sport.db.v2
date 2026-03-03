@@ -976,28 +976,27 @@ module_eval(<<'.,.,', 'parser.y', 210)
 
 module_eval(<<'.,.,', 'parser.y', 216)
   def _reduce_63(val, _values, result)
-                          ## todo - add possible status_notes too!!! 
-                      result = { status: val[0][1][:status] }
+                          result = {}.merge( val[0][1] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 219)
+module_eval(<<'.,.,', 'parser.y', 218)
   def _reduce_64(val, _values, result)
      result = { note: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 220)
+module_eval(<<'.,.,', 'parser.y', 219)
   def _reduce_65(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 228)
+module_eval(<<'.,.,', 'parser.y', 227)
   def _reduce_66(val, _values, result)
                           result = {}.merge( val[0], val[1], val[2] ) 
 
@@ -1005,14 +1004,14 @@ module_eval(<<'.,.,', 'parser.y', 228)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 238)
+module_eval(<<'.,.,', 'parser.y', 237)
   def _reduce_67(val, _values, result)
       result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 241)
+module_eval(<<'.,.,', 'parser.y', 240)
   def _reduce_68(val, _values, result)
                            result = { att: val[0][1][:value] }
 
@@ -1020,7 +1019,7 @@ module_eval(<<'.,.,', 'parser.y', 241)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 246)
+module_eval(<<'.,.,', 'parser.y', 245)
   def _reduce_69(val, _values, result)
                            result = { att: val[1][1][:value] }
 
@@ -1028,7 +1027,7 @@ module_eval(<<'.,.,', 'parser.y', 246)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 260)
+module_eval(<<'.,.,', 'parser.y', 259)
   def _reduce_70(val, _values, result)
                           kwargs = { score: val[1][1] }.merge( val[0] )
                       @tree << MatchLineLegs.new( **kwargs )             
@@ -1037,21 +1036,21 @@ module_eval(<<'.,.,', 'parser.y', 260)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 266)
+module_eval(<<'.,.,', 'parser.y', 265)
   def _reduce_71(val, _values, result)
       result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 267)
+module_eval(<<'.,.,', 'parser.y', 266)
   def _reduce_72(val, _values, result)
       result = { note: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 273)
+module_eval(<<'.,.,', 'parser.y', 272)
   def _reduce_73(val, _values, result)
                            kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
@@ -1060,7 +1059,7 @@ module_eval(<<'.,.,', 'parser.y', 273)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 278)
+module_eval(<<'.,.,', 'parser.y', 277)
   def _reduce_74(val, _values, result)
                            kwargs = {}.merge( val[0], val[1] )
                        @tree << MatchLine.new( **kwargs )
@@ -1069,7 +1068,7 @@ module_eval(<<'.,.,', 'parser.y', 278)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 284)
+module_eval(<<'.,.,', 'parser.y', 283)
   def _reduce_75(val, _values, result)
                              kwargs = {}.merge( val[0], val[1] )
                          @tree << MatchLineBye.new( **kwargs ) 
@@ -1078,7 +1077,7 @@ module_eval(<<'.,.,', 'parser.y', 284)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 289)
+module_eval(<<'.,.,', 'parser.y', 288)
   def _reduce_76(val, _values, result)
                              kwargs = {}.merge( val[0], val[1] )
                          @tree << MatchLineWalkover.new( **kwargs )
@@ -1087,7 +1086,7 @@ module_eval(<<'.,.,', 'parser.y', 289)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 300)
+module_eval(<<'.,.,', 'parser.y', 299)
   def _reduce_77(val, _values, result)
                           kwargs = {}.merge( val[0] )
                       @tree << MatchLine.new( **kwargs )
@@ -1099,14 +1098,14 @@ module_eval(<<'.,.,', 'parser.y', 300)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 316)
+module_eval(<<'.,.,', 'parser.y', 315)
   def _reduce_78(val, _values, result)
       result = { num: val[0][1][:value] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 321)
+module_eval(<<'.,.,', 'parser.y', 320)
   def _reduce_79(val, _values, result)
                                          result = {}.merge( val[0], val[1], val[2] )
 
@@ -1114,7 +1113,7 @@ module_eval(<<'.,.,', 'parser.y', 321)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 324)
+module_eval(<<'.,.,', 'parser.y', 323)
   def _reduce_80(val, _values, result)
                                          result = {}.merge( val[0], val[1] )
 
@@ -1122,7 +1121,7 @@ module_eval(<<'.,.,', 'parser.y', 324)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 327)
+module_eval(<<'.,.,', 'parser.y', 326)
   def _reduce_81(val, _values, result)
                                          result = {}.merge( val[0], val[1] )
 
@@ -1132,31 +1131,30 @@ module_eval(<<'.,.,', 'parser.y', 327)
 
 # reduce 82 omitted
 
-module_eval(<<'.,.,', 'parser.y', 337)
+module_eval(<<'.,.,', 'parser.y', 336)
   def _reduce_83(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 340)
+module_eval(<<'.,.,', 'parser.y', 339)
   def _reduce_84(val, _values, result)
-                          ## todo - add possible status_notes too!!! 
-                      result = { status: val[0][1][:status] }
+                          result = {}.merge( val[0][1] ) 
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 345)
+module_eval(<<'.,.,', 'parser.y', 343)
   def _reduce_85(val, _values, result)
-                         result = { status: val[0][1][:status] }.merge( val[1], val[2] ) 
+                         result = {}.merge( val[0][1], val[1], val[2] ) 
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 349)
+module_eval(<<'.,.,', 'parser.y', 347)
   def _reduce_86(val, _values, result)
                        result = {}.merge( val[0], val[1], val[2] ) 
 
@@ -1164,14 +1162,14 @@ module_eval(<<'.,.,', 'parser.y', 349)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 351)
+module_eval(<<'.,.,', 'parser.y', 349)
   def _reduce_87(val, _values, result)
      result = { note: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 356)
+module_eval(<<'.,.,', 'parser.y', 354)
   def _reduce_88(val, _values, result)
      result = {}
     result
@@ -1180,21 +1178,21 @@ module_eval(<<'.,.,', 'parser.y', 356)
 
 # reduce 89 omitted
 
-module_eval(<<'.,.,', 'parser.y', 362)
+module_eval(<<'.,.,', 'parser.y', 360)
   def _reduce_90(val, _values, result)
      result = { geo: val[1] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 369)
+module_eval(<<'.,.,', 'parser.y', 367)
   def _reduce_91(val, _values, result)
       result = val
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 370)
+module_eval(<<'.,.,', 'parser.y', 368)
   def _reduce_92(val, _values, result)
       result.push( val[2] )
     result
@@ -1209,7 +1207,7 @@ module_eval(<<'.,.,', 'parser.y', 370)
 
 # reduce 96 omitted
 
-module_eval(<<'.,.,', 'parser.y', 386)
+module_eval(<<'.,.,', 'parser.y', 384)
   def _reduce_97(val, _values, result)
                           result = { team: val[0] }
 
@@ -1217,7 +1215,7 @@ module_eval(<<'.,.,', 'parser.y', 386)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 392)
+module_eval(<<'.,.,', 'parser.y', 390)
   def _reduce_98(val, _values, result)
                           result = { team1: val[0],
                                  team2: val[2] }
@@ -1230,7 +1228,7 @@ module_eval(<<'.,.,', 'parser.y', 392)
 
 # reduce 100 omitted
 
-module_eval(<<'.,.,', 'parser.y', 402)
+module_eval(<<'.,.,', 'parser.y', 400)
   def _reduce_101(val, _values, result)
                                    trace( "RECUDE match_fixture" )
                                result = { team1: val[0],
@@ -1240,7 +1238,7 @@ module_eval(<<'.,.,', 'parser.y', 402)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 410)
+module_eval(<<'.,.,', 'parser.y', 408)
   def _reduce_102(val, _values, result)
                                    ## note - auto-add (match) status canceled - why? why not?
                                ##   A n/p B   short (inline) form of =>
@@ -1254,7 +1252,7 @@ module_eval(<<'.,.,', 'parser.y', 410)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 420)
+module_eval(<<'.,.,', 'parser.y', 418)
   def _reduce_103(val, _values, result)
                                    result = { team1: val[0],
                                           team2: val[2],
@@ -1264,7 +1262,7 @@ module_eval(<<'.,.,', 'parser.y', 420)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 427)
+module_eval(<<'.,.,', 'parser.y', 425)
   def _reduce_104(val, _values, result)
                                    result = { team1: val[0],
                                           team2: val[2],
@@ -1278,7 +1276,7 @@ module_eval(<<'.,.,', 'parser.y', 427)
 
 # reduce 106 omitted
 
-module_eval(<<'.,.,', 'parser.y', 442)
+module_eval(<<'.,.,', 'parser.y', 440)
   def _reduce_107(val, _values, result)
                                trace( "REDUCE => match_result : TEAM SCORE TEAM" )
  
@@ -1292,7 +1290,7 @@ module_eval(<<'.,.,', 'parser.y', 442)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 452)
+module_eval(<<'.,.,', 'parser.y', 450)
   def _reduce_108(val, _values, result)
                                result = { team1: val[0], team2: val[2],
                                       score: val[1][1],
@@ -1303,7 +1301,7 @@ module_eval(<<'.,.,', 'parser.y', 452)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 459)
+module_eval(<<'.,.,', 'parser.y', 457)
   def _reduce_109(val, _values, result)
                                result = { team1: val[0], team2: val[2], 
                                       status_inline: 'abandoned' 
@@ -1313,7 +1311,7 @@ module_eval(<<'.,.,', 'parser.y', 459)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 465)
+module_eval(<<'.,.,', 'parser.y', 463)
   def _reduce_110(val, _values, result)
                                result = { team1: val[0], team2: val[2], 
                                       status_inline: 'suspended' 
@@ -1323,7 +1321,7 @@ module_eval(<<'.,.,', 'parser.y', 465)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 471)
+module_eval(<<'.,.,', 'parser.y', 469)
   def _reduce_111(val, _values, result)
                                result = { team1: val[0], team2: val[2], 
                                       status_inline: 'awarded' 
@@ -1333,7 +1331,7 @@ module_eval(<<'.,.,', 'parser.y', 471)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 478)
+module_eval(<<'.,.,', 'parser.y', 476)
   def _reduce_112(val, _values, result)
                                 trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
                             score = nil
@@ -1362,7 +1360,7 @@ module_eval(<<'.,.,', 'parser.y', 478)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 503)
+module_eval(<<'.,.,', 'parser.y', 501)
   def _reduce_113(val, _values, result)
                                result = { team1: val[0],
                                       team2: val[2],
@@ -1373,7 +1371,7 @@ module_eval(<<'.,.,', 'parser.y', 503)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 510)
+module_eval(<<'.,.,', 'parser.y', 508)
   def _reduce_114(val, _values, result)
                               trace( "REDUCE  => match_result : match_fixture SCORE" )
                           ## note - use/keep generic score (as array!! NOT hash!!!)
@@ -1385,7 +1383,7 @@ module_eval(<<'.,.,', 'parser.y', 510)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 518)
+module_eval(<<'.,.,', 'parser.y', 516)
   def _reduce_115(val, _values, result)
                               trace( "REDUCE  => match_result : match_fixture score" )
                           result = { score: val[1][1] }.merge( val[0] )  
@@ -1395,7 +1393,7 @@ module_eval(<<'.,.,', 'parser.y', 518)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 557)
+module_eval(<<'.,.,', 'parser.y', 555)
   def _reduce_116(val, _values, result)
                              kwargs = val[1]
                          @tree << GoalLine.new( **kwargs )
@@ -1404,7 +1402,7 @@ module_eval(<<'.,.,', 'parser.y', 557)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 562)
+module_eval(<<'.,.,', 'parser.y', 560)
   def _reduce_117(val, _values, result)
       result = { goals1: val[0],
                                                               goals2: [] } 
@@ -1413,7 +1411,7 @@ module_eval(<<'.,.,', 'parser.y', 562)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 565)
+module_eval(<<'.,.,', 'parser.y', 563)
   def _reduce_118(val, _values, result)
       result = { goals1: [],
                                                               goals2: val[1] } 
@@ -1422,7 +1420,7 @@ module_eval(<<'.,.,', 'parser.y', 565)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 568)
+module_eval(<<'.,.,', 'parser.y', 566)
   def _reduce_119(val, _values, result)
       result = { goals1: val[0],
                                                               goals2: val[2] }
@@ -1439,7 +1437,7 @@ module_eval(<<'.,.,', 'parser.y', 568)
 
 # reduce 123 omitted
 
-module_eval(<<'.,.,', 'parser.y', 579)
+module_eval(<<'.,.,', 'parser.y', 577)
   def _reduce_124(val, _values, result)
     
     result
@@ -1450,21 +1448,21 @@ module_eval(<<'.,.,', 'parser.y', 579)
 
 # reduce 126 omitted
 
-module_eval(<<'.,.,', 'parser.y', 583)
+module_eval(<<'.,.,', 'parser.y', 581)
   def _reduce_127(val, _values, result)
      result = val
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 584)
+module_eval(<<'.,.,', 'parser.y', 582)
   def _reduce_128(val, _values, result)
      result.push( val[2])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 592)
+module_eval(<<'.,.,', 'parser.y', 590)
   def _reduce_129(val, _values, result)
                            result = Goal.new( player:  val[0],
                                           minutes: val[1] )   
@@ -1473,7 +1471,7 @@ module_eval(<<'.,.,', 'parser.y', 592)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 597)
+module_eval(<<'.,.,', 'parser.y', 595)
   def _reduce_130(val, _values, result)
                             ### todo/check:
                         ##    auto convert/expand 
@@ -1486,7 +1484,7 @@ module_eval(<<'.,.,', 'parser.y', 597)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 606)
+module_eval(<<'.,.,', 'parser.y', 604)
   def _reduce_131(val, _values, result)
                             result = Goal.new( player: val[0],
                                            minutes: [] )
@@ -1495,7 +1493,7 @@ module_eval(<<'.,.,', 'parser.y', 606)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 613)
+module_eval(<<'.,.,', 'parser.y', 611)
   def _reduce_132(val, _values, result)
     
     result
@@ -1504,21 +1502,21 @@ module_eval(<<'.,.,', 'parser.y', 613)
 
 # reduce 133 omitted
 
-module_eval(<<'.,.,', 'parser.y', 616)
+module_eval(<<'.,.,', 'parser.y', 614)
   def _reduce_134(val, _values, result)
       result = val
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 617)
+module_eval(<<'.,.,', 'parser.y', 615)
   def _reduce_135(val, _values, result)
       result.push( val[2])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 621)
+module_eval(<<'.,.,', 'parser.y', 619)
   def _reduce_136(val, _values, result)
                                  kwargs = {}.merge( val[0][1] )
                              result = GoalMinute.new( **kwargs )  
@@ -1527,7 +1525,7 @@ module_eval(<<'.,.,', 'parser.y', 621)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 638)
+module_eval(<<'.,.,', 'parser.y', 636)
   def _reduce_137(val, _values, result)
                                  @tree << GoalLineAlt.new( goals: val[1] )
 
@@ -1535,21 +1533,21 @@ module_eval(<<'.,.,', 'parser.y', 638)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 642)
+module_eval(<<'.,.,', 'parser.y', 640)
   def _reduce_138(val, _values, result)
      result = val
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 645)
+module_eval(<<'.,.,', 'parser.y', 643)
   def _reduce_139(val, _values, result)
      result.push( val[2])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 648)
+module_eval(<<'.,.,', 'parser.y', 646)
   def _reduce_140(val, _values, result)
     
     result
@@ -1560,7 +1558,7 @@ module_eval(<<'.,.,', 'parser.y', 648)
 
 # reduce 142 omitted
 
-module_eval(<<'.,.,', 'parser.y', 655)
+module_eval(<<'.,.,', 'parser.y', 653)
   def _reduce_143(val, _values, result)
                                result = GoalAlt.new( score:   val[0][1][:score],
                                                  player:  val[1] )
@@ -1569,7 +1567,7 @@ module_eval(<<'.,.,', 'parser.y', 655)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 660)
+module_eval(<<'.,.,', 'parser.y', 658)
   def _reduce_144(val, _values, result)
                                kwargs = {}.merge( val[2][1] )
                            goal_minute = GoalMinute.new( **kwargs )
@@ -1585,7 +1583,7 @@ module_eval(<<'.,.,', 'parser.y', 660)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 672)
+module_eval(<<'.,.,', 'parser.y', 670)
   def _reduce_145(val, _values, result)
                                kwargs = {}.merge( val[2][1] )
                            goal_type = GoalType.new( **kwargs )
@@ -1598,7 +1596,7 @@ module_eval(<<'.,.,', 'parser.y', 672)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 688)
+module_eval(<<'.,.,', 'parser.y', 686)
   def _reduce_146(val, _values, result)
                                      @tree << AttendanceLine.new( att: val[1][1][:value] )
 
@@ -1606,7 +1604,7 @@ module_eval(<<'.,.,', 'parser.y', 688)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 694)
+module_eval(<<'.,.,', 'parser.y', 692)
   def _reduce_147(val, _values, result)
                                    kwargs = val[1] 
                                @tree << RefereeLine.new( **kwargs ) 
@@ -1617,7 +1615,7 @@ module_eval(<<'.,.,', 'parser.y', 694)
 
 # reduce 148 omitted
 
-module_eval(<<'.,.,', 'parser.y', 701)
+module_eval(<<'.,.,', 'parser.y', 699)
   def _reduce_149(val, _values, result)
                                      @tree << AttendanceLine.new( att: val[2][1][:value] )
 
@@ -1625,21 +1623,21 @@ module_eval(<<'.,.,', 'parser.y', 701)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 706)
+module_eval(<<'.,.,', 'parser.y', 704)
   def _reduce_150(val, _values, result)
       result = { name: val[0]}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 708)
+module_eval(<<'.,.,', 'parser.y', 706)
   def _reduce_151(val, _values, result)
       result = { name: val[0], country: val[1] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 713)
+module_eval(<<'.,.,', 'parser.y', 711)
   def _reduce_152(val, _values, result)
                                    @tree << PenaltiesLine.new( penalties: val[1] )                                                            
 
@@ -1647,14 +1645,14 @@ module_eval(<<'.,.,', 'parser.y', 713)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 716)
+module_eval(<<'.,.,', 'parser.y', 714)
   def _reduce_153(val, _values, result)
       result = [val[0]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 717)
+module_eval(<<'.,.,', 'parser.y', 715)
   def _reduce_154(val, _values, result)
       result << val[2]
     result
@@ -1669,7 +1667,7 @@ module_eval(<<'.,.,', 'parser.y', 717)
 
 # reduce 158 omitted
 
-module_eval(<<'.,.,', 'parser.y', 727)
+module_eval(<<'.,.,', 'parser.y', 725)
   def _reduce_159(val, _values, result)
                                      result = Penalty.new( score: val[0][1][:score],
                                                        name: val[1] )
@@ -1678,7 +1676,7 @@ module_eval(<<'.,.,', 'parser.y', 727)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 732)
+module_eval(<<'.,.,', 'parser.y', 730)
   def _reduce_160(val, _values, result)
                                      result = Penalty.new( score: val[0][1][:score],
                                                        name: val[1],
@@ -1688,7 +1686,7 @@ module_eval(<<'.,.,', 'parser.y', 732)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 738)
+module_eval(<<'.,.,', 'parser.y', 736)
   def _reduce_161(val, _values, result)
                                      result = Penalty.new( name: val[0] )                                
 
@@ -1696,7 +1694,7 @@ module_eval(<<'.,.,', 'parser.y', 738)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 742)
+module_eval(<<'.,.,', 'parser.y', 740)
   def _reduce_162(val, _values, result)
                                      result = Penalty.new( name: val[0],
                                                        note: val[1] )                                
@@ -1705,7 +1703,7 @@ module_eval(<<'.,.,', 'parser.y', 742)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 749)
+module_eval(<<'.,.,', 'parser.y', 747)
   def _reduce_163(val, _values, result)
                                    @tree << CardsLine.new( type: 'Y', bookings: val[1] )                               
 
@@ -1713,7 +1711,7 @@ module_eval(<<'.,.,', 'parser.y', 749)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 753)
+module_eval(<<'.,.,', 'parser.y', 751)
   def _reduce_164(val, _values, result)
                                    @tree << CardsLine.new( type: 'R', bookings: val[1] )                    
 
@@ -1721,14 +1719,14 @@ module_eval(<<'.,.,', 'parser.y', 753)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 760)
+module_eval(<<'.,.,', 'parser.y', 758)
   def _reduce_165(val, _values, result)
        result = [val[0]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 762)
+module_eval(<<'.,.,', 'parser.y', 760)
   def _reduce_166(val, _values, result)
       result << val[2]
     result
@@ -1741,21 +1739,21 @@ module_eval(<<'.,.,', 'parser.y', 762)
 
 # reduce 169 omitted
 
-module_eval(<<'.,.,', 'parser.y', 769)
+module_eval(<<'.,.,', 'parser.y', 767)
   def _reduce_170(val, _values, result)
      result = Booking.new( name: val[0] )
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 771)
+module_eval(<<'.,.,', 'parser.y', 769)
   def _reduce_171(val, _values, result)
      result = Booking.new( name: val[0], minute: val[1][1] )
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 779)
+module_eval(<<'.,.,', 'parser.y', 777)
   def _reduce_172(val, _values, result)
                               kwargs = { team:    val[0],
                                      lineup:  val[1]  }.merge( val[2] ) 
@@ -1765,35 +1763,35 @@ module_eval(<<'.,.,', 'parser.y', 779)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 785)
+module_eval(<<'.,.,', 'parser.y', 783)
   def _reduce_173(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 787)
+module_eval(<<'.,.,', 'parser.y', 785)
   def _reduce_174(val, _values, result)
       result = { coach: val[2] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 789)
+module_eval(<<'.,.,', 'parser.y', 787)
   def _reduce_175(val, _values, result)
       result = { coach: val[3] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 792)
+module_eval(<<'.,.,', 'parser.y', 790)
   def _reduce_176(val, _values, result)
      result = [[val[0]]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 795)
+module_eval(<<'.,.,', 'parser.y', 793)
   def _reduce_177(val, _values, result)
                            ## if lineup_sep is -  start a new sub array!!
                        if val[1] == '-'
@@ -1808,7 +1806,7 @@ module_eval(<<'.,.,', 'parser.y', 795)
 
 # reduce 178 omitted
 
-module_eval(<<'.,.,', 'parser.y', 805)
+module_eval(<<'.,.,', 'parser.y', 803)
   def _reduce_179(val, _values, result)
      result = val[0]
     result
@@ -1817,14 +1815,14 @@ module_eval(<<'.,.,', 'parser.y', 805)
 
 # reduce 180 omitted
 
-module_eval(<<'.,.,', 'parser.y', 807)
+module_eval(<<'.,.,', 'parser.y', 805)
   def _reduce_181(val, _values, result)
      result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 812)
+module_eval(<<'.,.,', 'parser.y', 810)
   def _reduce_182(val, _values, result)
                                   kwargs = { name: val[0] }.merge( val[1] ).merge( val[2] )
                               result = Lineup.new( **kwargs )
@@ -1833,28 +1831,28 @@ module_eval(<<'.,.,', 'parser.y', 812)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 816)
+module_eval(<<'.,.,', 'parser.y', 814)
   def _reduce_183(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 817)
+module_eval(<<'.,.,', 'parser.y', 815)
   def _reduce_184(val, _values, result)
      result = { card: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 834)
+module_eval(<<'.,.,', 'parser.y', 832)
   def _reduce_185(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 837)
+module_eval(<<'.,.,', 'parser.y', 835)
   def _reduce_186(val, _values, result)
                                   kwargs = { name: val[1] }.merge( val[2] ).merge( val[4] )
                               sub    = Sub.new( sub:    Lineup.new( **kwargs ),
@@ -1866,7 +1864,7 @@ module_eval(<<'.,.,', 'parser.y', 837)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 845)
+module_eval(<<'.,.,', 'parser.y', 843)
   def _reduce_187(val, _values, result)
                                   sub = Sub.new( sub: val[1] )
                               result = { sub: sub }
@@ -1875,7 +1873,7 @@ module_eval(<<'.,.,', 'parser.y', 845)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 851)
+module_eval(<<'.,.,', 'parser.y', 849)
   def _reduce_188(val, _values, result)
                                   sub = Sub.new( sub:    val[2],
                                              minute: Minute.new(val[1][1]) 
@@ -1886,7 +1884,7 @@ module_eval(<<'.,.,', 'parser.y', 851)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 861)
+module_eval(<<'.,.,', 'parser.y', 859)
   def _reduce_189(val, _values, result)
                                   kwargs = val[1]
                               result = Card.new( **kwargs )
@@ -1895,14 +1893,14 @@ module_eval(<<'.,.,', 'parser.y', 861)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 866)
+module_eval(<<'.,.,', 'parser.y', 864)
   def _reduce_190(val, _values, result)
      result = { name: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 868)
+module_eval(<<'.,.,', 'parser.y', 866)
   def _reduce_191(val, _values, result)
      result = { name: val[0],
                                         minute: Minute.new(val[1][1]) } 

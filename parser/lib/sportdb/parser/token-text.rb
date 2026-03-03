@@ -90,17 +90,18 @@ TEXT_RE = %r{
               (?:(?:  (?:[ ]   # only single spaces allowed inline!!!
                           ## note - exclude (v[ ]/vs[ ])
                           ##    AND switch to case-sensitive (via -i!!!)
-                        (?! (?-i: vs? [ ] | 
-                                   n/p [ ] | 
-                                   w/o [ ] | 
-                                   abd\.? [ ] |
-                                   aban\.? [ ] |
-                                   susp\.? [ ] |
-                                   ppd\.? [ ] |
-                                   postp\.? [ ] |
-                                   awd\.? [ ] |
-                                   canc\.? [ ] |
-                                   bye (?:[ ]|$))
+                        (?! (?-i: (?: vs?|VS|   ## note - (big) V not matching for versus!!!   
+                                      n/p|N/P|  
+                                      w/o|W/O| 
+                                      abd\.?|ABD|
+                                      aban\.?|ABAN|
+                                      susp\.?|SUSP|
+                                      ppd\.?|PPD|
+                                      postp\.?|POSTP|P-P|
+                                      awd\.?|AWD|
+                                      canc\.?|CANC ) [ ] 
+                                        |
+                                  (?: bye|BYE ) (?:[ ]|$))
                           )    
                       )
                       |     

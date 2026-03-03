@@ -271,6 +271,17 @@ def tokenize_with_errors
                         { date: date[1], time: time[1] }
                       ]
                nodes << [:DATETIME, val]
+         ### support  date time with comma too - why? why not?
+         elsif buf.match?( :DATE, :',', :TIME )
+               date  = buf.next[1]
+               _    = buf.next  ## ignore comma 
+               time = buf.next[1]
+               ## puts "DATETIME:"
+               ## pp date, time
+               val =  [date[0] + ' ' + time[0],  ## concat string of two tokens
+                        { date: date[1], time: time[1] }
+                      ]
+               nodes << [:DATETIME, val]        
          elsif buf.match?( :GOAL_MINUTE, :',', :GOAL_MINUTE )
              ## note - only advance by two tokens!
              ##     allows more :GOAL_MINUTE sequences!! e.g. 12,13,14 etc!!!
@@ -852,14 +863,7 @@ def _tokenize_line( line )
           ##  note - top-level (for now always) assumes TEAM for TEXT match!!
           [:TEAM, m[:text]]   ## keep pos - why? why not?
         elsif m[:status]   ## (match) status e.g. cancelled, awarded, etc.
-          ## todo/check - add text (or status) 
-          #     to opts hash {} by default (for value)
-          if m[:status_note]   ## includes note? e.g.  awarded; originally 2-0
-             [:STATUS, [m[:status], {status: m[:status], 
-                                     note:   m[:status_note]} ]]
-          else
-             [:STATUS, [m[:status], {status: m[:status] } ]]
-          end
+            [:STATUS, [m[:status], _build_status( m ) ]]
         elsif m[:inline_wo]   ## w/o - walkover  (match status)
             [:INLINE_WO, m[:inline_wo]]
         elsif m[:inline_np]   ## n/p - not played (match status)

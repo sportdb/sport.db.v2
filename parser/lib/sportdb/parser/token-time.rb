@@ -30,7 +30,11 @@ TIME_RE = %r{
                     [ ]  ## require space - why? why not
                      (?<timezone>
                         (?: 
-                          (?: BST|CEST|CEST|EEST) 
+                          ## BST   - British Summer Time
+                          ## CES?T - Central European (Summer) Time
+                          ## EES?T - Eastern European (Summer) Time
+                          ##
+                          (?: BST|CES?T|EES?T) 
                                (?: /
                                    UTC[+-]\d{1,4}
                                )?
