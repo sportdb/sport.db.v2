@@ -167,6 +167,14 @@ RoundOutline = Struct.new( :outline, :level ) do
 end
 
 
+
+class BlankLine
+  def pretty_print( printer )
+    printer.text( "<BlankLine>" )
+  end
+end
+
+
 NoteLine = Struct.new( :text ) do
   def pretty_print( printer )
     printer.text( "<NoteLine #{self.text}>" )

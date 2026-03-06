@@ -48,7 +48,10 @@ class RaccMatchParser
                              ##  starting with score 
  
           | BLANK        ##  was empty_line
-             { trace( "REDUCE BLANK" ) } 
+             { 
+               trace( "REDUCE BLANK" ) 
+               @tree << BlankLine.new
+             } 
           | lineup_lines
           | yellowcard_lines   ## use _line only - why? why not?
           | redcard_lines
@@ -151,16 +154,10 @@ class RaccMatchParser
     
     datetime
       :   DATETIME              { result = {}.merge( val[0][1] ) }
-      |   DATETIME TIME_LOCAL   {
-                                  result = { time_local: val[1][1] }.merge( val[0][1] ) 
-                                }
 
     time 
-      :   TIME                  {   result = { time:        val[0][1]}  }
-      |   TIME TIME_LOCAL       {   result = { time:        val[0][1],
-                                               time_local:  val[1][1] }
-                                }
-
+      :   TIME                  { result = {}.merge( val[0][1] ) }
+     
      ## note - does NOT incl. time only
      ##   todo/check - rename to date_or_datetime - why? why not?
     date_clause  
@@ -360,10 +357,6 @@ class RaccMatchParser
         ##       @ München 
         geo_opts : '@' geo_values           { result = { geo: val[1] } }
          
-         ###  note -  timezone for now moved to time use  13.00 (UTC+3) and such
-         ##               maybe add back later for the geo table def lines
-         ###       | '@' geo_values TIMEZONE  { result = { geo: val[1], timezone: val[2] } }
-
         geo_values
                :  GEO                         {  result = val }
                |  geo_values ',' GEO          {  result.push( val[2] )  }      

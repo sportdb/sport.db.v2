@@ -153,7 +153,6 @@ RE = Regexp.union(
                     DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
-                     TIME_LOCAL_RE,
                     ATTENDANCE_RE,   # note - allow att: for now inline in matches too - why? why not? 
                     SCORE_LEGS_RE,
                     SCORE_FULL_RE, 

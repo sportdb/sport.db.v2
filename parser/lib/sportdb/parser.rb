@@ -21,6 +21,7 @@ require_relative 'parser/token-score_fuller'
 require_relative 'parser/token-score_legs'
 require_relative 'parser/token-time'
 require_relative 'parser/token-date'
+require_relative 'parser/token-date_duration'
 require_relative 'parser/token-text'
 require_relative 'parser/token-status'
 require_relative 'parser/token-note'
@@ -32,6 +33,7 @@ require_relative 'parser/token-group'
 require_relative 'parser/token-round'
 require_relative 'parser/token-table'
 require_relative 'parser/token'
+
 
 ### add token ("private") parse helpers  e.g.  _parse_team() etc.
 require_relative 'parser/token_helpers'

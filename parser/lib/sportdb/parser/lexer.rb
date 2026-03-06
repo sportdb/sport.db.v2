@@ -267,8 +267,10 @@ def tokenize_with_errors
                time = buf.next[1]
                ## puts "DATETIME:"
                ## pp date, time
+               ##  note:  time value is { time: {} } or
+               ##                       { time: {}, time_local {} }
                val =  [date[0] + ' ' + time[0],  ## concat string of two tokens
-                        { date: date[1], time: time[1] }
+                        { date: date[1] }.merge( time[1] ) 
                       ]
                nodes << [:DATETIME, val]
          ### support  date time with comma too - why? why not?
@@ -278,8 +280,8 @@ def tokenize_with_errors
                time = buf.next[1]
                ## puts "DATETIME:"
                ## pp date, time
-               val =  [date[0] + ' ' + time[0],  ## concat string of two tokens
-                        { date: date[1], time: time[1] }
+               val =  [date[0] + ', ' + time[0],  ## concat string of two tokens
+                        { date: date[1] }.merge( time[1] )
                       ]
                nodes << [:DATETIME, val]        
          elsif buf.match?( :GOAL_MINUTE, :',', :GOAL_MINUTE )
@@ -483,31 +485,9 @@ def _tokenize_line( line )
            if m[:spaces] || m[:space] 
                nil    ## skip spaces
            elsif m[:date]
-            date = {}
-         ## map month names
-         ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
-            date[:y]  = m[:year].to_i(10)  if m[:year]
-            ## check - use y too for two-digit year or keep separate - why? why not?
-            date[:yy] = m[:yy].to_i(10)    if m[:yy]    ## two digit year (e.g. 25 or 78 etc.)
-            date[:m] = m[:month].to_i(10)  if m[:month]
-            date[:m] = MONTH_MAP[ m[:month_name].downcase ]   if m[:month_name]
-            date[:d]  = m[:day].to_i(10)   if m[:day]
-            date[:wday] = DAY_MAP[ m[:day_name].downcase ]   if m[:day_name]
-            ## note - for debugging keep (pass along) "literal" date
-            [:DATE, [m[:date], date]]
+            [:DATE, [m[:date], _build_date( m )]]
           elsif m[:duration]
-            ## todo/check/fix - if end: works for kwargs!!!!!
-            duration = { start: {}, end: {}}
-            duration[:start][:y] = m[:year1].to_i(10)  if m[:year1]
-            duration[:start][:m] = MONTH_MAP[ m[:month_name1].downcase ]   if m[:month_name1]
-            duration[:start][:d]  = m[:day1].to_i(10)   if m[:day1]
-            duration[:start][:wday] = DAY_MAP[ m[:day_name1].downcase ]   if m[:day_name1]
-            duration[:end][:y] = m[:year2].to_i(10)  if m[:year2]
-            duration[:end][:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
-            duration[:end][:d]  = m[:day2].to_i(10)   if m[:day2]
-            duration[:end][:wday] = DAY_MAP[ m[:day_name2].downcase ]   if m[:day_name2]
-            ## note - for debugging keep (pass along) "literal" duration
-            [:DURATION, [m[:duration], duration]] 
+            [:DURATION, [m[:duration], _build_duration( m )]] 
           elsif m[:sym]
               sym = m[:sym]
               case sym
@@ -575,11 +555,6 @@ def _tokenize_line( line )
                nil    ## skip (single) space
            elsif m[:text]
                [:GEO, m[:text]]   ## keep pos - why? why not?
-        ##  note - timezone for now moved out of geo
-        ##              (use after TIME or use TIME_LOCAL w/ optional TIMEZONE)
-        ##                TIMEZONE_RE, 
-        #   elsif m[:timezone]
-        #       [:TIMEZONE, m[:timezone]]
            elsif m[:sym]
               sym = m[:sym]
               ## return symbols "inline" as is - why? why not?
@@ -892,75 +867,11 @@ def _tokenize_line( line )
             ## [:NOTE, [m[:note], {note: m[:note] } ]]
              [:NOTE, m[:note]] 
         elsif m[:time]
-              ## unify to iso-format
-              ###   12.40 => 12:40
-              ##    12h40 => 12:40 etc.
-              ##  keep string (no time-only type in ruby)
-              time = {}
-              hour     =   m[:hour].to_i(10)  ## allow 08/07/etc.
-              minute   = m[:minute].to_i(10)
-
-              time[:h] = hour
-              time[:m] = minute
-              time[:timezone] = m[:timezone]    if m[:timezone] 
-
-              ##   check if 24:00 possible? or only 0:00 (23:59)
-              if (hour >= 0 && hour <= 24) &&
-                 (minute >=0 && minute <= 59)
-               ## note - for debugging keep (pass along) "literal" time
-               ##   might use/add support for am/pm later
-               [:TIME, [m[:time], time]]
-              else
-                 raise ArgumentError, "parse error - time >#{m[:time]}< out-of-range"
-              end
-        elsif m[:time_local]
-              time = {}
-              hour     =   m[:hour].to_i(10)  ## allow 08/07/etc.
-              minute   = m[:minute].to_i(10)
-
-              time[:h] = hour
-              time[:m] = minute
-              time[:timezone] = m[:timezone]    if m[:timezone] 
-
-              ## check if valid -  0:00 - 24:00
-              ##   check if 24:00 possible? or only 0:00 (23:59)
-              if (hour >= 0 && hour <= 24) &&
-                 (minute >=0 && minute <= 59)
-               ## note - for debugging keep (pass along) "literal" time
-               ##   might use/add support for am/pm later
-               [:TIME_LOCAL, [m[:time_local], time]]
-              else
-                 raise ArgumentError, "parse error - time >#{m[:time]}< out-of-range"
-              end           
+            [:TIME, [m[:time], _build_time(m)]]
         elsif m[:date]
-            date = {}
- ## map month names
- ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
-            date[:y]  = m[:year].to_i(10)  if m[:year]
-            ## check - use y too for two-digit year or keep separate - why? why not?
-            date[:yy] = m[:yy].to_i(10)    if m[:yy]    ## two digit year (e.g. 25 or 78 etc.)
-            date[:m] = m[:month].to_i(10)  if m[:month]
-            date[:m] = MONTH_MAP[ m[:month_name].downcase ]   if m[:month_name]
-            date[:d]  = m[:day].to_i(10)   if m[:day]
-            date[:wday] = DAY_MAP[ m[:day_name].downcase ]   if m[:day_name]
-            ## note - for debugging keep (pass along) "literal" date
-            [:DATE, [m[:date], date]]
+            [:DATE, [m[:date], _build_date(m)]]
         elsif m[:date_legs]
-            legs = {}
- ## map month names
- ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
-            date = {}
-            date[:m] = MONTH_MAP[ m[:month_name1].downcase ]
-            date[:d]  = m[:day1].to_i(10)   
-            legs[:date1] = date
-     
-            date = {}
-            date[:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
-            date[:d]  = m[:day2].to_i(10)   
-            legs[:date2] = date
-
-            ## note - for debugging keep (pass along) "literal" date
-            [:DATE_LEGS, [m[:date_legs], legs]] 
+            [:DATE_LEGS, [m[:date_legs], _build_date_legs(m)]] 
         elsif m[:ord]   ## note -  ord (for ordinal number!!!) e.g match number (1), (42), etc.
               ## note -  strip enclosing () and convert to integer
              [:ORD, [m[:ord], { value: m[:value].to_i(10) } ]]

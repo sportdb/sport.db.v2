@@ -2,10 +2,6 @@ module SportDb
 class Lexer
 
 
-###
-###  todo - move duration to token-date_duration !!!
-
-
 
 def self.parse_names( txt )
   lines = [] # array of lines (with words)
@@ -174,7 +170,7 @@ DATE_II_RE = %r{
 
 # e.g. iso-date  -  2011-08-25     
 ##   note - allow/support ("shortcuts") e.g 2011-8-25  or 2011-8-3 / 2011-08-03 etc. 
-DATE_III_RE = %r{
+DATE_III_A_RE = %r{
 (?<date>
   \b
    (?<year>\d{4})
@@ -185,11 +181,33 @@ DATE_III_RE = %r{
   \b
 )}ix
 
+##  starting w/  day/month/year e.g.  25-08-2011
+DATE_III_B_RE = %r{
+(?<date>
+  \b
+     ## optional day name
+     ((?<day_name>#{DAY_NAMES})
+          [ ]
+     )?
+   (?<day>\d{1,2})
+       -
+   (?<month>\d{1,2})
+       -
+   (?<year>\d{4})
+  \b
+)}ix
+
+
+
 ## allow (short)"european" style  8.8. 
 ##   note - assume day/month!!!
 DATE_IIII_RE = %r{
 (?<date>
   \b
+     ## optional day name
+     ((?<day_name>#{DAY_NAMES})
+          [ ]
+     )?
    (?<day>\d{1,2})
        \.
    (?<month>\d{1,2})
@@ -204,6 +222,24 @@ DATE_IIII_RE = %r{
 )
 }ix
 
+####################
+### 04/03/2026
+##     note - year (YYYY) required for now - why? why not?
+DATE_IIIII_RE = %r{
+(?<date>
+  \b
+     ## optional day name
+     ((?<day_name>#{DAY_NAMES})
+          [ ]
+     )?
+   (?<day>\d{1,2})
+       /
+   (?<month>\d{1,2})
+       /
+   (?<year>\d{4})      
+  \b
+)
+}ix
 
 
 
@@ -213,16 +249,56 @@ DATE_IIII_RE = %r{
 DATE_RE = Regexp.union(
    DATE_I_RE,
    DATE_II_RE,
-   DATE_III_RE,
+   DATE_III_A_RE,    ## e.g. 1973-08-14
+   DATE_III_B_RE,
    DATE_IIII_RE,    ## e.g. 8.8. or 8.13.79 or 08.14.1973 
+   DATE_IIIII_RE,   ## e.g.  08/14/1973
 )
 
 ## todo - add more format style here; change to Regexp.union later!!!
 DATE_LEGS_RE  =    DATE_LEGS_I_RE
 
 
-##
-##  add a date parser helper
+##  "internal" date helpers
+def self._build_date( m )
+            date = {}
+         ## map month names
+         ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
+            date[:y]  = m[:year].to_i(10)  if m[:year]
+            ## check - use y too for two-digit year or keep separate - why? why not?
+            date[:yy] = m[:yy].to_i(10)    if m[:yy]    ## two digit year (e.g. 25 or 78 etc.)
+            date[:m] = m[:month].to_i(10)  if m[:month]
+            date[:m] = MONTH_MAP[ m[:month_name].downcase ]   if m[:month_name]
+            date[:d]  = m[:day].to_i(10)   if m[:day]
+            date[:wday] = DAY_MAP[ m[:day_name].downcase ]   if m[:day_name]
+
+            date
+end
+def _build_date( m ) self.class._build_date( m ); end
+
+def self._build_date_legs( m )
+           legs = {}
+        ## map month names
+         ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
+            date = {}
+            date[:m] = MONTH_MAP[ m[:month_name1].downcase ]
+            date[:d]  = m[:day1].to_i(10)   
+            legs[:date1] = date
+     
+            date = {}
+            date[:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
+            date[:d]  = m[:day2].to_i(10)   
+            legs[:date2] = date
+
+            legs
+end 
+def _build_date_legs( m ) self.class._build_date_legs( m ); end
+
+
+
+
+#############
+## "top-level" add a date parser helper
 def self.parse_date( str, start: )
     if m=DATE_RE.match( str )
 
@@ -247,170 +323,6 @@ def self.parse_date( str, start: )
       exit 1
     end
 end
-
-
-
-###
-#  date duration
-#   use - or + as separator
-#    in theory plus( +) only if dates
-#     are two days next to each other
-#
-#   otherwise  define new dates type in the future? why? why not?
-#
-#  check for plus (+) if dates are next to each other (t+1) - why? why not?
-
-#
-#  Sun Jun 23 - Wed Jun 26   -- YES
-#  Jun 23 - Jun 26           -- YES
-#  Jun 25 - 26        - why? why not???  - YES - see blow variant iii!!!
-
-#  Tue Jun 25 + Wed Jun 26   -- NO
-#  Jun 25 + Jun 26           -- NO
-#  Jun 25 .. 26        - why? why not???
-#  Jun 25 to 26        - why? why not???
-#  Jun 25 + 26        - add - why? why not???
-#  Sun-Wed Jun 23-26  -  add - why? why not???
-#  Wed+Thu Jun 26+27 2024  -  add - why? why not???
-#
-#  maybe use comma and plus for list of dates
-#    Tue Jun 25, Wed Jun 26, Thu Jun 27  ??
-#    Tue Jun 25 + Wed Jun 26 + Thu Jun 27  ??
-#
-#   add back optional comma (before) year - why? why not?
-#
-
-
-##
-#   todo add plus later on - why? why not?
-###   todo/fix  add optional comma (,) before year
-
-### regex note/tip/remindr -  \b () \b MUST always get enclosed in parantheses
-##                                     because alternation (|) has lowest priority/binding
-
-
-DURATION_I_RE =  %r{
-(?<duration>
-    \b
-  (?:
-   ## optional day name
-   ((?<day_name1>#{DAY_NAMES})
-      [ ]
-   )?
-   (?<month_name1>#{MONTH_NAMES})
-      [ ] 
-   (?<day1>\d{1,2})
-   ## optional year
-   (  ,?   # optional comma
-      [ ]
-      (?<year1>\d{4})
-   )?
-
-   ## support + and -  (add .. or such - why??)
-   [ ]* - [ ]*
-
-   ## optional day name
-   ((?<day_name2>#{DAY_NAMES})
-      [ ]
-   )?
-   (?<month_name2>#{MONTH_NAMES})
-      [ ] 
-   (?<day2>\d{1,2})
-   ## optional year
-   (  ,?   # optional comma
-      [ ]
-      (?<year2>\d{4})
-   )?
-  )
-   \b
-)}ix
-
-
-
-#   FIX - remove this variant 
-#         "standardize on month day [year]" !!!!
-
-=begin
-###
-#   variant ii
-# e.g. 26 July - 27 July
-#      26 July, 
-XXX_DURATION_II_RE =  %r{
-(?<duration>
-    \b
-  (?
-   ## optional day name
-   ((?<day_name1>#{DAY_NAMES})
-      [ ]
-   )?
-   (?<day1>\d{1,2})
-      [ ]
-   (?<month_name1>#{MONTH_NAMES})
-   ## optional year
-   (  
-       [ ]
-      (?<year1>\d{4})
-   )?
-
-   ## support + and -  (add .. or such - why??)
-   [ ]*[-][ ]*
-
-   ## optional day name
-   ((?<day_name2>#{DAY_NAMES})
-      [ ]
-   )?
-   (?<day2>\d{1,2})
-      [ ]
-   (?<month_name2>#{MONTH_NAMES})
-   ## optional year
-   ( [ ]
-      (?<year2>\d{4})
-   )?
-  )
-   \b
-)}ix
-=end
-
-
-#  variant ii
-#  add support for shorthand
-#     August 16-18, 2011     
-#     September 13-15, 2011
-#      October 18-20, 2011
-#      March 6-8 2012
-#      March 6-8
-#     
-#   - add support for August 16+17 or such (and check 16+18)
-#       use <op> to check if day2 is a plus or range or such - why? why not?
-
-DURATION_II_RE =  %r{
-(?<duration>
-    \b
-   (?:
-       (?<month_name1>#{MONTH_NAMES})
-           [ ]
-        (?<day1>\d{1,2})
-             -
-        (?<day2>\d{1,2})
-          (?:
-            ,?     ## optional comma
-            [ ]
-            (?<year1>\d{4})
-          )?     ## optional year   
-   )
-   \b
-)}ix
-
-
-
-#############################################
-# map tables
-#  note: order matters; first come-first matched/served
-DURATION_RE = Regexp.union(
-   DURATION_I_RE,
-   DURATION_II_RE,
-)
-
 
 
 end  #   class Lexer
