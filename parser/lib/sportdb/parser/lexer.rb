@@ -216,7 +216,7 @@ def tokenize_with_errors
            ## note - nota bene always resets parser mode to std/top-level!!!
            @re = RE
            tokens_by_line << [[:NOTA_BENE, m[:nota_bene]]]
-        elsif @re == RE && (m = TABLE_RE.match(line))
+       elsif @re == RE && (m = TABLE_RE.match(line))
             @re = TABLE_MORE_RE  ## switch into table mode
             if m[:table_heading]
               tokens_by_line << [[:TABLE_HEADING, m[:table_heading]]]
@@ -236,7 +236,14 @@ def tokenize_with_errors
               tokens_by_line << [[:TABLE_DIVIDER, m[:table_divider]]]
             else  ## assume table (line) e.g. m[:table]
               tokens_by_line << [[:TABLE_LINE, line]]
-            end 
+            end
+        elsif @re != TABLE_MORE_RE &&  (m = HRULER_RE.match(line))
+           ## note - hruler (---)
+           ##          will only match if NOT in table mode!!!
+           ##   otherwise
+           ##      hruler always resets parser mode to std/top-level!!!
+           @re = RE
+           tokens_by_line << [[:HRULER, '<|HRULER|>']]
         else
 
           more_tokens, more_errors = _tokenize_line( line )
@@ -351,8 +358,22 @@ def _tokenize_line( line )
   if @re == RE  ## top-level
     ### check for modes once (per line) here to speed-up parsing
     ###   for now goals only possible for start of line!!
-    ###        fix - remove optional [] - why? why not?  
-    if (m = GROUP_DEF_LINE_RE.match( line ))
+    ###        fix - remove optional [] - why? why not?
+    
+    ####
+    ## note - ord e.g. (45) for match number can only start a (match) line
+    ##                "inline" use NOT possible
+    ## note -  ord (for ordinal number!!!) e.g match number (1), (42), etc.
+    if (m = START_WITH_ORD.match(line))
+       ## note -  strip enclosing () and convert to integer
+       tokens << [:ORD, [m[:ord], { value: m[:value].to_i(10) } ]]
+
+       offsets = [m.begin(0), m.end(0)]
+       pos = offsets[1]    ## update pos
+    
+    ###
+    ##  todo/fix - rename to START_GROUP_DEF_LINE_RE !!!!   
+    elsif (m = GROUP_DEF_LINE_RE.match( line ))
       puts "  ENTER GROUP_DEF_RE MODE"   if debug?
       @re = GROUP_DEF_RE   
 
@@ -360,6 +381,8 @@ def _tokenize_line( line )
 
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
+
+    ###  todo/fix - rename to PROP_KEY_RE to START_WITH_PROP_KEY_RE !!!  
     elsif (m = PROP_KEY_RE.match( line ))
       ##  start with prop key (match will switch into prop mode!!!)
       ##   - fix - remove leading spaces in regex (upstream) - why? why not?
@@ -386,6 +409,8 @@ def _tokenize_line( line )
      #   elsif ['goals'].include?( key.downcase )
      #     @re = PROP_GOAL_RE
      #     tokens << [:PROP_GOALS, m[:key]]
+         
+         ## todo - add penalty kicks 
         elsif ['penalties', 'penalty shootout'].include?( key.downcase )
           @re = PROP_PENALTIES_RE
           tokens << [:PROP_PENALTIES, m[:key]]
@@ -396,6 +421,9 @@ def _tokenize_line( line )
 
         offsets = [m.begin(0), m.end(0)]
         pos = offsets[1]    ## update pos
+    ###
+    ### todo/fix
+    ###   rename to START_WITH_ROUND_DEF_OUTLINE_RE !!!!    
     elsif (m = ROUND_DEF_OUTLINE_RE.match( line ))
       puts "   ENTER ROUND_DEF_RE MODE"  if debug?
       @re = ROUND_DEF_RE   
@@ -420,25 +448,28 @@ def _tokenize_line( line )
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
-    elsif (m = GOAL_LINE_ALT_RE.match( line ))
-      @re = GOAL_ALT_RE
-      puts "  ENTER GOAL_ALT_RE MODE"   if debug?
-
-      tokens << [:GOALS_ALT, "<|GOALS_ALT|>"]
-
-      ## note - eat-up ( for now; pass along "virtual" GOALS_ALT token 
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos      
-    elsif (m = GOAL_LINE_RE.match( line ))   ## line starting with ( - assume
+    elsif (m = START_GOAL_LINE_RE.match( line ))   ## line starting with ( - assume
       ##  switch context to GOAL_RE (goalline(s)
-      ##   split token (automagically) into two!! - player AND minute!!!
-      @re = GOAL_RE
-      puts "  ENTER GOAL_RE MODE"   if debug?
+  
+      ####
+      ##  check for alt goal line
+      m_alt = START_GOAL_LINE_ALT_RE.match( line )
+      
+      if m_alt
+        @re = GOAL_ALT_RE
+        puts "  ENTER GOAL_ALT_RE MODE"   if debug?
 
-      tokens << [:GOALS, "<|GOALS|>"]
+        tokens << [:GOALS_ALT, "<|GOALS_ALT|>"]
+      else
+        @re = GOAL_RE
+        puts "  ENTER GOAL_RE MODE"   if debug?
+
+        tokens << [:GOALS, "<|GOALS|>"]
+      end
 
       ## note - eat-up ( for now
-      ##   pass along "virtual" GOALS token (see INLINE_GOALS for the starting goal line inline)     
+      ##   pass along "virtual" GOALS or GOALS_ALT token 
+      ##      (see INLINE_GOALS for the starting goal line inline)     
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos      
     end
@@ -872,9 +903,6 @@ def _tokenize_line( line )
             [:DATE, [m[:date], _build_date(m)]]
         elsif m[:date_legs]
             [:DATE_LEGS, [m[:date_legs], _build_date_legs(m)]] 
-        elsif m[:ord]   ## note -  ord (for ordinal number!!!) e.g match number (1), (42), etc.
-              ## note -  strip enclosing () and convert to integer
-             [:ORD, [m[:ord], { value: m[:value].to_i(10) } ]]
         elsif m[:score_legs]
               legs = {}
               

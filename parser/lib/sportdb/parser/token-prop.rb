@@ -90,6 +90,10 @@ PROP_NAME_RE = %r{
 ##
 ##  note - use special \G - Matches first matching position !!!!
 
+###
+##  todo/fix/fix
+##  change ^ to \A
+##    change name to START_WITH_PROP_KEY_RE !!!
 
   PROP_KEY_RE = %r{ 
                     ^     # note - MUST start line; leading spaces optional (eat-up)

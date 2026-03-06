@@ -6,14 +6,10 @@ class Lexer
 
 
 BASICS_RE = %r{
-    ## e.g. (51) or (1) etc.  - limit digits of number - why? why not???
-    ##  ord (for ordinal number)
-    (?<ord> \(  (?<value>\d+) \) )
-       |
     (?<vs>
        (?<=[ ])	# positive lookbehind for space
        (?-i: 
-         vs|v 
+           vs\.?|v 
        )        # note - only match case sensitive (downcased letters)!!!
                 # note -  bigger match first e.g. vs than v etc.
        (?=[ ])   # positive lookahead for space
@@ -24,6 +20,7 @@ BASICS_RE = %r{
         |
     (?<sym> [,;/@|()\[\]-] )   ### note: add parantheses too e.g () - why? why not?
 }ix
+
 
 
 
@@ -167,6 +164,22 @@ RE = Regexp.union(
 
 
 
+
+
+
+##  ord (for ordinal number)
+##   e.g. (51) or (1) etc.  - limit digits of number - why? why not???
+ 
+START_WITH_ORD = %r{
+   \A  
+    [ ]*    ## ignore leading spaces (if any)
+     (?<ord>
+       \(  
+        (?<value>\d+) 
+       \)
+     )}ix
+
+
 ###
 ## check for headings 
 ##    e.g.  = heading 1
@@ -194,6 +207,14 @@ HEADING_RE = %r{   \A
                          \z
                        }ix
 
+
+HRULER_RE = %r{
+                 \A
+                           [ ]*  ## ignore leading spaces (if any)
+                    -{3,}  ## must be at least three dashes!!!
+                           [ ]*  ## ignore trailing spaces (if any)                   
+                 \z
+}ix
 
 end  # class Lexer
 end # module SportDb

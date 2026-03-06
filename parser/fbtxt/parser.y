@@ -39,6 +39,7 @@ class RaccMatchParser
           ##              and only use NOTE for "standalone" NOTE (lines)
           | note_line  
           | nota_bene 
+          | hruler
  
           | table_line
  
@@ -87,6 +88,8 @@ class RaccMatchParser
         nota_bene
             : NOTA_BENE NEWLINE    { @tree << NotaBene.new( text: val[0]) }
 
+        hruler
+            : HRULER NEWLINE   { @tree << HRuler.new  }
 
         ######  
         # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland   
@@ -640,6 +643,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         opt_goal_alt_sep :  {}   ## none; optional!!
                          |  ','
                          |  ',' NEWLINE    ## allow multiline goallines!!!
+                         |  NEWLINE        ## allow newline-only separator!!!
 
 
         goal_alt    :  SCORE PLAYER     ## note - minute is optinal in alt goalline style!!!
@@ -658,7 +662,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                                  player: val[1],
                                                  minute: minute,
                                                  goal_type: goal_type )
-                        } 
+                        }
                    |  SCORE PLAYER GOAL_TYPE  
                        {
                            kwargs = {}.merge( val[2][1] )
@@ -666,6 +670,36 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
                            result = GoalAlt.new( score:  val[0][1][:score],
                                                  player: val[1],
+                                                 goal_type: goal_type )
+                       }
+                  ###  allow score on the right-side (that is, the end NOT the beginning) e.g.
+                  ##       Player      1-1
+                  ##       Player 14' 1-1 
+                  ##       Player (og) 1-1
+                   |  PLAYER SCORE
+                         {
+                           result = GoalAlt.new( score:   val[1][1][:score],
+                                                 player:  val[0] )                         
+                         } 
+                   |  PLAYER GOAL_MINUTE SCORE
+                        {
+                           kwargs = {}.merge( val[1][1] )
+                           goal_minute = GoalMinute.new( **kwargs )
+                           minute    = goal_minute.to_minute
+                           goal_type = goal_minute.to_goal_type 
+
+                           result = GoalAlt.new( score:  val[2][1][:score],
+                                                 player: val[0],
+                                                 minute: minute,
+                                                 goal_type: goal_type )
+                        }
+                   |  PLAYER GOAL_TYPE SCORE
+                       {
+                           kwargs = {}.merge( val[1][1] )
+                           goal_type = GoalType.new( **kwargs )
+
+                           result = GoalAlt.new( score:  val[2][1][:score],
+                                                 player: val[0],
                                                  goal_type: goal_type )
                        }
 

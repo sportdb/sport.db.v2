@@ -51,7 +51,7 @@ STATUS_RE = %r{
                             |
                     #{VOIDED} ### note - alternative to annulled
               ) 
-              [ ;,-]+  ## eat-up leading spaces (or separators) 
+              [ :;,-]+  ## eat-up leading spaces (or separators) 
                (?<status_note> 
                     [^\]]+?   ## note - add non-greedy match 
                  )   

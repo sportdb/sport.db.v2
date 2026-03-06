@@ -131,6 +131,9 @@ SW Bregenz postp Liefering
 SW Bregenz postp. Liefering      
 
 
+SW Bregenz v Liefering  [postponed: weather]    
+
+
 TXT
 
 

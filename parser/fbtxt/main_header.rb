@@ -137,6 +137,16 @@ May 26
 
 
 
+####
+##
+##  check hruler ---  (note: must be three or more dashes)
+
+---
+--------
+-----
+  ---
+      ------
+
 TXT
 
 

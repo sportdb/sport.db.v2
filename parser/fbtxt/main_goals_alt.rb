@@ -64,12 +64,57 @@ txt = <<-TXT
    3-3 Mbappé  (p))
 
 
+  (1-0 Messi    (p)
+   2-0 Di María
+   2-1 Mbappé  (p)
+   2-2 Mbappé
+   3-2 Messi 
+   3-3 Mbappé  (p))
+
+
+
  (0-1 Vujadinović 4, 1-1 Cea 19, 
   2-1 Anselmo 21 h,  3-1 Anselmo 23, 
   4-1 Iriarte 63,    5-1 Cea 66, 
   6-1 Cea 72)
 
-   
+
+  (                0-1 Vujadinović 4
+          Cea 19   1-1  
+      Anselmo 21 h 2-1   
+      Anselmo 23   3-1  
+      Iriarte 63   4-1 
+          Cea 66   5-1  
+          Cea 72   6-1)
+
+
+   (                0-1 Vujadinović 
+          Cea       1-1  
+      Anselmo (h)   2-1   
+      Anselmo       3-1  
+      Iriarte       4-1 
+          Cea       5-1  
+          Cea       6-1)
+         
+
+       (1-0 Dion Beljo 23'  
+        1-1 Andreas Gruber 45' 
+        2-1 Matthias Seidl 60')
+
+       (1-0 Dion Beljo 
+        1-1 Andreas Gruber 
+        2-1 Matthias Seidl)
+
+     (    Dion Beljo 23'  1-0 
+                          1-1  Andreas Gruber 45' 
+      Matthias Seidl 60'  2-1)
+
+
+         (Dion Beljo  1-0 
+                      1-1  Andreas Gruber 
+      Matthias Seidl  2-1)   
+
+
 TXT
 
 

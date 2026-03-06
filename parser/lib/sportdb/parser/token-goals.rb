@@ -26,13 +26,22 @@ GOAL_BASICS_RE = %r{
 }ix
 
 
+
+
+
+
 ## note - assume lines starting with opening ( are goal lines!!!!
 ##  note - use \A (instead of ^) - \A strictly matches the start of the string.
 ##
 ##   note -  check for negative lookahead
 ##                 to exclude ord (numbers) e.g.  (1), (42), etc.!!!
-GOAL_LINE_RE = %r{
-                     \A\(
+START_GOAL_LINE_RE = %r{
+                     \A                        
+                        [ ]*    ## ignore leading spaces (if any) 
+                       \(
+                 }xi
+
+=begin                      
                        # check NEGATIVE lookahead
                        (?! 
                              ##  exclude ord
@@ -43,20 +52,31 @@ GOAL_LINE_RE = %r{
                                         \d-\d   ## score e.g. 1-0
                                       \b  )   
                        )	 	
-                 }xi
+=end
+
 
 
 ###
 ##  check for goal line (alternate syntax)
 ##    (1-0 Player, 1-1 Player, ...)       
-#    must start off with score          
-GOAL_LINE_ALT_RE = %r{
-                     \A\(
-                       # check POSITIVE lookahead
-                       (?= [ ]* \b 
-                                 \d-\d    ## score e.g. 0-1 
-                                  \b )	 	
+#    must start-off OR yes, include score      
+##    
+##    note - allow "centered" style e.g. 
+##           (    Player 44' (p)  1-0  
+##                                1-1 Player 64'   )
+
+
+START_GOAL_LINE_ALT_RE = %r{
+                     \A
+                        [ ]*    ## ignore leading spaces (if any) 
+                      \(  
+                      
+                      # check POSITIVE lookahead                                    
+                       (?=  .*?         ## note - non-greedy 
+                                \b \d-\d \b    ## score e.g. 0-1 
+                         )	 	
                  }xi
+
 
 
 ###

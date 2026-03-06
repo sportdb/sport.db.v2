@@ -174,6 +174,14 @@ class BlankLine
   end
 end
 
+## todo/check - find a better name for hruler - divider?  or ??? - why? why not?
+class HRuler   ## h(orizontal) ruler (for breaks; new scopes) 
+  def pretty_print( printer )
+    printer.text( "<HRuler>" )
+  end
+end
+
+
 
 NoteLine = Struct.new( :text ) do
   def pretty_print( printer )

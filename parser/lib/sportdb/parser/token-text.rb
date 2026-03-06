@@ -88,9 +88,11 @@ TEXT_RE = %r{
 
 
               (?:(?:  (?:[ ]   # only single spaces allowed inline!!!
-                          ## note - exclude (v[ ]/vs[ ])
+                          ## note - exclude (v[ ]/vs[ ]/vs.[ ])
                           ##    AND switch to case-sensitive (via -i!!!)
-                        (?! (?-i: (?: vs?|VS|   ## note - (big) V not matching for versus!!!   
+                        (?! (?-i: (?:  ## note - (big) V not matching for versus!!!
+                                      vs\.?|v|VS|   
+                                         
                                       n/p|N/P|  
                                       w/o|W/O| 
                                       abd\.?|ABD|
