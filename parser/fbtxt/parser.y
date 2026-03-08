@@ -45,9 +45,11 @@ class RaccMatchParser
  
           ## check - goal_lines MUST follow match_line - why? why not?     
           | goal_lines     
-          | goal_lines_alt   ## allow differnt style/variant e.g. 1-0 Player
-                             ##  starting with score 
+          | goal_lines_alt     ## allow differnt style/variant e.g. 1-0 Player
+                               ##  starting with score 
+          | goal_lines_compat
  
+
           | BLANK        ##  was empty_line
              { 
                trace( "REDUCE BLANK" ) 
@@ -295,7 +297,7 @@ class RaccMatchParser
                ### note - for now inline goals only for "compact" match results
                ###           make more flexible (allow leading date/time etc. too)
                ###   plus allow  match status/note - why? why not?
-               |   match_result  INLINE_GOALS  goal_lines_body NEWLINE
+               |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  NEWLINE
                   { 
                       kwargs = {}.merge( val[0] )
                       @tree << MatchLine.new( **kwargs )
@@ -547,12 +549,12 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
         ##
         ## note - GOALS token is virtual - basically opening-paranthesis `(` for now
-        goal_lines : GOALS goal_lines_body NEWLINE
+        goal_lines : GOALS goal_lines_body GOALS_END NEWLINE
                       {
                          kwargs = val[1]
                          @tree << GoalLine.new( **kwargs )
                       }
-                
+        
 
         goal_lines_body : goals                 {  result = { goals1: val[0],
                                                               goals2: [] } 
@@ -574,6 +576,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
          opt_goal_sep   :  {}        ## none; optional!!
                         | ','
                         | ',' NEWLINE
+                        |  NEWLINE   ## note - allow "standalone" newline!!!
 
          goals   : goal                      { result = val }
                  | goals opt_goal_sep  goal  { result.push( val[2])  }
@@ -628,7 +631,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 ##     3-2 Messi    108', 
 ##     3-3 Mbappé   118'(pen.))
 
-        goal_lines_alt : GOALS_ALT goals_alt NEWLINE
+        goal_lines_alt : GOALS_ALT goals_alt GOALS_END NEWLINE
                            {
                              @tree << GoalLineAlt.new( goals: val[1] )
                            }
@@ -636,15 +639,10 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         goals_alt   :  goal_alt
                         { result = val }
                        ## note - allow optional comma sep (or comma sep w/ newline)
-                    |  goals_alt  opt_goal_alt_sep  goal_alt   
+                    |  goals_alt  opt_goal_sep  goal_alt   
                         { result.push( val[2])  } 
                     
                  
-        opt_goal_alt_sep :  {}   ## none; optional!!
-                         |  ','
-                         |  ',' NEWLINE    ## allow multiline goallines!!!
-                         |  NEWLINE        ## allow newline-only separator!!!
-
 
         goal_alt    :  SCORE PLAYER     ## note - minute is optinal in alt goalline style!!!
                         {
@@ -653,24 +651,18 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                         }   
                     |  SCORE PLAYER GOAL_MINUTE
                         {
-                           kwargs = {}.merge( val[2][1] )
-                           goal_minute = GoalMinute.new( **kwargs )
-                           minute    = goal_minute.to_minute
-                           goal_type = goal_minute.to_goal_type 
+                           goal_minute = GoalMinute.new( **val[2][1] )
 
-                           result = GoalAlt.new( score:  val[0][1][:score],
-                                                 player: val[1],
-                                                 minute: minute,
-                                                 goal_type: goal_type )
+                           result = GoalAlt.new( score:     val[0][1][:score],
+                                                 player:    val[1],
+                                                 minute:    goal_minute.to_minute,
+                                                 goal_type: goal_minute.to_goal_type )
                         }
                    |  SCORE PLAYER GOAL_TYPE  
                        {
-                           kwargs = {}.merge( val[2][1] )
-                           goal_type = GoalType.new( **kwargs )
-
-                           result = GoalAlt.new( score:  val[0][1][:score],
-                                                 player: val[1],
-                                                 goal_type: goal_type )
+                           result = GoalAlt.new( score:     val[0][1][:score],
+                                                 player:    val[1],
+                                                 goal_type: GoalType.new( **val[2][1] ))
                        }
                   ###  allow score on the right-side (that is, the end NOT the beginning) e.g.
                   ##       Player      1-1
@@ -678,32 +670,69 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                   ##       Player (og) 1-1
                    |  PLAYER SCORE
                          {
-                           result = GoalAlt.new( score:   val[1][1][:score],
-                                                 player:  val[0] )                         
+                           result = GoalAlt.new( player:  val[0],
+                                                 score:   val[1][1][:score] )                         
                          } 
                    |  PLAYER GOAL_MINUTE SCORE
                         {
-                           kwargs = {}.merge( val[1][1] )
-                           goal_minute = GoalMinute.new( **kwargs )
-                           minute    = goal_minute.to_minute
-                           goal_type = goal_minute.to_goal_type 
-
-                           result = GoalAlt.new( score:  val[2][1][:score],
-                                                 player: val[0],
-                                                 minute: minute,
-                                                 goal_type: goal_type )
+                           goal_minute = GoalMinute.new( **val[1][1] )
+ 
+                           result = GoalAlt.new( player:    val[0],
+                                                 minute:    goal_minute.to_minute,
+                                                 goal_type: goal_minute.to_goal_type,
+                                                 score:     val[2][1][:score] )
                         }
                    |  PLAYER GOAL_TYPE SCORE
                        {
-                           kwargs = {}.merge( val[1][1] )
-                           goal_type = GoalType.new( **kwargs )
-
-                           result = GoalAlt.new( score:  val[2][1][:score],
-                                                 player: val[0],
-                                                 goal_type: goal_type )
+                           result = GoalAlt.new( player:    val[0],
+                                                 goal_type: GoalType.new( **val[1][1] ),
+                                                 score:     val[2][1][:score] )
                        }
 
+################
+##
+##   compat ("legacy") goal line style starting with minute
+##
 
+        goal_lines_compat : GOALS_COMPAT goals_compat GOALS_END NEWLINE
+                           {
+                             @tree << GoalLineCompat.new( goals: val[1] )
+                           }
+
+        goals_compat   :  goal_compat
+                           { result = val }
+                       |  goals_compat  opt_goal_sep  goal_compat   
+                           { result.push( val[2])  } 
+                    
+/**
+  * note - for now SCORE required - why? why not?
+        goal_compat    :  MINUTE PLAYER     
+                        {
+                           result = GoalCompat.new( minute:  Minute.new(**val[0][1]),
+                                                    player:  val[1] )
+                        }   
+                      |  MINUTE PLAYER GOAL_TYPE  
+                         {
+                           result = GoalCompat.new( minute: Minute.new(**val[0][1]),
+                                                    player: val[1],
+                                                    goal_type: GoalType.new( **val[2][1] ))
+                        }
+ */
+
+        goal_compat    :  MINUTE PLAYER SCORE
+                        {
+                           result = GoalCompat.new( minute:  Minute.new(**val[0][1]),
+                                                    player:  val[1],
+                                                    score:  val[2][1][:score] )
+                        } 
+                      | MINUTE PLAYER GOAL_TYPE SCORE
+                        {
+                           result = GoalCompat.new( minute: Minute.new(**val[0][1]),
+                                                    player: val[1],
+                                                    goal_type: GoalType.new( **val[2][1] ),
+                                                    score:  val[3][1][:score] )
+                       }
+            
 
 ##########################################################################
 ##     level 2 support for properties - line-up, penalties, etc.

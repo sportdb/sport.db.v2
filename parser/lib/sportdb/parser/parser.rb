@@ -9,408 +9,419 @@ class RaccMatchParser < Racc::Parser
 ##### State transition tables begin ###
 
 racc_action_table = [
-    26,    19,    27,   225,    28,    29,    30,    31,    32,    33,
-    34,    35,    36,   108,   219,    37,    62,   279,    38,    39,
-    40,   225,    41,    42,    43,    46,   233,   170,   210,   106,
-   225,    55,    59,   199,   169,    59,   142,   226,   203,   206,
-   205,   211,   293,   212,  -143,   234,   143,   295,   220,    63,
-   168,    71,   199,   208,  -143,   226,    73,    64,   217,    65,
-   231,   296,    66,   199,   226,   223,    67,    68,    69,  -124,
-    70,    26,    19,    27,   229,    28,    29,    30,    31,    32,
-    33,    34,    35,    36,   108,   278,    37,    62,  -124,    38,
-    39,    40,   149,    41,    42,    43,    46,   197,   198,  -124,
-   106,   149,    55,    59,    99,   142,    59,    74,   137,   137,
-   238,   139,   139,   150,   153,   143,   100,   101,   102,   153,
-    63,    75,   150,   239,   240,    76,   155,   156,    64,    77,
-    65,   155,   156,    66,   100,   101,   102,    67,    68,    69,
-    78,    70,   121,   122,   123,   124,   126,   127,   128,   134,
-   153,   129,   130,   131,   132,   133,   -89,    40,    79,    41,
-    42,    43,   155,   156,   261,    80,   262,   172,   173,   123,
-   124,   126,   127,   128,   134,    81,   129,   130,   131,   132,
-   133,   301,    83,    84,   284,    88,    87,   165,   166,   172,
-   173,   172,   173,   257,  -132,    82,    86,    90,    91,    96,
-    59,    96,   109,   109,   112,    59,   120,   144,   146,   160,
-   161,   163,   174,   176,    59,   179,   180,    59,   183,   184,
-   185,   186,   187,   188,   189,   190,   191,   192,   193,   194,
-   195,   139,   209,   213,   215,   216,   221,   222,   227,   228,
-   237,   241,   242,   243,   244,   245,   246,   109,   249,   250,
-   251,   139,   253,   254,   255,   139,   260,   263,   264,   265,
-   266,   267,   268,   270,   271,   272,   273,   153,   275,   276,
-   277,   160,   281,   282,   284,   286,   205,   288,   289,   290,
-   291,   292,   297,   237,   299,   160,   302,   284,   304 ]
+    27,    20,    28,   233,    29,    30,    31,    32,    33,    34,
+    35,    36,    37,   205,   205,    38,    63,   292,    39,    40,
+    41,   227,    42,    43,    44,    47,   241,   204,   204,   205,
+   154,   110,    56,    60,   139,   205,   154,   141,   234,   310,
+   276,    73,   212,   204,   175,   308,   242,   108,    75,   204,
+    64,   174,   205,   155,    60,   277,   228,   218,    65,   155,
+    66,   239,    67,   311,  -125,    68,   204,   173,   225,    69,
+    70,    71,    72,    27,    20,    28,    76,    29,    30,    31,
+    32,    33,    34,    35,    36,    37,  -125,   291,    38,    63,
+   233,    39,    40,    41,   233,    42,    43,    44,    47,   110,
+   246,   202,   203,  -125,   101,    56,    60,   316,   209,   139,
+   211,   215,   141,   247,   248,   108,   158,   102,   103,   104,
+   297,    77,    60,    64,   216,   234,   217,   160,   161,   234,
+   144,    65,   270,    66,   271,    67,    78,   231,    68,    79,
+   145,   237,    69,    70,    71,    72,   123,   124,   125,   126,
+   128,   129,   130,   136,   158,   131,   132,   133,   134,   135,
+   -90,    80,   158,    85,    86,   160,   161,   102,   103,   104,
+    81,   177,   178,   160,   161,   125,   126,   128,   129,   130,
+   136,   144,   131,   132,   133,   134,   135,    90,    89,    82,
+    41,   145,    42,    43,    44,   170,   171,   177,   178,   177,
+   178,   266,  -134,    83,    84,    88,    92,    93,    98,    60,
+    98,   111,   111,   114,    60,   122,   148,   149,   151,   165,
+   166,   168,   179,   181,    60,   184,   185,    60,   188,   189,
+   190,   191,   192,   193,   194,   195,   196,   197,   198,   199,
+   200,   141,   214,   220,   221,   223,   224,   229,   230,   235,
+   236,   245,   249,   250,   251,   252,   253,   254,   111,   257,
+   258,   259,   260,   141,   262,   263,   264,   141,   268,   272,
+   273,   274,   148,   278,   279,   280,   281,   283,   284,   285,
+   286,   158,   288,   289,   290,   165,   294,   295,   297,   299,
+   300,   211,   302,   303,   304,   305,   306,   307,   312,   245,
+   314,   165,   317,   297,   319 ]
 
 racc_action_check = [
-     0,     0,     0,   285,     0,     0,     0,     0,     0,     0,
-     0,     0,     0,    51,   147,     0,     0,   231,     0,     0,
-     0,   151,     0,     0,     0,     0,   158,    93,   143,    51,
-   157,     0,     0,   201,    93,    51,    64,   285,   139,   140,
-   139,   143,   284,   143,   206,   158,    64,   284,   147,     0,
-    93,     1,   252,   140,   206,   151,    27,     0,   147,     0,
-   158,   285,     0,   136,   157,   151,     0,     0,     0,   201,
-     0,     2,     2,     2,   157,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,   104,   231,     2,     2,   252,     2,
-     2,     2,    67,     2,     2,     2,     2,   136,   136,   136,
-   104,   218,     2,     2,    49,   207,   104,    28,    63,   112,
-   162,    63,   112,    67,    68,   207,    49,    49,    49,    69,
-     2,    29,   218,   162,   162,    30,    68,    68,     2,    31,
-     2,    69,    69,     2,    95,    95,    95,     2,     2,     2,
-    32,     2,    62,    62,    62,    62,    62,    62,    62,    62,
-   237,    62,    62,    62,    62,    62,    97,    56,    33,    56,
-    56,    56,   237,   237,   209,    34,   209,    97,    97,    96,
-    96,    96,    96,    96,    96,    35,    96,    96,    96,    96,
-    96,   298,    37,    37,   298,    39,    39,    89,    89,   107,
-   107,   177,   177,   202,   202,    36,    38,    44,    46,    47,
-    48,    50,    52,    53,    54,    57,    59,    65,    66,    70,
-    71,    85,    99,   105,   106,   110,   111,   116,   119,   122,
-   125,   126,   127,   128,   129,   130,   131,   132,   133,   134,
-   135,   137,   142,   144,   145,   146,   149,   150,   153,   154,
-   160,   164,   168,   169,   171,   173,   175,   178,   181,   183,
-   189,   196,   197,   198,   199,   200,   208,   211,   212,   213,
-   214,   215,   217,   219,   220,   221,   223,   224,   226,   229,
-   230,   232,   233,   234,   235,   240,   258,   266,   267,   277,
-   278,   279,   292,   293,   294,   295,   300,   301,   303 ]
+     0,     0,     0,   298,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,   207,   142,     0,     0,   239,     0,     0,
+     0,   152,     0,     0,     0,     0,   163,   207,   142,   146,
+    69,    52,     0,     0,    64,   261,   226,    64,   298,   297,
+   220,     1,   142,   146,    95,   297,   163,    52,    28,   261,
+     0,    95,   138,    69,    52,   220,   152,   146,     0,   226,
+     0,   163,     0,   298,   207,     0,   138,    95,   152,     0,
+     0,     0,     0,     2,     2,     2,    29,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,   261,   239,     2,     2,
+   156,     2,     2,     2,   162,     2,     2,     2,     2,   106,
+   167,   138,   138,   138,    50,     2,     2,   313,   141,   114,
+   141,   145,   114,   167,   167,   106,    70,    50,    50,    50,
+   313,    30,   106,     2,   145,   156,   145,    70,    70,   162,
+    65,     2,   214,     2,   214,     2,    31,   156,     2,    32,
+    65,   162,     2,     2,     2,     2,    63,    63,    63,    63,
+    63,    63,    63,    63,    71,    63,    63,    63,    63,    63,
+    99,    33,   245,    38,    38,    71,    71,    97,    97,    97,
+    34,    99,    99,   245,   245,    98,    98,    98,    98,    98,
+    98,   213,    98,    98,    98,    98,    98,    40,    40,    35,
+    57,   213,    57,    57,    57,    91,    91,   109,   109,   182,
+   182,   208,   208,    36,    37,    39,    45,    47,    48,    49,
+    51,    53,    54,    55,    58,    60,    66,    67,    68,    72,
+    73,    87,   101,   107,   108,   112,   113,   118,   121,   124,
+   127,   128,   129,   130,   131,   132,   133,   134,   135,   136,
+   137,   139,   144,   148,   149,   150,   151,   154,   155,   158,
+   159,   165,   169,   173,   174,   176,   178,   180,   183,   186,
+   188,   194,   200,   201,   202,   203,   204,   206,   212,   216,
+   217,   218,   219,   221,   222,   223,   225,   227,   228,   229,
+   231,   232,   234,   237,   238,   240,   241,   242,   243,   248,
+   257,   267,   277,   279,   280,   290,   291,   292,   307,   308,
+   309,   310,   315,   316,   318 ]
 
 racc_action_pointer = [
-    -1,    51,    70,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+    -1,    41,    72,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,    52,   103,   117,
-   121,   125,   136,   154,   161,   171,   191,   168,   192,   171,
-   nil,   nil,   nil,   nil,   193,   nil,   194,   182,   167,    74,
-   184,     2,   191,   192,   173,   nil,   136,   172,   nil,   172,
-   nil,   nil,   107,    57,    -8,   146,   143,    48,    49,    54,
-   144,   210,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   194,   nil,   nil,   nil,   166,
-   nil,   nil,   nil,    23,   nil,    92,   132,   139,   nil,   208,
-   nil,   nil,   nil,   nil,    73,   209,   181,   161,   nil,   nil,
-   211,   212,    58,   nil,   nil,   nil,   184,   nil,   nil,   200,
-   nil,   nil,   202,   nil,   nil,   203,   204,   205,   206,   207,
-   208,   209,   210,   211,   212,   226,    45,   177,   nil,   -17,
-    35,   nil,   178,   -16,   171,   182,   169,    -4,   nil,   171,
-   171,     3,   nil,   168,   169,   nil,   nil,    12,     8,   nil,
-   165,   nil,   106,   nil,   237,   nil,   nil,   nil,   238,   239,
-   nil,   240,   nil,   217,   nil,   242,   nil,   163,   236,   nil,
-   nil,   244,   nil,   215,   nil,   nil,   nil,   nil,   nil,   201,
-   nil,   nil,   nil,   nil,   nil,   nil,   197,   248,   249,   250,
-   201,    15,   137,   nil,   nil,   nil,     0,    61,   252,   107,
-   nil,   213,   214,   255,   198,   197,   nil,   258,    57,   259,
-   260,   199,   nil,   262,   202,   nil,   264,   nil,   nil,   265,
-   208,    13,   206,   268,   269,   201,   nil,    85,   nil,   nil,
-   258,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,    34,   nil,   nil,   nil,   nil,   nil,   219,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   273,   217,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,   275,   215,   209,
-   nil,   nil,   nil,   nil,   -23,   -15,   nil,   nil,   nil,   nil,
-   nil,   nil,   217,   208,   210,   220,   nil,   nil,   111,   nil,
-   212,   214,   nil,   214,   nil ]
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    44,    72,
+   117,   132,   135,   157,   166,   185,   199,   200,   149,   201,
+   173,   nil,   nil,   nil,   nil,   202,   nil,   203,   191,   175,
+    74,   193,    20,   200,   201,   182,   nil,   169,   180,   nil,
+   180,   nil,   nil,   110,   -18,    85,   154,   153,   150,   -15,
+    48,    86,   151,   220,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   204,   nil,   nil,
+   nil,   174,   nil,   nil,   nil,    40,   nil,   124,   137,   143,
+   nil,   218,   nil,   nil,   nil,   nil,    88,   219,   190,   169,
+   nil,   nil,   221,   222,    57,   nil,   nil,   nil,   193,   nil,
+   nil,   210,   nil,   nil,   212,   nil,   nil,   213,   214,   215,
+   216,   217,   218,   219,   220,   221,   222,   208,    48,   186,
+   nil,    52,    10,   nil,   187,    66,    25,   nil,   188,   179,
+   192,   177,     3,   nil,   179,   179,    72,   nil,   187,   188,
+   nil,   nil,    76,     8,   nil,   174,   nil,    96,   nil,   248,
+   nil,   nil,   nil,   249,   250,   nil,   251,   nil,   228,   nil,
+   253,   nil,   171,   247,   nil,   nil,   227,   nil,   225,   nil,
+   nil,   nil,   nil,   nil,   211,   nil,   nil,   nil,   nil,   nil,
+   258,   208,   260,   261,   262,   nil,   212,     9,   144,   nil,
+   nil,   nil,   264,   136,    74,   nil,   224,   225,   267,   210,
+    -5,   269,   209,   208,   nil,   272,    -9,   273,   274,   210,
+   nil,   276,   213,   nil,   278,   nil,   nil,   279,   219,    13,
+   217,   282,   283,   213,   nil,    94,   nil,   nil,   272,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   286,   nil,   nil,
+   nil,    31,   nil,   nil,   nil,   nil,   nil,   233,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   247,   nil,   289,
+   230,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   291,   228,   223,   nil,   nil,   nil,   nil,   -23,   -15,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   230,   222,   224,
+   233,   nil,   nil,    45,   nil,   226,   228,   nil,   228,   nil ]
 
 racc_action_default = [
-    -1,  -198,    -2,    -3,    -5,    -6,    -7,    -8,    -9,   -10,
+    -1,  -201,    -2,    -3,    -5,    -6,    -7,    -8,    -9,   -10,
    -11,   -12,   -13,   -14,   -15,   -16,   -17,   -18,   -19,   -20,
-   -21,   -22,   -23,   -24,   -25,   -26,   -27,  -198,  -198,  -198,
-  -198,  -198,  -198,  -198,  -198,  -198,  -198,  -198,  -198,  -198,
-   -50,   -51,   -52,   -53,   -54,   -55,  -198,  -198,   -88,   -94,
-  -198,   -83,   -71,   -71,   -93,   -78,   -56,   -88,   -82,  -198,
-   -95,   -96,  -198,  -198,  -198,  -198,  -198,  -198,  -198,  -198,
-  -198,  -198,    -4,   -28,   -29,   -30,   -31,   -32,   -33,   -34,
-   -35,   -36,   -37,   -38,   -39,  -198,   -44,   -45,   -46,  -198,
-   -59,   -60,   -61,  -198,   -93,   -94,  -198,   -67,   -80,  -198,
-  -105,  -106,  -114,  -115,   -83,  -198,   -84,   -67,   -87,   -72,
-  -198,  -198,  -198,   -54,   -57,   -58,   -88,   -81,   -89,   -90,
-   -91,   -97,  -198,   -99,  -100,  -198,  -198,  -198,  -198,  -198,
-  -198,  -198,  -198,  -198,  -198,  -198,  -117,  -198,  -127,  -131,
-  -140,  -138,  -198,  -198,  -198,  -152,  -154,  -198,  -157,  -198,
-  -165,  -198,  -169,  -174,  -194,  -196,  -197,  -198,  -177,  -180,
-  -187,   305,  -198,   -41,  -198,   -48,   -49,   -62,  -198,  -198,
-   -65,  -198,   -68,  -198,   -70,  -198,   -74,   -67,   -71,   -75,
-   -76,  -198,   -79,  -198,   -98,  -101,  -102,  -103,  -104,  -107,
-  -108,  -109,  -110,  -111,  -113,  -116,  -198,  -120,  -122,  -125,
-  -198,  -118,  -129,  -130,  -134,  -136,  -137,  -198,  -141,  -144,
-  -147,  -198,  -198,  -198,  -198,  -198,  -155,  -198,  -198,  -159,
-  -161,  -163,  -166,  -198,  -198,  -171,  -172,  -175,  -195,  -198,
-  -198,  -198,  -198,  -182,  -184,  -189,  -188,  -198,   -40,   -42,
-  -198,   -47,   -63,   -64,   -66,   -69,   -73,   -85,   -86,   -77,
-   -92,  -112,  -119,  -121,  -123,  -126,  -128,  -133,  -198,  -139,
-  -142,  -145,  -146,  -148,  -149,  -150,  -198,  -198,  -156,  -158,
-  -160,  -162,  -164,  -167,  -170,  -173,  -168,  -198,  -198,  -198,
-  -181,  -183,  -185,  -186,  -198,  -198,   -43,  -135,  -151,  -153,
-  -176,  -178,  -198,  -187,  -198,  -198,  -193,  -179,  -189,  -191,
-  -198,  -189,  -192,  -198,  -190 ]
+   -21,   -22,   -23,   -24,   -25,   -26,   -27,   -28,  -201,  -201,
+  -201,  -201,  -201,  -201,  -201,  -201,  -201,  -201,  -201,  -201,
+  -201,   -51,   -52,   -53,   -54,   -55,   -56,  -201,  -201,   -89,
+   -95,  -201,   -84,   -72,   -72,   -94,   -79,   -57,   -89,   -83,
+  -201,   -96,   -97,  -201,  -201,  -201,  -201,  -201,  -201,  -201,
+  -201,  -201,  -201,  -201,    -4,   -29,   -30,   -31,   -32,   -33,
+   -34,   -35,   -36,   -37,   -38,   -39,   -40,  -201,   -45,   -46,
+   -47,  -201,   -60,   -61,   -62,  -201,   -94,   -95,  -201,   -68,
+   -81,  -201,  -106,  -107,  -115,  -116,   -84,  -201,   -85,   -68,
+   -88,   -73,  -201,  -201,  -201,   -55,   -58,   -59,   -89,   -82,
+   -90,   -91,   -92,   -98,  -201,  -100,  -101,  -201,  -201,  -201,
+  -201,  -201,  -201,  -201,  -201,  -201,  -201,  -201,  -118,  -201,
+  -129,  -133,  -125,  -140,  -201,  -201,  -125,  -149,  -201,  -201,
+  -155,  -157,  -201,  -160,  -201,  -168,  -201,  -172,  -177,  -197,
+  -199,  -200,  -201,  -180,  -183,  -190,   320,  -201,   -42,  -201,
+   -49,   -50,   -63,  -201,  -201,   -66,  -201,   -69,  -201,   -71,
+  -201,   -75,   -68,   -72,   -76,   -77,  -201,   -80,  -201,   -99,
+  -102,  -103,  -104,  -105,  -108,  -109,  -110,  -111,  -112,  -114,
+  -201,  -201,  -121,  -123,  -126,  -128,  -201,  -119,  -131,  -132,
+  -136,  -138,  -201,  -201,  -142,  -145,  -201,  -201,  -201,  -201,
+  -201,  -201,  -201,  -201,  -158,  -201,  -201,  -162,  -164,  -166,
+  -169,  -201,  -201,  -174,  -175,  -178,  -198,  -201,  -201,  -201,
+  -201,  -185,  -187,  -192,  -191,  -201,   -41,   -43,  -201,   -48,
+   -64,   -65,   -67,   -70,   -74,   -86,   -87,  -201,   -93,  -113,
+  -117,  -120,  -122,  -124,  -127,  -130,  -135,  -201,  -139,  -141,
+  -143,  -144,  -146,  -147,  -148,  -150,  -151,  -201,  -153,  -201,
+  -201,  -159,  -161,  -163,  -165,  -167,  -170,  -173,  -176,  -171,
+  -201,  -201,  -201,  -184,  -186,  -188,  -189,  -201,  -201,   -44,
+   -78,  -137,  -152,  -154,  -156,  -179,  -181,  -201,  -190,  -201,
+  -201,  -196,  -182,  -192,  -194,  -201,  -192,  -195,  -201,  -193 ]
 
 racc_goto_table = [
-   159,   151,   157,   148,   141,   235,   110,   111,   204,   171,
-   105,    97,    98,   201,   107,   135,     3,     1,    72,   178,
-   118,   117,    93,    95,    94,   104,    95,    94,     2,    85,
-   162,    89,   164,   113,   115,   114,   116,    92,   167,   119,
-   196,   256,   202,   258,   140,   207,   145,   214,   147,   218,
-   274,   158,   230,   232,   303,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   175,   181,   nil,   nil,   107,   nil,   177,
-   nil,   nil,   252,   nil,   nil,   nil,   nil,   nil,   nil,   118,
-   182,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   247,
+   164,   156,   162,   153,   147,   143,   243,   112,   113,   210,
+   176,   207,    99,   100,   107,   109,   137,     1,     2,   213,
+   183,   120,   119,   219,    95,    97,    96,   106,    97,    96,
+     3,    87,    74,   167,    91,   169,   115,   117,   116,   118,
+    94,   172,   121,   201,   265,   208,   267,   142,   146,   150,
+   222,   152,   226,   287,   163,   238,   240,   318,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   186,   nil,   180,   109,
+   nil,   182,   nil,   261,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   120,   187,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   255,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,   287,   nil,   nil,
-   nil,   nil,   248,   nil,   nil,   nil,   nil,   nil,   298,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,   259,   nil,   nil,
-   nil,   nil,   nil,   nil,   269,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   280,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   285,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   301,   nil,   256,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   313,
+   nil,   nil,   nil,   269,   nil,   nil,   nil,   275,   nil,   nil,
+   282,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   293,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   298,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   294,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   300 ]
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   309,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   315 ]
 
 racc_goto_check = [
-    75,    70,    70,    68,    63,    77,    41,    41,    61,    39,
-    43,    38,    49,    55,    38,    47,     3,     1,     3,    39,
-    38,    49,    36,    40,    46,    36,    40,    46,     2,    25,
-    26,    27,    28,    29,    31,    32,    33,    35,    37,    50,
-    56,    58,    59,    60,    62,    64,    65,    66,    67,    69,
-    71,    73,    74,    76,    78,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,    43,    47,   nil,   nil,    38,   nil,    38,
-   nil,   nil,    55,   nil,   nil,   nil,   nil,   nil,   nil,    38,
-    49,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    39,
+    77,    72,    72,    70,    66,    64,    79,    42,    42,    62,
+    40,    56,    39,    50,    44,    39,    48,     1,     2,    58,
+    40,    39,    50,    58,    37,    41,    47,    37,    41,    47,
+     3,    26,     3,    27,    28,    29,    30,    32,    33,    34,
+    36,    38,    51,    57,    59,    60,    61,    63,    65,    67,
+    68,    69,    71,    73,    75,    76,    78,    80,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,    48,   nil,    44,    39,
+   nil,    39,   nil,    56,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,    39,    50,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,    40,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,    61,   nil,   nil,
-   nil,   nil,    41,   nil,   nil,   nil,   nil,   nil,    77,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,    63,   nil,   nil,
-   nil,   nil,   nil,   nil,    68,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,    75,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-    70,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,    62,   nil,    42,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    79,
+   nil,   nil,   nil,    64,   nil,   nil,   nil,    66,   nil,   nil,
+    70,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    77,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,    72,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,    75,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,    75 ]
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,    77,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    77 ]
 
 racc_goto_pointer = [
-   nil,    17,    28,    16,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,    17,    18,    30,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,    -8,   -55,    -8,   -57,   -23,
-   nil,   -22,   -21,   -20,   nil,   -10,   -25,   -55,   -37,   -88,
-   -24,   -46,   nil,   -41,   nil,   nil,   -23,   -48,   nil,   -36,
-   -20,   nil,   nil,   nil,   nil,  -124,   -96,   nil,  -159,   -97,
-  -159,  -131,   -20,   -60,   -95,   -20,   -98,   -19,   -64,   -98,
-   -67,  -174,   nil,   -19,  -106,   -70,  -105,  -155,  -247,   nil,
-   nil ]
+   nil,   nil,   nil,   nil,   nil,   nil,    -7,   -54,    -6,   -56,
+   -21,   nil,   -20,   -19,   -18,   nil,    -8,   -24,   -54,   -37,
+   -89,   -23,   -46,   nil,   -38,   nil,   nil,   -22,   -48,   nil,
+   -36,   -18,   nil,   nil,   nil,   nil,  -128,   -95,  -123,  -162,
+   -96,  -162,  -132,   -18,   -60,   -18,   -62,   -19,  -100,   -18,
+   -66,  -100,   -69,  -179,   nil,   -18,  -108,   -72,  -107,  -159,
+  -259,   nil,   nil ]
 
 racc_goto_default = [
    nil,   nil,   nil,   nil,     4,     5,     6,     7,     8,     9,
-    10,    11,    12,    13,    14,    15,    16,    17,    18,    20,
-    21,    22,    23,    24,    25,   nil,   nil,   nil,   nil,    44,
-    45,    57,    48,   nil,    47,   nil,    51,   nil,    58,   nil,
-    49,   nil,    50,   nil,    52,    53,    54,   nil,    56,   nil,
-   nil,    60,    61,   125,   103,   136,   nil,   200,   138,   nil,
+    10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
+    21,    22,    23,    24,    25,    26,   nil,   nil,   nil,   nil,
+    45,    46,    58,    49,   nil,    48,   nil,    52,   nil,    59,
+   nil,    50,   nil,    51,   nil,    53,    54,    55,   nil,    57,
+   nil,   nil,    61,    62,   127,   105,   138,   nil,   206,   140,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   152,   224,   nil,   nil,   nil,   nil,   nil,   283,   236,
-   154 ]
+   nil,   nil,   nil,   157,   232,   nil,   nil,   nil,   nil,   nil,
+   296,   244,   159 ]
 
 racc_reduce_table = [
   0, 0, :racc_error,
-  0, 80, :_reduce_1,
-  1, 80, :_reduce_none,
-  1, 81, :_reduce_none,
-  2, 81, :_reduce_none,
+  0, 82, :_reduce_1,
   1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_20,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_none,
-  1, 82, :_reduce_27,
-  2, 83, :_reduce_28,
-  2, 83, :_reduce_29,
-  2, 83, :_reduce_30,
-  2, 95, :_reduce_31,
-  2, 95, :_reduce_32,
-  2, 95, :_reduce_33,
-  2, 95, :_reduce_34,
-  2, 92, :_reduce_35,
-  2, 93, :_reduce_36,
-  2, 94, :_reduce_37,
-  1, 104, :_reduce_none,
-  1, 104, :_reduce_none,
-  4, 84, :_reduce_40,
-  1, 105, :_reduce_41,
-  2, 105, :_reduce_42,
-  3, 105, :_reduce_43,
-  2, 86, :_reduce_44,
-  1, 106, :_reduce_none,
-  1, 106, :_reduce_none,
-  4, 85, :_reduce_47,
-  1, 107, :_reduce_48,
-  1, 107, :_reduce_49,
-  1, 108, :_reduce_50,
-  1, 108, :_reduce_none,
-  1, 109, :_reduce_52,
-  1, 110, :_reduce_53,
+  1, 83, :_reduce_none,
+  2, 83, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_21,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_none,
+  1, 84, :_reduce_28,
+  2, 85, :_reduce_29,
+  2, 85, :_reduce_30,
+  2, 85, :_reduce_31,
+  2, 97, :_reduce_32,
+  2, 97, :_reduce_33,
+  2, 97, :_reduce_34,
+  2, 97, :_reduce_35,
+  2, 94, :_reduce_36,
+  2, 95, :_reduce_37,
+  2, 96, :_reduce_38,
+  1, 107, :_reduce_none,
+  1, 107, :_reduce_none,
+  4, 86, :_reduce_41,
+  1, 108, :_reduce_42,
+  2, 108, :_reduce_43,
+  3, 108, :_reduce_44,
+  2, 88, :_reduce_45,
+  1, 109, :_reduce_none,
+  1, 109, :_reduce_none,
+  4, 87, :_reduce_48,
+  1, 110, :_reduce_49,
+  1, 110, :_reduce_50,
+  1, 111, :_reduce_51,
   1, 111, :_reduce_none,
-  1, 111, :_reduce_none,
-  0, 112, :_reduce_56,
-  1, 112, :_reduce_none,
-  1, 112, :_reduce_none,
-  2, 87, :_reduce_59,
-  2, 90, :_reduce_60,
-  2, 88, :_reduce_61,
-  2, 114, :_reduce_62,
-  2, 116, :_reduce_63,
-  2, 116, :_reduce_64,
-  1, 116, :_reduce_65,
-  4, 113, :_reduce_66,
-  0, 118, :_reduce_67,
-  1, 118, :_reduce_68,
-  2, 118, :_reduce_69,
-  3, 91, :_reduce_70,
-  0, 120, :_reduce_71,
-  1, 120, :_reduce_72,
-  4, 89, :_reduce_73,
-  3, 89, :_reduce_74,
-  3, 89, :_reduce_75,
-  3, 89, :_reduce_76,
-  4, 89, :_reduce_77,
-  1, 127, :_reduce_78,
-  3, 121, :_reduce_79,
-  2, 121, :_reduce_80,
-  2, 121, :_reduce_81,
-  1, 121, :_reduce_none,
-  0, 122, :_reduce_83,
-  1, 122, :_reduce_84,
-  3, 122, :_reduce_85,
-  3, 122, :_reduce_86,
-  1, 122, :_reduce_87,
-  0, 128, :_reduce_88,
-  1, 128, :_reduce_none,
-  2, 117, :_reduce_90,
-  1, 129, :_reduce_91,
-  3, 129, :_reduce_92,
+  1, 112, :_reduce_53,
+  1, 113, :_reduce_54,
+  1, 114, :_reduce_none,
+  1, 114, :_reduce_none,
+  0, 115, :_reduce_57,
   1, 115, :_reduce_none,
   1, 115, :_reduce_none,
-  1, 115, :_reduce_none,
-  1, 115, :_reduce_none,
-  2, 123, :_reduce_97,
-  3, 124, :_reduce_98,
-  1, 132, :_reduce_none,
-  1, 132, :_reduce_none,
-  3, 119, :_reduce_101,
-  3, 130, :_reduce_102,
-  3, 130, :_reduce_103,
-  3, 131, :_reduce_104,
-  1, 133, :_reduce_none,
-  1, 133, :_reduce_none,
-  3, 125, :_reduce_107,
-  3, 125, :_reduce_108,
-  3, 125, :_reduce_109,
-  3, 125, :_reduce_110,
-  3, 125, :_reduce_111,
-  4, 125, :_reduce_112,
-  3, 125, :_reduce_113,
-  2, 125, :_reduce_114,
-  2, 125, :_reduce_115,
-  3, 96, :_reduce_116,
-  1, 126, :_reduce_117,
-  2, 126, :_reduce_118,
-  3, 126, :_reduce_119,
+  2, 89, :_reduce_60,
+  2, 92, :_reduce_61,
+  2, 90, :_reduce_62,
+  2, 117, :_reduce_63,
+  2, 119, :_reduce_64,
+  2, 119, :_reduce_65,
+  1, 119, :_reduce_66,
+  4, 116, :_reduce_67,
+  0, 121, :_reduce_68,
+  1, 121, :_reduce_69,
+  2, 121, :_reduce_70,
+  3, 93, :_reduce_71,
+  0, 123, :_reduce_72,
+  1, 123, :_reduce_73,
+  4, 91, :_reduce_74,
+  3, 91, :_reduce_75,
+  3, 91, :_reduce_76,
+  3, 91, :_reduce_77,
+  5, 91, :_reduce_78,
+  1, 130, :_reduce_79,
+  3, 124, :_reduce_80,
+  2, 124, :_reduce_81,
+  2, 124, :_reduce_82,
+  1, 124, :_reduce_none,
+  0, 125, :_reduce_84,
+  1, 125, :_reduce_85,
+  3, 125, :_reduce_86,
+  3, 125, :_reduce_87,
+  1, 125, :_reduce_88,
+  0, 131, :_reduce_89,
+  1, 131, :_reduce_none,
+  2, 120, :_reduce_91,
+  1, 132, :_reduce_92,
+  3, 132, :_reduce_93,
+  1, 118, :_reduce_none,
+  1, 118, :_reduce_none,
+  1, 118, :_reduce_none,
+  1, 118, :_reduce_none,
+  2, 126, :_reduce_98,
+  3, 127, :_reduce_99,
   1, 135, :_reduce_none,
-  2, 135, :_reduce_none,
   1, 135, :_reduce_none,
-  2, 135, :_reduce_none,
-  0, 136, :_reduce_124,
+  3, 122, :_reduce_102,
+  3, 133, :_reduce_103,
+  3, 133, :_reduce_104,
+  3, 134, :_reduce_105,
   1, 136, :_reduce_none,
-  2, 136, :_reduce_none,
-  1, 134, :_reduce_127,
-  3, 134, :_reduce_128,
-  2, 137, :_reduce_129,
-  2, 137, :_reduce_130,
-  1, 137, :_reduce_131,
-  0, 139, :_reduce_132,
+  1, 136, :_reduce_none,
+  3, 128, :_reduce_108,
+  3, 128, :_reduce_109,
+  3, 128, :_reduce_110,
+  3, 128, :_reduce_111,
+  3, 128, :_reduce_112,
+  4, 128, :_reduce_113,
+  3, 128, :_reduce_114,
+  2, 128, :_reduce_115,
+  2, 128, :_reduce_116,
+  4, 98, :_reduce_117,
+  1, 129, :_reduce_118,
+  2, 129, :_reduce_119,
+  3, 129, :_reduce_120,
+  1, 138, :_reduce_none,
+  2, 138, :_reduce_none,
+  1, 138, :_reduce_none,
+  2, 138, :_reduce_none,
+  0, 139, :_reduce_125,
   1, 139, :_reduce_none,
-  1, 138, :_reduce_134,
-  3, 138, :_reduce_135,
-  1, 140, :_reduce_136,
-  3, 97, :_reduce_137,
-  1, 141, :_reduce_138,
-  3, 141, :_reduce_139,
-  0, 143, :_reduce_140,
-  1, 143, :_reduce_none,
-  2, 143, :_reduce_none,
-  1, 143, :_reduce_none,
-  2, 142, :_reduce_144,
-  3, 142, :_reduce_145,
-  3, 142, :_reduce_146,
-  2, 142, :_reduce_147,
-  3, 142, :_reduce_148,
-  3, 142, :_reduce_149,
-  4, 103, :_reduce_150,
-  5, 102, :_reduce_151,
-  0, 145, :_reduce_none,
-  3, 145, :_reduce_153,
-  1, 144, :_reduce_154,
-  2, 144, :_reduce_155,
-  4, 101, :_reduce_156,
-  1, 146, :_reduce_157,
-  3, 146, :_reduce_158,
-  1, 148, :_reduce_none,
-  2, 148, :_reduce_none,
-  1, 148, :_reduce_none,
-  2, 148, :_reduce_none,
-  2, 147, :_reduce_163,
-  3, 147, :_reduce_164,
-  1, 147, :_reduce_165,
-  2, 147, :_reduce_166,
-  4, 99, :_reduce_167,
-  4, 100, :_reduce_168,
-  1, 149, :_reduce_169,
-  3, 149, :_reduce_170,
-  1, 151, :_reduce_none,
-  1, 151, :_reduce_none,
-  2, 151, :_reduce_none,
-  1, 150, :_reduce_174,
-  2, 150, :_reduce_175,
-  5, 98, :_reduce_176,
-  0, 153, :_reduce_177,
-  3, 153, :_reduce_178,
-  4, 153, :_reduce_179,
-  1, 152, :_reduce_180,
-  3, 152, :_reduce_181,
+  2, 139, :_reduce_none,
+  1, 139, :_reduce_none,
+  1, 137, :_reduce_129,
+  3, 137, :_reduce_130,
+  2, 140, :_reduce_131,
+  2, 140, :_reduce_132,
+  1, 140, :_reduce_133,
+  0, 142, :_reduce_134,
+  1, 142, :_reduce_none,
+  1, 141, :_reduce_136,
+  3, 141, :_reduce_137,
+  1, 143, :_reduce_138,
+  4, 99, :_reduce_139,
+  1, 144, :_reduce_140,
+  3, 144, :_reduce_141,
+  2, 145, :_reduce_142,
+  3, 145, :_reduce_143,
+  3, 145, :_reduce_144,
+  2, 145, :_reduce_145,
+  3, 145, :_reduce_146,
+  3, 145, :_reduce_147,
+  4, 100, :_reduce_148,
+  1, 146, :_reduce_149,
+  3, 146, :_reduce_150,
+  3, 147, :_reduce_151,
+  4, 147, :_reduce_152,
+  4, 106, :_reduce_153,
+  5, 105, :_reduce_154,
+  0, 149, :_reduce_none,
+  3, 149, :_reduce_156,
+  1, 148, :_reduce_157,
+  2, 148, :_reduce_158,
+  4, 104, :_reduce_159,
+  1, 150, :_reduce_160,
+  3, 150, :_reduce_161,
+  1, 152, :_reduce_none,
+  2, 152, :_reduce_none,
+  1, 152, :_reduce_none,
+  2, 152, :_reduce_none,
+  2, 151, :_reduce_166,
+  3, 151, :_reduce_167,
+  1, 151, :_reduce_168,
+  2, 151, :_reduce_169,
+  4, 102, :_reduce_170,
+  4, 103, :_reduce_171,
+  1, 153, :_reduce_172,
+  3, 153, :_reduce_173,
   1, 155, :_reduce_none,
-  2, 155, :_reduce_183,
   1, 155, :_reduce_none,
-  2, 155, :_reduce_185,
-  3, 154, :_reduce_186,
-  0, 156, :_reduce_187,
-  1, 156, :_reduce_188,
-  0, 157, :_reduce_189,
-  6, 157, :_reduce_190,
-  3, 157, :_reduce_191,
-  4, 157, :_reduce_192,
-  3, 158, :_reduce_193,
-  1, 149, :_reduce_194,
-  2, 149, :_reduce_195,
+  2, 155, :_reduce_none,
+  1, 154, :_reduce_177,
+  2, 154, :_reduce_178,
+  5, 101, :_reduce_179,
+  0, 157, :_reduce_180,
+  3, 157, :_reduce_181,
+  4, 157, :_reduce_182,
+  1, 156, :_reduce_183,
+  3, 156, :_reduce_184,
   1, 159, :_reduce_none,
-  1, 159, :_reduce_none ]
+  2, 159, :_reduce_186,
+  1, 159, :_reduce_none,
+  2, 159, :_reduce_188,
+  3, 158, :_reduce_189,
+  0, 160, :_reduce_190,
+  1, 160, :_reduce_191,
+  0, 161, :_reduce_192,
+  6, 161, :_reduce_193,
+  3, 161, :_reduce_194,
+  4, 161, :_reduce_195,
+  3, 162, :_reduce_196,
+  1, 153, :_reduce_197,
+  2, 153, :_reduce_198,
+  1, 163, :_reduce_none,
+  1, 163, :_reduce_none ]
 
-racc_reduce_n = 198
+racc_reduce_n = 201
 
-racc_shift_n = 305
+racc_shift_n = 320
 
 racc_token_table = {
   false => 0,
@@ -445,55 +456,57 @@ racc_token_table = {
   :INLINE_ATTENDANCE_SEP => 29,
   :SCORE_LEGS => 30,
   :INLINE_GOALS => 31,
-  :ORD => 32,
-  "@" => 33,
-  :GEO => 34,
-  :INLINE_BYE => 35,
-  :INLINE_WO => 36,
-  "-" => 37,
-  :VS => 38,
-  :INLINE_NP => 39,
-  :INLINE_CANC => 40,
-  :INLINE_PPD => 41,
-  :SCORE_FULL => 42,
-  :SCORE_FULLER => 43,
-  :SCORE => 44,
-  :SCORE_AWD => 45,
-  :INLINE_ABD => 46,
-  :INLINE_SUSP => 47,
-  :INLINE_AWD => 48,
-  :SCORE_FULLER_MORE => 49,
-  :GOALS => 50,
-  :GOALS_NONE => 51,
-  ";" => 52,
-  :GOAL_SEP_ALT => 53,
-  :PLAYER => 54,
-  :GOAL_COUNT => 55,
-  :GOAL_MINUTE_SEP => 56,
-  :GOAL_MINUTE => 57,
-  :GOALS_ALT => 58,
-  :GOAL_TYPE => 59,
-  :PROP_ATTENDANCE => 60,
-  :PROP_NUM => 61,
-  :PROP_END => 62,
-  :PROP_REFEREE => 63,
-  :ATTENDANCE => 64,
-  :PROP_NAME => 65,
-  :ENCLOSED_NAME => 66,
-  :PROP_PENALTIES => 67,
-  :PROP_YELLOWCARDS => 68,
-  :PROP_REDCARDS => 69,
-  :MINUTE => 70,
-  :PROP => 71,
-  :COACH => 72,
-  "(" => 73,
-  ")" => 74,
-  "[" => 75,
-  "]" => 76,
-  :YELLOW_CARD => 77,
-  :RED_CARD => 78 }
+  :GOALS_END => 32,
+  :ORD => 33,
+  "@" => 34,
+  :GEO => 35,
+  :INLINE_BYE => 36,
+  :INLINE_WO => 37,
+  "-" => 38,
+  :VS => 39,
+  :INLINE_NP => 40,
+  :INLINE_CANC => 41,
+  :INLINE_PPD => 42,
+  :SCORE_FULL => 43,
+  :SCORE_FULLER => 44,
+  :SCORE => 45,
+  :SCORE_AWD => 46,
+  :INLINE_ABD => 47,
+  :INLINE_SUSP => 48,
+  :INLINE_AWD => 49,
+  :SCORE_FULLER_MORE => 50,
+  :GOALS => 51,
+  :GOALS_NONE => 52,
+  ";" => 53,
+  :GOAL_SEP_ALT => 54,
+  :PLAYER => 55,
+  :GOAL_COUNT => 56,
+  :GOAL_MINUTE_SEP => 57,
+  :GOAL_MINUTE => 58,
+  :GOALS_ALT => 59,
+  :GOAL_TYPE => 60,
+  :GOALS_COMPAT => 61,
+  :MINUTE => 62,
+  :PROP_ATTENDANCE => 63,
+  :PROP_NUM => 64,
+  :PROP_END => 65,
+  :PROP_REFEREE => 66,
+  :ATTENDANCE => 67,
+  :PROP_NAME => 68,
+  :ENCLOSED_NAME => 69,
+  :PROP_PENALTIES => 70,
+  :PROP_YELLOWCARDS => 71,
+  :PROP_REDCARDS => 72,
+  :PROP => 73,
+  :COACH => 74,
+  "(" => 75,
+  ")" => 76,
+  "[" => 77,
+  "]" => 78,
+  :YELLOW_CARD => 79,
+  :RED_CARD => 80 }
 
-racc_nt_base = 79
+racc_nt_base = 81
 
 racc_use_result_var = true
 
@@ -547,6 +560,7 @@ Racc_token_to_s_table = [
   "INLINE_ATTENDANCE_SEP",
   "SCORE_LEGS",
   "INLINE_GOALS",
+  "GOALS_END",
   "ORD",
   "\"@\"",
   "GEO",
@@ -575,6 +589,8 @@ Racc_token_to_s_table = [
   "GOAL_MINUTE",
   "GOALS_ALT",
   "GOAL_TYPE",
+  "GOALS_COMPAT",
+  "MINUTE",
   "PROP_ATTENDANCE",
   "PROP_NUM",
   "PROP_END",
@@ -585,7 +601,6 @@ Racc_token_to_s_table = [
   "PROP_PENALTIES",
   "PROP_YELLOWCARDS",
   "PROP_REDCARDS",
-  "MINUTE",
   "PROP",
   "COACH",
   "\"(\"",
@@ -613,6 +628,7 @@ Racc_token_to_s_table = [
   "table_line",
   "goal_lines",
   "goal_lines_alt",
+  "goal_lines_compat",
   "lineup_lines",
   "yellowcard_lines",
   "redcard_lines",
@@ -658,7 +674,8 @@ Racc_token_to_s_table = [
   "goal_minute",
   "goals_alt",
   "goal_alt",
-  "opt_goal_alt_sep",
+  "goals_compat",
+  "goal_compat",
   "referee",
   "attendance_opt",
   "penalties_body",
@@ -726,16 +743,16 @@ module_eval(<<'.,.,', 'parser.y', 18)
 
 # reduce 19 omitted
 
-module_eval(<<'.,.,', 'parser.y', 52)
-  def _reduce_20(val, _values, result)
+# reduce 20 omitted
+
+module_eval(<<'.,.,', 'parser.y', 54)
+  def _reduce_21(val, _values, result)
                    trace( "REDUCE BLANK" ) 
                @tree << BlankLine.new
 
     result
   end
 .,.,
-
-# reduce 21 omitted
 
 # reduce 22 omitted
 
@@ -747,8 +764,10 @@ module_eval(<<'.,.,', 'parser.y', 52)
 
 # reduce 26 omitted
 
-module_eval(<<'.,.,', 'parser.y', 62)
-  def _reduce_27(val, _values, result)
+# reduce 27 omitted
+
+module_eval(<<'.,.,', 'parser.y', 64)
+  def _reduce_28(val, _values, result)
      puts "!! skipping invalid content (trying to recover from parse error):"
                 pp val[0]
                 ##  note - do NOT report recover errors for now 
@@ -758,82 +777,82 @@ module_eval(<<'.,.,', 'parser.y', 62)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 74)
-  def _reduce_28(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 76)
+  def _reduce_29(val, _values, result)
       @tree << Heading1.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 75)
-  def _reduce_29(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 77)
+  def _reduce_30(val, _values, result)
       @tree << Heading2.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 76)
-  def _reduce_30(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 78)
+  def _reduce_31(val, _values, result)
       @tree << Heading3.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 79)
-  def _reduce_31(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 81)
+  def _reduce_32(val, _values, result)
      @tree << TableHeading.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 80)
-  def _reduce_32(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 82)
+  def _reduce_33(val, _values, result)
      @tree << TableLine.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 81)
-  def _reduce_33(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 83)
+  def _reduce_34(val, _values, result)
      @tree << TableNote.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 82)
-  def _reduce_34(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 84)
+  def _reduce_35(val, _values, result)
      @tree << TableDivider.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 85)
-  def _reduce_35(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 87)
+  def _reduce_36(val, _values, result)
      @tree << NoteLine.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 88)
-  def _reduce_36(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 90)
+  def _reduce_37(val, _values, result)
      @tree << NotaBene.new( text: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 91)
-  def _reduce_37(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 93)
+  def _reduce_38(val, _values, result)
      @tree << HRuler.new
     result
   end
 .,.,
 
-# reduce 38 omitted
-
 # reduce 39 omitted
 
-module_eval(<<'.,.,', 'parser.y', 103)
-  def _reduce_40(val, _values, result)
+# reduce 40 omitted
+
+module_eval(<<'.,.,', 'parser.y', 105)
+  def _reduce_41(val, _values, result)
                           @tree << GroupDef.new( name:  val[0],
                                              teams: val[2] )
 
@@ -841,8 +860,8 @@ module_eval(<<'.,.,', 'parser.y', 103)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 108)
-  def _reduce_41(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 110)
+  def _reduce_42(val, _values, result)
      result = val
                                                ## e.g. val is ["Austria"] 
 
@@ -850,22 +869,22 @@ module_eval(<<'.,.,', 'parser.y', 108)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 111)
-  def _reduce_42(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 113)
+  def _reduce_43(val, _values, result)
      result.push( val[1] )
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 112)
-  def _reduce_43(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 114)
+  def _reduce_44(val, _values, result)
      result.push( val[2] )
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 120)
-  def _reduce_44(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 122)
+  def _reduce_45(val, _values, result)
                                       kwargs = val[0][1]
                                   @tree << RoundOutline.new( **kwargs )
 
@@ -873,12 +892,12 @@ module_eval(<<'.,.,', 'parser.y', 120)
   end
 .,.,
 
-# reduce 45 omitted
-
 # reduce 46 omitted
 
-module_eval(<<'.,.,', 'parser.y', 137)
-  def _reduce_47(val, _values, result)
+# reduce 47 omitted
+
+module_eval(<<'.,.,', 'parser.y', 139)
+  def _reduce_48(val, _values, result)
                           kwargs = { name: val[0] }.merge( val[2] )
                       @tree << RoundDef.new( **kwargs )
 
@@ -891,68 +910,68 @@ module_eval(<<'.,.,', 'parser.y', 137)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 146)
-  def _reduce_48(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 148)
+  def _reduce_49(val, _values, result)
      result = { date: val[0][1] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 147)
-  def _reduce_49(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 149)
+  def _reduce_50(val, _values, result)
      result = { duration: val[0][1] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 154)
-  def _reduce_50(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 156)
+  def _reduce_51(val, _values, result)
      result = { date: val[0][1] }
     result
   end
 .,.,
 
-# reduce 51 omitted
+# reduce 52 omitted
 
-module_eval(<<'.,.,', 'parser.y', 158)
-  def _reduce_52(val, _values, result)
-     result = {}.merge( val[0][1] )
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'parser.y', 161)
+module_eval(<<'.,.,', 'parser.y', 160)
   def _reduce_53(val, _values, result)
      result = {}.merge( val[0][1] )
     result
   end
 .,.,
 
-# reduce 54 omitted
+module_eval(<<'.,.,', 'parser.y', 163)
+  def _reduce_54(val, _values, result)
+     result = {}.merge( val[0][1] )
+    result
+  end
+.,.,
 
 # reduce 55 omitted
 
-module_eval(<<'.,.,', 'parser.y', 171)
-  def _reduce_56(val, _values, result)
+# reduce 56 omitted
+
+module_eval(<<'.,.,', 'parser.y', 173)
+  def _reduce_57(val, _values, result)
       result = {}
     result
   end
 .,.,
 
-# reduce 57 omitted
-
 # reduce 58 omitted
 
-module_eval(<<'.,.,', 'parser.y', 184)
-  def _reduce_59(val, _values, result)
+# reduce 59 omitted
+
+module_eval(<<'.,.,', 'parser.y', 186)
+  def _reduce_60(val, _values, result)
                          @tree <<  DateHeader.new( **val[0] )  
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 190)
-  def _reduce_60(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 192)
+  def _reduce_61(val, _values, result)
                          kwargs =  val[0][1]  
                      @tree <<  DateHeaderLegs.new( **kwargs )                      
 
@@ -960,8 +979,8 @@ module_eval(<<'.,.,', 'parser.y', 190)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 201)
-  def _reduce_61(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 203)
+  def _reduce_62(val, _values, result)
                          ## todo/fix - add header flag (header: true)
                      ##    used downstream for scope / e.g. DateHeader merge/inheritance or such                     
                       kwargs = { header: true }.merge( val[0], val[1] )
@@ -971,17 +990,9 @@ module_eval(<<'.,.,', 'parser.y', 201)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 210)
-  def _reduce_62(val, _values, result)
-                          result = {}.merge( val[0], val[1] )
-
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'parser.y', 216)
+module_eval(<<'.,.,', 'parser.y', 212)
   def _reduce_63(val, _values, result)
-                          result = {}.merge( val[0][1] )
+                          result = {}.merge( val[0], val[1] )
 
     result
   end
@@ -989,51 +1000,59 @@ module_eval(<<'.,.,', 'parser.y', 216)
 
 module_eval(<<'.,.,', 'parser.y', 218)
   def _reduce_64(val, _values, result)
+                          result = {}.merge( val[0][1] )
+
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 220)
+  def _reduce_65(val, _values, result)
      result = { note: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 219)
-  def _reduce_65(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 221)
+  def _reduce_66(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 227)
-  def _reduce_66(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 229)
+  def _reduce_67(val, _values, result)
                           result = {}.merge( val[0], val[1], val[2] ) 
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 237)
-  def _reduce_67(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 239)
+  def _reduce_68(val, _values, result)
       result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 240)
-  def _reduce_68(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 242)
+  def _reduce_69(val, _values, result)
                            result = { att: val[0][1][:value] }
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 245)
-  def _reduce_69(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 247)
+  def _reduce_70(val, _values, result)
                            result = { att: val[1][1][:value] }
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 259)
-  def _reduce_70(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 261)
+  def _reduce_71(val, _values, result)
                           kwargs = { score: val[1][1] }.merge( val[0] )
                       @tree << MatchLineLegs.new( **kwargs )             
 
@@ -1041,22 +1060,22 @@ module_eval(<<'.,.,', 'parser.y', 259)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 265)
-  def _reduce_71(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 267)
+  def _reduce_72(val, _values, result)
       result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 266)
-  def _reduce_72(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 268)
+  def _reduce_73(val, _values, result)
       result = { note: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 272)
-  def _reduce_73(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 274)
+  def _reduce_74(val, _values, result)
                            kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
 
@@ -1064,8 +1083,8 @@ module_eval(<<'.,.,', 'parser.y', 272)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 277)
-  def _reduce_74(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 279)
+  def _reduce_75(val, _values, result)
                            kwargs = {}.merge( val[0], val[1] )
                        @tree << MatchLine.new( **kwargs )
 
@@ -1073,8 +1092,8 @@ module_eval(<<'.,.,', 'parser.y', 277)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 283)
-  def _reduce_75(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 285)
+  def _reduce_76(val, _values, result)
                              kwargs = {}.merge( val[0], val[1] )
                          @tree << MatchLineBye.new( **kwargs ) 
 
@@ -1082,8 +1101,8 @@ module_eval(<<'.,.,', 'parser.y', 283)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 288)
-  def _reduce_76(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 290)
+  def _reduce_77(val, _values, result)
                              kwargs = {}.merge( val[0], val[1] )
                          @tree << MatchLineWalkover.new( **kwargs )
 
@@ -1091,8 +1110,8 @@ module_eval(<<'.,.,', 'parser.y', 288)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 299)
-  def _reduce_77(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 301)
+  def _reduce_78(val, _values, result)
                           kwargs = {}.merge( val[0] )
                       @tree << MatchLine.new( **kwargs )
 
@@ -1103,30 +1122,22 @@ module_eval(<<'.,.,', 'parser.y', 299)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 315)
-  def _reduce_78(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 317)
+  def _reduce_79(val, _values, result)
       result = { num: val[0][1][:value] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 320)
-  def _reduce_79(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 322)
+  def _reduce_80(val, _values, result)
                                          result = {}.merge( val[0], val[1], val[2] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 323)
-  def _reduce_80(val, _values, result)
-                                         result = {}.merge( val[0], val[1] )
-
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'parser.y', 326)
+module_eval(<<'.,.,', 'parser.y', 325)
   def _reduce_81(val, _values, result)
                                          result = {}.merge( val[0], val[1] )
 
@@ -1134,34 +1145,34 @@ module_eval(<<'.,.,', 'parser.y', 326)
   end
 .,.,
 
-# reduce 82 omitted
+module_eval(<<'.,.,', 'parser.y', 328)
+  def _reduce_82(val, _values, result)
+                                         result = {}.merge( val[0], val[1] )
 
-module_eval(<<'.,.,', 'parser.y', 336)
-  def _reduce_83(val, _values, result)
+    result
+  end
+.,.,
+
+# reduce 83 omitted
+
+module_eval(<<'.,.,', 'parser.y', 338)
+  def _reduce_84(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 339)
-  def _reduce_84(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 341)
+  def _reduce_85(val, _values, result)
                           result = {}.merge( val[0][1] ) 
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 343)
-  def _reduce_85(val, _values, result)
-                         result = {}.merge( val[0][1], val[1], val[2] ) 
-
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'parser.y', 347)
+module_eval(<<'.,.,', 'parser.y', 345)
   def _reduce_86(val, _values, result)
-                       result = {}.merge( val[0], val[1], val[2] ) 
+                         result = {}.merge( val[0][1], val[1], val[2] ) 
 
     result
   end
@@ -1169,42 +1180,48 @@ module_eval(<<'.,.,', 'parser.y', 347)
 
 module_eval(<<'.,.,', 'parser.y', 349)
   def _reduce_87(val, _values, result)
+                       result = {}.merge( val[0], val[1], val[2] ) 
+
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 351)
+  def _reduce_88(val, _values, result)
      result = { note: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 354)
-  def _reduce_88(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 356)
+  def _reduce_89(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-# reduce 89 omitted
+# reduce 90 omitted
 
-module_eval(<<'.,.,', 'parser.y', 360)
-  def _reduce_90(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 362)
+  def _reduce_91(val, _values, result)
      result = { geo: val[1] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 363)
-  def _reduce_91(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 365)
+  def _reduce_92(val, _values, result)
       result = val
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 364)
-  def _reduce_92(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 366)
+  def _reduce_93(val, _values, result)
       result.push( val[2] )
     result
   end
 .,.,
-
-# reduce 93 omitted
 
 # reduce 94 omitted
 
@@ -1212,16 +1229,18 @@ module_eval(<<'.,.,', 'parser.y', 364)
 
 # reduce 96 omitted
 
-module_eval(<<'.,.,', 'parser.y', 380)
-  def _reduce_97(val, _values, result)
+# reduce 97 omitted
+
+module_eval(<<'.,.,', 'parser.y', 382)
+  def _reduce_98(val, _values, result)
                           result = { team: val[0] }
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 386)
-  def _reduce_98(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 388)
+  def _reduce_99(val, _values, result)
                           result = { team1: val[0],
                                  team2: val[2] }
 
@@ -1229,12 +1248,12 @@ module_eval(<<'.,.,', 'parser.y', 386)
   end
 .,.,
 
-# reduce 99 omitted
-
 # reduce 100 omitted
 
-module_eval(<<'.,.,', 'parser.y', 396)
-  def _reduce_101(val, _values, result)
+# reduce 101 omitted
+
+module_eval(<<'.,.,', 'parser.y', 398)
+  def _reduce_102(val, _values, result)
                                    trace( "RECUDE match_fixture" )
                                result = { team1: val[0],
                                           team2: val[2] }   
@@ -1243,8 +1262,8 @@ module_eval(<<'.,.,', 'parser.y', 396)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 404)
-  def _reduce_102(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 406)
+  def _reduce_103(val, _values, result)
                                    ## note - auto-add (match) status canceled - why? why not?
                                ##   A n/p B   short (inline) form of =>
                                ##   A v B [canceled]
@@ -1257,8 +1276,8 @@ module_eval(<<'.,.,', 'parser.y', 404)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 414)
-  def _reduce_103(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 416)
+  def _reduce_104(val, _values, result)
                                    result = { team1: val[0],
                                           team2: val[2],
                                           status_inline: 'canceled' }   
@@ -1267,8 +1286,8 @@ module_eval(<<'.,.,', 'parser.y', 414)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 421)
-  def _reduce_104(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 423)
+  def _reduce_105(val, _values, result)
                                    result = { team1: val[0],
                                           team2: val[2],
                                           status_inline: 'postponed' }   
@@ -1277,12 +1296,12 @@ module_eval(<<'.,.,', 'parser.y', 421)
   end
 .,.,
 
-# reduce 105 omitted
-
 # reduce 106 omitted
 
-module_eval(<<'.,.,', 'parser.y', 436)
-  def _reduce_107(val, _values, result)
+# reduce 107 omitted
+
+module_eval(<<'.,.,', 'parser.y', 438)
+  def _reduce_108(val, _values, result)
                                trace( "REDUCE => match_result : TEAM SCORE TEAM" )
  
                           ## note - use/keep generic score (as array!! NOT hash!!!)
@@ -1295,8 +1314,8 @@ module_eval(<<'.,.,', 'parser.y', 436)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 446)
-  def _reduce_108(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 448)
+  def _reduce_109(val, _values, result)
                                result = { team1: val[0], team2: val[2],
                                       score: val[1][1],
                                       status_inline: 'awarded'
@@ -1306,8 +1325,8 @@ module_eval(<<'.,.,', 'parser.y', 446)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 453)
-  def _reduce_109(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 455)
+  def _reduce_110(val, _values, result)
                                result = { team1: val[0], team2: val[2], 
                                       status_inline: 'abandoned' 
                                     }                          
@@ -1316,8 +1335,8 @@ module_eval(<<'.,.,', 'parser.y', 453)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 459)
-  def _reduce_110(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 461)
+  def _reduce_111(val, _values, result)
                                result = { team1: val[0], team2: val[2], 
                                       status_inline: 'suspended' 
                                     }                          
@@ -1326,8 +1345,8 @@ module_eval(<<'.,.,', 'parser.y', 459)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 465)
-  def _reduce_111(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 467)
+  def _reduce_112(val, _values, result)
                                result = { team1: val[0], team2: val[2], 
                                       status_inline: 'awarded' 
                                     }                          
@@ -1336,8 +1355,8 @@ module_eval(<<'.,.,', 'parser.y', 465)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 472)
-  def _reduce_112(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 474)
+  def _reduce_113(val, _values, result)
                                 trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
                             score = nil
                             score =  if val[3][1][:score] && 
@@ -1365,8 +1384,8 @@ module_eval(<<'.,.,', 'parser.y', 472)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 497)
-  def _reduce_113(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 499)
+  def _reduce_114(val, _values, result)
                                result = { team1: val[0],
                                       team2: val[2],
                                       score: val[1][1]
@@ -1376,8 +1395,8 @@ module_eval(<<'.,.,', 'parser.y', 497)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 504)
-  def _reduce_114(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 506)
+  def _reduce_115(val, _values, result)
                               trace( "REDUCE  => match_result : match_fixture SCORE" )
                           ## note - use/keep generic score (as array!! NOT hash!!!)
                           result = { score: val[1][1][:score]  ## note - as array e.g. [1,1] !! 
@@ -1388,8 +1407,8 @@ module_eval(<<'.,.,', 'parser.y', 504)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 512)
-  def _reduce_115(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 514)
+  def _reduce_116(val, _values, result)
                               trace( "REDUCE  => match_result : match_fixture score" )
                           result = { score: val[1][1] }.merge( val[0] )  
                           ## pp result
@@ -1398,8 +1417,8 @@ module_eval(<<'.,.,', 'parser.y', 512)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 551)
-  def _reduce_116(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 553)
+  def _reduce_117(val, _values, result)
                              kwargs = val[1]
                          @tree << GoalLine.new( **kwargs )
 
@@ -1407,8 +1426,8 @@ module_eval(<<'.,.,', 'parser.y', 551)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 556)
-  def _reduce_117(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 558)
+  def _reduce_118(val, _values, result)
       result = { goals1: val[0],
                                                               goals2: [] } 
 
@@ -1416,8 +1435,8 @@ module_eval(<<'.,.,', 'parser.y', 556)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 559)
-  def _reduce_118(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 561)
+  def _reduce_119(val, _values, result)
       result = { goals1: [],
                                                               goals2: val[1] } 
 
@@ -1425,8 +1444,8 @@ module_eval(<<'.,.,', 'parser.y', 559)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 562)
-  def _reduce_119(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 564)
+  def _reduce_120(val, _values, result)
       result = { goals1: val[0],
                                                               goals2: val[2] }
 
@@ -1434,41 +1453,43 @@ module_eval(<<'.,.,', 'parser.y', 562)
   end
 .,.,
 
-# reduce 120 omitted
-
 # reduce 121 omitted
 
 # reduce 122 omitted
 
 # reduce 123 omitted
 
-module_eval(<<'.,.,', 'parser.y', 573)
-  def _reduce_124(val, _values, result)
+# reduce 124 omitted
+
+module_eval(<<'.,.,', 'parser.y', 575)
+  def _reduce_125(val, _values, result)
     
     result
   end
 .,.,
 
-# reduce 125 omitted
-
 # reduce 126 omitted
 
-module_eval(<<'.,.,', 'parser.y', 577)
-  def _reduce_127(val, _values, result)
+# reduce 127 omitted
+
+# reduce 128 omitted
+
+module_eval(<<'.,.,', 'parser.y', 580)
+  def _reduce_129(val, _values, result)
      result = val
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 578)
-  def _reduce_128(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 581)
+  def _reduce_130(val, _values, result)
      result.push( val[2])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 586)
-  def _reduce_129(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 589)
+  def _reduce_131(val, _values, result)
                            result = Goal.new( player:  val[0],
                                           minutes: val[1] )   
 
@@ -1476,8 +1497,8 @@ module_eval(<<'.,.,', 'parser.y', 586)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 591)
-  def _reduce_130(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 594)
+  def _reduce_132(val, _values, result)
                             ### todo/check:
                         ##    auto convert/expand 
                         ##    count to minutes - why? why not?
@@ -1489,8 +1510,8 @@ module_eval(<<'.,.,', 'parser.y', 591)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 600)
-  def _reduce_131(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 603)
+  def _reduce_133(val, _values, result)
                             result = Goal.new( player: val[0],
                                            minutes: [] )
 
@@ -1498,31 +1519,31 @@ module_eval(<<'.,.,', 'parser.y', 600)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 607)
-  def _reduce_132(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 610)
+  def _reduce_134(val, _values, result)
     
     result
   end
 .,.,
 
-# reduce 133 omitted
+# reduce 135 omitted
 
-module_eval(<<'.,.,', 'parser.y', 610)
-  def _reduce_134(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 613)
+  def _reduce_136(val, _values, result)
       result = val
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 611)
-  def _reduce_135(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 614)
+  def _reduce_137(val, _values, result)
       result.push( val[2])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 615)
-  def _reduce_136(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 618)
+  def _reduce_138(val, _values, result)
                                  kwargs = {}.merge( val[0][1] )
                              result = GoalMinute.new( **kwargs )  
 
@@ -1530,43 +1551,30 @@ module_eval(<<'.,.,', 'parser.y', 615)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 632)
-  def _reduce_137(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 635)
+  def _reduce_139(val, _values, result)
                                  @tree << GoalLineAlt.new( goals: val[1] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 636)
-  def _reduce_138(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 639)
+  def _reduce_140(val, _values, result)
      result = val
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 639)
-  def _reduce_139(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 642)
+  def _reduce_141(val, _values, result)
      result.push( val[2])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 642)
-  def _reduce_140(val, _values, result)
-    
-    result
-  end
-.,.,
-
-# reduce 141 omitted
-
-# reduce 142 omitted
-
-# reduce 143 omitted
-
-module_eval(<<'.,.,', 'parser.y', 650)
-  def _reduce_144(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 648)
+  def _reduce_142(val, _values, result)
                                result = GoalAlt.new( score:   val[0][1][:score],
                                                  player:  val[1] )
 
@@ -1574,83 +1582,114 @@ module_eval(<<'.,.,', 'parser.y', 650)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 655)
+module_eval(<<'.,.,', 'parser.y', 653)
+  def _reduce_143(val, _values, result)
+                               goal_minute = GoalMinute.new( **val[2][1] )
+
+                           result = GoalAlt.new( score:     val[0][1][:score],
+                                                 player:    val[1],
+                                                 minute:    goal_minute.to_minute,
+                                                 goal_type: goal_minute.to_goal_type )
+
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 662)
+  def _reduce_144(val, _values, result)
+                               result = GoalAlt.new( score:     val[0][1][:score],
+                                                 player:    val[1],
+                                                 goal_type: GoalType.new( **val[2][1] ))
+
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 672)
   def _reduce_145(val, _values, result)
-                               kwargs = {}.merge( val[2][1] )
-                           goal_minute = GoalMinute.new( **kwargs )
-                           minute    = goal_minute.to_minute
-                           goal_type = goal_minute.to_goal_type 
-
-                           result = GoalAlt.new( score:  val[0][1][:score],
-                                                 player: val[1],
-                                                 minute: minute,
-                                                 goal_type: goal_type )
+                               result = GoalAlt.new( player:  val[0],
+                                                 score:   val[1][1][:score] )                         
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 667)
+module_eval(<<'.,.,', 'parser.y', 677)
   def _reduce_146(val, _values, result)
-                               kwargs = {}.merge( val[2][1] )
-                           goal_type = GoalType.new( **kwargs )
-
-                           result = GoalAlt.new( score:  val[0][1][:score],
-                                                 player: val[1],
-                                                 goal_type: goal_type )
+                               goal_minute = GoalMinute.new( **val[1][1] )
+ 
+                           result = GoalAlt.new( player:    val[0],
+                                                 minute:    goal_minute.to_minute,
+                                                 goal_type: goal_minute.to_goal_type,
+                                                 score:     val[2][1][:score] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 680)
+module_eval(<<'.,.,', 'parser.y', 686)
   def _reduce_147(val, _values, result)
-                               result = GoalAlt.new( score:   val[1][1][:score],
-                                                 player:  val[0] )                         
+                               result = GoalAlt.new( player:    val[0],
+                                                 goal_type: GoalType.new( **val[1][1] ),
+                                                 score:     val[2][1][:score] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 685)
+module_eval(<<'.,.,', 'parser.y', 698)
   def _reduce_148(val, _values, result)
-                               kwargs = {}.merge( val[1][1] )
-                           goal_minute = GoalMinute.new( **kwargs )
-                           minute    = goal_minute.to_minute
-                           goal_type = goal_minute.to_goal_type 
-
-                           result = GoalAlt.new( score:  val[2][1][:score],
-                                                 player: val[0],
-                                                 minute: minute,
-                                                 goal_type: goal_type )
+                                 @tree << GoalLineCompat.new( goals: val[1] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 697)
+module_eval(<<'.,.,', 'parser.y', 702)
   def _reduce_149(val, _values, result)
-                               kwargs = {}.merge( val[1][1] )
-                           goal_type = GoalType.new( **kwargs )
+     result = val
+    result
+  end
+.,.,
 
-                           result = GoalAlt.new( score:  val[2][1][:score],
-                                                 player: val[0],
-                                                 goal_type: goal_type )
+module_eval(<<'.,.,', 'parser.y', 704)
+  def _reduce_150(val, _values, result)
+     result.push( val[2])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 723)
+  def _reduce_151(val, _values, result)
+                               result = GoalCompat.new( minute:  Minute.new(**val[0][1]),
+                                                    player:  val[1],
+                                                    score:  val[2][1][:score] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 713)
-  def _reduce_150(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 729)
+  def _reduce_152(val, _values, result)
+                               result = GoalCompat.new( minute: Minute.new(**val[0][1]),
+                                                    player: val[1],
+                                                    goal_type: GoalType.new( **val[2][1] ),
+                                                    score:  val[3][1][:score] )
+
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 742)
+  def _reduce_153(val, _values, result)
                                      @tree << AttendanceLine.new( att: val[1][1][:value] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 719)
-  def _reduce_151(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 748)
+  def _reduce_154(val, _values, result)
                                    kwargs = val[1] 
                                @tree << RefereeLine.new( **kwargs ) 
 
@@ -1658,62 +1697,62 @@ module_eval(<<'.,.,', 'parser.y', 719)
   end
 .,.,
 
-# reduce 152 omitted
+# reduce 155 omitted
 
-module_eval(<<'.,.,', 'parser.y', 726)
-  def _reduce_153(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 755)
+  def _reduce_156(val, _values, result)
                                      @tree << AttendanceLine.new( att: val[2][1][:value] )
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 731)
-  def _reduce_154(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 760)
+  def _reduce_157(val, _values, result)
       result = { name: val[0]}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 733)
-  def _reduce_155(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 762)
+  def _reduce_158(val, _values, result)
       result = { name: val[0], country: val[1] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 738)
-  def _reduce_156(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 767)
+  def _reduce_159(val, _values, result)
                                    @tree << PenaltiesLine.new( penalties: val[1] )                                                            
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 741)
-  def _reduce_157(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 770)
+  def _reduce_160(val, _values, result)
       result = [val[0]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 742)
-  def _reduce_158(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 771)
+  def _reduce_161(val, _values, result)
       result << val[2]
     result
   end
 .,.,
 
-# reduce 159 omitted
-
-# reduce 160 omitted
-
-# reduce 161 omitted
-
 # reduce 162 omitted
 
-module_eval(<<'.,.,', 'parser.y', 752)
-  def _reduce_163(val, _values, result)
+# reduce 163 omitted
+
+# reduce 164 omitted
+
+# reduce 165 omitted
+
+module_eval(<<'.,.,', 'parser.y', 781)
+  def _reduce_166(val, _values, result)
                                      result = Penalty.new( score: val[0][1][:score],
                                                        name: val[1] )
 
@@ -1721,8 +1760,8 @@ module_eval(<<'.,.,', 'parser.y', 752)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 757)
-  def _reduce_164(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 786)
+  def _reduce_167(val, _values, result)
                                      result = Penalty.new( score: val[0][1][:score],
                                                        name: val[1],
                                                        note: val[2] )
@@ -1731,16 +1770,16 @@ module_eval(<<'.,.,', 'parser.y', 757)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 763)
-  def _reduce_165(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 792)
+  def _reduce_168(val, _values, result)
                                      result = Penalty.new( name: val[0] )                                
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 767)
-  def _reduce_166(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 796)
+  def _reduce_169(val, _values, result)
                                      result = Penalty.new( name: val[0],
                                                        note: val[1] )                                
 
@@ -1748,58 +1787,58 @@ module_eval(<<'.,.,', 'parser.y', 767)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 774)
-  def _reduce_167(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 803)
+  def _reduce_170(val, _values, result)
                                    @tree << CardsLine.new( type: 'Y', bookings: val[1] )                               
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 778)
-  def _reduce_168(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 807)
+  def _reduce_171(val, _values, result)
                                    @tree << CardsLine.new( type: 'R', bookings: val[1] )                    
 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 785)
-  def _reduce_169(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 814)
+  def _reduce_172(val, _values, result)
        result = [val[0]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 787)
-  def _reduce_170(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 816)
+  def _reduce_173(val, _values, result)
       result << val[2]
     result
   end
 .,.,
 
-# reduce 171 omitted
+# reduce 174 omitted
 
-# reduce 172 omitted
+# reduce 175 omitted
 
-# reduce 173 omitted
+# reduce 176 omitted
 
-module_eval(<<'.,.,', 'parser.y', 794)
-  def _reduce_174(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 823)
+  def _reduce_177(val, _values, result)
      result = Booking.new( name: val[0] )
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 796)
-  def _reduce_175(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 825)
+  def _reduce_178(val, _values, result)
      result = Booking.new( name: val[0], minute: val[1][1] )
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 804)
-  def _reduce_176(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 833)
+  def _reduce_179(val, _values, result)
                               kwargs = { team:    val[0],
                                      lineup:  val[1]  }.merge( val[2] ) 
                           @tree << LineupLine.new( **kwargs ) 
@@ -1808,36 +1847,36 @@ module_eval(<<'.,.,', 'parser.y', 804)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 810)
-  def _reduce_177(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 839)
+  def _reduce_180(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 812)
-  def _reduce_178(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 841)
+  def _reduce_181(val, _values, result)
       result = { coach: val[2] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 814)
-  def _reduce_179(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 843)
+  def _reduce_182(val, _values, result)
       result = { coach: val[3] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 817)
-  def _reduce_180(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 846)
+  def _reduce_183(val, _values, result)
      result = [[val[0]]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 820)
-  def _reduce_181(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 849)
+  def _reduce_184(val, _values, result)
                            ## if lineup_sep is -  start a new sub array!!
                        if val[1] == '-'
                           result << [val[2]]
@@ -1849,26 +1888,26 @@ module_eval(<<'.,.,', 'parser.y', 820)
   end
 .,.,
 
-# reduce 182 omitted
+# reduce 185 omitted
 
-module_eval(<<'.,.,', 'parser.y', 830)
-  def _reduce_183(val, _values, result)
-     result = val[0]
-    result
-  end
-.,.,
-
-# reduce 184 omitted
-
-module_eval(<<'.,.,', 'parser.y', 832)
-  def _reduce_185(val, _values, result)
-     result = val[0]
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'parser.y', 837)
+module_eval(<<'.,.,', 'parser.y', 859)
   def _reduce_186(val, _values, result)
+     result = val[0]
+    result
+  end
+.,.,
+
+# reduce 187 omitted
+
+module_eval(<<'.,.,', 'parser.y', 861)
+  def _reduce_188(val, _values, result)
+     result = val[0]
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 866)
+  def _reduce_189(val, _values, result)
                                   kwargs = { name: val[0] }.merge( val[1] ).merge( val[2] )
                               result = Lineup.new( **kwargs )
 
@@ -1876,29 +1915,29 @@ module_eval(<<'.,.,', 'parser.y', 837)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 841)
-  def _reduce_187(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 870)
+  def _reduce_190(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 842)
-  def _reduce_188(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 871)
+  def _reduce_191(val, _values, result)
      result = { card: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 859)
-  def _reduce_189(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 888)
+  def _reduce_192(val, _values, result)
      result = {}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 862)
-  def _reduce_190(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 891)
+  def _reduce_193(val, _values, result)
                                   kwargs = { name: val[1] }.merge( val[2] ).merge( val[4] )
                               sub    = Sub.new( sub:    Lineup.new( **kwargs ),
                                                 minute: Minute.new(val[3][1]) 
@@ -1909,8 +1948,8 @@ module_eval(<<'.,.,', 'parser.y', 862)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 870)
-  def _reduce_191(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 899)
+  def _reduce_194(val, _values, result)
                                   sub = Sub.new( sub: val[1] )
                               result = { sub: sub }
 
@@ -1918,8 +1957,8 @@ module_eval(<<'.,.,', 'parser.y', 870)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 876)
-  def _reduce_192(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 905)
+  def _reduce_195(val, _values, result)
                                   sub = Sub.new( sub:    val[2],
                                              minute: Minute.new(val[1][1]) 
                                             )
@@ -1929,8 +1968,8 @@ module_eval(<<'.,.,', 'parser.y', 876)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 886)
-  def _reduce_193(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 915)
+  def _reduce_196(val, _values, result)
                                   kwargs = val[1]
                               result = Card.new( **kwargs )
 
@@ -1938,15 +1977,15 @@ module_eval(<<'.,.,', 'parser.y', 886)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 891)
-  def _reduce_194(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 920)
+  def _reduce_197(val, _values, result)
      result = { name: val[0] }
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 893)
-  def _reduce_195(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 922)
+  def _reduce_198(val, _values, result)
      result = { name: val[0],
                                         minute: Minute.new(val[1][1]) } 
 
@@ -1954,9 +1993,9 @@ module_eval(<<'.,.,', 'parser.y', 893)
   end
 .,.,
 
-# reduce 196 omitted
+# reduce 199 omitted
 
-# reduce 197 omitted
+# reduce 200 omitted
 
 def _reduce_none(val, _values, result)
   val[0]

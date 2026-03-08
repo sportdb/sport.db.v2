@@ -115,6 +115,62 @@ txt = <<-TXT
       Matthias Seidl  2-1)   
 
 
+
+###################
+# for World Cup 1954 score samples,
+#        see https://www.rsssf.org/tables/54full.html
+
+(1-0 Baltazar 24, 2-0 Didi 29 f, 3-0 Pinga 34, 4-0 Pinga 42, 5-0 Julinho 90)
+
+(1-0 Vincent 19, 2-0 Cárdenas 46 o, 2-1 Lamadrid 54, 
+ 2-2 Balcázar 85, 3-2 Kopa 88 p)
+
+(1-0 Puskás 11, 2-0 Lantos 16 f, 3-0 Kocsis 24, 4-0 Kocsis 31, 5-0 Kocsis 49,
+ 6-0 Czibor 59, 7-0 Palotás 76, 8-0 Palotás 83, 9-0 Puskás 89)
+
+(0-1 Suat 3, 1-1 Schäfer 12, 2-1 Klodt 51, 3-1 O.Walter 80, 4-1 Morlock 84)
+
+(1-0 Kocsis 4, 2-0 Puskás 17, 3-0 Kocsis 21, 3-1 Pfaff 28, 4-1 Hidegkuti 52,
+ 5-1 Hidegkuti 56, 6-1 Kocsis 69, 7-1 J.Tóth 75, 7-2 Rahn 76, 8-2 Kocsis 79,
+ 8-3 Hermann 84)
+
+(1-0 Suat 18, 2-0 Lefter 18, 3-0 Suat 30, 4-0 Burhan 38, 5-0 Burhan 64, 
+ 6-0 Burhan 70 h, 7-0 Erol 76)
+
+(1-0 O.Walter 7, 2-0 Schäfer 11, 2-1 Mustafa 22 h, 3-1 Morlock 31, 
+ 4-1 Morlock 62, 5-1 F.Walter 63, 6-1 Morlock 71, 7-1 Schäfer 79, 7-2 Lefter 84)
+
+ (1-0 Miguez 70 h, 2-0 Schiaffino 84 f)
+
+ (0-1 Anoul 6, 1-1 Broadis 25, 2-1 Lofthouse 37 h, 3-1 Broadis 62, 
+  3-2 Anoul 72 h, 3-3 Coppens 76, 4-3 Lofthouse 92, 4-4 Dickinson 93 o)
+
+(0-1 Ballaman 16, 0-2 Hügi 17, 0-3 Hügi 23, 1-3 Wagner 25, 2-2 A.Körner 26,
+ 3-3 Wagner 28, 4-3 Ocwirk 32, 5-3 A.Körner 34, 5-4 Ballaman 41, 
+ 6-4 Wagner 52, 6-5 Hügi 60, 7-5 Probst 77)
+
+(1-0 Hidegkuti 4
+ 2-0 Kocsis 7 h
+ 2-1 D.Santos 18 p
+ 3-1 Lántós 53 p 
+ 3-2 Julinho 65
+ 4-2 Kocsis 88 h)
+
+(1-0 Hidegkuti 4'
+ 2-0 Kocsis 7'(h)
+ 2-1 D.Santos 18'(p)
+ 3-1 Lántós 53'(p) 
+ 3-2 Julinho 65'
+ 4-2 Kocsis 88'(h))
+
+(1-0 Horvat 10 o, 2-0 Rahn 86)
+(1-0 Horvat 10'(o), 2-0 Rahn 86')
+
+(1-0 Stojaspal 16 p, 1-1 Hohberg 21, 2-1 Cruz 59 o, 3-1 Ocwirk 79)
+
+(0-1 Puskás 6, 0-2 Czibor 9, 1-2 Morlock 11, 2-2 Rahn 18, 3-2 Rahn 84)
+
+
 TXT
 
 

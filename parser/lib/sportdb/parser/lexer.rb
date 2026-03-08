@@ -449,18 +449,30 @@ def _tokenize_line( line )
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
     elsif (m = START_GOAL_LINE_RE.match( line ))   ## line starting with ( - assume
-      ##  switch context to GOAL_RE (goalline(s)
-  
+      ##  switch context to GOAL_RE (goalline(s))
       ####
-      ##  check for alt goal line
-      m_alt = START_GOAL_LINE_ALT_RE.match( line )
-      
-      if m_alt
+      ##  note - check for alternate goal line styles / formats    
+      if START_GOAL_LINE_COMPAT_RE.match(line ) 
+        ## "legacy" style starting with minute e.g. 
+        ##  (6 Puskás 0-1, 9 Czibor 0-2, 11 Morlock 1-2, 18 Rahn 2-2,
+        ##    84 Rahn 3-2)
+        @re = GOAL_COMPAT_RE
+        puts "  ENTER GOAL_COMPAT_RE MODE"   if debug?
+
+        tokens << [:GOALS_COMPAT, "<|GOALS_COMPAT|>"]
+      elsif START_GOAL_LINE_ALT_RE.match( line )
+        ##  goals with scores e.g. 
+        ##    (1-0 Franck Ribéry, 2-0 Ivica Olić, 2-1 Wayne Rooney)
+        ##         -or-
+        ##      (Dion Beljo  1-0 
+        ##                   1-1  Andreas Gruber 
+        ##   Matthias Seidl  2-1)   
         @re = GOAL_ALT_RE
         puts "  ENTER GOAL_ALT_RE MODE"   if debug?
 
         tokens << [:GOALS_ALT, "<|GOALS_ALT|>"]
       else
+        ## "standard" / default style
         @re = GOAL_RE
         puts "  ENTER GOAL_RE MODE"   if debug?
 
@@ -782,6 +794,49 @@ def _tokenize_line( line )
             puts "!!! TOKENIZE ERROR (PROP_PENALTIES_RE) - no match found"
             nil 
          end
+      elsif @re == GOAL_COMPAT_RE 
+         if m[:space] || m[:spaces]
+              nil    ## skip space(s)
+         elsif m[:prop_name]    ## note - change prop_name to player
+             [:PLAYER, m[:name]] 
+         elsif m[:minute]
+              minute = _build_minute( m )
+             [:MINUTE, [m[:minute], minute]]
+         elsif m[:goal_type]
+              goal_type = _build_goal_type( m )
+             [:GOAL_TYPE, [m[:goal_type], goal_type]]
+         elsif m[:score]
+            score = {}
+             ##  note - score is "generic"
+            ##      might be full-time (ft) or
+            ##         after extra-time (aet) or such
+            ##         or even undecided/unknown
+            ##    thus, use score1/score2 and NOT ft1/ft2
+            score[:score] = [m[:score1].to_i(10),
+                             m[:score2].to_i(10)]  
+            ## note - for debugging keep (pass along) "literal" score
+            [:SCORE, [m[:score], score]]
+         elsif m[:sym]
+            sym = m[:sym]
+            ## return symbols "inline" as is - why? why not?
+            ## (?<sym>[;,@|\[\]-])
+ 
+            case sym
+            when ',' then [:',']
+            when ')'  ## leave goal mode!!
+                puts "  LEAVE GOAL_COMPAT_RE MODE"   if debug?
+                @re = RE
+                ##  note - use/return GOAL_END token   - change to GOAL_END_PAREN(THESIS)
+                ##                                or GOAL_PAREN_CLOSE/END ???
+                [:GOALS_END, '<|GOALS_END|>']
+            else
+              nil  ## ignore others (e.g. brackets [])
+            end
+         else
+            ## report error
+            puts "!!! TOKENIZE ERROR (GOAL_COMPAT_RE) - no match found"
+            nil 
+         end
       elsif @re == GOAL_ALT_RE 
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
@@ -814,7 +869,9 @@ def _tokenize_line( line )
             when ')'  ## leave goal mode!!
                 puts "  LEAVE GOAL_ALT_RE MODE"   if debug?
                 @re = RE
-                nil
+                ##  note - use/return GOAL_END token   - change to GOAL_END_PAREN(THESIS)
+                ##                                or GOAL_PAREN_CLOSE/END ???
+                [:GOALS_END, '<|GOALS_END|>']
             else
               nil  ## ignore others (e.g. brackets [])
             end
@@ -851,7 +908,9 @@ def _tokenize_line( line )
             when ')'  ## leave goal mode!!
                 puts "  LEAVE GOAL_RE MODE"   if debug?
                 @re = RE
-                nil
+                ##  note - use/return GOAL_END token   - change to GOAL_END_PAREN(THESIS)
+                ##                                or GOAL_PAREN_CLOSE/END ???
+                [:GOALS_END, '<|GOALS_END|>']
             else
               nil  ## ignore others (e.g. brackets [])
             end

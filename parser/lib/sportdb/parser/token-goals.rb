@@ -35,11 +35,23 @@ GOAL_BASICS_RE = %r{
 ##
 ##   note -  check for negative lookahead
 ##                 to exclude ord (numbers) e.g.  (1), (42), etc.!!!
+##
+##  todo/fix -- exclude (a), (h), (n)  - TEAM_AWAY, TEAM_HOME, TEAM_NEUTRAL tokens!!
+
 START_GOAL_LINE_RE = %r{
                      \A                        
                         [ ]*    ## ignore leading spaces (if any) 
                        \(
-                 }xi
+
+                       # check NEGATIVE lookahead
+                       (?! 
+                             ##  exclude (a), (h), (n)
+                             ##    TEAM_AWAY, TEAM_HOME, TEAM_NEUTRAL
+                             (?: a|h|n )  
+                             \)  
+                        )
+
+ }xi
 
 =begin                      
                        # check NEGATIVE lookahead
@@ -55,6 +67,37 @@ START_GOAL_LINE_RE = %r{
 =end
 
 
+#############
+##  check for goal compat(ility) "legacy" line
+##         e.g.   
+## (6' Puskás 0-1, 9' Czibor 0-2, 11' Morlock 1-2, 18' Rahn 2-2,
+##   84' Rahn 3-2)
+## (6 Puskás 0-1, 9 Czibor 0-2, 11 Morlock 1-2, 18 Rahn 2-2,
+##  84 Rahn 3-2)
+
+
+START_GOAL_LINE_COMPAT_RE = %r{
+                   \A
+                        [ ]*    ## ignore leading spaces (if any) 
+                      \(  
+                      
+                      ## (i) check NEGATIVE lookahead
+                      ##    exclude score e.g. 1-1 etc.        
+                          (?! [ ]* \b \d-\d \b)
+
+                      ## (ii) check POSITIVE lookahead                                    
+                          (?= [ ]*
+                               \d{1,3}
+                                   '?    ## optional minute marker
+                                (?: \+  ## note - allow 46+,94+,97+ etc. too for now - why? why not?
+                                  (?: \d{1,2}   
+                                    '?    ## optional minute marker
+                                  )?
+                                )?          
+                            )    
+}xi
+
+
 
 ###
 ##  check for goal line (alternate syntax)
@@ -64,8 +107,6 @@ START_GOAL_LINE_RE = %r{
 ##    note - allow "centered" style e.g. 
 ##           (    Player 44' (p)  1-0  
 ##                                1-1 Player 64'   )
-
-
 START_GOAL_LINE_ALT_RE = %r{
                      \A
                         [ ]*    ## ignore leading spaces (if any) 
@@ -150,6 +191,59 @@ GOAL_COUNT_RE = %r{
 )}ix
 
 
+
+
+
+
+## minute variant for  N/A not/available
+##     todo/check - find a better syntax - why? why not?
+##
+##   note  "??".to_i(10) returns 0 or
+##         "__".to_i(10) returns 0
+##   quick hack - assume 0 for n/a for now 
+
+MINUTE_NA_RE = %r{
+   (?<minute>
+      (?<=[ (])	 # positive lookbehind for space or opening 
+        (?<value> \?{2} | _{2} )
+        '   ## must have minute marker!!!!
+    )
+}ix
+
+=begin
+MINUTE_RE = %r{
+     (?<minute>
+       (?<=[ (])	 # positive lookbehind for space or opening ( e.g. (61') required
+                     #    todo - add more lookbehinds e.g.  ,) etc. - why? why not?
+             (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
+                   (?: \+
+                     (?<value2>\d{1,3})   
+                   )?           
+        '     ## must have minute marker!!!!
+     )
+}ix
+=end
+
+##
+## note - inline \b check in MINUTE_RE excludes
+##      85pen  or 90+4pen or 38p  (possible and NOT excludes in GOAL_MINUTE_RE  !!!)
+
+MINUTE_RE = %r{
+     (?<minute>
+               \b
+             (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
+                \b
+                '?    ## optional minute marker
+                
+             (?: (?<plus>\+)  ## note - allow 46+,94+,97+ etc. too for now - why? why not?
+                 (?: (?<value2>\d{1,2}) 
+                       \b   
+                      '?    ## optional minute marker
+                 )?
+             )?          
+      )
+}ix
+
 ##   goal types
 # (pen.) or (pen) or (p.) or (p)
 ## (o.g.) or (og)
@@ -167,7 +261,7 @@ GOAL_MINUTE_RE = %r{
                 '?    ## optional minute marker
                 
              (?: (?<plus>\+)  ## note - allow 46+,94+,97+ etc. too for now - why? why not?
-                 (?: (?<value2>\d{1,3})   
+                 (?: (?<value2>\d{1,2})
                       '?    ## optional minute marker
                  )?
              )?          
@@ -254,6 +348,14 @@ GOAL_ALT_RE = Regexp.union(
     ## todo/fix - add ANY_RE !!!!
 )
 
+GOAL_COMPAT_RE = Regexp.union(
+    GOAL_BASICS_RE,
+    SCORE_RE,        ## e.g.  1-0, 0-1, etc.
+    MINUTE_RE,          ## note - matches minute e.g.  92, 7, 7' 7+3, 46+, etc.
+    GOAL_TYPE_RE,
+    PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
+    ## todo/fix - add ANY_RE !!!!
+)
 
 =begin
 ## note - leave out n/a minute in goals - make minutes optional!!!
@@ -320,6 +422,35 @@ end
 def _build_goal_minute( m ) self.class._build_goal_minute( m ); end
     
 
+def self._build_minute( m )
+    minute = {}
+    value =  m[:value].to_i(10)   ## always required
+
+    if m[:plus] && m[:value2].nil?  ## check for 47+, 93+
+        if value < 90        # assume 1st half (45+xx)
+          minute[:m]      = 45
+          minute[:offset] = value - 45
+        elsif value < 105    # assume 2nd half (90+xx)
+          minute[:m]      = 90
+          minute[:offset] = value - 90
+        elsif value < 120    # assume extra time, 1nd half (105+xx)
+          minute[:m]      = 105
+          minute[:offset] = value - 105
+        else                 # assume extra time, 2nd half (120+xx)
+          minute[:m]      = 120
+          minute[:offset] = value - 120
+        end
+    else
+      minute[:m] = value
+    end
+    
+    minute[:offset] = m[:value2].to_i(10)   if m[:value2]
+
+    minute
+end
+def _build_minute( m ) self.class._build_minute( m ); end
+
+
 
 def self._parse_goal_count( str )  
     ## note - strip - leading/trailing spaces
@@ -356,8 +487,6 @@ def self._build_goal_type( m )
     goal
 end
 def _build_goal_type( m ) self.class._build_goal_type( m ); end
-
-
 
 
 end  # class Lexer

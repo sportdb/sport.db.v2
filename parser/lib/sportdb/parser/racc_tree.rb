@@ -371,10 +371,39 @@ end
 GoalAlt   = Struct.new( :score, :player, :minute, :goal_type ) do
   def to_s
     buf = String.new
-    buf << "#{self.score[0]}-#{self.score[1]}"  
+    buf << "#{self.score[0]}-#{self.score[1]}"
     buf << " #{self.player}"
     buf << " #{self.minute}"     if self.minute
     buf << " #{self.goal_type}"  if self.goal_type
+    buf
+  end
+
+  def pretty_print( printer )
+    printer.text( to_s )
+  end  
+end
+
+
+
+GoalLineCompat = Struct.new( :goals ) do
+  def pretty_print( printer )
+    printer.text( "<GoalLineCompat " )
+    printer.text( "goals=" + self.goals.pretty_inspect + ">" )
+  end  
+end
+
+##
+##   minute and player REQUIRED
+##   note - score (e.g. 1-1) is optional
+##          goal type is optional e.g. "standalone" (p), (og), etc.
+
+GoalCompat    = Struct.new( :score, :player, :minute, :goal_type ) do
+  def to_s
+    buf = String.new
+    buf << "#{self.minute}"    
+    buf << " #{self.player}"
+    buf << " #{self.goal_type}"                  if self.goal_type
+    buf << " #{self.score[0]}-#{self.score[1]}"  if self.score
     buf
   end
 

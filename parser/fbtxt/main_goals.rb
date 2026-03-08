@@ -18,10 +18,22 @@ txt = <<-TXT
              Wayne Rooney 2)
         (Franck Ribéry 77 Ivica Olić 90+2;
              Wayne Rooney 2)
+        
+        (Franck Ribéry 77 
+         Ivica Olić 90+2;
+         Wayne Rooney 2)
+
+
 
         (Darron Gibson 3, Nani 7,41;
                 Ivica Olić 43, Arjen Robben 74)
+  
+        (Darron Gibson 3
+         Nani 7 41;
+         Ivica Olić 43
+         Arjen Robben 74)
    
+
         (Theo Walcott 69, Cesc Fàbregas 85pen;
                Zlatan Ibrahimović 46,59)
 
@@ -110,15 +122,19 @@ txt = <<-TXT
 (Schämer 40 p - Neumann 38 p)
 
 
-
 ###
 #  try "inline" style
 
 Werder      3-2 Dortmund    (Soya 34, Schütz 36, Klöckner 50; Konietzka 1, 90)
 Werder      3-2 Dortmund    (Soya 34, Schütz 36, Klöckner 50; 
                              Konietzka 1, 90)
+Werder      3-2 Dortmund    (Soya 34 
+                             Schütz 36
+                             Klöckner 50; 
+                             Konietzka 1 90)
 
 
+                             
 Hertha      1-1 Nürnberg    (Schimmöller 63p; Morlock 40)
 Münster     1-1 Hamburger   (Dörr 70; Dörfel 86)
 Frankfurt   1-1 K'lautern   (Schämer 40p; Neumann 38p)
