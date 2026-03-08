@@ -163,6 +163,17 @@ Arsenal 5-0 Leeds United  (HT 2-0)
    Gyokeres 47, 90+4 pen)
 
 
+ARS 2-1 CHE
+Arsenal 2-1 Chelsea (HT 1-1)
+  (Saliba 21'
+   Timber 66';
+   Hincapié 45'+2' (OG))
+
+  (Saliba 20, Timber 65; 
+    Hincapie 45+1 og)
+    
+
+    
 
 TXT
 

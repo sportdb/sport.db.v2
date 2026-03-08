@@ -770,7 +770,20 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                                     goal_type: GoalType.new( **val[2][1] ),
                                                     score:  val[3][1][:score] )
                        }
-            
+                       | MINUTE SCORE PLAYER 
+                        {
+                           result = GoalCompat.new( minute:  Minute.new(**val[0][1]),
+                                                    score:  val[1][1][:score],
+                                                    player:  val[2] )
+                        } 
+                      | MINUTE SCORE PLAYER GOAL_TYPE 
+                        {
+                           result = GoalCompat.new( minute: Minute.new(**val[0][1]),
+                                                    score:  val[1][1][:score],
+                                                    player: val[2],
+                                                    goal_type: GoalType.new( **val[3][1] ))
+                       }
+                        
 
 ##########################################################################
 ##     level 2 support for properties - line-up, penalties, etc.
