@@ -296,6 +296,7 @@ MatchLine   = Struct.new( :header,
                           :score,
                           :status,  :status_inline, :status_note,
                           :geo,
+                          :neutral,  ## true/false - NOT -home/away - neutral ground
                           :note,
                           :att )  do   ## change to geos - why? why not?
 

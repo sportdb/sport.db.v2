@@ -127,6 +127,16 @@ INLINE_CANC_RE =  %r{
                )}x   ## note - NOT case insensitive 
 
 
+###
+##   home/away/neutral  - (h), (a), (n)
+##    add support for h/a/n  
+##       with (?-i \b [han] \b) lower-case and \b boundry - why? why not?
+
+TEAM_HOME_RE     = %r{  (?<team_home> \(h\) )}xi
+TEAM_AWAY_RE     = %r{  (?<team_away> \(a\)  )}xi
+TEAM_NEUTRAL_RE  = %r{  (?<team_neutral> \(n\) )}xi
+
+
 
 ## "top-level" regex used for:
 ##    - date_header
@@ -146,6 +156,10 @@ RE = Regexp.union(
                     INLINE_AWD_RE,   ## (inline) match status - awd/awd. (awarded)
                     INLINE_CANC_RE,  ## (inline) match status - canc/canc. (cancelled/canceled)
                    
+                    TEAM_HOME_RE,     ## (H)
+                    TEAM_AWAY_RE,     ## (A)
+                    TEAM_NEUTRAL_RE,  ## (N)
+
                     NOTE_RE,  ### fix - change to INLINE_NOTE !!!
                     DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)

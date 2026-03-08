@@ -134,7 +134,7 @@ Werder      3-2 Dortmund    (Soya 34
                              Konietzka 1 90)
 
 
-                             
+
 Hertha      1-1 Nürnberg    (Schimmöller 63p; Morlock 40)
 Münster     1-1 Hamburger   (Dörr 70; Dörfel 86)
 Frankfurt   1-1 K'lautern   (Schämer 40p; Neumann 38p)
@@ -146,6 +146,22 @@ Schalke     2-0 Stuttgart   (Koslowski 37, Gerhardt 42)
 S'brücken   v 1. FC Köln  0-2  (Overath 22, C.Müller 43)
 TSV 1860    v B'schweig   1-1  (Brunnenmeier 17 - Gerwien 74)
 Schalke     v Stuttgart   2-0  (Koslowski 37, Gerhardt 42)
+
+
+
+###
+# more goal samples
+
+ARS 5-0 LEE
+Arsenal 5-0 Leeds United  (HT 2-0)
+  (Timber 34', 56'
+   Saka 45'+1'
+   Gyökeres 48', 90'+5' (Pen))
+
+  (Timber 33, 55
+   Saka 45
+   Gyokeres 47, 90+4 pen)
+
 
 
 TXT

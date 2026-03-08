@@ -88,6 +88,12 @@ def tokenize_with_errors
     ##  note - KEEP empty lines (get turned into BLANK token!!!!)
 
 
+    ##  "universal" newlines
+    ##    replace all windows-style  cr+lf (\r\n) to lf (\n) only
+    txt = @txt.gsub( "\r\n", "\n" )
+
+
+
     ###
     ## quick hack for now
     ##   remove  html-style comments <!-- -->
@@ -945,6 +951,13 @@ def _tokenize_line( line )
             [:INLINE_AWD, m[:inline_awd]]
         elsif m[:inline_canc]  ## canc/canc. - cancelled/canceled (match status)
             [:INLINE_CANC, m[:inline_canc]]
+
+        elsif m[:team_home]
+            [:TEAM_HOME, m[:team_home]]
+        elsif m[:team_away]
+            [:TEAM_AWAY, m[:team_away]]
+        elsif m[:team_neutral]
+            [:TEAM_NEUTRAL, m[:team_neutral]]
 
         elsif m[:attendance]
              att = {} 

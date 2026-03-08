@@ -21,7 +21,10 @@ Fri July 10
 Fri July 10 2026
 Friday July 10 2026
 Fr July 10
-Fr July 10 2026
+
+Fr,     July 10 2026
+Friday, July 10 2026
+Fr,     July 10
 
 
 10 July
@@ -32,6 +35,15 @@ Fri 10 July 2026
 Friday 10 July 2026
 Fr 10 July
 Fr 10 July 2026
+Fri     10 July 2026
+Friday  10 July 2026
+Fr      10 July
+Fri,     10 July 2026
+Friday, 10 July 2026
+Fr,      10 July
+Fri, 10 July 2026
+Friday, 10 July 2026
+Fr, 10 July
 
 
 ###############
@@ -48,6 +60,8 @@ Fr 10.07.26
 Fr 10.7.26
 Fr 10.07.
 Fr 10.7.
+Fri  10.07.2026
+Fr   10.7.2026
 
 
 ###
@@ -60,6 +74,8 @@ Fr 10.7.
 7-10-2026
 Fri 07-10-2026
 Fr 7-10-2026
+Fri  07-10-2026
+Fr    7-10-2026
 
 ###
 #  use slash (/)
@@ -67,7 +83,32 @@ Fr 7-10-2026
 7/10/2026
 Fri 07/10/2026
 Fr 7/10/2026
+Fri  07/10/2026
+Fr    7/10/2026
 
+1/3/26
+1/03/26
+01/03/26    
+1/3
+1/03
+01/03      
+Su  1/3
+Su 1/03
+Su 01/03      
+
+We  4/3   
+Sa 14/3
+Sa 11/4
+Sa 11/04
+
+
+
+###############
+# more misc dates
+Sun  1 Mar        
+Wed  4 Mar        
+Sat 14 Mar  
+Sat 11 Apr
 
 
 

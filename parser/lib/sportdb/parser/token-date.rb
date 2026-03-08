@@ -110,19 +110,24 @@ DAY_MAP   = build_map( DAY_LINES, downcase: true )
 
 
 # e.g.  Fri Aug 9
+#       Fri  Aug 9
+##      Fri, Aug 9
+##      Fri, Aug 9 2024
+##   note - eat-up optional comma after DAY_NAMES!!
+##
 ##      note - Fri Aug/9  no longer supported!!!   
 DATE_I_RE = %r{
 (?<date>
   \b
      ## optional day name
      ((?<day_name>#{DAY_NAMES})
-          [ ]
+           (?: ,?[ ]+)
      )?
      (?<month_name>#{MONTH_NAMES})
           [ ] 
      (?<day>\d{1,2})
      ## optional year
-     (  [ ]
+     (    [ ]
         (?<year>\d{4})
      )?
   \b
@@ -149,13 +154,23 @@ DATE_LEGS_I_RE = %r{
 )}ix
 
 
+###
 # e.g. 3 June  or 10 June
+##   note - allow more spaces between  DAY_NAMES and DAY e.g.
+##    Sun  1 Mar        
+##    Wed  4 Mar        
+##    Sat 14 Mar   
+##    Sat 11 Apr 
+##
+##    Sat, 11 Apr
+##   note - eat-up optional comma after DAY_NAMES!!
+
 DATE_II_RE = %r{
 (?<date>
   \b
      ## optional day name
      ((?<day_name>#{DAY_NAMES})
-          [ ]
+           (?: ,?[ ]+)
      )?
      (?<day>\d{1,2})
          [ ]
@@ -187,7 +202,7 @@ DATE_III_B_RE = %r{
   \b
      ## optional day name
      ((?<day_name>#{DAY_NAMES})
-          [ ]
+          [ ]+
      )?
    (?<day>\d{1,2})
        -
@@ -206,7 +221,7 @@ DATE_IIII_RE = %r{
   \b
      ## optional day name
      ((?<day_name>#{DAY_NAMES})
-          [ ]
+          [ ]+
      )?
    (?<day>\d{1,2})
        \.
@@ -222,22 +237,31 @@ DATE_IIII_RE = %r{
 )
 }ix
 
+
 ####################
-### 04/03/2026
-##     note - year (YYYY) required for now - why? why not?
+### 04/03/2026  or 4/3/2026
+##   04/03/26   or 4/3/26
+##   04/03      or 4/3
 DATE_IIIII_RE = %r{
 (?<date>
   \b
      ## optional day name
      ((?<day_name>#{DAY_NAMES})
-          [ ]
+          [ ]+
      )?
    (?<day>\d{1,2})
        /
    (?<month>\d{1,2})
-       /
-   (?<year>\d{4})      
-  \b
+    \b
+   (?:  
+        /
+       (?: 
+          (?<year>\d{4})         ## optional year 2025 (yyyy)
+              |
+          (?<yy>\d{2})           ## optional year 25 (yy)
+       )
+      \b
+   )?
 )
 }ix
 

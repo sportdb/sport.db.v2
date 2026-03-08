@@ -375,7 +375,24 @@ class RaccMatchParser
                 ##                       e.g. Rapid v Austria 3-1
                 |   match_fixture_not_played    ## note - uses n/p or canc/canc. as match separator
                 |   match_fixture_postponed     ## note - uses ppd/ppd. or postp/postp. as match separator
-                                                
+                ### note - separarte match fixtures & results
+                ##               with "built-in" team using (A), (H), (N) shortcut
+                |   match_fixture_base 
+                |   match_result_base                       
+
+
+         ##########################
+         ####  shortcuts (H), (A), (N) with base team 
+         ##         (H) = Home, (A) = Away, (N) = Neutral 
+         ##     note: use underscore (_) for base team placeholder for now
+                      
+         match_fixture_base 
+                   :  TEAM_HOME    TEAM  { result = { team1: '_', team2: val[1] } }
+                   |  TEAM_AWAY    TEAM  { result = { team1: val[1], team2: '_' } }
+                   |  TEAM_NEUTRAL TEAM  { result = { team1: '_', team2: val[1],
+                                                       neutral: true } }
+                      
+
 
          match_bye 
               :   TEAM INLINE_BYE       ## e.g.  Queen's Park   bye     
@@ -383,6 +400,9 @@ class RaccMatchParser
                       result = { team: val[0] }
                     }
         
+        ###
+        ##  fix/fix/fix  - remove special walkover (w/o) handling!!!
+        ##                      add nodate/notime and hrule etc.
          match_walkover
               :   TEAM INLINE_WO TEAM    ## e.g.  Oxford University  w/o  Queen's Park 
                    {
@@ -401,7 +421,8 @@ class RaccMatchParser
                                           team2: val[2] }   
                            }
 
-### todo/fix - change to match_fixture_canceled !!!!
+
+### todo/fix - change to match_fixture_canceled  or keep - why? why not?!!!!
 match_fixture_not_played : TEAM INLINE_NP TEAM
                             {
                                ## note - auto-add (match) status canceled - why? why not?
@@ -451,6 +472,12 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                       status_inline: 'awarded'
                                     }                          
                           }
+                    | TEAM INLINE_AWD TEAM
+                          {
+                           result = { team1: val[0], team2: val[2], 
+                                      status_inline: 'awarded' 
+                                    }                          
+                          }
                      | TEAM INLINE_ABD TEAM
                           {
                            result = { team1: val[0], team2: val[2], 
@@ -461,12 +488,6 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                           {
                            result = { team1: val[0], team2: val[2], 
                                       status_inline: 'suspended' 
-                                    }                          
-                          }
-                    | TEAM INLINE_AWD TEAM
-                          {
-                           result = { team1: val[0], team2: val[2], 
-                                      status_inline: 'awarded' 
                                     }                          
                           }
 
@@ -518,7 +539,24 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                         }
 
 
-   
+         match_result_base
+                    :  match_fixture_base SCORE
+                        {
+                          trace( "REDUCE  => match_result_base : match_fixture_base SCORE" )
+                          ## note - use/keep generic score (as array!! NOT hash!!!)
+                          result = { score: val[1][1][:score]  ## note - as array e.g. [1,1] !! 
+                                   }.merge( val[0] )  
+                          ## pp result
+                        }
+                    |  match_fixture_base  score_full_or_fuller
+                        {
+                          trace( "REDUCE  => match_result_base : match_fixture_base score" )
+                          result = { score: val[1][1] }.merge( val[0] )  
+                          ## pp result
+                        }
+
+
+
         #######
         ## e.g. (Wirtz 10' Musiala 19' Havertz 45'+1 (pen)  Füllkrug 68' Can 90'+3;  
         ##      Rüdiger 87' (og))
