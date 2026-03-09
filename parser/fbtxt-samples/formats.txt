@@ -1,17 +1,6 @@
-####
-#  to run use:
-#    $ ruby ./main_formats.rb         (in /fbtxt)
-
-
-##
+##################
 ##  check different match formats/styles
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 ###
 ##  check for 04/03/2026 date 
@@ -41,20 +30,3 @@ txt = <<-TXT
 24.08.25 17:30  Borussia Mönchengladbach - Hamburger SV
 
 
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"

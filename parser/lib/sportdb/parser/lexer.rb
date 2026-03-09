@@ -186,10 +186,13 @@ def tokenize_with_errors
                    "  "   ## replace with two spaces
                  end
 
-        line = line.gsub( /[–]/ ) do |_|
+        ###
+        ## todo/fix - print unicode numbers for [–−]
+        ##                different candidates to differentiate and document!!!         
+        line = line.gsub( /[–−]/ ) do |uni|
                   ## report error here
                   ## todo/add error here
-                  puts "!! WARN - auto-fix; replacing unicode dash ascii dash (-) in line #{line.inspect}"
+                  puts "!! WARN - auto-fix; replacing unicode dash (#{uni}/#{uni.ord}) w/ ascii dash (-/#{"-".ord}) in line #{line.inspect}"
                    '-'   ## replace with ascii dash (-)
                   end
 

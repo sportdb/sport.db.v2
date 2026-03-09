@@ -1,0 +1,21 @@
+##########
+#  quick check for parse errors
+
+
+
+## check match with utc timezone
+
+Sun Jun 28 
+  (73) 12:00 UTC-7   2A v 2B       
+Mon Jun 29
+  (74) 16:30 UTC−4   1E v 3A/B/C/D/F 
+  (75) 19:00 UTC−6   1F v 2C          
+  (76) 12:00 UTC−5   1C v 2F          
+
+
+### check two-digit years 92 ??
+
+    16 Aug 92 @ Tallinn         Estonia          0-6 Switzerland
+    09 Sep 92 @ Berne           Switzerland      3-1 Scotland
+    14 Oct 92 @ Cagliari        Italy            2-2 Switzerland
+    

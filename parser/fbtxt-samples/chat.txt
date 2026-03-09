@@ -1,17 +1,6 @@
-####
-#  to run use:
-#    $ ruby ./main_chat.rb         (in /fbtxt)
-
-
-##
+################################
 ##  check misc. formats from ai chats
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 ## Common Result Formats (Inline Between Teams)
 ## Standard Score Format
@@ -507,20 +496,3 @@ Arsenal 0-3 awd. Chelsea
 2026-02-01 @ London (Emirates Stadium)   Arsenal 2-0 Chelsea [annulled - result expunged after club removal]
 
 
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"

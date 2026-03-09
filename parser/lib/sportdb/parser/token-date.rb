@@ -126,11 +126,16 @@ DATE_I_RE = %r{
      (?<month_name>#{MONTH_NAMES})
           [ ] 
      (?<day>\d{1,2})
+          \b
      ## optional year
      (    [ ]
-        (?<year>\d{4})
+        (?: 
+            (?<year>\d{4})        ## optional year 2025 (yyyy)
+               |
+            (?<yy>\d{2})           ## optional year 25 (yy)
+         )
+        \b
      )?
-  \b
 )}ix
 
 
@@ -175,11 +180,16 @@ DATE_II_RE = %r{
      (?<day>\d{1,2})
          [ ]
      (?<month_name>#{MONTH_NAMES})
+          \b
      ## optional year
      (  [ ]
-        (?<year>\d{4})
+        (?: 
+           (?<year>\d{4})        ## optional year 2025 (yyyy)
+               |
+           (?<yy>\d{2})           ## optional year 25 (yy)
+        )
+        \b   
      )?
-  \b
 )}ix
 
 

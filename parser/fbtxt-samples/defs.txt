@@ -1,17 +1,6 @@
-####
-#  to run use:
-#    $ ruby ./main_defs.rb         (in /fbtxt)
-
-
-##
+###################
 ##  check definition lines  (groups, rounds/matchdays, etc.)
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 ▪ Final | July 10 
 ▪ Final: July 10 
@@ -88,20 +77,3 @@ Group 4  |   Uruguay  Bolivia  France
 ▪ Round 19  | Mar 24/25,  ca. Apr 18
 
 
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"

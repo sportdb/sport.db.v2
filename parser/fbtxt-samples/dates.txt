@@ -1,17 +1,6 @@
-####
-#  to run use:
-#    $ ruby ./main_dates.rb         (in /fbtxt)
-
-
-##
+################################
 ##  check different date formats
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 ## with month (Jul/July)
 July 10 
@@ -118,20 +107,3 @@ Sun, May 17
 Sun, May 24
 
 
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"

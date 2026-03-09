@@ -1,17 +1,6 @@
-####
-#  to run use:
-#    $ ruby ./main_goals_alt.rb         (in /fbtxt)
-
-
-##
+######################
 ##  check (alternate)  goal lines 
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 
         (1-0 Franck Ribéry, 2-0 Ivica Olić, 2-1 Wayne Rooney)
@@ -171,20 +160,3 @@ txt = <<-TXT
 (0-1 Puskás 6, 0-2 Czibor 9, 1-2 Morlock 11, 2-2 Rahn 18, 3-2 Rahn 84)
 
 
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"
