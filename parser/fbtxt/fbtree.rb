@@ -82,6 +82,7 @@ end
 
 
 DEFAULT =  parse_names( <<TXT )
+   main.txt
    chat.txt
    dates.txt
    formats.txt
@@ -90,7 +91,22 @@ DEFAULT =  parse_names( <<TXT )
    goals.txt
    goals_alt.txt
    goals_compat.txt
+
+   ### check more
+   header.txt
+   home_away.txt
+   note.txt
+   ord.txt
+   score.txt
+   status.txt
+   table.txt
+
+   quick.txt
+
+   ##  todos.txt
+   ##  penalties.txt  -- fix
 TXT
+
 
 WORLDCUP = parse_names( <<TXT )
    worldcup/2026--usa/cup.txt
@@ -114,6 +130,43 @@ WORLDCUP = parse_names( <<TXT )
    ## worldcup/rsssf/2022q.txt
 TXT
 
+AUSTRIA =  parse_names( <<TXT )
+
+  ##############
+  #  austriascoccer.at
+  austria/austriasoccer.at/20240922rapiaust0.txt
+  austria/austriasoccer.at/20250330rapifc_r0.txt
+  austria/austriasoccer.at/aktuell.txt
+  austria/austriasoccer.at/cup_2025_26.txt
+  austria/austriasoccer.at/o1__bundesliga__2025_26.txt
+  austria/austriasoccer.at/vorschau.txt
+
+  ####
+  #  rapidarchiv.at
+  austria/rapidarchiv.at/2025-26.txt
+
+  #####
+  #  rsssf
+  austria/rsssf/oost01.txt
+  austria/rsssf/oost01_cup.txt
+  austria/rsssf/oost2025.txt
+  austria/rsssf/oost2025_cup.txt
+TXT
+
+
+ENGLAND =  parse_names( <<TXT )   
+  england/rsssf/eng2020-facup.txt
+  england/rsssf/eng2020-leaguecup.txt
+  england/rsssf/eng2024-playoffs.txt
+  england/rsssf/eng2024-playoffs_details.txt
+  england/rsssf/eng2024-playoffs_v2.txt
+  england/rsssf/eng2024-premierleague.txt
+  england/rsssf/eng2025-premierleague.txt
+  england/rsssf/engcup1872.txt
+  england/rsssf/engcup1873.txt
+TXT
+
+
 
 if __FILE__ == $0
 
@@ -123,6 +176,10 @@ if __FILE__ == $0
     args = DEFAULT 
   elsif args.size == 1 && (args[0] == 'worldcup' || args[0] == 'wc')
     args = WORLDCUP
+  elsif args.size == 1 && (args[0] == 'austria' || args[0] == 'at')
+    args = AUSTRIA
+  elsif args.size == 1 && (args[0] == 'england' || args[0] == 'eng')
+    args = ENGLAND
   end
 
   fbtree( args )

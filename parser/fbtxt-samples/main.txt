@@ -1,15 +1,4 @@
-####
-#  to run use:
-#    $ ruby ./main.rb  (in /fbtxt)
 
-
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 = Heading 1
 = Heading 1 ===========
@@ -311,21 +300,3 @@ June 24
   (38)  Runner-up Group A v Runner-up Group B   @ Liverpool
 
 
-
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"

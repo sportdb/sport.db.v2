@@ -32,8 +32,11 @@
 ##
 ##  try h(eader) and f(ree kick)
                   (Diego Milito 35h,70f)
+                 (Diego Milito 35 (h),70 (f))
+                  (Diego Milito 35hdr,70fk)
+                (Diego Milito 35 (hdr),70 (fk))
 
-                  ##
+               
 ## try 92+ for 90+2                 
         (Franck Ribéry 77 Ivica Olić 92+;
              Wayne Rooney 2)
@@ -70,10 +73,11 @@
             
 
 ###
-#  allow mix'n'match for now  (that is, 
-#  1) goal scorers with minutes
-#  2) goal scorers w/o minutes
-#  3) goal scorers w/o minutes with count e.g. (2) or (2/p) or (p), (og), etc.
+#  allow mix'n'match for now, that is, 
+#    (i) goal scorers with minutes
+#   (ii) goal scorers w/o minutes
+#  (iii) goal scorers w/o minutes with count e.g. (2) or (2/p) or (p), (og), etc.
+
    (Theo Walcott 69, Cesc Fàbregas 85p; Zlatan Ibrahimović (2))
       (Theo Walcott, Cesc Fàbregas (p); Zlatan Ibrahimović 46,59)
       (Theo Walcott, Cesc Fàbregas; Zlatan Ibrahimović)

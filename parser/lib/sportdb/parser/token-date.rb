@@ -113,6 +113,9 @@ DAY_MAP   = build_map( DAY_LINES, downcase: true )
 #       Fri  Aug 9
 ##      Fri, Aug 9
 ##      Fri, Aug 9 2024
+##      Fri, Aug 9, 2024
+##           Aug 9, 2024
+##           Aug 9, 2024
 ##   note - eat-up optional comma after DAY_NAMES!!
 ##
 ##      note - Fri Aug/9  no longer supported!!!   
@@ -128,13 +131,9 @@ DATE_I_RE = %r{
      (?<day>\d{1,2})
           \b
      ## optional year
-     (    [ ]
-        (?: 
-            (?<year>\d{4})        ## optional year 2025 (yyyy)
-               |
-            (?<yy>\d{2})           ## optional year 25 (yy)
-         )
-        \b
+     (      ,? [ ]       ## note - comma optinal with single space required for now
+            (?<year>\d{4})        ## optional year 2025 (yyyy)      
+              \b
      )?
 )}ix
 
@@ -166,9 +165,14 @@ DATE_LEGS_I_RE = %r{
 ##    Wed  4 Mar        
 ##    Sat 14 Mar   
 ##    Sat 11 Apr 
+##    Sat 11 Apr 2021
+##    Sat 11 Apr 21
 ##
 ##    Sat, 11 Apr
 ##   note - eat-up optional comma after DAY_NAMES!!
+##
+##  note - Sat 14 Mar 17:30
+##          check two-digit year (with NEGATIVE lookahead for time!!!)
 
 DATE_II_RE = %r{
 (?<date>
@@ -186,7 +190,11 @@ DATE_II_RE = %r{
         (?: 
            (?<year>\d{4})        ## optional year 2025 (yyyy)
                |
-           (?<yy>\d{2})           ## optional year 25 (yy)
+            (?:
+               (?<yy>\d{2})           ## optional year 25 (yy)
+                ## check NEGATIVE lookahead
+               (?! :|[:h]\d{2})
+            )
         )
         \b   
      )?
@@ -212,7 +220,7 @@ DATE_III_B_RE = %r{
   \b
      ## optional day name
      ((?<day_name>#{DAY_NAMES})
-          [ ]+
+          (?: ,?[ ]+)
      )?
    (?<day>\d{1,2})
        -
@@ -231,7 +239,7 @@ DATE_IIII_RE = %r{
   \b
      ## optional day name
      ((?<day_name>#{DAY_NAMES})
-          [ ]+
+           (?: ,?[ ]+) 
      )?
    (?<day>\d{1,2})
        \.
@@ -257,7 +265,7 @@ DATE_IIIII_RE = %r{
   \b
      ## optional day name
      ((?<day_name>#{DAY_NAMES})
-          [ ]+
+          (?: ,?[ ]+)
      )?
    (?<day>\d{1,2})
        /

@@ -98,8 +98,8 @@ Germany             2-1 Czech Republic             ASDET
 
 
 - [ ]  use "old" tokenizer pattern match
-         and 1) change  text vs text  to  team vs team
-         and 2) change  text minute   to  player minute!!!!
+         and (1) change  text vs text  to  team vs team
+         and (2) change  text minute   to  player minute!!!!
 
 
 - [ ]  split parser into def sections (e.g. group def/rouund def) 
@@ -143,7 +143,7 @@ Matchday 1    and Messi 24
 
 ## open (format) questions - discuss
 
-- [ ]   use `()` to auto-switch into name mode (for goals/etc) - why? why not?
+- [x]   use `()` to auto-switch into name mode (for goals/etc) - why? why not?
 
 
 

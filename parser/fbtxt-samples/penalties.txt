@@ -1,16 +1,3 @@
-####
-#  to run use:
-#    $ ruby ./main_penalties.rb  (in /fbtxt)
-
-
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
-
 
 Penalties:       1-0  Mario Gavranović, 1-1 Paul Pogba, 
                  2-1  Fabian Schär, 2-2 Olivier Giroud,
@@ -44,22 +31,4 @@ Penalty shootout:     Zinho (held),  0-1 Dudamel;
                   3-3 Rogério,           Bedoya (post);
                   4-3 Euller,            Zapata (wide) 
 
-
-TXT
-
-
-   
-parser = RaccMatchParser.new( txt, debug: true )
-tree, errors = parser.parse_with_errors
-pp tree
-
-if errors.size > 0
-   puts "!! #{errors.size} parse error(s):"
-   pp errors
-else
-   puts "--  OK - no parse errors found"
-end
-
-
-puts "bye"
 

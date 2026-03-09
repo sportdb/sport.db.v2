@@ -1,17 +1,6 @@
-####
-#  to run use:
-#    $ ruby ./main_table.rb         (in /fbtxt)
-
-
-##
+################
 ##  check table (standing) lines
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
                       P  W  D  L   Gls  Pts
   1.BRAZIL            3  2  1  0   7- 2   7
@@ -184,21 +173,3 @@ NB: between fifth placed club from the championship playoff and the
 15. Gallneukirchen        30   8  3 19  48-72  27  relegated
 16. Hörsching             30   6  8 16  36-52  26  relegated    
 
-
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"

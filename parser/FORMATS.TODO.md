@@ -5,16 +5,18 @@
 
 
 ### Goal Line
-- [ ]  do NOT eat-up goal line starter; use "virtual" GOALS token (kind of INLINE_GOALS)!!!
-- [ ]  check for negative lookahead `(1)` - ord (number) for goal line starter 
+- [x]  do NOT eat-up goal line starter; use "virtual" GOALS token (kind of INLINE_GOALS)!!!
+- [x]  check for negative lookahead `(1)` - ord (number) for goal line starter 
 
 
 ### Time / Timezone
 
-- [ ]  yes, remove the `12.00`, `17.30` option from time! 
+- [x]  yes, remove the `12.00`, `17.30` option from time! 
        only support `12:00`, `17:30` - `12h00`, `17h30`
-- [ ]  fix optional timezone  -   follow time w/o enclosing bracket e.g.
+- [x]  fix optional timezone  -   follow time w/o enclosing bracket e.g.
        `12:00 CEST` or `12:00 CEST/UTC+1` etc.  
+
+
 
 ### Score
 
@@ -29,7 +31,7 @@
 
 ### Minutes
 
-- [ ]  allow  "double" minute markers too (if possible) - see on mlssoccer.com site
+- [x]  allow  "double" minute markers too (if possible) - see on mlssoccer.com site
        e.g. `45'+1'`or `90'+5'`
 
 

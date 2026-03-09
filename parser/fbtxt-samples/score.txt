@@ -1,18 +1,6 @@
-####
-#  to run use:
-#    $ ruby ./main_score.rb         (in /fbtxt)
-
-
-##
+##################
 ##  check some fuller scores with on aggregate and on away goals etc.
 
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 
 ###
@@ -409,21 +397,3 @@ France             2-1 aet/gg (1-1, 1-0) Italy
 France             2-1 aet/gg (1-1,) Italy          
 France             2-1 aet/gg (1-1) Italy          
 
-
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"

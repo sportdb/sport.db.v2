@@ -1,18 +1,7 @@
-####
-#  to run use:
-#    $ ruby ./main_status.rb         (in /fbtxt)
-
-
-##
+####################
 ##  check lines w/ inline match status  e.g. n/p, w/o, bye  
 ##                 or match status notes e.g. [cancelled], [annulled], etc.
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 SW Bregenz      3-0 Liefering        [awarded; abandoned at 2-0 in injury time,
                                         Liefering walked off]
@@ -134,20 +123,3 @@ SW Bregenz postp. Liefering
 SW Bregenz v Liefering  [postponed: weather]    
 
 
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"

@@ -1,17 +1,7 @@
-####
-#  to run use:
-#    $ ruby ./main_note.rb         (in /fbtxt)
-
-
-##
+######################
 ##  check lines w/ notes
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
 
-
-
-txt = <<-TXT
 ▪ Round 18
 Mar 1
   SW Bregenz      3-0 Liefering        [awarded; abandoned at 2-0 in injury time,
@@ -65,21 +55,3 @@ Nov 11
 Jan 20  
   Wanderers           0-0  Crystal Palace      [both qualified]
 
-
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree = parser.parse
-  pp tree
-
-  if parser.errors?
-    puts "-- #{parser.errors.size} parse error(s):"
-    pp parser.errors
-  else
-    puts "--  OK - no parse errors found"
-  end
-  
-
-
-puts "bye"
