@@ -32,3 +32,32 @@ Penalty shootout:     Zinho (held),  0-1 Dudamel;
                   4-3 Euller,            Zapata (wide) 
 
 
+
+## Penalties: 1-0 K.Allofs, 1-1 Negrete, 2-1 Brehme, (2-1) Quirarte (save
+## Schumacher), 3-1 Matthäus, (3-1) Servin (save Schumacher), 4-1 Littbarski
+
+Penalties: 1-0 K.Allofs,  1-1 Negrete, 
+           2-1 Brehme,        Quirarte (save Schumacher), 
+           3-1 Matthäus,      Servin (save Schumacher), 
+           4-1 Littbarski
+
+
+## Penalties: (0-0) Socrates (save Bats), 1-0 Stopyra, 1-1 Alemão, 2-1 Amoros,
+##  2-2 Zico, 3-2 Bellone, 3-3 Branco, (3-3) Platini (out), (3-3) Julio Cesar
+##  (out), 4-3 Fernandez
+
+Penalties:      Socrates (save Bats), 1-0 Stopyra, 
+            1-1 Alemão,               2-1 Amoros,
+            2-2 Zico,                 3-2 Bellone, 
+            3-3 Branco,                   Platini (out), 
+                Julio Cesar (out),    4-3 Fernandez
+
+## Penalties: 0-1 Señor, 1-1 Claesen, (1-1) Eloy (save Pfaff), 2-1 Scifo,
+## 2-2 Chendo, 3-2 Broos, 3-3 Butragueno, 4-3 Vervoort, 4-4 Victor, 5-4 L.van
+## der Elst
+
+Penalties:  0-1 Señor,             1-1 Claesen, 
+                Eloy (save Pfaff), 2-1 Scifo,
+            2-2 Chendo,            3-2 Broos, 
+            3-3 Butragueno,        4-3 Vervoort, 
+            4-4 Victor,            5-4 L.van der Elst

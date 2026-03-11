@@ -43,6 +43,7 @@ end
 
 PATH = [
    '../fbtxt-samples',
+   '../fbtxt-rsssf',
    '../../../../openfootball', 
 ]
 
@@ -167,6 +168,12 @@ ENGLAND =  parse_names( <<TXT )
 TXT
 
 
+RSSSF = parse_names( <<TXT )
+   86full.patch.txt
+   2014f.patch.txt
+TXT
+
+
 
 if __FILE__ == $0
 
@@ -180,6 +187,8 @@ if __FILE__ == $0
     args = AUSTRIA
   elsif args.size == 1 && (args[0] == 'england' || args[0] == 'eng')
     args = ENGLAND
+  elsif args.size == 1 && args[0] == 'rsssf'
+    args = RSSSF
   end
 
   fbtree( args )

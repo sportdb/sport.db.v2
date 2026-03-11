@@ -7,6 +7,16 @@ class Lexer
 ##          change PROP_NAME_RE to   TEXT_II or TEXT_???  - why? why not?
 
 
+
+##
+##
+## FIX / FIX / FIX
+##  support match for 
+##      K.-H.Förster
+
+
+
+
 ## name different from text (does NOT allow number in name/text)
 PROP_NAME_RE = %r{
                  (?<prop_name> 
@@ -30,10 +40,15 @@ PROP_NAME_RE = %r{
                                    )                      
                                   |   
                              (?:
-                                (?<=\p{L})   ## use lookbehind
+                                (?<=    ## \p{L}\. | \p{L}
+                                        [\p{L}.] 
+                                     )  ## use  POSITIVE lookbehind
                                  [-]   ## must be surrounded by letters
-                                       ## e.g. One/Two NOT
-                                       ##      One/ Two or One / Two or One /Two etc.
+                                       ## note - allow leading dot (.) e.g. K.-H.Förster 
+                                       ##                short for          Karl-Heinz Förster
+                                       ##
+                                       ## e.g. One-Two NOT
+                                       ##      One- Two or One - Two or One -Two etc.
                                 (?=\p{L})      ## use lookahead        
                               )
                                  |   

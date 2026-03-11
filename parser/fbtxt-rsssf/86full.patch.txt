@@ -1,0 +1,77 @@
+###
+#   World Cup 1986
+#  rsssf page for auto-fix/convert testing
+#   source see https://www.rsssf.org/tables/86full.html
+
+
+##
+##  patched by "hand" for testing
+##
+
+=World Cup 1986
+
+
+Group A: ARG  BUL  ITA  KOR
+
+
+▪ Group A
+31.05.86  12:00 @ Mexico City, Estadio Azteca
+   ITA - BUL 1-1 (1-0)
+    (1-0 Altobelli 44, 
+     1-1 Sirakov 85 h)
+
+ITA: Galli - Bergomi, Vierchowod, Scirea, Cabrini - de Napoli,
+     Bagni, di Gennaro, Conti (66 Vialli) - Galderisi, Altobelli
+BUL: Mikhailov - Zdravkov, Dimitrov, Arabov, A.Markov - Sadkov,
+     Sirakov, Getov, Gospodinov (74 Zheliazkov) - Iskrenov (66 Kostadinov),
+     Mladenov
+
+NOTE: Match preceded by WC opening ceremony
+
+---
+
+02.06.86  12:00 @ Mexico City, Estadio Olimpico '68
+  ARG - KOR 3-1 (2-0)
+   (1-0 Valdano 8, 
+    2-0 Ruggeri 19 h, 
+    3-0 Valdano 47, 
+    3-1 Park Chang-sun 72)
+
+ARG: Pumpido - Clausen, Brown, Ruggeri, Garre - Giusti, Batista (75 Olarticoechea), 
+      Burruchaga, Pasculli (74 Tápia) - Maradona, Valdano
+KOR: Oh Yung-kyo - Park Kyung-hoon, Chung Yong-hwan, Cho Min-kook, 
+     Kim Yong-se (46 Byun Byung-ok) - Huh Jung-moo, Kim Pyung-suk (23 Cho Kwang-rae), 
+     Park Chang-sun, Kim Joo-sung - Choi Soon-hoo, Cha Bum-keun
+
+---
+
+05.06.86  12:00 @ Puebla, Estadio Cuauhtemoc
+   ARG - ITA 1-1 (1-1)
+     (0-1 Altobelli 7 p, 
+      1-1 Maradona 34)
+
+ARG: Pumpido - Cuciuffo, Brown, Ruggeri, Garré - Giusti, Batista (50 Olarticoechea), 
+      Burruchaga, Borghi (75 Enrique) - Maradona, Valdano
+ITA: Galli - Bergomi, Vierchowod, Scirea, Cabrini - de Napoli (65 G.Baresi), 
+     Bagni, di Gennaro, Conti (87 Vialli) - Galderisi, Altobelli
+
+
+
+##  ...
+
+
+▪ Final
+29.06.86  12:00 @ Mexico City, Estadio Azteca
+  ARG - GER 3-2 (1-0)
+   (1-0 Brown 23 h, 
+    2-0 Valdano 56, 
+    2-1 Rummenige 74, 
+    2-2 Völler 82 h, 
+    3-2 Burruchaga 88)
+
+ARG: Pumpido - Brown, Cuciuffo, Ruggeri, Olarticoechea - Giusti,
+     Batista, Maradona, Enrique - Burruchaga (89 Trobbiani), Valdano
+GER: Schumacher - Jakobs, Berthold, K.-H.Förster, Briegel - Matthäus,
+     Brehme, Magath (63 D.Hoeness), Eder, K.H.Rummenigge, K.K.Allofs (46 Völler)
+
+

@@ -1,0 +1,959 @@
+###
+#   World Cup 1986
+#  rsssf page for auto-fix/convert testing
+#   source see https://www.rsssf.org/tables/86full.html
+
+
+
+=World Cup 1986
+
+
+==Group A - ARG BUL ITA KOR
+
+31.05.86  12:00 @ Mexico City, Estadio Azteca
+
+(-100000) Fredriksson SWE, Codesal MEX, Roth GER
+
+ITA: Galli - Bergomi, Vierchowod, Scirea [c], Cabrini - de Napoli,
+Bagni, di Gennaro, Conti (66 Vialli) - Galderisi, Altobelli
+BUL: Mikhailov - Zdravkov, Dimitrov [c], Arabov, A.Markov - Sadkov,
+Sirakov, Getov, Gospodinov (74 Zheliazkov) - Iskrenov (66 Kostadinov),
+Mladenov
+
+1-0 Altobelli 44, 1-1 Sirakov 85 h
+
+booked: Bergomi, Cabrini / A.Markov
+
+NOTE: Match preceded by WC opening ceremony
+
+---
+
+02.06.86  12:00 @ Mexico City, Estadio Olimpico '68
+
+ARG - KOR 3-1 (2-0)
+
+(~60000) Sánchez ESP, González PAR, Diaz COL
+
+ARG: Pumpido - Clausen, Brown, Ruggeri, Garre - Giusti, Batista
+(75 Olarticoechea), Burruchaga, Pasculli (74 Tápia) - Maradona [c], Valdano
+KOR: Oh Yung-kyo - Park Kyung-hoon, Chung Yong-hwan, Cho Min-kook, Kim Yong-se
+(46 Byun Byung-ok) - Huh Jung-moo, Kim Pyung-suk (23 Cho Kwang-rae), Park
+Chang-sun [c], Kim Joo-sung - Choi Soon-hoo, Cha Bum-keun
+
+1-0 Valdano 8, 2-0 Ruggeri 19 h, 3-0 Valdano 47, 3-1 Park Chang-sun 72
+
+booked: Huh Jung-moo, Park Chang-sun
+
+---
+
+05.06.86  12:00 @ Puebla, Estadio Cuauhtemoc
+
+ARG - ITA 1-1 (1-1)
+
+(~32000) Keizer HOL, Snoddy NIR, Márquez MEX
+
+ARG: Pumpido - Cuciuffo, Brown, Ruggeri, Garré - Giusti, Batista
+(50 Olarticoechea), Burruchaga, Borghi (75 Enrique) - Maradona [c], Valdano
+ITA: Galli - Bergomi, Vierchowod, Scirea [c], Cabrini - de Napoli (65
+G.Baresi), Bagni, di Gennaro, Conti (87 Vialli) - Galderisi, Altobelli
+
+0-1 Altobelli 7 p, 1-1 Maradona 34
+
+booked: Giusti, Garré / Bergomi
+
+---
+
+05.06.86  16:00 @ Mexico City, Estadio Olimpico '68
+
+BUL - KOR 1-1 (1-0)
+
+(~45000) Al-Shanar ARS, Butenko ZSR, Igna ROM
+
+BUL: Mikhailov - Zdravkov, Dimitrov [c], Arabov, Petrov - Sadkov, Sirakov,
+Getov (87 Zheliazkov), Gospodinov - Iskrenov (46 Kostadinov), Mladenov
+KOR: Oh Yung-kyo, Park Kyung-hoon, Chung Yong-hwan, Cho Young-jeung, Huh
+Jung-moo - Cho Kwang-rae (71 Cho Min-kook), Park Chang-sun [c], Noh Soo-jin (46
+Kim Jong-boo), Byun Byung-joo - Kim Joo-sung, Cha Bum-keun
+
+1-0 Getov 12, 1-1 Kim Jong-boo 70
+
+booked: Gospodinov / Cho Young-jeung, Kim Joo-sung
+
+---
+
+10.06.86  12:00 @ Mexico City, Estadio Olimpico '68
+
+ARG - BUL 2-0 (1-0)
+
+(~65000) Ulloa COS, Martinez URU, Arppi Filho BRA
+
+ARG: Pumpido - Cuciuffo, Brown, Ruggeri, Garré - Giusti, Batista
+(46 Olarticoechea), Burruchaga, Borghi (46 Enrique) - Maradona, Valdano
+BUL: Mikhailov - A.Markov, Dimitrov [c], Petrov, Sadkov - Sirakov (72
+Zdravkov), Getov, Zheliazkov, Yordanov - P.Markov, Mladenov (53 Velitchkov)
+
+1-0 Valdano 4 h, 2-0 Burruchaga 77 h
+
+booked: Cuciuffo
+
+---
+
+10.06.86  12:00 @ Puebla, Estadio Cuauhtemoc
+
+ITA - KOR 3-2 (1-0)
+
+(~20000) Socha USA, Urres MEX, Al-Sharif SYR
+
+ITA: Galli - Collovati, Vierchowod, Scirea [c], Cabrini - de Napoli, Bagni
+(67 G.Baresi), di Gennaro, Conti - Galderisi (88 Vialli), Altobelli
+KOR: Oh Yung-kyo - Park Kyung-hoon, Chung Yong-hwan, Cho Young-jeung, Huh
+Jung-moo - Cho Kwang-rae, Choi Soon-ho, Park Chang-sun [c], Byun Byung-joo
+(71 Kim Jong-hoo) - Kim Joo-sung (46 Chung Jong-soo), Cha Bum-keun
+
+1-0 Altobelli 18, 1-1 Choi Song-hoo 62, 2-1 Altobelli 73, 3-1 Choi Kwang-rae
+82 o, 3-2 Huh Jung-moo 89 (26 Altobelli missed penalty)
+
+1. ARG^         3  2 1 0  5  6-2
+2. ITA^         3  1 2 0  4  5-4
+3. BUL^         3  0 2 1  2  2-4
+4. KOR          3  0 1 2  1  4-7
+
+==Group B - BEL IRK MEX PAR
+
+03.06.86  12:00 @ Mexico City, Estadio Azteca
+
+MEX - BEL 2-1 (2-1)
+
+(~110000) Esposito ARG, Valente POR, Méndez GUA
+
+MEX: Larios - Trejo, Felix Cruz, Quirarte, Servin - Aguirre, Negrete,
+Muñoz, Boy [c] (69 Espana) - Flores (79 J.Cruz), Sánchez
+BEL: Pfaff - Gerets, Broos, F.van der Elst, de Wolf - Vercauteren,
+Van der Eycken, Scifo, Ceulemans [c] - van den Bergh (66 Demol), Desmet (60
+Claesen)
+
+1-0 Quirarte 23 h, 2-0 Sánchez 39 h, 2-1 van den Bergh 45 h
+
+booked: Sánchez, Muñoz / F.van der Elst
+---
+
+04.06.86  12:00 @ Toluca, Estadio Bombonera
+
+PAR - IRK 1-0 (1-0)
+
+(~24000) Picon-Ackong MRS, Socha USA, Ulloa COS
+
+PAR: Fernandez - Torales, Zabala, Schettina, Delgado [c] - Nunez, Ferreira,
+Romero, Cabañas - Canete, Mendoza (88 Guasch)
+IRK: Salman [c] - Allawe, Mahmoud, Salim, Al-Roubai - Abidoun, Amaiesh,
+Hanna, Mohammed (82 Bassim) - Hassan (68 Aufi), Shihab
+
+1-0 Romero 36
+
+booked: Schettina / Mahmoud
+
+---
+
+07.06.86  12:00 @ Mexico City, Estadio Azteca
+
+MEX - PAR 1-1 (1-1)
+
+(+114000) Courtney ENG, Igna ROM, Fredriksson SWE
+
+MEX: Larios - Trejo, F.Cruz, Quirarte, Servin - Aguirre, Negrete,
+Muñoz, Boy [c] (89 Espana) - Flores (76 J.Cruz), Sánchez
+PAR: Fernandez - Torales (81 Hicks), Zabala, Schettina, Delgado [c] - Nunez,
+Ferreira, Romero, Cabañas - Canete, Mendoza (63 Guasch)
+
+1-0 Flóres 3, 1-1 Romero 86 h (88 Fernandez saved a penalty by Sánchez)
+
+booked: Trejo, Negrete, Sánchez / Schettina, Mendoza
+
+---
+
+08.06.86  12:00 @ Toluca, Estadio Bombonera
+
+BEL - IRK 2-1 (2-0)
+
+(~20000) Diaz COL, Sánchez ESP, Christov CZE
+
+BEL: Pfaff - Gerets, Demol (69 Grun), F.van Der Elst, de Wolf - Vercauteren,
+Vandereycken, Scifo (67 Clijsters) - Ceulemans [c], Desmet, Claesen
+IRK: Salman [c] - Allawe, Mahmoud, Salim, Al-Roubai - Abidoun, Amaiesh,
+Minshid (82 Aufi), Hanna - Hassan, Shihab
+
+1-0 Scifo 16, 2-0 Claesen 22 p, 2-1 Ammaiesh 67
+
+booked: Salman, Salim, AL-Roubai, Abidoun, Haman, Mahmoud (after match)
+sent off: Hanna (51)
+
+---
+
+11.06.86  @ Toluca, Estadio Bombonera
+
+BEL - PAR 2-2 (1-0)
+
+(~16000) Dochev BUL, Silva CHI, Ben Naceur TUN
+
+BEL: Pfaff - Broos, Demol, Grun (89 L.van der Elst), Renquin - Vercauteren,
+Vervoort, Scifo, Ceulemans [c] - Veyt, Claesen
+PAR: Fernandez - Torales, Zabala, Delgado [c], Nunez - Ferreira, Romero,
+Cabañas, Canete - Mendoza (68 Hicks), Guasch
+
+1-0 Vercauteren 32, 1-1 Cabañas 50, 2-1 Veyt 60, 2-2 Cabañas 76
+
+booked: Ceulemans / Romero (82 the Paraguaian coach expulsed from the bench)
+
+---
+
+11.06.86  12:00 @ Mexico City, Estadio Azteca
+
+MEX - IRk 1-0 (0-0)
+
+(+103000) Petrović JUG, Agnolin ITA, Nemeth HUN
+
+MEX: Larios - Amador (63 Dominguez), F.Cruz, Quirarte, Servin - Aguirre,
+Negrete, Boy, Espana - Flóres, de los Cobos (79 J.Cruz)
+IRK: Jassim - Allawe [c], Majeed, Salim, Al-Roubai - Abidoun (61 Aufi),
+Amaiesh, Tweresh (69 Hamza), Basim - Minahid, Shihab
+
+1-0 Quirarte 54
+
+booked: Allawe, Minahid
+
+1. MEX^         3  2 1 0  5  4-2
+2. PAR^         3  1 2 0  4  4-3
+3. BEL^         3  1 1 1  3  5-5
+4. IRK          3  0 0 3  0  1-4
+
+
+==Group C - CAN FRA HUN ZSR
+
+01.06.86  16:00 @ León, Estadio León
+
+FRA - CAN 1-0 (0-0)
+
+(-36000) Silva CHI, Ulloa COS, Méndez GUA
+
+FRA: Bats - Amoros, Battiston, Bossis, Tusseau - Fernandez, Tigana,
+Platini [c], Giresse - Papin, Rocheteau (69 Stopyra)
+CAN: Dolan - Lenarduzzi, Samuel, Bridge, Wilson [c] - Ragan, James (82 Segota),
+Norman, Sweeney (54 Lowery) - Valentine, Vrablic
+
+1-0 Papin 79 h
+
+---
+
+02.06.86  12:00 @ Irapuato, Estadio Irapuato
+
+ZSR - HUN 6-0 (3-0)
+
+(-17000) Agnolin ITA, Courtney ENG,
+
+ZSR: Dassajev - Larionov, Bessonov, Kuznetsov, Demianenko [c] - Yaremchuk,
+Aleinikov, Yakovenko (72 Yevtushenko), Rats - Belanov (70 Rodionov), Zavarov
+HUN: P.Disztl - Sallai, Garaba, Péter (63 Dajka), Kardos - Bognar, Nagy [c],
+Détári, Roth (13 Burcsa) - Kiprich, Esterházy
+
+1-0 Yakovienko 2, 2-0 Aleinikov 4, 3-0 Belanov 25 p, 4-0 Yaremchuk 65, 5-0
+Yaremuchuk 73, 6-0 Rodionov 80 (77 Yevtushenko missed penalty)
+
+booked: Larionov
+
+---
+
+05.06.86  12:00 @ León, Estadio León
+
+FRA - ZSR 1-1 (0-0)
+
+(+36000) Arppi FIlho BRA, Takada JAP, Sánchez ESP
+
+FRA: Bats - Amoros, Battiston, Bossis, Ayache - Fernandez, Tigana,
+Platini [c], Giresse (83 Vercruysse) - Papin (77 Bellone), Stopyra
+ZSR: Dassajev - Larionov, Bessonov, Kuznetsov, Demianenko [c] - Yaremchuk,
+Aleinikov, Yakovenko (70 Rodionov), Rats - Belanov, Zavarov (80 Blokhin)
+
+0-1 Rats 54, 1-1 Fernandez 62
+
+booked: Fernandez, Amoros / Rats, Belanov
+
+---
+
+06.06.86  12:00 @ Irapuato, Estadio Irapuato
+
+HUN - CAN 2-0 (1-0)
+
+(-14000) Al-Sharif SYR, Bambridge AUS, Petrović JUG
+
+HUN: Szendrei - Sallai, Garaba, Varga, Kardos - Bognár, Nagy [c] (63 Dajka),
+Détári, Burcsa (29 Róth) - Kiprich, Esterházy
+CAN: Lettieri - Lenarduzzi, Samuel, Bridge, Wilson [c] (41 Sweeney) - Ragan,
+James (56 Segota), Norman, Valentine - Gray, Vrablic
+
+1-0 Esterházy 2, 2-0 Détári 76
+
+booked: Sweeney, Lenarduzzi
+sent off: Sweeney (86)
+
+---
+
+09.06.86  12:00 @ León, Estadio León
+
+FRA - HUN 3-0 (1-0)
+
+(+31000) Valente POR, Daina SUI, Ponnet BEL
+
+FRA: Bats - Amoros, Battiston, Bossis, Ayache - Fernandez, Tigana,
+Platini [c], Giresse - Papin (62 Rocheteau), Stopyra (71 Ferreri)
+HUN: P.Disztl - Sallai, Garaba [c], Varga, Kardos - Róth, Détári, Hannich
+(46 Nagy), Dajka - Kovacs (66 Bognár), Esterházy
+
+1-0 Stopyra 30 h, 2-0 Tigana 64, 3-0 Rocheteau 85
+
+booked: Ayache, Rocheteau
+
+---
+
+09.06.86  12:00 @ Irapuato, Estadio Irapuato
+
+ZSR - CAN 2-0 (0-0)
+
+(+14000) Traoré MLI, González PAR, Al-Shanar ARS
+
+ZSR: Chanov - Morozov, Bubnov, Kuznetsov, Bal - Aleinikov, Litovchenko,
+Rodionov, Yevtushenko - Protasov (57 Belanov), Blokhin [c] (61 Zavarov)
+CAN: Lettieri - Lenarduzzi, Samuel, Bridge, Wilson [c] - Ragan, James
+(65 Segota), Norman, Valentine - Gray (69 Pakos), Mitchell
+
+1-0 Blokhin 59, 2-0 Zavarov 75
+
+1. ZSR^         3  2 1 0  5  9-1
+2. FRA^         3  2 1 0  5  5-1
+3. HUN          3  1 0 2  2  2-9
+4. CAN          3  0 0 3  0  0-5
+
+==Group D - ALG BRA ESP NIR
+
+01.06.86  12:00 @ Guadalajara, Estadio Jalisco
+
+BRA - ESP 1-0 (0-0)
+
+(~65000) Bambridge AUS, Socha USA, Kelzer HOL
+
+BRA: Carlos - Branco, Edinho [c], Julio Cesar, Edson - Junior (79 Falcão),
+Socrates, Alemão, Elzo - Casagrande (66 Müller), Careca
+ESP: Zubizarreta - Tomás, Maceda, Goicoechea, Camacho [c] - Victor, Michel,
+Francisco (83 Señor), Julio Alberto - Butragueño, Julio Salinas
+
+1-0 Socrates 63 h
+
+booked: Branco / Julio Alberto
+
+---
+
+03.06.86  12:00 @ Guadalajara, Estadio Trez de Marzo
+
+ALG - NIR 1-1 (0-1)
+
+(~22000) Butenko ZSR, Petrović JUG, Daina SUI
+
+ALG: Larbi - Medjadi, Kourichi, Guendouz [c], Mansouri - Kaci-Said, Ben
+Mabrouk, Maroc, Madjer (33 Harkouk) - Zidane (71 Belloumi), Assad
+NIR: Jennings - J.Nicholl, O'Neill, McDonald, Donaghy - Penney (89 Stewart),
+McIlroy [c], McCreery, Worthington - Hamilton, Whiteside (62 Clarke)
+
+0-1 Whiteside 6 f, 1-1 Zidane 59
+
+booked: Mansouri / Whiteside, Worthington, McIlroy
+
+---
+
+06.06.86  12:00 @ Guadalajara, Estadio Jalisco
+
+BRA - ALG 1-0 (1-0)
+
+(~48000) Méndez GUA, Quiniou FRA, Martinez URU
+
+BRA: Carlos - Branco, Edinho [c], Julio Cesar, Edson (11 Falcãao) - Junior, Socrates,
+Alemão, Elzo - Casagrande (60 Müller), Careca
+ALG: Drid - Medjadi, Megharia, Guendouz [c], Mansouri - Kaci-Said, Ben Mabrouk,
+Madjer, Menad - Belloumi (79 Zidane), Assad (68 Bensaoula)
+
+1-0 Careca 67
+
+---
+
+07.06.86  12:00 @ Guadalajara, Estadio Trez de Marzo
+
+ESP - NIR 2-1 (2-0)
+
+(~28000) Brummeier AUT, Nemeth HUN, Agnolin ITA
+
+ESP: Zubizarreta - Tomás, Gallego, Goicoechea, Camacho [c] - Victor, Michel,
+Francisco, Gordillo (54 Caldere) - Butragueno, Julio Salinas (78 Señor)
+NIR: Jennings - J.Nicholl, O'Neill, McDonald, Donaghy - Penney (54 Stewart),
+McIlroy [c], McCreery, Worthington (71 Hamilton) - Whiteside, Clarke
+
+1-0 Butragueño 2 (63 sec), 2-0 Julio Salinas 18, 2-1 Clarke 48 h
+
+booked: Victor / Hamilton
+
+---
+
+12.06.86  12:00 @ Guadalajara, Estadio Jalisco
+
+BRA - NIR 3-0 (2-0)
+
+(~51000) Kirschen DDR, Courtney ENG, Traore MLI
+
+BRA: Carlos - Branco, Edinho [c], Julio Cesar, Josimar - Junior, Socrates
+(68 Zico), Alemão - Elzo, Müller (28 Casagrande), Careca
+NIR: Jennings - J.Nicholl, O'Neill, McDonald, Donaghy - Stewart, McIlroy [c],
+McCreery, Campbell (71 Armstrong) - Whiteside (68 Hamilton), Clarke
+
+1-0 Careca 18, 2-0 Josimar 42, 3-0 Careca 88
+
+booked: Donaghy
+
+---
+
+12.06.86  12:00 @ Monterrey, Estadio Tecnologico
+
+ESP - ALG 3-0 (1-0)
+
+(~20000) Takada JAP, Esposito ARG, Picon-Ackong MRS
+
+ESP: Zubizarreta - Tomás, Gallego, Goicoechea, Camacho, Victor - Michel
+(84 Señor), Francisco, Caldere - Butragueno (46 Eloy), Julio Salinas
+ALG: Drid (20 El Hadi) - Kourichi, Megharia, Guendouz [c], Mansouri - Kaci-Said,
+Zidane (59 Menad), Madjer, Harkouk - Maroc, Belloumi
+
+1-0 Calderé 17, 2-0 Calderé 68, 3-0 Eloy 71
+
+booked: Goicoechea / Madjer
+
+NOTE: Calderé failed anti-dope testing. However the Spanish officials
+explained that the drug taken was actually a necessary medicine for asthma.
+Therefore no personal sanctions were applied against the player, but the
+Spanish federation was obliged to pay a 25000 SFR worth of fine.
+
+1. BRA^         3  3 0 0  6  5-0
+2. ESP^         3  2 0 1  4  5-2
+3. NIR          3  0 1 2  1  2-6
+4. ALG          3  0 1 2  1  1-5
+
+==Group E - DAN GER SCO URU
+
+04.06.86  12:00 @ Queretaro, Estadio La Corregidora
+
+GER - URU 1-1 (0-1)
+
+(+30000) Christov CZE, Silva CHI, Valente POR
+
+GER: Schumacher [c] - Berthold, K.H.Förster, Eder, Briegel - Matthäus
+(70 Rummenigge), Magath, Brehme (46 Littbarski), Augenthaler - Völler, K.Allofs
+URU: Alvez - Diogo, Acevedo, Gutierrez, Batista - Bossio, Barrios
+[c] (56 Saralegui), Santin, Francescoli - Alzamendi (82 Ramos), da Silva
+
+0-1 Alzamendi 4, 1-1 K.Allofs 85
+
+booked: Diego, Saralegui
+
+---
+
+04.06.86  16:00 @ Nezahualcoyotl, Estadio Neza '86
+
+DAN - SCO 1-0 (0-0)
+
+(~18000) Nemeth HUN, Al-Shanar ARS, Kirschen DDR
+
+DAN: Rasmussen - Busk, M.Olsen, I.Nielsen, Lerby [c] - J.Olsen (80 Mølby),
+Berggreen, Bertelsen, Arnesen (76 Sivebæk) - Laudrup, Elkjær-Larsen
+SCO: Leighton - Gough, Malpas, McLeish, Miller - Souness [c], Aitken, Nicol,
+Nicholas - Strachan (75 Bannon), Sturrock (63 McAvennie)
+
+1-0 Eljkær-Larsen 58
+
+booked: Berggreen
+
+---
+
+08.06.86  12:00 @ Queretaro, Estadio La Corregidora
+
+GER - SCO 2-1 (1-1)
+
+(~30000) Igna ROM, Dochev BUL, Snoddy NIR
+
+GER: Schumacher [c] - Berthold, K.H.Förster, Eder, Briegel (64 Jakobs) -
+Matthäus, Magath, Littbarski (76 Rummenigge), Augenthaler - Völler, K.Allofs
+SCO: Leighton - Gough, Malpas, Narey, Miller - Souness [c], Aitken, Nicol
+(61 McAvennie), Strachan - Bannon (75 Cooper), Archibald
+
+0-1 Strachan 18, 1-1 Völler 22, 2-1 K.Allofs 50
+
+booked: Archibald, Bannon, Malpas
+
+---
+
+08.06.86  16:00 @ Nezahualcoyotl, Estadio Neza '86
+
+DAN - URU 6-1 (2-1)
+
+(+26000) Márquez MEX, Arppi Filho BRA, Keizer HOL
+
+DAN: Rasmussen - Busk, M.Olsen, I.Nielsen, Lerby [c], Andersen - Berggren,
+Bertelsen (57 Mølby), Arnesen - Laudrup (81 J.Olsen), Elkjær-Larsen
+URU: Alvez - Diogo, Acevedo [c], Gutierrez, Batista - Bossio, Saralegui, Santin
+(57 Salazar), Francescoli - Alzamendi (57 Ramos), da Silva
+
+1-0 Elkjær-Larsen 11, 2-0 Lerby 41, 2-1 Francescoli 45+ p, 3-1 Laudrup
+52, 4-1 Elkjær-Larsen 69, 5-1 Elkjær-Larsen 79, 6-1 J.Olsen 88
+
+booked: I.Nielsen / Bossio, da Silva
+sent off: Bossio (20)
+
+---
+
+13.06.86  12:00 @ Queretaro, Estadio La Corregidora
+
+DAN - GER 2-0 (1-0)
+
+(~36000) Ponnet BEL, Fredriksson SWE, Bambridge AUS
+
+DAN: Høgh - Busk, M.Olsen, Sivebæk, Lerby [c], Andersen - Mølby,
+Arnesen - Laudrup, J.Olsen (71 Simonsen), Elkjær-Larsen (46 Eriksen)
+GER: Schumacher [c] - Berthold, K.H.Förster (71 Rummenigge), Eder, Herget -
+Jakobs, Matthäus, Rolff (46 Littbarski), Brehme - Völler, K.Allofs
+
+1-0 J.Olsen 44 p, 2-0 Eriksen 83
+
+booked: Arnesen / Eder, Jakobs
+sent off: Arnesen (89)
+
+---
+
+13.06.86  12:00 @ Nezahualcoyotl, Estadio Neza '86
+
+SCO - URU 0-0
+
+(~20000) Quiniou FRA, Ben Naceur TUN, Diaz COL
+
+SCO: Leighton - Gough, Albiston, Narey, Miller [c] - McStay, Aitken, Nicol
+(70 Cooper), Strachan - Sharp, Sturrock (70 Nicholas)
+URU: Alvez - Diogo, Acevedo, Gutierrez, Batista - Pereya, Barrios [c],
+Santin, Francescoli (84 Alzamendi) - Ramos (71 Saralegui), Cabrera
+
+booked: Narey, Nicol / Cabrera, Diogo, Acevedo
+sent off: Batista (53 sec!)
+
+NOTE: The Uruguayan coach banned from taking place on the bench for
+one match
+
+1. DAN^         3  3 0 0  6  9-1
+2. GER^         3  1 1 1  3  3-4
+3. URU^         3  0 2 1  2  2-7
+4. SCO          3  0 1 2  1  1-3
+
+==Group F - ENG MAR POL POR
+
+02.06.86  16:00 @ Monterrey, Estadio Universitario
+
+MAR - POL 0-0
+
+(~19000) Martinez URU, Quiniou FRA, Traore MLI
+
+MAR: Zaki [c] - Khalifa, El Biaz, Bouyahyaoui, Lemriss - Dolmy, El Haddaoui
+(69 Souleymani), Timoumi (90 Khairi) - M.Merry, Krimau
+POL: Młynarczyk - Kubicki (46 Przybyś), Wójcicki, Majewski, Ostrowski -
+Matysik, Buncol, Komornicki, Boniek [c] - Smolarek, Dziekanowski (56 Urban)
+
+booked: Timoumi
+
+---
+
+03.06.86  16:00 @ Monterrey, Estadio Tecnologico
+
+POR - ENG 1-0 (0-0)
+
+(~23000) Roth GER, Dochev BUL, Al-Sharif SYR
+
+POR: Bento [c] - Alvaro, Frederico, Oliveira, Inacio - Diamantino
+(83 José Antonio), Jaime Pacheco, André, Sousa - Carlos Manuel, Gomes (73
+Futre)
+ENG: Shilton - G.M.Stevens, Fenwick, Butcher, Sansom - Hoddle, Robson
+[c] (60 Hodge), Wilkins, Waddle (80 Beardsley) - Hateley, Lineker
+
+1-0 Carlos Manuel 75
+
+booked: Jaime Pacheco / Fenwick, Butcher
+
+---
+
+06.06.86  16:00 @ Monterrey, Estadio Tecnologico
+
+ENG - MAR 0-0
+
+(+20000) González PAR, Kirschen DDR, Espsito ARG
+
+ENG: Shilton - G.M.Stevens, Fenwick, Butcher, Sansom - Hoddle, Robson
+[c] (42 Hodge), Wilkins - Waddle, Hateley (76 G.A.Stevens), Lineker
+MAR: Zaki [c] - Khalifi, El Biaz, Bouyahyaoui, Lemriss (74 Ouadani) - Dolmy,
+Timoumi, Khairi, M.Merry (88 Souleymani) - Bouderbala, Krimau
+
+booked: Wilkins, Hateley / Khalifi, Khairi
+sent off: Wilkins (42)
+
+---
+
+07.06.86  16:00 @ Monterrey, Estadio Universitario
+
+POL - POR 1-0 (0-0)
+
+(-20000)
+
+POL: Młynarczyk - Pawlak, Wójcicki, Majewski, Ostrowski - Matysik,
+Komornicki (57 Karaś), Boniek [c] - Smolarek (75 Zgutczyński), Dziekanowski, Urban
+POR: Damas - Alvaro, Frederico, Oliveira, Inacio - Diamantino, Jaime
+Pacheco, André (73 J.Magalhaes), Sousa - Carlos Manuel, Gomes [c] (46 Futre)
+
+1-0 Smolarek 64
+
+booked: Wójcicki, Dziekanowski
+
+---
+
+11.06.86  16:00 @ Monterrey, Estadio Universitario
+
+ENG - POL 3-0 (3-0)
+
+(-23000) Daina SUI, Christov CZE, Brummeier AUT
+
+ENG: Shilton [c] - G.M.Stevens, Fenwick, Butcher, Sansom - Hoddle, Steven,
+Hodge, Reid - Beardsley (76 Waddle), Lineker (86 Dixon)
+POL: Młynarczyk - Pawlak, Wójcicki, Majewski, Ostrowski - Matysik (46 Buncol),
+Komornicki (24 Karaś), Boniek, Smolarek - Dziekanowski, Urban
+
+1-0 Lineker 8, 2-0 Lineker 14, 3-0 Lineker 36
+
+booked: Fenwick
+
+---
+
+11.06.86  16:00 @ Guadalajara, Estadio 3 de Marzo
+
+MAR - POR 3-1 (2-0)
+
+(-24000) Snoddy NIR, Roth GER, Butenko ZSR
+
+MAR: Zaki [c] - Khalifi, El Biaz, Bouyahyaoui, Lemriss (69 Amanallah) - Dolmy,
+El Haddaoui (71 Souleymani), Timoumi, Khairi - Bouderbala, Krimau
+POR: Damas - Alvaro (55 Rui Aguas), Frederico, Oliveira, Inacio - Pacheco,
+J.Magalhaes, Sousa (69 Diamantino), Carlos Manuel - Gomes [c], Futre
+
+1-0 Khairi 19, 2-0 Khairi 28, 3-0 Krimau 62, 3-1 Diamantino 90
+
+booked: Gomes
+
+1. MAR^         3  1 2 0  4  3-1
+2. ENG^         3  1 1 1  3  3-1
+3. POL^         3  1 1 1  3  1-3
+4. POR          3  1 0 2  2  2-4
+
+Additional table to determine third places order:
+
+1. BEL^     3  5-5
+2. POL^     3  1-3
+3. BUL^     2  2-4
+4. URU^     2  2-7
+5. HUN      2  2-9
+6. NIR      1  2-6
+
+▪ Second Round
+
+15.06.86  12:00 @ Mexico City, Estadio Azteca
+
+MEX - BUL 2-0 (1-0)
+
+(+114000) Arppi FIlho BRA, Igna ROM, Méndez GUA
+
+MEX: Larios - Amador, Quirarte, F.Cruz, Servin - Munoz, Negrete, Espana,
+Boy (c- 80 de los Cobos) - Aguirre, Sanchez
+BUL: Mikhailov - Zdravkov, Arabov, Petrov, Dimitrov [c] - Sadkov, Yordanov,
+Kostadinov, Gospodinov - Pashev (80 Iskrenov), Getov (71 Sirakov)
+
+1-0 Negrete 35, 2-0 Sarvin 61 h
+
+booked: Arabov
+
+---
+
+15.06.86  16:00 @ Leon, Estadio Sergio Leon
+
+BEL - ZSR 4-3 (0-1, 2-2, 3-2)
+
+(+32000) Fredriksson SWE, Socha USA, Sánchez ESP
+
+BEL: Pfaff - Grun (112 Clijsters), Gerets (101 L.van der Elst), Renquin,
+Vervoort - Scifo, Demol, Ceulemans [c], Vercauteren - Claesen, Veyt
+ZSR: Dassajev - Bessonov, Demianenko [c], Kuznetsov, Bal - Zavarov  (73
+Rodionov), Aleinikov, Yakovenko (80 Yevtushenko), Yaremchuk - Belanov, Rats
+
+0-1 Belanov 28, 1-1 Scifo 56, 1-2 Belanov 70, 2-2 Ceulemans 78, 3-2 Demol
+102 h, 4-2 Claesen 109, 4-3 Belanov 111 p
+
+booked: Renquin
+
+---
+
+16.06.86  12:00 @ Guadalajara, Estadio Jalisco
+
+BRA - POL 4-0 (1-0)
+
+(~45000) Roth GER, Márquez MEX, Snoddy NIR
+
+BRA: Carlos - Josimar, Julio Cesar, Edinho [c], Branco - Elzo, Alemão,
+Socrates (70 Zico), Junior, Careca, Müller (74 Silas)
+POL: Młynarczyk - Przybyś (60 Furtok), Ostrowski, Tarasiewicz, Karaś -
+Wójcicki, Majewski, Urban (84 Żmuda), Boniek - Dziekanowski, Smolarek
+
+1-0 Socrates 30 p, 2-0 Josimar 54, 3-0 Edinho 78, 4-0 Careca 82 p
+
+booked: Careca, Edinho / Boniek, Smolarek, Dziekanowski
+
+---
+
+16.06.86  16:00 @ Puebla, Estadio Cuauhtemoc
+
+ARG - URU 1-0 (0-0)
+
+(~26000) Agnolin ITA, Valente POR, Courtney ENG
+
+ARG: Pumpido - Cuciuffo, Ruggeri, Brown, Garré - Giusti, Batista
+(87 Olarticoechea), Burruchaga, Pasculli - Maradona [c], Valdano
+URU: Alvez - Gutierrez, Acevedo (61 Paz), Rivero, Santin - Ramos, Bossio,
+Barrios [c], Pereyra - Cabrera (46 da Silva), Francescoli
+
+1-0 Pasculli 42
+
+booked: Garré, Brown, Pumpido / Francescoli, Acevedo, da Silva, Santin
+
+NOTE: The Uruguayan coach banned from taking place on the bench.
+The 400th game of the World Cup
+
+---
+
+17.06.86  12:00 @ Mexico City, Estadio Olimpico '68
+
+FRA - ITA 2-0 (1-0)
+
+(~70000) Esposito ARG, Diaz COL, Martinez URU
+
+FRA: Bats - Ayache, Battiston, Bossis, Amoros - Giresse, Tigana, Fernandez
+(75 Tusseau), Platini [c] (86 Ferreri) - Rocheteau, Stopyra
+ITA: Galli - Bergomi, Vierchowod, Scirea [c], Cabrini - G.Baresi (46
+di Gennaro), de Napoli, Bagni - Conti, Altobelli, Galderisi (58 Vialli)
+
+1-0 Platini 16, 2-0 Stopyra 56
+
+booked: Ayache / de Napoli, di Gennaro
+
+---
+
+17.06.86  16:00 @ Monterrey, Estadio Universitario
+
+GER - MAR 1-0 (0-0)
+
+(-19000) Petrović JUG, Brunmeier AUT, Nemeth HUN
+
+GER: Schumacher - Berthold, K.-H.Förster, Jakobs, Briegel - Eder,
+Matthäus, Magath, Rummenigge [c] - K.Allofs, Völler (46 Littbarski)
+MAR: Zaki [c] - Khalifa, Bouyahyaoui, Oudani, Lemriss - Dolmy, El
+Haddaoui, Bouderbala, Timoumi - Khairi, Krimau
+
+1-0 Matthäus 89 f
+
+booked: Lemriss, Khalifi
+
+---
+
+18.06.86  12:00 @ Mexico City, Estadio Azteca
+
+ENG - PAR 3-0 (1-0)
+
+(-99000) Al-Sharif SYR, Al-Shanar ARS, Ponnet BEL
+
+ENG: Shilton [c] - G.M.Stevens, Martin, Butcher, Sansom - Steven, Reid
+(58 G.A.Stevens), Hoddle, Hodge - Lineker, Beardsley (82 Hateley)
+PAR: Fernandez - Torales (85 Guasch), Schettina, Delgado [c], Zabala - Canete,
+Romero, Nunez, Ferreira - Cabañas, Mendoza
+
+1-0 Lineker 32, 2-0 Beardsley 56, 3-0 Lineker 72
+
+booked: Martin, Hodges / Romero, Nunez
+
+NOTE: The Paraguayan coach banned from taking place on the bench
+
+---
+
+18.06.86  16:00 @ Queretaro, Estadio La Corregidora
+
+ESP - DAN 5-1 (1-1)
+
+(~38500) Keizer HOL, Dochev BUL, Ben Naceur TUN
+
+ESP: Zubizarreta - Tomás, Gallego, Goicoechea, Camacho [c] - Julio Alberto,
+Victor, Michel (84 Francisco), Caldere - Butragueno, Julio Salinas (46 Eloy)
+DEN: Høgh - Busk, M.Olsen [c], I.Nielsen, Andersen (60 Eriksen) - Berggren,
+J.Olsen (71 Mølby), Bertelsen, Lerby - Laudrup, Elkjær-Larsen
+
+0-1 J.Olsen 33 p, 1-1 Butragueno 43, 2-1 Butragueno 56 h, 3-1 Goicoechea 69 p,
+4-1 Butragueno 80, 5-1 Butragueno 90 p
+
+booked: Goichoecea, Camacho / Andersen
+
+▪ Quarterfinals
+
+21.06.86  12:00 @ Guadalajara, Estadio Jalisco
+
+FRA - BRA 1-1 (1-1, 1-1, 1-1)  p 4-3
+
+(+65000) Igna ROM, Christov CZE, Nemeth HUN
+
+FRA: Bats - Battiston, Amoros, Bossis, Tusseau - Giresse (84 Ferreri), Tigana,
+Platini [c], Fernandez - Stopyra, Rocheteau (101 Bellone)
+BRA: Carlos - Josimar, Julio Cesar, Edinho [c], Branco - Alemão, Socrates,
+Junior (91 Silas), Elzo - Müller (72 Zico), Careca
+
+0-1 Careca 18, 1-1 Platini 42 (75 Bats saved a penalty by Zico)
+
+Penalties: (0-0) Socrates (save Bats), 1-0 Stopyra, 1-1 Alemão, 2-1 Amoros,
+2-2 Zico, 3-2 Bellone, 3-3 Branco, (3-3) Platini (out), (3-3) Julio Cesar
+(out), 4-3 Fernandez
+
+booked: Edinho (during pen shoot-out)
+
+---
+
+21.06.86  16:00 @ Monterrey, Estadio Universitario
+
+GER - MEX 0-0 (0-0, 0-0. 0-0)  p 4-1
+
+(+44000) Diaz COL, Bambridge AUS, Snoddy NIR
+
+GER: Schumacher - Berthold, K.H.Förster, Jakobs, Briegel - Brehme, Eder
+(115 Littbarski), Matthäus, Magath - K.Allofs, Rummenigge [c] (59 D.Hoeness)
+MEX: Larios - Servin, F.Cruz, Quirarte, Amador (70 J.Cruz) - Munoz, Aguirre,
+Negrete, Espana - Boy [c] (32 de los Cobos), Sánchez
+
+Penalties: 1-0 K.Allofs, 1-1 Negrete, 2-1 Brehme, (2-1) Quirarte (save
+Schumacher), 3-1 Matthäus, (3-1) Servin (save Schumacher), 4-1 Littbarski
+
+booked: K.Allofs, Förster, Matthäus / Aguirre, Quirarte, de los Cobos, Servin,
+Sánchez
+sent off: Berthold (84) / Aguirre (100)
+
+---
+
+22.06.86  12:00 @ Mexico City, Estadio Azteca
+
+ARG - ENG 2-1 (0-0)
+
+(~115000) Ben Naceur TUN, Dochev BUL, Ulloa COS
+
+ARG: Pumpido - Cuciuffo, Brown, Ruggeri, Olarticoechea - Batista, Giusti,
+Burruchaga (76 Tapia), Enrique - Valdano, Maradona [c]
+ENG: Shilton [c] - G.M.Stevens, Butcher, Fenwick, Sansom - Hoddle, Steven
+(76 Barnes), Reid (66 Waddle), Hodge - Lineker, Beardsley
+
+1-0 Maradona 51 h?, 2-0 Maradona 56, 2-1 Lineker 81 h
+
+booked: Batista / Fenwick, Butcher
+
+---
+
+22.06.86  16:00 @ Puebla, Estadio Cuauhtemoc
+
+BEL - ESP 1-1 (1-0, 1-1, 1-1)  p 5-4
+
+(~45000) Kirschen GER, Brummeier AUT, Codesal MEX
+
+BEL: Pfaff - Gerets, Renquin, Demol, Grun - Vercauteren (106 L.van der Elst),
+Scifo, Vervoort - Ceulemans [c], Claesen, Veyt (83 Broos)
+ESP: Zubizarreta - Tomás (46 Señor), Gallego, Chendo, Camacho [c] -
+Julio Alberto, Victor, Michel, Calderé - Butragueno, Julio Salinas (63 Eloy)
+
+1-0 Ceulemans 34, 1-1 Señor 85
+
+Penalties: 0-1 Señor, 1-1 Claesen, (1-1) Eloy (save Pfaff), 2-1 Scifo,
+2-2 Chendo, 3-2 Broos, 3-3 Butragueno, 4-3 Vervoort, 4-4 Victor, 5-4 L.van
+der Elst
+
+booked: Demol, Grun - Tomás, Calderé
+
+▪ Semifinals
+
+25.06.86  12:00 @ Guadalajara, Estadio Jalisco
+
+GER - FRA 2-0 (1-0)
+
+(~47500) Agnolin ITA, Nemeth HUN, Petrović JUG
+
+GER: Schumacher - Brehme, K.H.Förster, Jakobs, Briegel - Eder, Matthäus -
+Magath, Rolff, K.Allofs, Rummenigge [c] (58 Völler)
+FRA: Bats - Ayache, Battiston, Bossis, Amoros - Tigana, Giresse (72
+Vercruysse), Platini [c], Fernandez - Stopyra, Bellone (66 Xuereb)
+
+1-0 Brehme 9, 2-0 Völler 90
+
+booked: Magath / Fernandez
+
+---
+
+25.06.86  16:00 @ Mexico City, Estadio Azteca
+
+(+110000) Márquez MEX, Valente POR, Méndez GUA
+
+ARG: Pumpido - Cuciuffo, Ruggeri, Brown, Olarticoechea - Giusti, Enrique,
+Batista, Burruchaga (86 Bochini) - Maradona [c], Valdano
+BEL: Pfaff - Gerets, Grun, Demol, Renquin (54 Desmet) - Vervoort, Scifo,
+Vercauteren, Ceulemans [c] - Claesen, Veyt
+
+1-0 Maradona 52, 2-0 Maradona 63
+
+booked: Valdano / Veyt
+
+▪ Third place match
+
+28.06.86  12:00 @ Puebla, Estadio Cuauhtemoc
+
+FRA - BEL 4-2 (2-1, 2-2, 3-2)
+
+(~21000) Courtney ENG, Silva CHI, Al-Sharif SYR
+
+FRA: Rust - Le Roux (56 Bossis), Battiston [c], Bibard, Amoros - Tigana (84
+Tusseau), Genghini, Vercruysse, Ferreri - Bellone, Papin
+BEL: Pfaff - Gerets, Grun, Demol, Renquin (64 F.van der Elst) - Vervoort,
+Scifo (46 L.van der Elst), Mommens - Ceulemans [c], Claesen, Veyt
+
+0-1 Ceulemans 11, 1-1 Ferreri 27, 2-1 Papin 43, 2-2 Claesen 73, 3-2
+Genghini 103, 4-2 Amoros 109 p
+
+booked: Pfaff
+
+▪ Final
+
+29.06.86  12:00 @ Mexico City, Estadio Azteca
+
+ARG - GER 3-2 (1-0)
+
+(~114000) Arppi Filho BRA, Fredriksson SWE, Ulloa COS
+
+ARG: Pumpido - Brown, Cuciuffo, Ruggeri, Olarticoechea - Giusti,
+Batista, Maradona [c], Enrique - Burruchaga (89 Trobbiani), Valdano
+GER: Schumacher - Jakobs, Berthold, K.-H.Förster, Briegel - Matthäus,
+Brehme, Magath (63 D.Hoeness), Eder, K.H.Rummenigge [c], K.K.Allofs (46 Völler)
+
+1-0 Brown 23 h, 2-0 Valdano 56, 2-1 Rummenige 74, 2-2 Völler 82 h, 3-2
+Burruchaga 88
+
+booked: Maradona, Enrique, Pumpido, Olarticoechea / Matthäus, Briegel

@@ -65,8 +65,12 @@ PREPROC_NOTA_BENE_RE = %r{
        .+?  ## non-greedy 
    
     ## positive lookahead
-    ##    note - must end with blank line or end-of-file/document   
-      (?=  \n[ ]*\n | \z )   
+    ##    note - must end with blank line or end-of-file/document 
+    ##   note - do NOT eat-up trailing hrule (---)  
+      (?=      (?: \n [ ]* -{3,} [ ]*)? 
+                   \n[ ]*\n
+               | \z 
+        )   
 }xim
 
 ##  

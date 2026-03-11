@@ -1,15 +1,4 @@
-####
-#  to run use:
-#    $ ruby ./main6_lex.rb  (in /fbtxt)
 
-
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 ▪ Final - First Leg 
 
@@ -74,24 +63,7 @@ attendance:  1234
   AA v BB  @ Cheshire Silk 106.9 Stadium
   
   ##  check for v / vs in geo name
-  AA v BB  @  Stadium v xyz
-  AA v BB  @  Stadium vs xyz
+  AA v BB  @ Stadium v xyz
+  AA v BB  @ Stadium vs xyz
 
-TXT
-
-
-     
-  lexer = SportDb::Lexer.new( txt, debug: true )
-  tokens, errors = lexer.tokenize_with_errors
-  pp tokens
-
-  if errors.size > 0
-     puts "!! #{errors.size} tokenize error(s):"
-     pp errors
-  else
-     puts "--  OK - no tokenize errors found"
-  end
-
-
-puts "bye"
 
