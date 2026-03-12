@@ -292,7 +292,7 @@ def tokenize_with_errors
                val =  [date[0] + ' ' + time[0],  ## concat string of two tokens
                         { date: date[1] }.merge( time[1] ) 
                       ]
-               nodes << [:DATETIME, val]
+               nodes << [:DATETIME, val]         
          ### support  date time with comma too - why? why not?
          elsif buf.match?( :DATE, :',', :TIME )
                date  = buf.next[1]
@@ -303,7 +303,16 @@ def tokenize_with_errors
                val =  [date[0] + ', ' + time[0],  ## concat string of two tokens
                         { date: date[1] }.merge( time[1] )
                       ]
-               nodes << [:DATETIME, val]        
+               nodes << [:DATETIME, val]    
+        elsif buf.match?( :TEAM, :SCORE_TEAM )  
+            ## merge TEAM SCORE_TEAM into TEAMALT 
+            ##     (use TEAMENTRY or TEAMRESULT - why? why not?)
+               team       = buf.next[1]
+               score_team = buf.next[1]
+               val =  [team + ' ' + score_team[0],  ## concat string of two tokens
+                        { team: team }.merge( score_team[1] ) 
+                      ]
+               nodes << [:TEAMALT, val]         
          elsif buf.match?( :GOAL_MINUTE, :',', :GOAL_MINUTE )
              ## note - only advance by two tokens!
              ##     allows more :GOAL_MINUTE sequences!! e.g. 12,13,14 etc!!!
@@ -1002,6 +1011,8 @@ def _tokenize_line( line )
             [:DATE, [m[:date], _build_date(m)]]
         elsif m[:date_legs]
             [:DATE_LEGS, [m[:date_legs], _build_date_legs(m)]] 
+        elsif m[:score_team]
+            [:SCORE_TEAM, [m[:score_team], _build_score_team(m)]] 
         elsif m[:score_legs]
               legs = {}
               

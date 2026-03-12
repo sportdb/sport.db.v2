@@ -188,6 +188,10 @@ RE = Regexp.union(
                     SCORE_AWD_RE,   #  (inline) score awarded e.g. 3-0 awd or 0-1 awd. etc.
                     SCORE_ABD_RE,   #  (inline) score abandoned e.g. 2-1 abd.
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
+                    
+                    ## note - add "experimental" "split" scores for now
+                    SCORE_TEAM_RE,   ##  e.g. (2) 1  for "split" scores
+                    
                     BASICS_RE, 
                    TEXT_RE,
                    ANY_RE,

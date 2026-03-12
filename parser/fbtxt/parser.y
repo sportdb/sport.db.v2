@@ -31,6 +31,7 @@ class RaccMatchParser
           | date_header 
           | match_line_with_header
           | match_line
+          | match_line_alt
           ## add support for "compact" match legs (1st leg, 2nd leg, aggregate)
           | date_header_legs
           | match_line_legs
@@ -218,8 +219,13 @@ class RaccMatchParser
                   { 
                       result = {}.merge( val[0], val[1], val[2] )
                   }
-                
+               |  match_alt NEWLINE
+                   {
+                      result = {}.merge( val[0] )
+                   }  
+                                
      
+
         ### note - no geo_opts in (more_)match_line (w/ header)
         ##               always incl. in header
         more_match_header_opts
@@ -325,8 +331,43 @@ class RaccMatchParser
                       @tree << GoalLine.new( **kwargs ) 
                   }
 
+        ###### 
+        ### (experimental) alternate style with "split" score
+        match_line_alt : match_alt NEWLINE
+                           {
+                              kwargs = {}.merge( val[0] )
+                              @tree << MatchLine.new( **kwargs )
+                           }
+
+        match_alt :
+             TEAMALT opt_newline TEAMALT 
+                   {
+                           puts "debug match_alt reduce:"
+                           pp val[0]
+                           pp val[2]
+
+                           ## assume ht/ft  
+                           ## or let's use [[0,1],[1,2]] - why? why not?
+                           score_team1 = val[0][1][:score]
+                           score_team2 = val[2][1][:score]
+
+  
+                           score =  [[score_team1[0], score_team2[0]],
+                                     [score_team1[1], score_team2[1]]] 
+
+                           result = { team1: val[0][1][:team], 
+                                      team2: val[2][1][:team],
+                                      score: score
+                                    }
+
+                           puts "  result:"
+                           pp result   
+
+                   }
 
 
+       opt_newline :  ## empty; optional  
+                    | NEWLINE           
 
         ## optional ord(inal) match number e.g (1), (42), etc.
         opt_ord
@@ -473,7 +514,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                 | SCORE_FULLER    ## note - SCORE_FULLER NOT supported inline!!
                                   ##       only after  Team1 v Team2 !!
                    
-      
+
+    
         match_result :  TEAM  SCORE  TEAM      
                          {
                            trace( "REDUCE => match_result : TEAM SCORE TEAM" )

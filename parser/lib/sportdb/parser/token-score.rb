@@ -330,7 +330,37 @@ SCORE_RE  = %r{
               \b
              )}ix  
 
-  
+
+######
+#  add support for "split" score
+#    note - for now (2) 1  is REQUIRED
+
+SCORE_TEAM_RE = %r{
+            (?<score_team>
+                 \(
+                    (?<score_i> \d{1,2}) 
+                 \)
+                 [ ]+   ## note - space for now required - why? why not?
+                    (?<score_ii> \d{1,2})
+                \b 
+            )
+        }ix   
+
+
+def self._build_score_team( m )
+            score = {}
+            ##  note - score team is "generic"
+            ##      might be full-time (ft) or
+            ##         after extra-time (aet) or such
+            ##         or even undecided/unknown
+            ##    thus, use score_i/score_ii 
+            score[:score] = [m[:score_i].to_i(10),
+                             m[:score_ii].to_i(10)]  
+            score
+end 
+def _build_score_team( m ) self.class._build_score_team( m ); end 
+
+
 
 end  #  class Lexer
 end  # module SportDb
