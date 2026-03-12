@@ -7,7 +7,7 @@ class Lexer
 ##  add more variants - why? why not?
 
 
-POSTPONED = %Q{ (?<postponed> postponed  | postp\\.?  | ppd\\.? ) }
+POSTPONED = %Q{ (?<postponed> postponed  | po?stp\\.?  | ppd\\.? ) }
 CANCELED  = %Q{ (?<canceled>  cancell?ed | canc\\.? ) }    ##  add can/can. - why? why not?
 WALKOVER  = %Q{ (?<walkover>  walkover   | w/o  | wo ) }   ## add o/w too - why? why not?                
 AWARDED   = %Q{ (?<awarded>   awarded    | awd\\.? ) }                     

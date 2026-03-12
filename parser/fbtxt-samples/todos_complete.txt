@@ -1,0 +1,62 @@
+
+###
+##  - [x] add x-x or X-X  for  INLINE_VOID 
+
+    28 Feb 93 @ Cairo           Egypt            X-X Zimbabwe 
+    28 Feb 93 @ Cairo           Egypt            x-x Zimbabwe 
+      [Stopped and cancelled at 2-1 due to crowd violence.]
+    
+    ## note:
+    ##  use abandoned at  for stopped and cancelled before complete 90 mins...
+    ##  use voided/annulled for cancelled completed match
+    ##  use cancelled for matches NOT PLAYED ONLY
+
+###
+##  - [x] add 2-1 abd. or 2-1 abd   for SCORE_ABD
+
+     28 Feb 93 @ Cairo           Egypt       2-1 abd. Zimbabwe 
+    [abandonded at 2-1 due to crowd violence.]
+
+
+###
+## - [x] allow blank lines between match header and match header line
+
+July 27 @ Estadio Centenario, Montevideo    Att: 93000
+ URUGUAY v YUGOSLAVIA    6-1 (3-1)
+
+July 30 @ Estadio Centenario, Montevideo    Att: 93000
+ URUGUAY v ARGENTINA   4-2 (1-2)
+
+
+July 27 @ Estadio Centenario, Montevideo    Att: 93000
+
+ URUGUAY v YUGOSLAVIA    6-1 (3-1)
+
+
+July 30 @ Estadio Centenario, Montevideo    Att: 93000
+
+ URUGUAY v ARGENTINA   4-2 (1-2)
+
+
+###
+##  - [x] allow more than one space after geo-marker 
+##          for first text match
+
+   09 Oct 92 @ Harare          Zimbabwe         1-0 Togo
+   11 Oct 92 @ Cairo           Egypt            1-0 Angola
+ 
+
+   09 Oct 92 @  Harare          Zimbabwe         1-0 Togo
+   11 Oct 92 @  Cairo           Egypt            1-0 Angola
+ 
+   09 Oct 92   @    Harare          Zimbabwe         1-0 Togo
+   11 Oct 92   @    Cairo           Egypt            1-0 Angola
+
+   09 Oct 92   @    Harare, Zimbabwe          Zimbabwe         1-0 Togo
+   11 Oct 92   @    Cairo, Egypt              Egypt            1-0 Angola
+
+   ## allow more (do not break) opt spaces after geo separator too - why? why not?
+   09 Oct 92   @    Harare,  Zimbabwe          Zimbabwe         1-0 Togo
+   11 Oct 92   @    Cairo,  Egypt              Egypt            1-0 Angola
+
+  

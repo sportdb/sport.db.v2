@@ -297,6 +297,19 @@ SCORE_AWD_RE  = %r{
                (?= [ ])
              )}ix  
 
+###
+##
+##  add support for score abandoned (inline style)
+##       2-1 abd. 
+SCORE_ABD_RE  = %r{
+            (?<score_abd>
+              \b
+               (?<score1>\d{1,2}) - (?<score2>\d{1,2})
+                 [ ]?
+                  abd\.?
+               ## POSITIVE lookahead - requires space
+               (?= [ ])
+             )}ix  
 
 #####
 ##      2-1

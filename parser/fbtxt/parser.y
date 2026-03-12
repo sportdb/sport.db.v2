@@ -194,27 +194,36 @@ class RaccMatchParser
                      @tree <<  DateHeaderLegs.new( **kwargs )                      
                   }
 
+           opt_blank_lines :   ## optional; empty
+                           | blank_lines
+
+          blank_lines  : BLANK
+                       | blank_lines BLANK
+
          ###
          #  note - match_line_with_header 
          #     support less variants (no geo/date/time) in match line (already in header)
          #             use match_line_header to syntax check via parser
          match_line_with_header 
-               :  match_header  match_line_header
+               :  match_header  opt_blank_lines  match_line_header
                   {
-                     ## todo/fix - add header flag (header: true)
+                     ## note - header flag (header: true)
                      ##    used downstream for scope / e.g. DateHeader merge/inheritance or such                     
-                      kwargs = { header: true }.merge( val[0], val[1] )
+                      kwargs = { header: true }.merge( val[0], val[2] )
                       @tree << MatchLine.new( **kwargs )  
                   }
 
          match_line_header    
-               :  match  more_match_header_opts 
+               :  opt_ord  match  more_match_header_opts 
                   { 
-                      result = {}.merge( val[0], val[1] )
+                      result = {}.merge( val[0], val[1], val[2] )
                   }
+                
      
+        ### note - no geo_opts in (more_)match_line (w/ header)
+        ##               always incl. in header
         more_match_header_opts
-             : STATUS NEWLINE      ## note - for now status must be BEFORE geo_opts!!
+             : STATUS NEWLINE     
                  { 
                       result = {}.merge( val[0][1] )
                  }
@@ -222,32 +231,42 @@ class RaccMatchParser
              | NEWLINE             { result = {} }
 
 
+       ###
+       ## fix - rename geo_opts to geo_tree - why? why not?
 
-       ### note - match_header MUST incl. geo tree!!!
+       ### note - match_header REQUIRES 
+       ##          (i) geo_opts/tree or
+       ##          (ii) or inline_attendance
+       ##           
        match_header       
             :     date_clause geo_opts opt_inline_attendance  NEWLINE 
                    { 
                       result = {}.merge( val[0], val[1], val[2] ) 
                    }
-               
+            |      date_clause inline_attendance  NEWLINE 
+                   { 
+                      result = {}.merge( val[0], val[1] ) 
+                   }
 
          ## todo/fix - allow (inline) attendance in match w/o header too
          ##              for now match header required
          ##
          ##  note - use "hack" with INLINE_ATTENDANCE_SEP (a.k.a comma (,))
          ##           to help with shift/reduce conflict
-         opt_inline_attendance
-              :    {  result = {}  }    ## empty; make rule optinal, returns {}
-              |   INLINE_ATTENDANCE   
+         inline_attendance 
+                : INLINE_ATTENDANCE   
                     { 
                        result = { att: val[0][1][:value] }
                     }
-              |  INLINE_ATTENDANCE_SEP  INLINE_ATTENDANCE  
               ## |  ','  INLINE_ATTENDANCE  
+                 |  INLINE_ATTENDANCE_SEP  INLINE_ATTENDANCE  
                     { 
                        result = { att: val[1][1][:value] }
                     }
 
+         opt_inline_attendance
+              :    {  result = {}  }    ## empty; make rule optinal, returns {}
+              |    inline_attendance
 
 
 
@@ -310,9 +329,9 @@ class RaccMatchParser
 
 
         ## optional ord(inal) match number e.g (1), (42), etc.
- #       opt_ord
- #          :        {  result = {}  }     ## empty; optional 
- #          | ord
+        opt_ord
+           :        {  result = {}  }     ## empty; optional 
+           | ord
 
         ord 
            : ORD    {  result = { num: val[0][1][:value] } }
@@ -478,10 +497,23 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                       status_inline: 'awarded' 
                                     }                          
                           }
+                     | TEAM SCORE_ABD TEAM
+                          {
+                           result = { team1: val[0], team2: val[2],
+                                      score: val[1][1],
+                                      status_inline: 'abandoned'
+                                    }                          
+                          }
                      | TEAM INLINE_ABD TEAM
                           {
                            result = { team1: val[0], team2: val[2], 
                                       status_inline: 'abandoned' 
+                                    }                          
+                          }
+                     | TEAM INLINE_VOID TEAM
+                          {
+                           result = { team1: val[0], team2: val[2], 
+                                      status_inline: 'annulled' 
                                     }                          
                           }
                      | TEAM INLINE_SUSP TEAM

@@ -362,6 +362,9 @@ def _tokenize_line( line )
   offsets = [0,0]
   m = nil
 
+  ## track number of geo text seen
+  ##    (use for - do NOT break on two spaces if no geo text seen yet!!)
+  geo_count = 0
 
   ####
   ## quick hack - keep re state/mode between tokenize calls!!!
@@ -602,23 +605,38 @@ def _tokenize_line( line )
            ## note: break on double spaces e.g.
            ## e.g. Jul/16 @ Arena Auf Schalke, Gelsenkirchen  Serbia 0-1 England    
            if m[:spaces]
+                 ### note - do NOT break out 
+                 ##           if not text seen yet!!!
+                 if geo_count > 0
+                    ## get out-off geo mode and backtrack (w/ next)
+                    puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
+                    @re = RE
+                    pos = old_pos
+                    next   ## backtrack (resume new loop step)
+                 else 
+                     nil   ## skip spaces
+                 end                
+           elsif m[:space] 
+               nil    ## skip (single) space
+           elsif m[:text]
+               geo_count += 1
+               [:GEO, m[:text]]   ## keep pos - why? why not?
+           elsif m[:geo_end]   ## "hacky" special comma; always ends geo mode!!!
                  ## get out-off geo mode and backtrack (w/ next)
                  puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
                  @re = RE
                  pos = old_pos
                  next   ## backtrack (resume new loop step)                 
-           elsif m[:space] 
-               nil    ## skip (single) space
-           elsif m[:text]
-               [:GEO, m[:text]]   ## keep pos - why? why not?
            elsif m[:sym]
               sym = m[:sym]
               ## return symbols "inline" as is - why? why not?
               ## (?<sym>[;,@|\[\]-])
               case sym
-              when ',' then  [:',']
-              when '›' then  [:',']  ## note - treat geo sep › (unicode) like comma for now!!!
-              when '>' then  [:',']  ## note - treat geo sep > (ascii) like comma for now!!!
+                ## note - reset geo_count to 0 (avoids break on two spaces)
+                ##                     if separator seen!!
+              when ',' then geo_count = 0; [:',']
+              when '›' then geo_count = 0; [:',']  ## note - treat geo sep › (unicode) like comma for now!!!
+              when '>' then geo_count = 0; [:',']  ## note - treat geo sep > (ascii) like comma for now!!!
               when '[' then
                  ## get out-off geo mode and backtrack (w/ next)
                  puts "  LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE"  if debug?
@@ -950,6 +968,8 @@ def _tokenize_line( line )
             [:INLINE_BYE, m[:inline_bye]]
         elsif m[:inline_abd]  ## abd/abd. - abandoned (match status)
             [:INLINE_ABD, m[:inline_abd]]
+        elsif m[:inline_void]  ## abd/abd. - abandoned (match status)
+            [:INLINE_VOID, m[:inline_void]]
         elsif m[:inline_susp]  ## susp/susp. - suspended (match status)
             [:INLINE_SUSP, m[:inline_susp]]
         elsif m[:inline_ppd]  ## ppd/ppd. or postp/postp. - postponed (match status)
@@ -1115,6 +1135,14 @@ def _tokenize_line( line )
             ## add score[:awarded] = true ???
             ##    or only use match status to avoid duplicate?
             [:SCORE_AWD, [m[:score_awd], score]]
+        elsif m[:score_abd]   ## score abandonded (abd/abd.)
+            score = {}
+            ### note - use "generic" score for now
+            score[:score] = [m[:score1].to_i(10),
+                             m[:score2].to_i(10)]  
+            ## add score[:awarded] = true ???
+            ##    or only use match status to avoid duplicate?
+            [:SCORE_ABD, [m[:score_abd], score]]
       elsif m[:minute]
               minute = {}
               minute[:m]      = m[:value].to_i(10)
@@ -1132,6 +1160,7 @@ def _tokenize_line( line )
           when '@'    ##  enter geo mode
             puts "  ENTER GEO_RE MODE"  if debug?
             @re = GEO_RE
+            geo_count = 0
             [:'@']
           when ',' then [:',']
           when ';' then [:';']

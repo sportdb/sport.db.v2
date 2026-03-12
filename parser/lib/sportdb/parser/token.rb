@@ -92,17 +92,31 @@ INLINE_SUSP_RE = %r{
 
 
 ####
-# ppd/ppd. or postp/postp.   [postponed] 
-#  PPD/POSTP/P-P              
+# ppd/ppd. or pstp/pstp. or postp/postp.   [postponed] 
+#  PPD/PSTP/POSTP/P-P              
+#   todo/check - add/allow p-p too - why? why not?
 INLINE_PPD_RE = %r{
                    (?<inline_ppd>
                        \b (?: ppd\.? |
-                              postp\.? |
-                              PPD | POSTP | P-P
+                              po?stp\.? |
+                              PPD | PO?STP | P-P
                            ) 
                   ## POSITIVE lookahead - requires space
                          (?= [ ])
                )}x   ## note - NOT case insensitive 
+
+####
+#  void via   x-x X-X
+#     todo/check - only allow X-X - why? why not?
+INLINE_VOID_RE = %r{
+                      (?<inline_void>
+                          \b (?: x-x |
+                                 X-X 
+                             )
+                        ## POSITIVE lookahead - requires space
+                           (?= [ ])
+                )}x ## note - NOT case insensitive
+
 
 ####
 #  awd/awd.                [awarded]
@@ -152,10 +166,12 @@ RE = Regexp.union(
                     INLINE_BYE_RE,   ## (inline) match status - bye (advance to next round)
                     INLINE_ABD_RE,   ## (inline) match status - abd/abd. (abandoned)
                     INLINE_SUSP_RE,  ## (inline) match status - susp/susp.  (suspended)
-                    INLINE_PPD_RE,   ## (inline) match status - ppd/ppd. or postp/postp. (postponed)            
+                    INLINE_PPD_RE,   ## (inline) match status - ppd/ppd. or pstp/pstp. or postp/postp. or p-p (postponed)            
+                    INLINE_VOID_RE,  ## (inline) match status - x-x (voided) 
                     INLINE_AWD_RE,   ## (inline) match status - awd/awd. (awarded)
                     INLINE_CANC_RE,  ## (inline) match status - canc/canc. (cancelled/canceled)
                    
+
                     TEAM_HOME_RE,     ## (H)
                     TEAM_AWAY_RE,     ## (A)
                     TEAM_NEUTRAL_RE,  ## (N)
@@ -170,6 +186,7 @@ RE = Regexp.union(
                     SCORE_FULLER_RE,
                     SCORE_FULLER_MORE_RE,
                     SCORE_AWD_RE,   #  (inline) score awarded e.g. 3-0 awd or 0-1 awd. etc.
+                    SCORE_ABD_RE,   #  (inline) score abandoned e.g. 2-1 abd.
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
                     BASICS_RE, 
                    TEXT_RE,

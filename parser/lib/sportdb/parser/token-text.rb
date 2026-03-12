@@ -99,7 +99,8 @@ TEXT_RE = %r{
                                       aban\.?|ABAN|
                                       susp\.?|SUSP|
                                       ppd\.?|PPD|
-                                      postp\.?|POSTP|P-P|
+                                      po?stp\.?|PO?STP|P-P|
+                                      x-x|X-X|
                                       awd\.?|AWD|
                                       canc\.?|CANC ) [ ] 
                                         |

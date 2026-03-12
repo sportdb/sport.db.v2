@@ -102,6 +102,8 @@ DEFAULT =  parse_names( <<TXT )
    status.txt
    table.txt
 
+   todos_complete.txt
+
    quick.txt
 
    ##  todos.txt

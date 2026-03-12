@@ -14,7 +14,7 @@ class Lexer
 GEO_TEXT_RE = %r{
     ## must start with alpha (allow unicode letters!!)
     (?<text>
-           ## positive lookbehind -  for now space (or beginning of line - for testing) only
+          ## positive lookbehind -  for now space (or beginning of line - for testing) only
            ##  (MUST be fixed number of chars - no quantifier e.g. +? etc.)
             (?<= [ ,›>\[\]]|^)
             (?:
@@ -79,11 +79,11 @@ GEO_TEXT_RE = %r{
            ##    must be space!!!
            ##   (or comma or  start/end of string)
            ##   kind of \b !!!
-            ## positive lookahead
+            ## POSITIVE lookahead
             (?=[ ,›>\[\]]|$)
+
    )
 }ix
-
 
 
 
@@ -96,9 +96,30 @@ GEO_BASICS_RE = %r{
 }ix
 
 
+##  note - add "hacky" check for comma that is followed by a prop(erty)
+##
+##  make sure to NOT match
+##      props  e.g.  att: 18000
+##   July 10 @ Paris, Parc des Princes, att: 18000    
+##   July 10 @ Paris, Parc des Princes,   att: 18000    
+##
+
+
+GEO_END_RE = %r{
+   (?<geo_end>
+        ,
+    )
+    ## POSITIVE lookahead for props
+    (?=    
+        [ ]*  ## optional spaces
+         (?: att|ref)    ## todo/fix - use generic [a-z]+ - why? why not?
+         :
+    )
+}ix
 
 
 GEO_RE = Regexp.union(
+                    GEO_END_RE,
                     GEO_BASICS_RE, 
                     GEO_TEXT_RE,
                     ANY_RE,
