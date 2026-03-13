@@ -1,0 +1,26 @@
+
+#######
+#  (expand/convert) goal minutes  45+1,90+4,120+4 shortcuts
+#                     to "standard"  minute+stoppage e.g.
+#                                     45+1 => 45+1 format
+
+
+## check auto-fix for minute with offset/stoppage marker
+
+45+1     #=> 45+1
+90+4     #=> 90+4
+120+4    #=> 120+4
+
+
+45'+1     #=> 45+1
+90'+4     #=> 90+4
+120'+4    #=> 120+4
+
+## do NOT match/replace with MINUTE regex
+45+1  45'+1 45'+1'
+90+4  90'+4 90'+4'
+
+## with goal type marker
+45+1p  45+1f 45+1 (p) 45+1 (fk)   45+1 (o.g.)
+
+

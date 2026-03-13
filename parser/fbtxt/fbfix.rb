@@ -29,7 +29,7 @@ end
 
 
 PATH = [
-   '../fbtxt-rsssf',
+   '../fbtxt-fix',
 ]
 
 
@@ -61,6 +61,22 @@ TIME_DE_RE =  %r{   \( (\d{1,2})
                        (\d{2})  \)  
                 }ix
 TIME_DE_REPLACE = '\1:\2'
+
+
+
+##
+##  47+   =>  45+2
+##  47'+  =>  45'+2
+##  123+  =>  120+3
+MINUTE_RE = %r{
+                  \b
+                    (?<value>\d{1,3})
+                    (?<marker>')?
+                    \+
+                    ## negative lookahead - no number e.g. 42+3
+                    (?! [0-9])
+               }ix
+
 
 
 def autofix( txt )
@@ -206,6 +222,25 @@ def autofix( txt )
       end
    end
    txt = newtxt
+
+
+   txt = txt.gsub( MINUTE_RE ) do |_|
+           ## note - sub passes in string (!) NOT matchdata in arg (_)
+           m = $~   ## is $LAST_MATCH_DATA
+           value = m[:value].to_i(10)
+
+           values =    if value < 90        # assume 1st half (45+xx)
+                           [45, value - 45]
+                       elsif value < 105    # assume 2nd half (90+xx)
+                           [90, value - 90]
+                       elsif value < 120    # assume extra time, 1nd half (105+xx)
+                           [105, value - 105]
+                       else                 # assume extra time, 2nd half (120+xx)
+                           [120, value - 120]
+                       end
+
+            "#{values[0]}#{m[:marker]}+#{values[1]}"            
+        end  
 
 
 ###
