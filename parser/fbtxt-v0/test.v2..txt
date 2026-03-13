@@ -1,0 +1,23 @@
+
+
+▪ Matchday 1
+Sat Sep 12
+  12:30  Fulham FC                0-3 (0-1)  Arsenal FC
+  15:00  Crystal Palace FC        1-0 (1-0)  Southampton FC
+  17:30  Liverpool FC             4-3 (3-2)  Leeds United FC
+  20:00  West Ham United FC       0-2 (0-0)  Newcastle United FC
+Sun Sep 13
+  14:00  West Bromwich Albion FC  0-3 (0-0)  Leicester City FC
+ 
+
+▪ Matchday 28
+
+
+
+## check european-style dates - do NOT match with TIME regex
+
+12.12.
+12.12.2024
+12.11.
+2.11.
+2.11.2026

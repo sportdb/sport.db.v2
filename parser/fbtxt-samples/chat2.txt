@@ -1,0 +1,415 @@
+###
+# more chat samples
+
+
+## add support for
+
+## - [ ]  Extra-time explicit score
+##         e.g. SPAIN 1-1 ITALY  (aet 2-1)  
+##    note - same as -> SPAIN 1-1 ITALY  (ft, aet 2-1)
+
+## - [ ]  Inline half-time score
+          e.g. TEAM_A 4–3 TEAM_B (2–1)
+
+#
+##  use TEAMRESULT and TEAMRESULT_PEN and TEAMRESULT_FT or
+##      TEAM_HTFT and TEAM_PEN and TEAM_FT  for token names??
+
+## - [ ] support  for  ft & penalties score ??   TEAMALT_PEN!!
+##        check how score works with a.e.t.!!! (and penalties)
+##       e.g. ITALY 1 (5) SPAIN 1 (4)
+##           or
+##            ITALY 1 (5) 
+##            SPAIN 1 (4)
+
+## - [ ] no half-time score                     TEAMALT_FT | TEAMALT (=TEAMALT_HTFT)
+##         e.g. FRANCE     3
+##              PORTUGAL   1
+
+
+
+
+
+
+# Handling extra-time (AET)
+SPAIN 2-1  ITALY  (aet) 
+
+##  support ??
+## SPAIN 1-1 ITALY  (aet 2-1)
+
+
+#####
+## Handling penalties
+
+ITALY 1–1 SPAIN (5–4 pens)
+
+### support  for  ft & penalties score ??
+# ITALY 1 (5) SPAIN 1 (4)
+
+
+############
+## Combined example (most complex)
+
+BRAZIL 1–1 ARGENTINA (aet, 4–3 pens)
+##   note - 1-1 score interpreted as after extra-time (aet) score!!
+##                         NOT full-time score and aet flag!! 
+
+
+BRAZIL 1–1 ARGENTINA (4–3 pens)
+## note - same as => BRAZIL 1–1 ARGENTINA (ft, 4–3 pens)
+###   support (ft, 4-3 pens) too - why? why not?
+
+
+####
+
+FRANCE 2–2 PORTUGAL (aet, 5–4 pens)
+
+
+
+###########
+## 10 score formats
+#################
+
+
+######
+## 1. Standard result (most common worldwide)
+##
+## TEAM_A 2–1 TEAM_B
+
+SPAIN 2–1 ITALY
+
+## =>
+##  TEAM_A
+##  FT_SCORE_A
+##  FT_SCORE_B
+##  TEAM_B
+
+########
+## 2. Team-per-line newspaper format
+##
+## TEAM_A (HT) FT
+## TEAM_B (HT) FT
+
+URUGUAY (2) 4
+ARGENTINA (1) 3
+
+## =>
+##  TEAM
+##  HT_SCORE
+##  FT_SCORE
+
+
+####
+##  3. Inline half-time score
+##
+## TEAM_A 4–3 TEAM_B (2–1)
+
+URUGUAY 4–3 ARGENTINA (2–1)
+
+## =>
+## FT 4–3
+## HT 2–1
+
+
+###
+##  4. Extra-time indicator
+##
+##  TEAM_A 2–1 TEAM_B aet
+
+SPAIN 2–1 ITALY (aet)
+
+## =>
+## FT = 1–1    xxxx - note - score missing!
+## ET = 2–1
+## 
+## Common markers - aet / et /after extra time
+
+
+###
+## 5. Extra-time explicit score
+##
+##  TEAM_A 1–1 TEAM_B (aet 2–1)
+
+SPAIN 1–1 ITALY (aet 2–1)
+
+## => 
+## FT = 1–1
+## ET = 2–1
+
+
+###
+## 6. Penalty shootout (bracket form)
+##
+##  TEAM_A 1–1 TEAM_B (5–4 pens)
+
+ITALY 1–1 SPAIN (5–4 pens)
+
+## =>
+## FT = 1–1
+## PEN = 5–4
+##
+##  Common tokens -  pens / pen / p / penalties
+
+
+#####
+## 7. Penalties embedded per team
+##
+## TEAM_A 1 (5) TEAM_B 1 (4)
+
+ITALY 1 (5) SPAIN 1 (4)
+
+## =>
+## FT = 1–1    -   what about extra time??
+## PEN = 5–4
+
+
+####
+## 8. Aggregate score (two-leg ties)
+##
+##  TEAM_A 2–1 TEAM_B (agg 4–3)
+
+REAL MADRID 2–1 BAYERN (agg 4–3)
+
+## =>
+##  MATCH_SCORE = 2–1
+##  AGGREGATE_SCORE = 4–3
+##
+##  Common tokens -  agg / aggregate / on agg
+
+
+####
+## 9. Away-goals decision
+##
+## Older competitions sometimes show:
+##
+## TEAM_A 1–1 TEAM_B (agg 2–2, away goals)
+
+## CHELSEA 1–1 PSG (agg 2–2, PSG win on away goals)
+
+CHELSEA 1–1 PSG (agg 2–2, win on away goals)
+
+CHELSEA 1–1 PSG (agg 2–2) 
+[PSG win on away goals]
+
+
+
+###
+##  10. Forfeit / awarded match
+##
+## Sometimes written:
+##
+## TEAM_A 3–0 TEAM_B (awarded)
+##  or
+##  TEAM_A w/o TEAM_B
+
+TEAM A 3–0 TEAM B  [awarded]
+TEAM A w/o TEAM B
+
+
+
+###
+##  team-per-line newspaper format
+##
+
+URUGUAY    (2) 4
+ARGENTINA  (1) 3
+
+ENGLAND    (0) 1
+GERMANY    (0) 0
+
+BRAZIL     (0) 2
+CHILE      (1) 1
+
+NETHERLANDS (3) 5
+BELGIUM     (1) 2
+
+ITALY      (1) 2
+SPAIN      (1) 2
+
+
+##############
+## 6. No half-time shown (some newspapers omit it)
+
+FRANCE     3
+PORTUGAL   1
+
+
+## 7. With competition header (very common in newspapers)
+▪ WORLD CUP QUALIFIER
+
+URUGUAY    (2) 4
+ARGENTINA  (1) 3
+
+
+## 8. With date or venue line
+@ MONTEVIDEO
+
+URUGUAY    (1) 2
+PARAGUAY   (0) 0
+
+
+## 9. Multiple matches in a column
+
+BRAZIL     (1) 3
+PERU       (0) 0
+
+COLOMBIA   (0) 1
+ECUADOR    (0) 1
+
+
+## 10. With extra note after result
+
+ITALY      (0) 1
+FRANCE     (0) 1
+[ITALY win 5–4 pens]
+
+
+
+###
+## check spacing
+URUGUAY   (2)4
+ARGENTINA (1)3
+
+## or even
+URUGUAY  (2)4
+ARGENTINA(1)3
+
+
+
+####
+# additional examples in the team-per-line newspaper style
+####
+
+## 1. Penalty shootout (note after the two lines)
+ITALY      (0) 1
+SPAIN      (0) 1
+[Italy win 5–4 pens]
+
+ITALY      1-1 (0-0), 5-4 pens  SPAIN
+ITALY v SPAIN        1-1 (0-0), 5-4 pens 
+
+
+## 2. Penalty shootout with abbreviation
+BRAZIL     (1) 2
+URUGUAY    (1) 2
+[Brazil won 4–3 pens]
+
+BRAZIL     2-2 (1-1), 4-3 pens  URUGUAY
+BRAZIL v URUGUAY    2-2 (1-1), 4-3 pens  
+ 
+
+## 3. Penalties with minimal wording
+GERMANY    (0) 0
+FRANCE     (0) 0
+[France win pens 3–2]
+
+GERMANY   0-0 (0-0), 2-3 pen. FRANCE 
+GERMANY  v FRANCE     0-0 (0-0), 2-3 pen. 
+
+
+## 4. Walkover (forfeit)
+PORTUGAL   w/o
+GREECE
+
+PORTUGAL   w/o  GREECE
+PORTUGAL v GREECE  [walkover]
+
+
+## 5. Walkover with score awarded
+##
+## Some competitions officially record:
+
+PORTUGAL   3
+GREECE     0
+[walkover]
+
+PORTUGAL   3-0 GREECE   [walkover]
+PORTUGAL   3-0 awd. GREECE  [walkover]
+
+
+## 6. Walkover noted after the result
+
+NETHERLANDS 3
+ICELAND     0
+[Iceland forfeited]
+
+NETHERLANDS 3-0 ICELAND  [Iceland forfeited]
+NETHERLANDS 3-0 awd. ICELAND 
+NETHERLANDS 3-0 ICELAND [awarded]
+
+
+## 7. Abandoned match (after score shown)
+
+ARGENTINA  (1) 2
+CHILE      (0) 1
+[match abandoned]
+
+ARGENTINA   2-1 (1-0) CHILE   [match abandoned]
+ARGENTINA   2-1 (1-0) CHILE   [abandoned]
+ARGENTINA   2-1 abd. CHILE 
+
+
+## 8. Abandoned with minute
+##
+## Some newspapers show the minute:
+
+ARGENTINA  (1) 2
+CHILE      (0) 1
+[abandoned 68 mins]
+
+ARGENTINA  2-1 (1-0) CHILE   [abandoned 68 mins]
+ARGENTINA  2-1 abd. CHILE   [abandoned at 68']
+ARGENTINA  2-1 abd. CHILE   [at 68']
+
+## add support for half-time in SCORE_ABD ???
+## ARGENTINA  2-1 (1-0) abd. CHILE   [abandoned at 68']
+
+
+## 9. Abandoned without score
+
+PERU
+BOLIVIA
+[abandoned]
+
+PERU v BOLIVIA  [abandoned]
+PERU abd. BOLIVIA 
+
+## 10. Penalties written directly after teams
+##
+## Sometimes the shootout result appears immediately after:
+
+ITALY      (0) 1
+SPAIN      (0) 1
+[5–4 pens]
+
+
+ITALY      1-1 (0-0), 5-4 pens  SPAIN  
+ITALY v SPAIN    1-1 (0-0), 5-4 pens  
+
+
+
+# A practical structure:
+# 
+# MATCH_RESULT
+# ├─ TEAM_ENTRY
+# │   ├─ TEAM
+# │   ├─ HT_SCORE
+# │   └─ FT_SCORE
+# ├─ TEAM_ENTRY
+# │   ├─ TEAM
+# │   ├─ HT_SCORE
+# │   └─ FT_SCORE
+# └─ MATCH_STATUS
+#
+# Where MATCH_STATUS could be:
+# 
+# NORMAL
+# AET
+# PENALTY_SHOOTOUT
+# ABANDONED
+# WALKOVER
+# FORFEIT
+# AWARDED
+
+
+
