@@ -89,11 +89,10 @@ START_GOAL_LINE_COMPAT_RE = %r{
                           (?= [ ]*
                                \d{1,3}
                                    '?    ## optional minute marker
-                                (?: \+  ## note - allow 46+,94+,97+ etc. too for now - why? why not?
-                                  (?: \d{1,2}   
+                                  (?: \+
+                                      \d{1,2}   
                                     '?    ## optional minute marker
-                                  )?
-                                )?          
+                                  )?     
                             )    
 }xi
 
@@ -224,9 +223,12 @@ MINUTE_RE = %r{
 }ix
 =end
 
+
 ##
 ## note - inline \b check in MINUTE_RE excludes
-##      85pen  or 90+4pen or 38p  (possible and NOT excludes in GOAL_MINUTE_RE  !!!)
+##      85pen  or 90+4pen or 38p  (possible and NOT excluded in GOAL_MINUTE_RE  !!!)
+##
+##  minute with optional stoppage
 
 MINUTE_RE = %r{
      (?<minute>
@@ -235,12 +237,11 @@ MINUTE_RE = %r{
                 \b
                 '?    ## optional minute marker
                 
-             (?: (?<plus>\+)  ## note - allow 46+,94+,97+ etc. too for now - why? why not?
-                 (?: (?<value2>\d{1,2}) 
+                (?: \+ (?<value2>\d{1,2}) 
                        \b   
                       '?    ## optional minute marker
                  )?
-             )?          
+                      
       )
 }ix
 
@@ -260,11 +261,9 @@ GOAL_MINUTE_RE = %r{
              (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
                 '?    ## optional minute marker
                 
-             (?: (?<plus>\+)  ## note - allow 46+,94+,97+ etc. too for now - why? why not?
-                 (?: (?<value2>\d{1,2})
+                 (?: \+ (?<value2>\d{1,2})
                       '?    ## optional minute marker
-                 )?
-             )?          
+                 )?          
                    
         ## note - add goal minute qualifiers here inline!!! 
         (?:
@@ -386,28 +385,13 @@ def self._parse_goal_minute( str )
     end
 end
 
+
 def self._build_goal_minute( m )
     minute = {}
-    value =  m[:value].to_i(10)   ## always required
 
-    if m[:plus] && m[:value2].nil?  ## check for 47+, 93+
-        if value < 90        # assume 1st half (45+xx)
-          minute[:m]      = 45
-          minute[:offset] = value - 45
-        elsif value < 105    # assume 2nd half (90+xx)
-          minute[:m]      = 90
-          minute[:offset] = value - 90
-        elsif value < 120    # assume extra time, 1nd half (105+xx)
-          minute[:m]      = 105
-          minute[:offset] = value - 105
-        else                 # assume extra time, 2nd half (120+xx)
-          minute[:m]      = 120
-          minute[:offset] = value - 120
-        end
-    else
-      minute[:m] = value
-    end
-    
+    minute[:m]     =  m[:value].to_i(10)   ## always required
+
+    ## stoppage/injury time (offset)
     minute[:offset] = m[:value2].to_i(10)   if m[:value2]
     
     minute[:og]  = true       if m[:og]
@@ -424,26 +408,9 @@ def _build_goal_minute( m ) self.class._build_goal_minute( m ); end
 
 def self._build_minute( m )
     minute = {}
-    value =  m[:value].to_i(10)   ## always required
+    minute[:m]      = m[:value].to_i(10)   ## always required
 
-    if m[:plus] && m[:value2].nil?  ## check for 47+, 93+
-        if value < 90        # assume 1st half (45+xx)
-          minute[:m]      = 45
-          minute[:offset] = value - 45
-        elsif value < 105    # assume 2nd half (90+xx)
-          minute[:m]      = 90
-          minute[:offset] = value - 90
-        elsif value < 120    # assume extra time, 1nd half (105+xx)
-          minute[:m]      = 105
-          minute[:offset] = value - 105
-        else                 # assume extra time, 2nd half (120+xx)
-          minute[:m]      = 120
-          minute[:offset] = value - 120
-        end
-    else
-      minute[:m] = value
-    end
-    
+    ## stoppage/injury time (offset)   
     minute[:offset] = m[:value2].to_i(10)   if m[:value2]
 
     minute
