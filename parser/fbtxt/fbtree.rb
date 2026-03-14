@@ -101,6 +101,7 @@ DEFAULT =  parse_names( <<TXT )
    score.txt
    status.txt
    table.txt
+   year.txt
 
    todos_complete.txt
 

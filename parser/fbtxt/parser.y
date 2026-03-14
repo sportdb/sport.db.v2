@@ -156,7 +156,7 @@ class RaccMatchParser
 #  date & time rules / productions
     date
       :   DATE    { result = { date: val[0][1] } }
-      |   YEAR       ## to be done - add
+      |   YEAR    { result = { year: val[0] } } 
     
     datetime
       :   DATETIME              { result = {}.merge( val[0][1] ) }

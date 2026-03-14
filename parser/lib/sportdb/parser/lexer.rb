@@ -395,7 +395,13 @@ def _tokenize_line( line )
 
        offsets = [m.begin(0), m.end(0)]
        pos = offsets[1]    ## update pos
-    
+    elsif (m = START_WITH_YEAR.match(line))
+       ## note -  strip enclosing () and convert to integer
+       tokens << [:YEAR, m[:year].to_i(10)]
+
+       offsets = [m.begin(0), m.end(0)]
+       pos = offsets[1]    ## update pos
+
     ###
     ##  todo/fix - rename to START_GROUP_DEF_LINE_RE !!!!   
     elsif (m = GROUP_DEF_LINE_RE.match( line ))

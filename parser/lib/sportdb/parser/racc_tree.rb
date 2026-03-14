@@ -290,8 +290,8 @@ end
 #   note - BOTH might be present at the same time
 
 
-MatchLine   = Struct.new( :header,
-                          :num, :date, :time, :time_local,
+MatchLine   = Struct.new( :header,  :tty,   ## tty = TELETYPE MODE for teams and score!!
+                          :num, :date, :time, :time_local, :year,
                           :team1, :team2, 
                           :score,
                           :status,  :status_inline, :status_note,

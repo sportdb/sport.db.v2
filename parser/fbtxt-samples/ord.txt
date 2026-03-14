@@ -4,8 +4,11 @@ June 24
   (37)  Winner Group A   v Runner-up Group C   @ Cardiff
   (38)  Runner-up Group A v Runner-up Group B   @ Liverpool
 
+  (37)  1A v 2C   @ Cardiff
+  (38)  2A v 2B   @ Liverpool
 
-## with match header  -- add - why? why not?
+
+## ord with match header  -- add - why? why not?
 ##
 ## June 24 @ Cardiff
 ##   (37)  Winner Group A   v Runner-up Group C   

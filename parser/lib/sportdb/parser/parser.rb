@@ -294,7 +294,7 @@ racc_reduce_table = [
   1, 117, :_reduce_50,
   1, 117, :_reduce_51,
   1, 118, :_reduce_52,
-  1, 118, :_reduce_none,
+  1, 118, :_reduce_53,
   1, 119, :_reduce_54,
   1, 120, :_reduce_55,
   1, 121, :_reduce_none,
@@ -1003,7 +1003,12 @@ module_eval(<<'.,.,', 'parser.y', 157)
   end
 .,.,
 
-# reduce 53 omitted
+module_eval(<<'.,.,', 'parser.y', 158)
+  def _reduce_53(val, _values, result)
+     result = { year: val[0] }
+    result
+  end
+.,.,
 
 module_eval(<<'.,.,', 'parser.y', 161)
   def _reduce_54(val, _values, result)

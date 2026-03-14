@@ -215,6 +215,37 @@ START_WITH_ORD = %r{
      )}ix
 
 
+###  
+##   e.g. 1930, 1986, 2002, 2010, 2022, 2026
+##         note - only YYYY
+##    note - look out for clubs like  1860 München (de) !!!
+##                                    1899 Hoffenheim (de)
+##                                    1896 Löwenherz  (ch - a.k.a. FC Winterthur ??)
+##                    any others starting with YYYY ?!
+##    note - YEAR requires TWO (trailing) spaces !!!!! e.g. 
+##       1930    Uruguay             4-2 Argentina
+##       1934    Italy               2-1 Czechoslovakia   (AET)
+##       2022    Argentina           3-3 France           (AET, 4-2 pen)
+##
+##     do NOT match (iso date!!) -  2020-11-12
+##                                  2020/11/12
+##                                  2020.11.12 etc.
+
+START_WITH_YEAR = %r{
+   \A
+       [ ]*    ## ignore leading spaces (if any)
+     (?<year>
+        \d{4}
+     )
+     ## positive lookahead 
+       (?= [ ]{2} |   ## min. TWO spaces or 
+           [ ][@] |   ##   space with geo marker or
+            \z        ##    year (date) header (end-of-line/string)
+        )   
+}x
+
+
+
 ###
 ## check for headings 
 ##    e.g.  = heading 1
