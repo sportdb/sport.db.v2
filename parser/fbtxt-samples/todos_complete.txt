@@ -60,3 +60,24 @@ July 30 @ Estadio Centenario, Montevideo    Att: 93000
    11 Oct 92   @    Cairo,  Egypt              Egypt            1-0 Angola
 
   
+
+####
+## - [x] add (experimental) support for "split" score and optional newline break
+
+Team1 (1) 0  Team2 (2) 1
+
+Team1 (1) 0  
+Team2 (2) 1
+
+Team1 (1)0  
+Team2 (2)1
+
+### -- with match header
+
+July 30 @ Estadio Centenario, Montevideo    Att: 93000
+ URUGUAY   (1) 4  ARGENTINA  (2) 2 
+
+July 30 @ Estadio Centenario, Montevideo    Att: 93000
+ URUGUAY    (1) 4
+ ARGENTINA  (2) 2 
+ 

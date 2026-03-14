@@ -3,7 +3,7 @@
 # 1. Dense vertical results column (very common)
 
 ENGLAND v SCOTLAND
-@ London
+  @ London
 
 ENGLAND     (1) 2
 SCOTLAND    (0) 1
@@ -80,13 +80,21 @@ Celtic      (0) 1
 Hearts      (0) 0
 [match abandoned 72 mins]
 
+Celtic      (0) 1
+Hearts      (0) 0
+[abandoned 72 mins]
+
+
 ###
 # 7. Walkover / forfeited match
 
 = EURO CUP QUALIFIER
 
-Malta       w/o
-Albania
+# Malta       w/o
+# Albania
+
+Malta       w/o   Albania
+
 
 ## or
 
@@ -146,10 +154,12 @@ ITALY    0
 # CHILE·0 PERU·0
 
 
-## note - Football.TXT REQUIRES two-spaces between team and score!!
-BRAZIL   2 ARGENTINA  1
-URUGUAY  1 PARAGUAY   1
-CHILE    0 PERU       0
+## note - Football.TXT REQUIRES two-spaces between team and score
+##               AND score and team!!
+##           e.g. 2 ARGENTINA => TEAM<2 ARGENTINA> !!!
+BRAZIL   2  ARGENTINA  1
+URUGUAY  1  PARAGUAY   1
+CHILE    0  PERU       0
 
 
 

@@ -99,6 +99,7 @@ TEXT_RE = %r{
                                       aban\.?|ABAN|
                                       susp\.?|SUSP|
                                       ppd\.?|PPD|
+                                      pst\.?|PST|
                                       po?stp\.?|PO?STP|P-P|
                                       x-x|X-X|
                                       awd\.?|AWD|
@@ -127,7 +128,7 @@ TEXT_RE = %r{
                      [0-9h'+] |    ## protected break on 12h / 12' / 1-1
                                     ##  check usege for 3+4 - possible? where ? why?     
                      (?:[.:-]\d)     ## protected/exclude/break on 12.03 / 12:03 / 12-12
-                                     ##  BUT allow Park21-Arena for example e.g. 21-A :-)
+                                      ##  BUT allow Park21-Arena for example e.g. 21-A :-)
                     )
                     [°]?  ## followed by optional ord                 
                    ## negative lookahead for numbers

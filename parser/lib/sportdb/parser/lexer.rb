@@ -313,6 +313,20 @@ def tokenize_with_errors
                         { team: team }.merge( score_team[1] ) 
                       ]
                nodes << [:TEAMALT, val]         
+        elsif buf.match?( :TEAM, :SCORE_TEAM_PEN )  
+               team           = buf.next[1]
+               score_team_pen = buf.next[1]
+               val =  [team + ' ' + score_team_pen[0],  ## concat string of two tokens
+                        { team: team }.merge( score_team_pen[1] ) 
+                      ]
+               nodes << [:TEAMALT_PEN, val]         
+        elsif buf.match?( :TEAM, :SCORE_TEAM_NUM )  
+               team           = buf.next[1]
+               score_team_num = buf.next[1]
+               val =  [team + ' ' + score_team_num[0],  ## concat string of two tokens
+                        { team: team }.merge( score_team_num[1] ) 
+                      ]
+               nodes << [:TEAMALT_NUM, val]         
          elsif buf.match?( :GOAL_MINUTE, :',', :GOAL_MINUTE )
              ## note - only advance by two tokens!
              ##     allows more :GOAL_MINUTE sequences!! e.g. 12,13,14 etc!!!
@@ -340,6 +354,7 @@ def tokenize_with_errors
   end  # map tokens_by_line
 
 
+  
 
     ## flatten tokens
     tokens = []
@@ -348,6 +363,46 @@ def tokenize_with_errors
          if debug?
            pp tok
          end
+
+
+     ###############
+     ##   "hacky" (automagic) line merges (remove newline)
+           ## if line start with @  - check if incl. teams
+  
+     ###
+     ### quick merge lines hack
+     ##    if line starts with geo-marker token @
+     ##            check if line incl. TEAM
+     ##           if yes, leave alone
+     ##            otherwise  merge line into previous line!!
+     ##       - todo/fix - handle in possibly in grammar!!!
+     ##        for now match_line CAN start with @ London
+     ##                 resulting in parser conflict(s)!!!
+     ##    e.g. 
+     ##       England v Scotland
+     ##          @ London
+     ##          =>
+     ##        England v Scotland @ London
+     ## 
+  
+     ##
+     ##  note/todo - if INDENT / SPACES get added
+     ##                adjust here 
+     ##   tok[0][0] == :INDENT  (or :SPACES) && 
+     ##   tok[1][0] == :'@'
+
+           if tok[0][0] == :'@' 
+                team =  tok.find { |t| t[0] == :TEAM }
+                if team
+                   ## do nothing - keep as is (assume match_line starting w/ @)
+                else
+                  ## no team(s) found in line
+                  ##    remove last token (that is, NEWLINE)
+                  ##   note - possibly is blank ?!  keep blank
+                  tokens.pop  if tokens[-1][0] == :NEWLINE
+                end   
+           end
+
 
          tokens  += tok 
          ## auto-add newlines  (unless BLANK!!)
@@ -1019,7 +1074,11 @@ def _tokenize_line( line )
             [:DATE_LEGS, [m[:date_legs], _build_date_legs(m)]] 
         elsif m[:score_team]
             [:SCORE_TEAM, [m[:score_team], _build_score_team(m)]] 
-        elsif m[:score_legs]
+        elsif m[:score_team_pen]
+            [:SCORE_TEAM_PEN, [m[:score_team_pen], _build_score_team_pen(m)]] 
+        elsif m[:score_team_num]
+            [:SCORE_TEAM_NUM, [m[:score_team_num], _build_score_team_num(m)]]
+          elsif m[:score_legs]
               legs = {}
               
               ### leg1

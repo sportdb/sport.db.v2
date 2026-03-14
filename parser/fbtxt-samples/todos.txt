@@ -1,22 +1,5 @@
 
-####
-## - [ ] add (experimental) support for "split" score and optional newline break
 
-Team1 (1) 0  Team2 (2) 1
-
-Team1 (1) 0  
-Team2 (2) 1
-
-
-
-### with match header
-
-July 30 @ Estadio Centenario, Montevideo    Att: 93000
- URUGUAY   (1) 4  ARGENTINA  (2) 2 
-
-July 30 @ Estadio Centenario, Montevideo    Att: 93000
- URUGUAY    (1) 4
- ARGENTINA  (2) 2 
 
 
 
@@ -26,6 +9,14 @@ July 30 @ Estadio Centenario, Montevideo    Att: 93000
 
 att:  ~114000    or c.114000 or ?? ca.114000 ??
 att:  114000 (soldout)   or ???
+
+
+
+##
+##  add support for "split" w/o match block
+
+Malta       w/o
+Albania
 
 
 

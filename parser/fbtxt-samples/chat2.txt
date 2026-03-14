@@ -8,8 +8,9 @@
 ##         e.g. SPAIN 1-1 ITALY  (aet 2-1)  
 ##    note - same as -> SPAIN 1-1 ITALY  (ft, aet 2-1)
 
-## - [ ]  Inline half-time score
-          e.g. TEAM_A 4–3 TEAM_B (2–1)
+## - [ ]  Inline half-time score e.g.
+           
+##             TEAM_A 4–3 TEAM_B (2–1)
 
 #
 ##  use TEAMRESULT and TEAMRESULT_PEN and TEAMRESULT_FT or
@@ -17,16 +18,19 @@
 
 ## - [ ] support  for  ft & penalties score ??   TEAMALT_PEN!!
 ##        check how score works with a.e.t.!!! (and penalties)
-##       e.g. ITALY 1 (5) SPAIN 1 (4)
+##       e.g. 
+  
+    ITALY 1 (5) SPAIN 1 (4)
+
 ##           or
-##            ITALY 1 (5) 
-##            SPAIN 1 (4)
 
-## - [ ] no half-time score                     TEAMALT_FT | TEAMALT (=TEAMALT_HTFT)
-##         e.g. FRANCE     3
-##              PORTUGAL   1
+            ITALY 1 (5) 
+            SPAIN 1 (4)
 
+## - [ ] no half-time score  e.g.                   TEAMALT_FT | TEAMALT (=TEAMALT_HTFT)
 
+   FRANCE     3
+   PORTUGAL   1
 
 
 
@@ -44,7 +48,10 @@ SPAIN 2-1  ITALY  (aet)
 ITALY 1–1 SPAIN (5–4 pens)
 
 ### support  for  ft & penalties score ??
-# ITALY 1 (5) SPAIN 1 (4)
+ITALY  1 (5) SPAIN  1 (4)
+
+ITALY  1 (5) 
+SPAIN  1 (4)
 
 
 ############
@@ -156,7 +163,7 @@ ITALY 1–1 SPAIN (5–4 pens)
 ##
 ## TEAM_A 1 (5) TEAM_B 1 (4)
 
-ITALY 1 (5) SPAIN 1 (4)
+ITALY   1 (5) SPAIN  1 (4)
 
 ## =>
 ## FT = 1–1    -   what about extra time??

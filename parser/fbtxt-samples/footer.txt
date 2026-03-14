@@ -1,0 +1,24 @@
+
+##
+##  "virtual" match geo footer via  newline remove (line folding) 
+##      keep "hacky" match geo footer - why? why not?
+
+
+ENGLAND v SCOTLAND
+  @ London
+
+ENGLAND 1-4 SCOTLAND
+  @ London  att: 21000
+
+
+## VS
+ENGLAND v SCOTLAND     @ London
+ENGLAND 1-4 SCOTLAND   @ London  att: 21000
+
+
+
+###
+##  start match_line with location
+Dec 11
+15:30  @ Cardiff     WALES v NORTHERN IRELAND
+       @ London      ENGLAND v SCOTLAND     

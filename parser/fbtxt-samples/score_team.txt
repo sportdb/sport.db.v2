@@ -2,9 +2,20 @@
 
 Team1 (1) 0  Team2 (3) 2
 
-Team1 (1) 0  
-Team2 (3) 2
+Team1  (1) 0  
+Team2  (3) 2
 
+Team 1  (1) 0  
+Team 2  (3) 2
+
+Team 1 (1) 0  
+Team 2 (3) 2
+
+
+Team1 (1)0 Team2 (3)2
+
+Team1 (1)0  
+Team2 (3)2
 
 
 July 30 
@@ -13,6 +24,10 @@ July 30
 July 30 
  Team1 (1) 0  
  Team2 (3) 2
+
+July 30 
+ Team1 (1)0  
+ Team2 (3)2
 
 
 ###
@@ -44,3 +59,33 @@ July 30 @ Estadio Centenario, Montevideo    Att: 93000
 
  URUGUAY    (2) 4
  ARGENTINA  (1) 3 
+
+
+
+##############
+## try "penalty-style"     1 (4)
+##      e.g. 3-3 (aet, 4-2 pen)
+##
+## todo/fix - check how to mark result as after extra-time ???
+
+##
+##  note - two spaces required between team and score !!!
+
+Argentina   3 (4) France   3 (2)
+
+Argentina           3 (4)
+France              3 (2)
+
+
+
+######
+##  try   "no half-time"-style    1 
+##
+##  note - two spaces required between team and score !!!
+
+ URUGUAY     4
+ ARGENTINA   3 
+
+ URUGUAY     4  ARGENTINA   3 
+
+

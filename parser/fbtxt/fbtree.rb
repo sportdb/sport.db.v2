@@ -125,14 +125,26 @@ WORLDCUP = parse_names( <<TXT )
 
    ##############
    ## check some rsssf samples
-   worldcup/rsssf/2014f.txt
-   worldcup/rsssf/2022f.txt
    worldcup/rsssf/30full.txt
    worldcup/rsssf/34f.txt
    worldcup/rsssf/38f.txt
+   worldcup/rsssf/2014f.txt
+   worldcup/rsssf/2022f.txt
+   worldcup/rsssf/worldcup.txt
    
    ## worldcup/rsssf/2022q.txt
 TXT
+
+
+EURO = parse_names( <<TXT )
+    euro/rsssf/60e.txt
+    euro/rsssf/64e.txt
+    euro/rsssf/68e.txt
+    euro/rsssf/72e.txt
+    euro/rsssf/2024e.txt
+    euro/rsssf/eurochamp.txt
+TXT
+
 
 AUSTRIA =  parse_names( <<TXT )
 
@@ -186,6 +198,8 @@ if __FILE__ == $0
     args = DEFAULT 
   elsif args.size == 1 && (args[0] == 'worldcup' || args[0] == 'wc')
     args = WORLDCUP
+  elsif args.size == 1 && (args[0] == 'euro')
+    args = EURO
   elsif args.size == 1 && (args[0] == 'austria' || args[0] == 'at')
     args = AUSTRIA
   elsif args.size == 1 && (args[0] == 'england' || args[0] == 'eng')
