@@ -68,7 +68,7 @@ Derby       (0) 1
 
 Liverpool   (1) 1
 Arsenal     (0) 1
-[Liverpool win 4–3 pens]
+[Liverpool win 4–3 pens]     ## note - simple match note
 
 
 ##
@@ -78,11 +78,11 @@ Arsenal     (0) 1
 
 Celtic      (0) 1
 Hearts      (0) 0
-[match abandoned 72 mins]
+[match abandoned 72 mins]    ## note - simple match note (NOT matching match_status regex)
 
 Celtic      (0) 1
 Hearts      (0) 0
-[abandoned 72 mins]
+[abandoned 72 mins]   ## note - gets parsed/added as a match_status (plus note) !!
 
 
 ###
@@ -100,7 +100,7 @@ Malta       w/o   Albania
 
 Malta       3
 Albania     0
-[walkover]
+[walkover]              ## note - gets parsed/added as a match_status
 
 ##
 # 8. Multiple matches on one line (very annoying OCR case)
@@ -109,6 +109,20 @@ Albania     0
 
 # Arsenal (1)2 Everton (0)0    Leeds (0)1 Chelsea (1)1
 # Derby   (0)0 Wolves  (0)0    Spurs (2)3 Villa  (1)2
+
+###
+## note - must split "by hand" e.g.
+Arsenal (1)2 
+Derby   (0)0
+
+Everton (0)0    
+Wolves  (0)0
+
+Leeds (0)1 
+Spurs (2)3
+
+Chelsea (1)1
+Villa  (1)2
 
 
 ##
@@ -147,6 +161,16 @@ ITALY    0
 # BRAZIL 2 ARGENTINA 1    #=>  results in TEAM<BRAZIL 2 ARGENTINA 1> !!!
 # URUGUAY 1 PARAGUAY 1
 # CHILE 0 PERU 0
+
+
+############
+## try (experimental)  teletype (tty) mode
+##    might get turned on/off with a flag - why? why not?
+BRAZIL 2 ARGENTINA 1 
+URUGUAY 1 PARAGUAY 1
+CHILE 0 PERU 0
+
+
 
 # or use interpunct (·) to separate tokens "by hand"
 # BRAZIL·2 ARGENTINA·1  

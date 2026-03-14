@@ -92,14 +92,15 @@ INLINE_SUSP_RE = %r{
 
 
 ####
-# ppd/ppd. or pstp/pstp. or postp/postp.   [postponed] 
+# ppd/ppd. or pst/pst. or pstp/pstp. or postp/postp.   [postponed] 
 #  PPD/PSTP/POSTP/P-P              
 #   todo/check - add/allow p-p too - why? why not?
 INLINE_PPD_RE = %r{
                    (?<inline_ppd>
                        \b (?: ppd\.? |
+                              pst\.? |
                               po?stp\.? |
-                              PPD | PO?STP | P-P
+                              PPD | PST | PO?STP | P-P
                            ) 
                   ## POSITIVE lookahead - requires space
                          (?= [ ])

@@ -438,6 +438,14 @@ class RaccMatchParser
                                       score: score
                                     }
                    }
+               | TTY_TEXT TTY_NUM NEWLINE TTY_TEXT TTY_NUM 
+                   {
+                           result = { team1: val[0], 
+                                      team2: val[3],
+                                      score: [val[1], val[4]]
+                                    }
+                   }
+   
  
 
 
@@ -486,6 +494,13 @@ class RaccMatchParser
                            result = { team1: val[0][1][:team], 
                                       team2: val[1][1][:team],
                                       score: score
+                                    }
+                   }
+          | TTY_TEXT TTY_NUM TTY_TEXT TTY_NUM 
+                   {
+                           result = { team1: val[0], 
+                                      team2: val[2],
+                                      score: [val[1], val[3]]
                                     }
                    }
 

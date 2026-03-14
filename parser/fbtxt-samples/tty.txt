@@ -1,0 +1,29 @@
+
+##
+# try experimental teletype (tty) mode
+
+
+BRAZIL 2 ARGENTINA 1 
+URUGUAY 1 PARAGUAY 1
+CHILE 0 PERU 0
+
+A 2 B 1
+A1 2 B2 1
+1A 2 B2 1
+
+A 1A A1 2 B 2B B2 1   
+
+A 1A A1 2 
+B 2B B2 1   
+
+
+LEEDS UTD 2 CHELSEA 2
+MAN CITY 1 LIVERPOOL 0
+
+
+##
+##  check for known match status (ABD, CANC, etc.) 
+##    add later - why? why not?
+##      use a flag to turn on/off tty mode/support !!!! 
+## PERU abd. BOLIVIA 
+## PERU ABD BOLIVIA 
