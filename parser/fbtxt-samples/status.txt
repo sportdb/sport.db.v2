@@ -15,6 +15,7 @@ SW Bregenz 0-1awd Liefering
 SW Bregenz 0-1awd. Liefering      
 SW Bregenz 0-1 awd. Liefering      
 
+
 ###
 ## check (inline) awd/awd.  (awarded)   w/o score
 
@@ -23,7 +24,15 @@ SW Bregenz   awd. Liefering
 SW Bregenz awd Liefering      
 SW Bregenz awd. Liefering      
 
+SW Bregenz 0-1 AWD Liefering      
+SW Bregenz AWD Liefering      
 
+SW BREGENZ 0-1 AWD LIEFERING      
+SW BREGENZ AWD LIEFERING      
+
+
+SW Bregenz v Liefering    [awd]    
+SW Bregenz v Liefering    [awd.]   
 
 
 Schwarz-Weiß     1-4 Austria W             [annulled]
@@ -38,6 +47,8 @@ SV Frauental                  n/p Deutschlandsberger SC
 
 SC Parschlug n/p FC Judenburg
 SV Frauental n/p Deutschlandsberger SC 
+
+SC PARSCHLUG N/P FC JUDENBURG
 
 
 ##########
@@ -70,6 +81,8 @@ Chichester City bye
 
   Liefering        abd Juniors OÖ       [abandoned at 0-0 in 15' due to heavy snowfall]
   Amstetten        abd BW Linz          [abandoned at 0-1 in 37' due to heavy snowfall]
+  Amstetten        abd BW Linz          [abd. at 0-1 in 37' due to heavy snowfall]
+  Amstetten        abd BW Linz          [aban. at 0-1 in 37' due to heavy snowfall]
 
   Liefering        abd Juniors OÖ 
   Amstetten        abd BW Linz        
@@ -81,13 +94,17 @@ Chichester City bye
   Amstetten abd BW Linz        
   Liefering abd. Juniors OÖ 
   Amstetten abd. BW Linz        
+  Amstetten ABD BW Linz        
+  AMSTETTEN ABD BW LINZ       
 
   Liefering aban Juniors OÖ 
   Amstetten aban BW Linz        
   Liefering aban. Juniors OÖ 
   Amstetten aban. BW Linz        
+  Amstetten ABAN BW Linz        
+  AMSTETTEN ABAN BW LINZ        
+ 
 
-  
 ###
 ## check (inline) canc/canc.  (canceled/cancelled)
 
@@ -95,6 +112,14 @@ SW Bregenz   canc Liefering
 SW Bregenz   canc. Liefering      
 SW Bregenz canc Liefering      
 SW Bregenz canc. Liefering      
+
+SW Bregenz CANC Liefering      
+SW BREGENZ CANC LIEFERING      
+
+SW Bregenz v Liefering    [cancelled]     
+SW Bregenz v Liefering    [canceled]     
+SW Bregenz v Liefering    [canc.]     
+SW Bregenz v Liefering    [canc]     
 
 
 ###
@@ -105,6 +130,13 @@ SW Bregenz   susp. Liefering
 SW Bregenz susp Liefering      
 SW Bregenz susp. Liefering      
 
+SW Bregenz SUSP Liefering      
+SW BREGENZ SUSP LIEFERING      
+
+SW Bregenz v Liefering   [suspended]      
+SW Bregenz v Liefering   [susp.]      
+SW Bregenz v Liefering   [susp]      
+
 
 ###
 ## check (inline) ppd/ppd. or postp/postp.  (postponed)
@@ -113,13 +145,48 @@ SW Bregenz   ppd Liefering
 SW Bregenz   ppd. Liefering      
 SW Bregenz ppd Liefering      
 SW Bregenz ppd. Liefering      
+SW Bregenz PPD Liefering      
+
+SW Bregenz pst. Liefering      
+SW Bregenz pst Liefering      
+SW Bregenz PST Liefering 
+
+SW Bregenz pstp Liefering      
+SW Bregenz pstp. Liefering      
+SW Bregenz PSTP Liefering      
 
 SW Bregenz   postp Liefering      
 SW Bregenz   postp. Liefering      
 SW Bregenz postp Liefering      
 SW Bregenz postp. Liefering      
+SW Bregenz POSTP Liefering      
 
 
+SW BREGENZ PPD LIEFERING    
+SW BREGENZ PST LIEFERING      
+SW BREGENZ PSTP LIEFERING   
+SW BREGENZ POSTP LIEFERING      
+
+SW Bregenz v Liefering  [postponed]    
+SW Bregenz v Liefering  [ppd]    
+SW Bregenz v Liefering  [pst]    
+SW Bregenz v Liefering  [pstp]    
+SW Bregenz v Liefering  [postp]    
+
+
+## postponed (status) with note
 SW Bregenz v Liefering  [postponed: weather]    
+SW Bregenz v Liefering  [ppd: weather]    
+SW Bregenz v Liefering  [pst: weather]    
+SW Bregenz v Liefering  [pstp: weather]    
+SW Bregenz v Liefering  [postp: weather]    
+SW Bregenz v Liefering  [ppd.: weather]    
+SW Bregenz v Liefering  [pst.: weather]    
+SW Bregenz v Liefering  [pstp.: weather]    
+SW Bregenz v Liefering  [postp.: weather]    
 
+SW Bregenz v Liefering  [PPD weather]    
+SW Bregenz v Liefering  [PST weather]    
+SW Bregenz v Liefering  [PSTP weather]    
+SW Bregenz v Liefering  [POSTP weather]    
 

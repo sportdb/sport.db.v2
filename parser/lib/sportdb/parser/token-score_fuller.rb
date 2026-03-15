@@ -386,6 +386,32 @@ SCORE_FULLER_MORE__FT__RE = %r{
         )}ix
 
 
+###
+#  add special for fuller_more
+#     (aet 4-3)   -  core score is ft, and fuller more incl. et!!!
+
+SCORE_FULLER_MORE__FT_ET__RE = %r{
+        (?<score_fuller_more>
+              \(#{ET_EN}
+                   [ ]
+               (?<et1>\d{1,2}) - (?<et2>\d{1,2})
+              \) 
+        )}ix
+
+
+
+##
+#  note - simply   (1-1)  !!!!!
+##   note - special attention needed for placemenent in processing error!!!
+##     make sure it is the last (or on of the last) match(es)
+
+SCORE_FULLER_MORE__HT_FT__CLASSIC_RE = %r{
+        (?<score_fuller_more>
+             \(  
+                  (?<ht1>\d{1,2}) - (?<ht2>\d{1,2}) 
+             \)
+        )}ix
+
 
 SCORE_FULLER_MORE_RE = Regexp.union(
   SCORE_FULLER_MORE__FT__RE,          ## e.g. (ft)
@@ -393,10 +419,13 @@ SCORE_FULLER_MORE_RE = Regexp.union(
   SCORE_FULLER_MORE__HT_FT__RE,       ## e.g. (HT 2-1)
   SCORE_FULLER_MORE__ET_P__RE,        ## e.g. (aet, win 5-3 on pens)
   SCORE_FULLER_MORE__ET__RE,          ## e.g. (aet)
+  SCORE_FULLER_MORE__FT_ET__RE,       ## e.g. (aet 3-2) - (SPECIAL) incl. after extra-time score!!
   SCORE_FULLER_MORE__FT_P__RE,        ## e.g. (win 5-3 on pens)
   SCORE_FULLER_MORE__FT_AGG__RE,      ## e.g. (win 5-4 on aggregate)
   SCORE_FULLER_MORE__FT_AGG_AWAY__RE, ## e.g. (3-3 on aggreate, win 2-1 on away goals)
   SCORE_FULLER_MORE__ET_AGG_P__RE,    ## e.g. (aet, 3-3 on aggregate, win 5-2 on pens)
+
+  SCORE_FULLER_MORE__HT_FT__CLASSIC_RE,   ## e.g. (2-1)  half-time !!!!
 )
 
 

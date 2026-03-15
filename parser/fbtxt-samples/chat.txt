@@ -49,7 +49,7 @@ Juventus  v Inter        [Canc]
 ### note - mixed-case for inline match status NOT possible
 ##                e.g. Canc, Postp, 
 ##        only ppd/ppd./PPD  or
-##             postp/postp./POSTP or
+##             postp/postp./POSTP or  pstp/pstp./PSTP or pst/pst./PST
 ##             canc/canc./CANC
 ##  why?  "camel-case" reserved for team names! (Canc, Postp, Aban)
 ##                    or v/vs/VS   (Vs, V)
@@ -112,12 +112,12 @@ Liverpool ppd. Brighton
 
 ARS 2-1 CHE (FT)        ## YES - Bingo!
 MCI 3-0 TOT (FT)        ## YES - Bingo!
-## LIV vs BHA (PPD)    --- XXXX change (PPD) to [PPD]   or  ppd./PPD inline
+## LIV VS BHA (PPD)    --- XXXX change (PPD) to [PPD]   or  ppd./PPD inline
 
 
 ARS 2-1 CHE (FT)
 MCI 3-0 TOT (FT)
-LIV vs BHA [PPD]
+LIV VS BHA [PPD]
 
 ## -or-
 

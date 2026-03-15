@@ -13,6 +13,9 @@ texts = [## try status
           "   awarded   ",
           "   [awarded]  ",
           "[awarded]",
+          "  [postponed by storm]  ",
+          %Q{  [postponed due to tropical storm "Hanna"]},
+          "  [suspended at 84' by storm; result stood]",
          ]
 
 texts.each do |text|

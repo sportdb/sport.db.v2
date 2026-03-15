@@ -70,7 +70,7 @@ def fbtree( args, path: PATH )
       else
         puts "--  OK - no parse errors found"
 
-        log << [filename, "OK - no parse errors found"]
+        log << [filename, "OK"]
       end
    end
 
@@ -85,6 +85,8 @@ end
 DEFAULT =  parse_names( <<TXT )
    main.txt
    chat.txt
+   chat2.txt
+   chat3.txt
    dates.txt
    formats.txt
 
@@ -101,7 +103,9 @@ DEFAULT =  parse_names( <<TXT )
    score.txt
    status.txt
    table.txt
+   country.txt
    year.txt
+   tty.txt
 
    todos_complete.txt
 
@@ -109,6 +113,7 @@ DEFAULT =  parse_names( <<TXT )
 
    ##  todos.txt
    ##  penalties.txt  -- fix
+   ##  defs.txt  -- fix
 TXT
 
 

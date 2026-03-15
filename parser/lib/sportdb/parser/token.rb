@@ -9,7 +9,7 @@ BASICS_RE = %r{
     (?<vs>
        (?<=[ ])	# positive lookbehind for space
        (?-i: 
-           vs\.?|v 
+           vs\.?|v|VS 
        )        # note - only match case sensitive (downcased letters)!!!
                 # note -  bigger match first e.g. vs than v etc.
        (?=[ ])   # positive lookahead for space

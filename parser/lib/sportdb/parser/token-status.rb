@@ -19,6 +19,9 @@ VOIDED    = %Q{ (?<voided>    voided     | void ) }  ### note - alternative (nam
 REPLAY    = %Q{ (?<replay>    replay     | repl\\.? ) }  
 
 
+##
+##  note - status_note incl. complete  text incl. <status> (not normalized) 
+##            <status> gets normalized e.g. ppt => postponed etc.
 
 STATUS_RE = %r{
             \[
@@ -28,7 +31,8 @@ STATUS_RE = %r{
 ##                    e.g. [postponed due to tropical storm "Hanna"]
 ##                         [suspended at 84' by storm; result stood]
 #########################
-           (?: (?<status> 
+           (?: (?<status_note>
+                  (?<status>
                ####################
                ## pre-match (not played)
                     #{POSTPONED}
@@ -50,12 +54,11 @@ STATUS_RE = %r{
                     #{ANNULLED}
                             |
                     #{VOIDED} ### note - alternative to annulled
-              ) 
-              [ :;,-]+  ## eat-up leading spaces (or separators) 
-               (?<status_note> 
-                    [^\]]+?   ## note - add non-greedy match 
-                 )   
-              [ ]*  ## eat-up trailing spaces
+              )     ## end-of-<status>
+                  [ :;,-]+     ## leading spaces (or separators) 
+                  [^\]]+?      ## note - add non-greedy match 
+              ) ## end-of-<status-note>   
+              [ ]*  ## eat-up optional trailing spaces
             )
             |       
 ########################################

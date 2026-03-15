@@ -20,8 +20,14 @@ Albania
 
 
 
-
 ## ord with match header  -- add - why? why not?
 ##
 ## June 24 @ Cardiff
 ##   (37)  Winner Group A   v Runner-up Group C   
+
+
+##
+##  FIX/FIX/FIX - maybe add  ** or such for neutral marker - why? why not?
+## 2026-05-18 @ Munich (Allianz Arena**)  Arsenal 1-0 Chelsea 
+## 2026-05-18 @ Munich (Allianz Arena)  Arsenal* 1-0 Chelsea 
+## 2026-05-18 @ Munich (Allianz Arena)  Arsenal** 1-0 Chelsea 

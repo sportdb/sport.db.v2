@@ -19,19 +19,29 @@ class Lexer
     #
     ##  UPDATE mar/2026:  addd pens too - keep - why? why not?
     ##                     (4-3 pens)
-    P_EN  =  '(?: pens | pen\.? | p\.? )'     # e.g. p., p, pen, pen., etc.
+    ##  (4-3 Pens)  -- keep mixed Pens/Pen. too - why? why not?
+    ##  (4-3 Pen.)
+    P_EN  =  '(?-i: PEN | P |' +
+                   '[Pp]ens | [Pp]en\.? | p\.? )'     # e.g. p., p, pen, pen., etc.
+
 
     ## fix - change ET_EN  to AET_EN!!! - why? why not?
-    ET_EN =  '(?: aet | a\.e\.t\.? )'     # note: make last . optional (e.g a.e.t) allowed too
+    ##   check - allow Aet too - why? why not?
+    ##              or A.e.t ??
+    ET_EN =  '(?-i: AET | ' +
+                   'aet | a\.e\.t\.? )'     # note: make last . optional (e.g a.e.t) allowed too
     # AET_EN = ET_EN
 
     ####
     ## after (golden goal/sudden death) extra time   - add more options/styles - why? why not?
-    AETGG_EN  = '(?: aet/gg | a\.e\.t\.?/g\.g\.? | agget | asdet )'
+    AETGG_EN  = '(?-i: AET/GG | AGGET | ASDET | ' +
+                      'aet/gg | a\.e\.t\.?/g\.g\.? | agget | asdet )'
     ## after (silver goal) extra time
-    AETSG_EN  = '(?: aet/sg | a\.e\.t\.?/s\.g\.? | asget  )'
+    AETSG_EN  = '(?-i: AET/SG | ASGET | ' +
+                      'aet/sg | a\.e\.t\.?/s\.g\.? | asget  )'
     
-    AGG_EN = '(?: agg\.?  )'   ## aggregate e..g  4-4 agg etc.
+    ##  agg/agg.  or AGG
+    AGG_EN = '(?-i: AGG | agg\.? )'   ## aggregate e..g  4-4 agg etc.
   
 
     
@@ -123,7 +133,7 @@ class Lexer
                 ## todo/check:  remove loakahead assertion here - why require space?
                 ## note: \b works only after non-alphanum e.g. )
 
-    ### special case   - full time with penalties
+    ### special case (i)  - full time with penalties
     ##          2-2, 3-4 pen.
     SCORE__FT_P__RE = %r{
         (?<score_full>
@@ -133,6 +143,23 @@ class Lexer
             #{SCORE_P}  
             #{SCORE_LOOKAHEAD}
         )}ix
+
+    ### special case (ii)  - full time & half-time with penalties
+    ##          2-2 (1-1), 3-4 pen.
+    SCORE__FT_HT_P__RE = %r{
+        (?<score_full>
+           \b
+            (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
+                [ ]*
+                 \(
+                     (?<ht1>\d{1,2}) - (?<ht2>\d{1,2})
+                 \)
+                [ ]*,[ ]*    ## note - comma required!!! 
+            #{SCORE_P}  
+            #{SCORE_LOOKAHEAD}
+        )}ix
+
+
 
 
     ##  note: allow SPECIAL with penalty only
@@ -273,6 +300,7 @@ SCORE_FULL_RE = Regexp.union(
   SCORE__P_FT_HT__RE,     # e.g. 5-1 pen. (1-1)
   SCORE__ET_P__RE,        # e.g. 2-2 a.e.t., 5-1 pen.
   SCORE__FT_P__RE,        # e.g. 2-2, 5-1 pen.
+  SCORE__FT_HT_P__RE,     # e.g. 2-2 (1-1), 5-1 pen.
   SCORE__P_ET__RE,        # e.g.  5-1 pen. 2-2 a.e.t.  or  2-2 a.e.t. (w/o pen)
   SCORE__P__RE,           # e.g. 5-1 pen.
   SCORE__FT_HT__RE,        # e.g. 1-1 (1-0)
@@ -285,14 +313,18 @@ SCORE_FULL_RE = Regexp.union(
 ###
 ##
 ##  add support for score awarded (inline style)
-##    3-0 awd  3-0 awd. 3-0awd
-##    0-1 awd etc.
+##    3-0 awd  3-0 awd. 3-0awd 
+##    0-1 awd  or 0-1 AWD etc.
+
+##
+##   note - keep AWD w/o dot - why? why not?
+
 SCORE_AWD_RE  = %r{
             (?<score_awd>
               \b
                (?<score1>\d{1,2}) - (?<score2>\d{1,2})
                  [ ]?
-                  awd\.?
+                   (?-i: awd\.? | AWD )
                ## POSITIVE lookahead - requires space
                (?= [ ])
              )}ix  
@@ -300,13 +332,13 @@ SCORE_AWD_RE  = %r{
 ###
 ##
 ##  add support for score abandoned (inline style)
-##       2-1 abd. 
+##       2-1 abd.   or 2-1 ABD
 SCORE_ABD_RE  = %r{
             (?<score_abd>
               \b
                (?<score1>\d{1,2}) - (?<score2>\d{1,2})
                  [ ]?
-                  abd\.?
+                  (?-i: abd\.? | ABD )
                ## POSITIVE lookahead - requires space
                (?= [ ])
              )}ix  

@@ -2,44 +2,12 @@
 # more chat samples
 
 
-## add support for
+######
+##  Handling extra-time (AET)
+SPAIN 2-1 ITALY  (aet)             
 
-## - [ ]  Extra-time explicit score
-##         e.g. SPAIN 1-1 ITALY  (aet 2-1)  
-##    note - same as -> SPAIN 1-1 ITALY  (ft, aet 2-1)
+SPAIN 1-1 ITALY  (aet 2-1)
 
-## - [ ]  Inline half-time score e.g.
-           
-##             TEAM_A 4–3 TEAM_B (2–1)
-
-#
-##  use TEAMRESULT and TEAMRESULT_PEN and TEAMRESULT_FT or
-##      TEAM_HTFT and TEAM_PEN and TEAM_FT  for token names??
-
-## - [ ] support  for  ft & penalties score ??   TEAMALT_PEN!!
-##        check how score works with a.e.t.!!! (and penalties)
-##       e.g. 
-  
-    ITALY 1 (5) SPAIN 1 (4)
-
-##           or
-
-            ITALY 1 (5) 
-            SPAIN 1 (4)
-
-## - [ ] no half-time score  e.g.                   TEAMALT_FT | TEAMALT (=TEAMALT_HTFT)
-
-   FRANCE     3
-   PORTUGAL   1
-
-
-
-
-# Handling extra-time (AET)
-SPAIN 2-1  ITALY  (aet) 
-
-##  support ??
-## SPAIN 1-1 ITALY  (aet 2-1)
 
 
 #####
@@ -47,7 +15,6 @@ SPAIN 2-1  ITALY  (aet)
 
 ITALY 1–1 SPAIN (5–4 pens)
 
-### support  for  ft & penalties score ??
 ITALY  1 (5) SPAIN  1 (4)
 
 ITALY  1 (5) 
@@ -249,7 +216,7 @@ ARGENTINA  (1) 3
 
 
 ## 8. With date or venue line
-@ MONTEVIDEO
+## @ MONTEVIDEO
 
 URUGUAY    (1) 2
 PARAGUAY   (0) 0
@@ -337,8 +304,8 @@ PORTUGAL   3-0 awd. GREECE  [walkover]
 
 ## 6. Walkover noted after the result
 
-NETHERLANDS 3
-ICELAND     0
+NETHERLANDS  3
+ICELAND      0
 [Iceland forfeited]
 
 NETHERLANDS 3-0 ICELAND  [Iceland forfeited]

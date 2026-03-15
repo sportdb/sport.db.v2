@@ -80,4 +80,60 @@ July 30 @ Estadio Centenario, Montevideo    Att: 93000
 July 30 @ Estadio Centenario, Montevideo    Att: 93000
  URUGUAY    (1) 4
  ARGENTINA  (2) 2 
- 
+
+
+## note - two spaces required between/around SCORE_NUM 
+
+July 30 @ Estadio Centenario, Montevideo    Att: 93000
+ URUGUAY     4  ARGENTINA   2 
+
+July 30 @ Estadio Centenario, Montevideo    Att: 93000
+ URUGUAY     4
+ ARGENTINA   2 
+
+
+
+###
+## - [x]  Inline half-time score e.g.
+           
+             TEAM A 4–3 TEAM B (2–1)
+             URUGUAY 4-2 ARGENTINA (1-2) 
+
+## note - same as 
+               URUGUAY 4-2 (1-2) ARGENTINA 
+               URUGUAY 4-2 ARGENTINA (HT 1-2) 
+             
+               TEAM A 4–3 (2–1) TEAM B 
+              TEAM A 4–3 TEAM B (HT 2–1) 
+
+####
+## - [x]  Extra-time explicit score
+         
+         SPAIN 1-1 ITALY  (aet 2-1)    
+
+## note - same as
+         SPAIN 2-1 ITALY  (FT 1-1, aet)    
+         SPAIN 2-1 a.e.t. (1-1) ITALY     
+         SPAIN 2-1 aet (1-1) ITALY
+
+
+
+##  use TEAMRESULT and TEAMRESULT_PEN and TEAMRESULT_FT or
+##      TEAM_HTFT and TEAM_PEN and TEAM_FT  for token names??
+
+## - [x] support  for  ft & penalties score ??   TEAMALT_PEN!!
+##        check how score works with a.e.t.!!! (and penalties)
+##       e.g. 
+  
+    ITALY  1 (5) SPAIN  1 (4)
+
+## or
+
+            ITALY  1 (5) 
+            SPAIN  1 (4)
+
+## - [x] no half-time score  e.g.  TEAMALT_FT | TEAMALT (=TEAMALT_HTFT)
+
+   FRANCE     3
+   PORTUGAL   1
+

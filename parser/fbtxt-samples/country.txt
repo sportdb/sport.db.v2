@@ -1,0 +1,19 @@
+
+##########
+### try alt(ernate) country code style
+
+▪ Quarter-finals, 1st leg
+March 30 20:45         Bayern Munich › GER  2-1  Manchester United › ENG   
+March 31 20:45 (19:45) Arsenal FC › Eng  2-2  FC Barcelona›ESP  
+▪ Quarter-finals, 2nd leg
+April 6 20:45 (19:45) FC Barcelona › ESP       4-1   Arsenal FC › Eng   (win 6-3 on aggregate)
+April 7 20:45         Manchester United › ENG  3-2  Bayern Munich › Ger  (agg 4-4, win 1-2 on away goals)  
+
+### with comma - why? why not?
+▪ Quarter-finals, 1st leg
+March 30 20:45         Bayern Munich, GER  2-1  Manchester United, ENG   
+March 31 20:45 (19:45) Arsenal FC, Eng     2-2  FC Barcelona, Esp  
+▪ Quarter-finals, 2nd leg
+April 6 20:45 (19:45) FC Barcelona, ESP       4-1   Arsenal FC, ENG   (win 6-3 on aggregate)
+April 7 20:45         Manchester United, Eng  3-2  Bayern Munich, Ger  (agg 4-4, win 1-2 on away goals)  
+

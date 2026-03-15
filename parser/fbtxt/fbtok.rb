@@ -57,7 +57,7 @@ def fbtok( args, path: PATH )
       else
        puts "--  OK - no tokenize errors found"
  
-       log << [filename, "OK - no tokenize errors found"]
+       log << [filename, "OK"]
      end
    end
 
