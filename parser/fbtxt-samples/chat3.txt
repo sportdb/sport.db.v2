@@ -162,15 +162,12 @@ ITALY    0
 # URUGUAY 1 PARAGUAY 1
 # CHILE 0 PERU 0
 
-
-############
-## try (experimental)  teletype (tty) mode
-##    might get turned on/off with a flag - why? why not?
-BRAZIL 2 ARGENTINA 1 
-URUGUAY 1 PARAGUAY 1
-CHILE 0 PERU 0
-
-
+## note - Football.TXT REQUIRES two-spaces between team and score
+##               AND score and team!!
+##           e.g. 2 ARGENTINA => TEAM<2 ARGENTINA> !!!
+BRAZIL   2  ARGENTINA  1
+URUGUAY  1  PARAGUAY   1
+CHILE    0  PERU       0
 
 # or use interpunct (·) to separate tokens "by hand"
 # BRAZIL·2 ARGENTINA·1  
@@ -178,12 +175,18 @@ CHILE 0 PERU 0
 # CHILE·0 PERU·0
 
 
-## note - Football.TXT REQUIRES two-spaces between team and score
-##               AND score and team!!
-##           e.g. 2 ARGENTINA => TEAM<2 ARGENTINA> !!!
-BRAZIL   2  ARGENTINA  1
-URUGUAY  1  PARAGUAY   1
-CHILE    0  PERU       0
+############
+## try (experimental)  teletype (tty) mode
+##    might get turned on/off with a flag - why? why not?
+##
+##   teletype: true
+##    note - mode is/stays active until end-of-file!!!!
+
+BRAZIL 2 ARGENTINA 1 
+URUGUAY 1 PARAGUAY 1
+CHILE 0 PERU 0
+
+
 
 
 

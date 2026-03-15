@@ -1,6 +1,9 @@
 
 ##
 # try experimental teletype (tty) mode
+#    note: turn on via magic comment
+#
+#     teletype: true
 
 
 BRAZIL 2 ARGENTINA 1 
@@ -27,3 +30,9 @@ MAN CITY 1 LIVERPOOL 0
 ##      use a flag to turn on/off tty mode/support !!!! 
 ## PERU abd. BOLIVIA 
 ## PERU ABD BOLIVIA 
+
+
+
+## 31/05/2002, Seoul (South Korea), Seoul World Cup Stadium, 62561
+## FRANCE              0
+## SENEGAL             1 (Papa Bouba Diop 30')
