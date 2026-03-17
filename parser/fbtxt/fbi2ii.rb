@@ -48,8 +48,37 @@ TIME_RE = %r{  \b
 TIME_REPLACE = '\1:\2'
 
 DATE_WDAY_MMM_DD_RE = %r{ \[
-                           (Mon|Tue|Wed|Thu|Fri|Sat|Sun)
-                            [ ]+
+                           (?:    ## optional weekday
+                              (?<wday>
+                                  Mon|Mo|
+                                  Tue|Tu|
+                                  Wed|We|
+                                  Thu|Th|
+                                  Fri|Fr|
+                                  Sat|Sa|
+                                  Sun|Su)
+                              [ ]+
+                            )?
+                           (?<month>
+                               Jan|
+                               Feb|
+                               March|Mar|
+                               April|Apr|
+                               May|
+                               June|Jun|
+                               July|Jul|
+                               Aug|
+                               Sept|Sep|
+                               Oct|
+                               Nov|
+                               Dec)
+                             [/ ]     ## allow space ( ) or slash (/)
+                           (?<day> \d{1,2})       
+                        \] 
+            }ix
+            
+
+DATE_MMM_DD_RE = %r{     \b
                            (Jan|
                             Feb|
                             March|Mar|
@@ -62,42 +91,127 @@ DATE_WDAY_MMM_DD_RE = %r{ \[
                             Oct|
                             Nov|
                             Dec)
-                            /
-                           (\d{1,2})       
-                        \] 
+                             /      
+                           (\d{1,2})
+                           \b                               
             }ix
-DATE_WDAY_MMM_DD_REPLACE = '\1 \2 \3'            
+
+DATE_MMM_DD_REPLACE = '\1 \2'            
 
 
+
+
+##
+## todo/fix - add more round / matchday options!!!
+
+
+## note use q (downcase) for no-escapes in string (e.g. \d vs \\d etc)
+GROUPS = %q{(?:
+              Group [ ] [A-Z1-9]
+ 
+              ## note - last entry MUST NOT HAVE a pipe (|)
+              ##       make sure to use [ ] for space!!
+            )}
+
+ROUNDS = %q{(?:
+              Matchday [ ] \d{1,2}  
+               | 
+              Group [ ] [A-Z1-9] [ ] play-?off
+                |
+              First [ ] phase    |
+              Second [ ] round           
+                |
+              Round [ ] of [ ] (?: 8 | 16 | 32 )
+               |
+              1/8 [ ] finals
+               |
+              Quarter-?finals? 
+               |
+              Semi-?finals?
+               |
+              Third [ -] place [ ] (?: match | play-?off ) |
+              Match [ ] for [ ] third [ ] place 
+               |
+              Finals?
+
+              ## note - last entry MUST NOT HAVE a pipe (|)
+              ##       make sure to use [ ] for space!!
+         )}
+
+
+  ROUND_MARKER_RE =
 
 def autofix( txt )
+
+   ## convert "old" legacy round markers (») 
+   txt = txt.gsub( %r{^ [ ]*
+                          »
+                        (?= [ ]+)  ## require one trailing space for now!!
+                        }ix,   
+                        '▪' )
+
+
+   rounds_re = %r{
+      ^
+           [ ]*   ## ignore leading spaces
+             (#{ROUNDS} | #{GROUPS})
+       
+           ## check POSITIVE lookahead
+            (?= 
+               [ ]*  ## ignore trailing spaces
+                (?:
+                  \#+ [^\r\n]+?    ## ignore optional inline-comment
+                 )?
+                 $
+            )
+   }ix
+
+   txt = txt.gsub( rounds_re, '▪ \1') 
+
+
+##
+##  e.g.
+##    Matchday 1 | ...
+##    etc. 
+##   note - do NOT include GROUPS e.g. Group A, Group 1, etc.
+   round_defs_re = %r{
+      ^
+        [ ]* ## ignore leading spaces
+          (#{ROUNDS})           
+         
+          ## check POSITIVE lookahead
+         (?= 
+             [ ]*  ## ignore trailing spaces 
+              \|  
+         )
+   }ix
+
+      txt = txt.gsub( round_defs_re, '▪ \1') 
+
+
 
    ##  16.00  =>  16:00
    txt = txt.gsub( TIME_RE, TIME_REPLACE )
 
    ##  [Sat Sep/12]  =>  Sat Sep 12
-   txt = txt.gsub( DATE_WDAY_MMM_DD_RE, DATE_WDAY_MMM_DD_REPLACE )
-  
+   ##  [Sat Sep 12]  =>  Sat Sep 12 
+   ##  [Sep/12]      =>  Sep 12
+   ##  [Sep 12]      =>  Sep 12
+   txt = txt.gsub( DATE_WDAY_MMM_DD_RE ) do |_|
+               ## note - sub passes in string (!) NOT matchdata in arg (_)
+               m = $~   ## is $LAST_MATCH_DATA
+     
+               if m[:wday]
+                  "#{m[:wday]} #{m[:month]} #{m[:day]}"
+               else
+                   "#{m[:month]} #{m[:day]}"
+               end
+           end 
 
-###
-##
-##
-   rounds_re = %r{
-      ^
-        ## ignore leading spaces
-          [ ]*
-         (
-            Matchday [ ] \d{1,2}  
-             ## note - last entry MUST NOT HAVE a pipe (|)
-         )
-        ## ignore trailing spaces   
-         [ ]*  
-      $
-   }ix
+  ## Sep/12   =>  Sep 12
+  txt = txt.gsub( DATE_MMM_DD_RE, DATE_MMM_DD_REPLACE )
 
-   txt = txt.gsub( rounds_re, '▪ \1') 
    
-
   txt
 end
 
@@ -118,7 +232,8 @@ def fbi2ii( args, path: PATH )
       extname  = File.extname( filename )
 
       ## change outfile  - add .v2
-      outfile = File.join(  dirname, "#{basename}.v2.#{extname}" )
+      ##   note extname (already) starts with dot (.) e.g. .txt
+      outfile = File.join(  dirname, "#{basename}.v2#{extname}" )
       
       newtxt = autofix( txt )
 

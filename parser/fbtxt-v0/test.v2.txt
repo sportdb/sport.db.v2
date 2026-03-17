@@ -1,0 +1,135 @@
+
+
+▪ Matchday 1
+Sat Sep 12
+  12:30  Fulham FC                0-3 (0-1)  Arsenal FC
+  15:00  Crystal Palace FC        1-0 (1-0)  Southampton FC
+  17:30  Liverpool FC             4-3 (3-2)  Leeds United FC
+  20:00  West Ham United FC       0-2 (0-0)  Newcastle United FC
+Sun Sep 13
+  14:00  West Bromwich Albion FC  0-3 (0-0)  Leicester City FC
+ 
+
+▪ Matchday 28
+
+
+## check more round headers 
+
+▪ Group 2
+▪ Group 2 Play-off
+
+▪ 1/8 Finals
+▪ Round of 16
+▪ Quarter-finals
+▪ Semi-finals
+▪ Third-place match 
+▪ Third place match 
+▪ Third place play-off
+▪ Final
+
+
+▪ 1/8 FINALS
+▪ QUARTERFINALS
+▪ SEMIFINALS
+▪ THIRD PLACE MATCH
+▪ FINAL
+
+
+
+## check/allow for inline comments !!
+▪ Match for third place     ## check use just  Third place  - why? why not?
+
+
+## check round defs
+
+▪ Matchday 1 |  May 31 - June 5
+▪ Matchday 2 |  June 6-10 
+▪ Matchday 3 |  June 11-14 
+
+
+▪ Matchday 4 |  June 26
+▪ Matchday 5 |  June 30
+▪ Matchday 6 |  July 3
+
+
+▪ Matchday 10 | Sun Jun 18
+▪ Matchday 11 | Mon Jun 19
+▪ Matchday 12 | Tue Jun 20
+▪ Matchday 13 | Wed Jun 21
+▪ Matchday 14 | Thu Jun 22
+▪ Matchday 15 | Fri Jun 23
+
+▪ Round of 16            |  Sat Jun 28 - Tue Jul 1
+▪ Quarter-finals         |  Fri Jul 4 - Sat Jul 5
+▪ Semi-finals            |  Tue Jul 8 - Wed Jul 9
+▪ Match for third place  |  Sat Jul 12
+▪ Final                  |  Sun Jul 13
+
+▪ Round of 16            |  Sat Jun 30 - Tue Jul 3
+▪ Quarter-finals         |  Fri Jul 6 - Sat Jul 7
+▪ Semi-finals            |  Tue Jul 10 - Wed Jul 11
+▪ Match for third place  |  Sat Jul 14
+▪ Final                  |  Sun Jul 15
+
+
+
+## check old round marker
+▪ Group F
+▪ Group G
+
+
+
+
+## check european-style dates - do NOT match with TIME regex
+
+12.12.
+12.12.2024
+12.11.
+2.11.
+2.11.2026
+
+
+
+
+## check round defs - do NOT fix if already "fixed"
+
+▪ Matchday 1   | July 13
+▪ Matchday 2   | July 14
+▪ Matchday 3   | July 15
+▪ Matchday 4   | July 16
+▪ Matchday 5   | July 17
+▪ Matchday 6   | July 18
+▪ Matchday 7   | July 19
+▪ Matchday 8   | July 20
+▪ Matchday 9   | July 21
+▪ Matchday 10  | July 22
+▪ Semi-finals  | July 26-27
+▪ Final        | July 30
+
+
+▪ Round of 16            |  Sat Dec 3 - Tue Dec 6
+▪ Quarter-finals         |  Fri Dec 9 - Sat Dec 10
+▪ Semi-finals            |  Tue Dec 13 - Wed Dec 14
+▪ Match for third place  |  Sat Dec 17
+▪ Final                  |  Sun Dec 18
+
+
+## check header - do NOT fix
+
+▪ 1/8 Finals
+▪ Round of 32
+▪ Round of 16
+▪ Quarter-finals
+▪ Semi-finals
+▪ Match for third place
+▪ Final
+
+
+
+## check group defs - do NOT fix 
+
+Group 1  |  Brazil   Yugoslavia    France          Mexico
+Group 2  |  Hungary  West Germany  Turkey          South Korea
+Group 3  |  Uruguay  Austria       Czechoslovakia  Scotland
+Group 4  |  England  Switzerland   Italy           Belgium
+

@@ -1,6 +1,6 @@
 = English Premier League 2020/21
 
-# Date       Sat Sep/12 2020 - Sun May/23 2021 (253d)
+# Date       Sat Sep 12 2020 - Sun May 23 2021 (253d)
 # Teams      20
 # Matches    380
 
