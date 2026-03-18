@@ -1,0 +1,63 @@
+##
+#  more (match) status samples
+
+▪ Second Round Play-offs, 1st leg
+
+Jul 23 2011    Syria         0-3       Tajikistan  @ Amman    [awarded 0-3, originally 2-1]
+Jul 23 2011    Syria         0-3 awd.  Tajikistan  @ Amman    [awarded 0-3, originally 2-1]
+
+
+▪ Second Round Play-offs, 2nd leg
+
+## Jul 28 2011     Myanmar       0-2 (*) Oman      @ Yangon       ## note: awarded 0-2; abandoned at 0-2 in 39'
+## Jul 28 2011     Tajikistan    3-0 (*) Syria     @ Tursunzade    ## note: awarded 3-0, originally 0-4
+
+Jul 28 2011     Myanmar       0-2  Oman      @ Yangon      [awarded 0-2; abandoned at 0-2 in 39']
+Jul 28 2011     Tajikistan    3-0  Syria     @ Tursunzade  [awarded 3-0, originally 0-4]
+
+Jul 28 2011     Myanmar       0-2 awd.  Oman      @ Yangon      [awarded 0-2; abandoned at 0-2 in 39']
+Jul 28 2011     Tajikistan    3-0 awd.  Syria     @ Tursunzade  [awarded 3-0, originally 0-4]
+
+
+
+
+## Mar 24 2013  Equat. Guinea 0-3 (*) Cape Verde     @ Malabo     ## note: awarded 0-3, originally 4-3
+## Jun 8 2013   Cape Verde    3-0 (*) Equat. Guinea  @ Praia      ## note: awarded 3-0, originally 2-1
+## Sep 7 2013   Tunisia       3-0 (*) Cape Verde     @ Radès      ## note: awarded 3-0, originally 0-2
+
+Mar 24 2013  Equat. Guinea 0-3 awd. Cape Verde     @ Malabo    [awarded 0-3, originally 4-3]
+Jun 8 2013   Cape Verde    3-0 awd. Equat. Guinea  @ Praia     [awarded 3-0, originally 2-1]
+Sep 7 2013   Tunisia       3-0 awd. Cape Verde     @ Radès     [awarded 3-0, originally 0-2]
+
+Mar 24 2013  Equat. Guinea   awd. Cape Verde     @ Malabo    [awarded 0-3, originally 4-3]
+Jun 8 2013   Cape Verde      awd. Equat. Guinea  @ Praia     [awarded 3-0, originally 2-1]
+Sep 7 2013   Tunisia         awd. Cape Verde     @ Radès     [awarded 3-0, originally 0-2]
+
+Mar 24 2013  Equat. Guinea 0-3 awd. Cape Verde     @ Malabo    [awarded, originally 4-3]
+Jun 8 2013   Cape Verde    3-0 awd. Equat. Guinea  @ Praia     [awarded, originally 2-1]
+Sep 7 2013   Tunisia       3-0 awd. Cape Verde     @ Radès     [awarded, originally 0-2]
+
+
+
+# ▪ First Round Play-offs, 1st leg    # 11-12 November 2011
+#
+# Nov 11 2011    Mauritius     - (*)   Liberia
+#
+# ▪ First Round Play-offs, 2nd leg    # 15-16 November 2011
+#
+# Nov/15 2011    Liberia      - (*)  Mauritius
+#
+# 
+
+
+
+▪ First Round Play-offs, 1st leg    # 11-12 November 2011
+
+Nov 11 2011    Mauritius     v   Liberia  [cancelled; Mauritius withdrew on 31 October 2011; Liberia automatically moves on.] 
+
+▪ First Round Play-offs, 2nd leg    # 15-16 November 2011
+
+Nov/15 2011    Liberia      v    Mauritius [cancelled; Mauritius withdrew on 31 October 2011; Liberia automatically moves on.]
+
+## use a shared note - why? why not?
+Note: Mauritius withdrew on 31 October 2011; Liberia automatically moves on.

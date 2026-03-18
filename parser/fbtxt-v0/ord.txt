@@ -2,6 +2,14 @@
 ##
 # check auto-remove of match numbers (a.k.a. ord)
 
+
+
+##
+##  check special case minute
+           [Ángel di María 118']
+
+
+
 Group A
 
  (1) Thu Jun/14 18:00      Russia       5-0 (2-0)  Saudi Arabia     @ Luzhniki Stadium, Moscow (UTC+3)

@@ -48,11 +48,13 @@ TIME_RE = %r{
                           ##
                           (?: GMT|BST|CES?T|EES?T) 
                                (?: /
-                                   UTC[+-]\d{1,4}
+                                   UTC  (?: [+-]\d{1,4} | ±0)
                                )?
                           )
                           |
-                          (?: UTC[+-]\d{1,4})
+                          (?:
+                             UTC  (?: [+-]\d{1,4} | ±0)
+                          )
                      )
                  )?
         )          
@@ -75,11 +77,13 @@ TIME_RE = %r{
                    (?<local_timezone>
                       (?:  [A-Z]{3,4}
                            (?: /
-                                   UTC[+-]\d{1,4}
+                                   UTC (?: [+-]\d{1,4} | ±0)
                            )? 
                       )
                       |    
-                      (?: UTC[+-]\d{1,4})   ## e.g. 0 or 00 or 0000
+                      (?:     ## e.g. 0 or 00 or 0000
+                          UTC   (?: [+-]\d{1,4} | ±0)
+                      )   
                   )
                )?  # note - make timezone  optional!!!
           )

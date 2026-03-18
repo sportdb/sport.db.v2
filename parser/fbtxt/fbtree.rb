@@ -118,9 +118,23 @@ TXT
 
 
 WORLDCUP = parse_names( <<TXT )
+   worldcup/1930--uruguay/cup.txt
+
+   worldcup/2014--brazil/cup.txt
+   worldcup/2014--brazil/cup_finals.txt
+
+   worldcup/2018--russia/cup.txt
+   worldcup/2018--russia/cup_finals.txt
+
+   worldcup/2022--qatar/cup.txt
+   worldcup/2022--qatar/cup_finals.txt
+
    worldcup/2026--usa/cup.txt
    worldcup/2026--usa/cup_finals.txt
+TXT
 
+
+WORLDCUP2 = parse_names( <<TXT )  
    ##########
    ## check some planetworldcup samples
    worldcup/planetworldcup/wc10.txt
@@ -203,6 +217,8 @@ if __FILE__ == $0
     args = DEFAULT 
   elsif args.size == 1 && (args[0] == 'worldcup' || args[0] == 'wc')
     args = WORLDCUP
+  elsif args.size == 1 && (args[0] == 'worldcup2' || args[0] == 'wc2')
+    args = WORLDCUP2
   elsif args.size == 1 && (args[0] == 'euro')
     args = EURO
   elsif args.size == 1 && (args[0] == 'austria' || args[0] == 'at')

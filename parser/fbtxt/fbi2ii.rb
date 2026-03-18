@@ -30,6 +30,7 @@ end
 
 PATH = [
    '../fbtxt-v0',
+   '../../../../openfootball', 
 ]
 
 
@@ -150,6 +151,8 @@ ORD_RE = %r{  ^
 ##
 ##      [Gazinsky 12' Cheryshev 43', 90+1' Dzyuba 71' Golovin 90+4']
 ##        [-; Giménez 89']
+##       [Ángel di María 118']
+##        [Mario Götze 113']
 ##        90+5'
 
 GOAL_LINE_RE = %r{ ^
@@ -159,7 +162,7 @@ GOAL_LINE_RE = %r{ ^
                      [^0-9'\[\]();,]+?
                          ## check for single machting minute for now
                           [ ]
-                           \d{1,2} 
+                           \d{1,3} 
                            (?: \+\d{1,2})? 
                            '
                       
@@ -282,6 +285,42 @@ end
 
 
 def fbi2ii( args, path: PATH )
+
+###
+## check for command line options
+
+  opts = {
+      edit:  false,    ## edit (sub/change/remove) inplace
+  }
+
+parser = OptionParser.new do |parser|
+  parser.banner = "Usage: #{$PROGRAM_NAME} [options] PATH"
+
+
+  parser.on( "-e", "--edit",
+             "edit files inplace (default: #{opts[:edit]})" ) do |edit|
+    opts[:edit] = true
+  end
+end
+parser.parse!( args )
+
+
+  puts "OPTS:"
+  p opts
+  puts "ARGV:"
+  p args
+
+
+   ##
+   # edit inplace extension
+   #   use ts (timestamp - vyyyymmdd_hhmmss)
+   #    note - use %y last two digits only (e.g. 2026 => 26)
+   #     e.g.  "260318_140916"
+   ##
+   #  note - use same ts for all files passed in via args (kind of a changeset/batch)
+    ts = Time.now.utc.strftime("%y%m%d_%H%M%S")
+  
+
    log = []
 
    args.each_with_index do |name,i|
@@ -290,18 +329,32 @@ def fbi2ii( args, path: PATH )
       filename = find_file( name, path: path )
 
       txt = read_text( filename )
-
-      dirname  = File.dirname( filename )
-      basename = File.basename( filename, File.extname( filename ) )
-      extname  = File.extname( filename )
-
-      ## change outfile  - add .v2
-      ##   note extname (already) starts with dot (.) e.g. .txt
-      outfile = File.join(  dirname, "#{basename}.v2#{extname}" )
-      
+    
       newtxt = autofix( txt )
 
-      write_text( outfile, newtxt )
+      ## check if any changes
+      if newtxt != txt
+        dirname  = File.dirname( filename )
+        basename = File.basename( filename, File.extname( filename ) )
+        extname  = File.extname( filename )
+
+        if opts[:edit]  ## edit inplace 
+          backupfile = File.join(  dirname, "#{basename}.v#{ts}#{extname}" )
+          write_text( backupfile, txt )
+
+          ########################
+          ## !!!! DANGER !!!!! - overwrite original inplace with (new) text
+          ################
+          write_text( filename, newtxt )
+        else
+          ## change outfile  - add .v2
+          ##   note extname (already) starts with dot (.) e.g. .txt
+          outfile = File.join(  dirname, "#{basename}.v2#{extname}" )
+          write_text( outfile, newtxt)
+        end
+      else
+        puts "  - no changes in file #{filename} -"
+      end
    end
 end
 
