@@ -117,8 +117,43 @@ DEFAULT =  parse_names( <<TXT )
 TXT
 
 
+
 WORLDCUP = parse_names( <<TXT )
    worldcup/1930--uruguay/cup.txt
+   worldcup/1934--italy/cup.txt
+   worldcup/1938--france/cup.txt
+
+   worldcup/1950--brazil/cup.txt
+   worldcup/1954--switzerland/cup.txt
+   worldcup/1958--sweden/cup.txt
+   worldcup/1958--sweden/cup.txt
+   worldcup/1962--chile/cup.txt
+   worldcup/1966--england/cup.txt
+   worldcup/1970--mexico/cup.txt
+   worldcup/1974--west-germany/cup.txt
+   worldcup/1978--argentina/cup.txt
+   worldcup/1982--spain/cup.txt
+
+   worldcup/1986--mexico/cup.txt
+   worldcup/1986--mexico/cup_finals.txt
+
+   worldcup/1990--italy/cup.txt
+   worldcup/1990--italy/cup_finals.txt
+
+   worldcup/1994--usa/cup.txt
+   worldcup/1994--usa/cup_finals.txt
+
+   worldcup/1998--france/cup.txt
+   worldcup/1998--france/cup_finals.txt
+
+   worldcup/2002--south-korea-n-japan/cup.txt
+   worldcup/2002--south-korea-n-japan/cup_finals.txt
+
+   worldcup/2006--germany/cup.txt
+   worldcup/2006--germany/cup_finals.txt
+
+   worldcup/2010--south-africa/cup.txt
+   worldcup/2010--south-africa/cup_finals.txt
 
    worldcup/2014--brazil/cup.txt
    worldcup/2014--brazil/cup_finals.txt
@@ -140,6 +175,7 @@ WORLDCUP2 = parse_names( <<TXT )
    worldcup/planetworldcup/wc10.txt
    worldcup/planetworldcup/wc14.txt
    worldcup/planetworldcup/wc30.txt
+
    worldcup/planetworldcup/wc94qualification.txt
 
    ##############
@@ -151,7 +187,7 @@ WORLDCUP2 = parse_names( <<TXT )
    worldcup/rsssf/2022f.txt
    worldcup/rsssf/worldcup.txt
    
-   ## worldcup/rsssf/2022q.txt
+   worldcup/rsssf/2022q.txt
 TXT
 
 

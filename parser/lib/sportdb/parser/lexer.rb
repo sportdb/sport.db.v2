@@ -165,14 +165,19 @@ def tokenize_with_errors
    ##  2.LEBANON       6  3  1  2 11- 8 10  [0-2, 0-0]
    ##  3.Turkmenistan  6  3  0  3  8-11  9  [3-1]
    ##  4.Sri Lanka     6  0  0  6  2-23  0  [0-1]
-   ##  -.North Korea   withdrew after playing 5 matches due to safety concerns in \
-   ##                  connection with the Covid-19 pandemic; all results annulled
+   ##  -.North Korea   [withdrew after playing 5 matches due to safety concerns in 
+   ##                   connection with the Covid-19 pandemic; all results annulled]
+   ##
+   ##  note - no longer used for now
+   ##     enclose multi-line notes in []
+   ##         removes need for line continuation for now
 
-   txt = txt.gsub( LINE_CONTINUATION_RE ) do |_|
-            puts " [debug] preproc line continuation"
-              ## todo/check: replace with two spaces insead of ↵ - why? why not?
-               '↵' 
-         end 
+##
+##   txt = txt.gsub( LINE_CONTINUATION_RE ) do |_|
+##            puts " [debug] preproc line continuation"
+##              ## todo/check: replace with two spaces insead of ↵ - why? why not?
+##               '↵' 
+##         end 
 
 
 
