@@ -1,0 +1,13 @@
+
+## 
+# ignore tmp dir anywhere  
+tmp
+tmp2
+
+
+###
+# ignore all logs anywhere
+logs.txt
+
+
+

@@ -132,6 +132,8 @@ class MatchTree
             node.is_a?( RaccMatchParser::Heading2 ) ||
             node.is_a?( RaccMatchParser::Heading3 )
           ###  skip headings (1/2/3) for now
+      elsif node.is_a?( RaccMatchParser::BlankLine )
+          ### skip for now; do nothing
       else
         ## report error
         msg = "!! WARN - unknown node (parse tree type) - #{node.class.name}" 
@@ -455,9 +457,14 @@ class GoalStruct
     ##   use   01:44 or 1:44 ?
     ##  check for 0:00 or 24:00  possible?  
     time   = nil                       
-    time   =  ('%d:%02d' % [node.time[:h], node.time[:m]])  if node.time
- 
+    if node.time
+       time   =  ('%d:%02d' % [node.time[:h], node.time[:m]])  
+       ## check for timezone
+       time += " #{node.time[:timezone]}"   if node.time[:timezone]
+    end
 
+
+    
     ## todo/fix - 
     ##   keep  time & time_local as pairs for @last_time/@last_time_local
     ##    - check for timezone
@@ -606,13 +613,8 @@ class GoalStruct
 
 
     ground   = nil
-    timezone = nil
-    if node.geo
-       ground = node.geo
-       ## note: only add/check for timezone if geo (aka ground) is present - why? why not?
-       timezone = node.timezone   if node.timezone
-    end
-
+    ground = node.geo  if node.geo    
+    
     ## attendance
     att = nil
     att =  node.att   if node.att
@@ -629,7 +631,6 @@ class GoalStruct
                                    group:    group ? group.name : nil,  ## note: for now always use string (assume unique canonical name for event)
                                    status:   status,
                                    ground:   ground,
-                                   timezone: timezone,
                                    att:      att )
     ### todo: cache team lookups in hash?
   end
