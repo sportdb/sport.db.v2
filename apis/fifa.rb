@@ -19,12 +19,14 @@ fifa2026_stages_url  = "#{BASE_URL}/stages?idSeason=285023&language=en"
 
 premierleague_2526 = '51r6ph2woavlbbpk8f29nynf8'
 pl2526_matches_url = "#{BASE_URL}/calendar/matches?count=500&idSeason=#{premierleague_2526}&language=en"
+pl2526_stages_url  = "#{BASE_URL}/stages?idSeason=#{premierleague_2526}&language=en"
 
 cl_2526 = '2mr0u0l78k2gdsm79q56tb2fo'
 cl_2526_matches_url = "#{BASE_URL}/calendar/matches?count=500&idSeason=#{cl_2526}&language=en"
+cl_2526_stages_url  = "#{BASE_URL}/stages?idSeason=#{cl_2526}&language=en"
 
 
-fetch_json( cl_2526_matches_ur,  "./tmp/cl_2526.json" )
+fetch_json( pl2526_stages_url,  "./fifa/premierleague_2526_stages.json" )
 
 
 puts "bye"

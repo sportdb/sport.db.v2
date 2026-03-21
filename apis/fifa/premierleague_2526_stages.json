@@ -1,0 +1,14 @@
+{"Results": 
+  [{"IdStage": "52mas07a9lsy28lwm6egrtqfo",
+    "Name": [{"Locale": "en-gb", "Description": "Regular Season"}],
+    "IdSeason": "51r6ph2woavlbbpk8f29nynf8",
+    "SeasonName": 
+     [{"Locale": "en-gb", "Description": "Premier League 2025/2026"}],
+    "IdCompetition": "2000000000",
+    "StageLevel": 1,
+    "StartDate": "2025-08-15T00:00:00Z",
+    "EndDate": "2026-05-24T00:00:00Z",
+    "Type": 2,
+    "SequenceOrder": 1,
+    "Properties": {"IdStatsPerform": "52mas07a9lsy28lwm6egrtqfo"},
+    "IsUpdateable": null}]}
