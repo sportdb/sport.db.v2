@@ -16,8 +16,17 @@ require 'sportdb/quick'
 OPENFOOTBALL_PATH = '../../../openfootball'
 
 indir = OPENFOOTBALL_PATH
-outdir =   "#{OPENFOOTBALL_PATH}/worldcup.json"   
-## outdir = './tmp'
+## outdir =   "#{OPENFOOTBALL_PATH}/worldcup.json"   
+## outdir =   "#{OPENFOOTBALL_PATH}/euro.json"   
+outdir = './tmp'
+
+=begin
+config = [
+  ['2020/euro.json', ['euro/2021--europe/euro.txt']],
+  ['2024/euro.json', ['euro/2024--germany/euro.txt']],    
+  ['2028/euro.json', ['euro/2028--united_kingdom-ireland/euro.txt']],    
+]
+=end
 
 config = [
   ['2026/worldcup.json', ['worldcup/2026--usa/cup.txt',   'worldcup/2026--usa/cup_finals.txt']],
@@ -27,6 +36,8 @@ config = [
 
   ['2025/clubworldcup.json', ['club-worldcup/2025/clubworldcup.txt']],
 ]
+
+
 
 pp config
 

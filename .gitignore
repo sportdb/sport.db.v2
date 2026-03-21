@@ -10,4 +10,7 @@ tmp2
 logs.txt
 
 
+###
+#  ignore env files
+.env
 
