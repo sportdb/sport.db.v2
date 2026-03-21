@@ -1,15 +1,4 @@
-####
-#  to run use:
-#    $ ruby ./main6.rb  (in /fbtxt)
 
-
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-txt = <<-TXT
 
 ▪ Final - First Leg 
 
@@ -140,22 +129,4 @@ Cesar Vallejo (PER) v Caracas FC (VEN)    @ Estadio Monumental › Lima
 Wed Mar 28
   Iraq - Qatar  1-1   @ Muscat, Oman   [Iraq wins on penalties]
 
-
-TXT
-
-
-   
-parser = RaccMatchParser.new( txt, debug: true )
-tree, errors = parser.parse_with_errors
-pp tree
-
-if errors.size > 0
-   puts "!! #{errors.size} parse error(s):"
-   pp errors
-else
-   puts "--  OK - no parse errors found"
-end
-
-
-puts "bye"
 

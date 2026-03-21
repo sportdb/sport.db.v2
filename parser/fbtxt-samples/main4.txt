@@ -1,16 +1,3 @@
-####
-#  to run use:
-#    $ ruby ./main4.rb  (in /fbtxt)
-
-
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-
-txt = <<-TXT
 
 ###
 #  try alternate iso-date format
@@ -105,22 +92,4 @@ Sun Jul 14   @ Olympiastadion
      2-0 Player (pen.),
      2-1 Player,  
      3-1 Player (og)) 
-
-TXT
-
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree, errors = parser.parse_with_errors
-  pp tree
-
-  if errors.size > 0
-     puts "!! #{errors.size} parse error(s):"
-     pp errors
-  else
-     puts "--  OK - no parse errors found"
-  end
-
-
-puts "bye"
 

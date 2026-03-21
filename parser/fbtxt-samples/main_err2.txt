@@ -1,18 +1,5 @@
-####
-#  to run use:
-#    $ ruby ./main_err.rb  (in /fbtxt)
 
 
-## try error handling
-
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-
-txt = <<-TXT
 ################
 #### more       
 Rapid Wien   0-1  Austria Wien
@@ -29,24 +16,36 @@ Rapid Wien - Austria Wien   [cancelled]   @ Gerhard-Hanappi-Stadion, Wien
 
 
 
-### try "compact" match fixtures separated by comma 
-Matchday 3
-Rapid Wien v Austria Wien, Rapid Wien v Austria Wien
+▪ Matchday 3
+Rapid Wien v Austria Wien
 
 
-Matchday 4
-Fr Sept/24
-Rapid v Austria, GAK v Sturm, Wolfsbrug v Innsbruck
-Fr Sept/24 Rapid v Austria, GAK v Sturm, Wolfsbrug v Innsbruck
+▪ Matchday 4
+Fr Sept 24
+  Rapid v Austria
+  GAK v Sturm
+  Wolfsbrug v Innsbruck
+Fr Sept 24 
+  Rapid v Austria 
+  GAK v Sturm
+  Wolfsbrug v Innsbruck
 
 
-Matchday 5
-Fr Sept/24 18:00  Rapid - Austria,  GAK v Sturm,   Wolfsbrug v Innsbruck
+▪ Matchday 5
+Fr Sept 24 18:00  Rapid - Austria
+                    GAK v Sturm
+            Wolfsbrug v Innsbruck
 
 
-Sevilla 2-1 Bilbao,  Madrid v Barcelona    
-Sevilla v Bilbao 2-1,  Madrid v Barcelona
-Sevilla - Bilbao 2-1,  Madrid - Barcelona 1-5 (0-2), Elche - Getafe   
+Sevilla 2-1 Bilbao
+Madrid v Barcelona    
+
+Sevilla v Bilbao 2-1
+Madrid v Barcelona
+
+Sevilla - Bilbao 2-1  
+Madrid - Barcelona 1-5 (0-2)
+Elche - Getafe   
 
 
 
@@ -77,20 +76,4 @@ Sevilla - Bilbao 2-1,  Madrid - Barcelona 1-5 (0-2), Elche - Getafe
  @  Bamberg, Oberfranken, Bayern
 
  Denmark v France   @ Manaus (UTC-4)
-
-TXT
-
-
-
-## try parser "wrapper"
-
-  parser = SportDb::Parser.new
-  tree, errors = parser.parse_with_errors( txt )
-  puts "-- tree:"
-  pp tree
-  puts "-- errors:"
-  pp errors
-
-
-puts "bye"
 

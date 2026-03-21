@@ -1,16 +1,3 @@
-####
-#  to run use:
-#    $ ruby ./main5.rb  (in /fbtxt)
-
-
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-
-txt = <<-TXT
 
 Sat Jun 3
   Republic of St. Pauli - Gibraltar  1-2   @ Hamburg, Germany
@@ -72,23 +59,4 @@ ARG: Vidallé - Barbas, Van Tuyne, Passarella, Bordón - Gáspari, Larraquy, Gai
  1-1 Coscia (pen),  
  2-1 Tita (og)) 
 
-
-TXT
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree, errors = parser.parse_with_errors
-  pp tree
-
-  if errors.size > 0
-     puts "!! #{errors.size} parse error(s):"
-     pp errors
-  else
-     puts "--  OK - no parse errors found"
-  end
-
-
-
-
-puts "bye"
 

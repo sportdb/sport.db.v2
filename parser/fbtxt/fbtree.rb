@@ -244,6 +244,15 @@ RSSSF = parse_names( <<TXT )
 TXT
 
 
+SPEC = parse_names( <<TXT )
+    spec/samples/1960_euro_quali.txt
+    spec/samples/2024-25_austria.txt
+    spec/samples/2024_copa_libertadores.txt
+    spec/samples/2024_euro.txt
+    spec/samples/2025_club_worldcup.txt
+TXT
+
+
 
 if __FILE__ == $0
 
@@ -255,12 +264,14 @@ if __FILE__ == $0
     args = WORLDCUP
   elsif args.size == 1 && (args[0] == 'worldcup2' || args[0] == 'wc2')
     args = WORLDCUP2
-  elsif args.size == 1 && (args[0] == 'euro')
+  elsif args.size == 1 && args[0] == 'euro'
     args = EURO
   elsif args.size == 1 && (args[0] == 'austria' || args[0] == 'at')
     args = AUSTRIA
   elsif args.size == 1 && (args[0] == 'england' || args[0] == 'eng')
     args = ENGLAND
+  elsif args.size == 1 && (args[0] == 'spec' || args[0] == 'specs')
+    args = SPEC
   elsif args.size == 1 && args[0] == 'rsssf'
     args = RSSSF
   end

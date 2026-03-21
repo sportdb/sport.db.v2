@@ -245,6 +245,12 @@ def tokenize_with_errors
         line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
 
 
+        ####
+        #  support __END__ marker to cut-off input
+        break if line.strip == '__END__'
+
+
+
        ##
        ##  first check for tabs
        ##    add error/warn
@@ -463,7 +469,7 @@ def tokenize_with_errors
      ##   tok[0][0] == :INDENT  (or :SPACES) && 
      ##   tok[1][0] == :'@'
 
-           if tok[0][0] == :'@' 
+           if tok[0] && tok[0][0] == :'@' 
                 team =  tok.find { |t| t[0] == :TEAM }
                 if team
                    ## do nothing - keep as is (assume match_line starting w/ @)

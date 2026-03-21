@@ -1,16 +1,4 @@
-####
-#  to run use:
-#    $ ruby ./main3.rb  (in /fbtxt)
 
-
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
-
-
-
-
-txt = <<-TXT
 ################
 #### more       
 Rapid Wien   0-1  Austria Wien
@@ -59,22 +47,4 @@ Sun May 19
 
   Perth Glory  v Sydney FC   1-4 pen. 0-0 a.e.t.  
   Perth Glory  v Sydney FC   0-0 aet, 1-4 pen   
-
-TXT
-
-
-
-  parser = RaccMatchParser.new( txt, debug: true )
-  tree, errors = parser.parse_with_errors
-  pp tree
-
-  if errors.size > 0
-     puts "!! #{errors.size} parse error(s):"
-     pp errors
-  else
-     puts "--  OK - no parse errors found"
-  end
-
-
-puts "bye"
 
