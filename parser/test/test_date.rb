@@ -17,9 +17,9 @@ TESTS = [
       ['20.1.26',             { d:20, m:1, yy:26} ],  
       ['20.1.',               { d:20, m:1} ],
       ## "classic" american  - month/day 
-      ['Tu July/9 2024',      { wday:2, m:7, d:9, y:2024}],
+      ['Tu July 9 2024',      { wday:2, m:7, d:9, y:2024}],
       ['Sunday Jul 14 2024',  { wday:7, m:7, d:14, y:2024}],
-      ['Tue Feb/13',          { wday:2, m:2, d:13}],
+      ['Tue Feb 13',          { wday:2, m:2, d:13}],
       ## "classic" - day/month
       ['Tu 9 July 2024',      { wday:2, m:7, d:9, y:2024}],
       ['Sunday 14 Jul 2024',  { wday:7, m:7, d:14, y:2024}],
@@ -45,10 +45,10 @@ def test_date
        ## pp date
        puts "OK >#{text}<  -  #{date.pretty_inspect}"
        assert_equal exp_date, date
-    else
+     else
        puts "!! date NOT matching - #{text}"
        assert false
-    end
+     end
   end
 end
 

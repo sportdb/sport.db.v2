@@ -1,0 +1,78 @@
+##################
+## try fuller score style  (note - no half-time (ht) score possible/allowed here)
+
+###
+##    aet
+Rapid v Austria  3-2 (aet)
+Rapid v Austria  3-2 (a.e.t.)
+
+Rapid 3-2 Austria (aet)
+Rapid 3-2 Austria (a.e.t.)
+
+=>
+
+_4x(
+   MatchLine.new( team1: 'Rapid', team2: 'Austria',  
+                  score: {et:[3, 2]})
+   )
+
+---
+
+####
+##   aet + pen
+Rapid v Austria  3-3 (aet, win 5-2 on pens)
+Rapid v Austria  3-3 (aet, 5-2 on pens)
+Rapid v Austria  3-3 (aet, 5-2 pen)
+Rapid v Austria  3-3 (aet, 5-2p)
+Rapid v Austria  3-3 (a.e.t., 5-2 pen.)
+
+Rapid 3-3 Austria (aet, win 5-2 on pens)
+Rapid 3-3 Austria (aet, 5-2 on pens)
+Rapid 3-3 Austria (aet, 5-2 pen)
+Rapid 3-3 Austria (aet, 5-2p)
+Rapid 3-3 Austria (a.e.t., 5-2 pen.)
+
+=>
+
+_10x(
+  MatchLine.new( team1: 'Rapid', team2: 'Austria',  
+                 score: {p:[5, 2], et:[3, 3]})
+)
+
+---
+
+#####
+##    ft + pen
+Rapid v Austria  3-3 (win 5-2 on pens)
+Rapid v Austria  3-3 (5-2 on pens)
+Rapid v Austria  3-3 (5-2 pen)
+Rapid v Austria  3-3 (5-2 pen.)
+Rapid v Austria  3-3 (5-2p)
+
+Rapid 3-3 Austria (win 5-2 on pens)
+Rapid 3-3 Austria (5-2 on pens)
+Rapid 3-3 Austria (5-2 pen)
+Rapid 3-3 Austria (5-2 pen.)
+Rapid 3-3 Austria (5-2p)
+
+=>
+
+_10x(
+  MatchLine.new( team1: 'Rapid', team2: 'Austria',  
+                 score: {p:[5, 2], ft:[3, 3]})
+)
+
+---
+
+####
+##   check with HT & FT
+
+Rapid v Austria  3-2 (HT 1-0, FT 2-1, AET)
+Rapid 3-2 Austria (HT 1-0, FT 2-1, AET)
+
+=>
+
+_2x( MatchLine.new( team1: 'Rapid', team2: 'Austria',  
+                    score: {ht:[1,0], ft:[2,1], et:[3, 2]})
+)
+

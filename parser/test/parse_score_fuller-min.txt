@@ -1,0 +1,62 @@
+#####
+##  test minimal/compact (fuller) style
+
+A 3-1 B (AET)
+
+A 3-1 B (AET, P 5-1)
+A 3-1 B (AET, PEN 5-1)
+
+A 3-1 B (AET, AGG 3-3, P 5-1)
+A 3-1 B (AET, AGG 3-3, PEN 5-1)
+
+=>
+
+     MatchLine.new( team1: 'A', team2: 'B',  
+                    score: {et:[3, 1]}),
+
+_2x( MatchLine.new( team1: 'A', team2: 'B',  
+                    score: {p:[5,1], et:[3, 1]})
+),
+
+_2x( MatchLine.new( team1: 'A', team2: 'B',  
+                    score: {p:[5,1], et:[3, 1], agg:[3,3]})
+)
+
+
+---
+
+A 3-1 B (HT 1-0, FT 2-2, AET)
+
+A 3-1 B (HT 1-0, FT 2-2, AET, P 5-1)
+A 3-1 B (HT 1-0, FT 2-2, AET, PEN 5-1)
+
+=>
+
+     MatchLine.new( team1: 'A', team2: 'B',  
+                    score: {ht:[1,0], ft:[2,2], et:[3, 1]}),
+
+_2x( MatchLine.new( team1: 'A', team2: 'B',  
+                    score: {p:[5,1], ht:[1,0], ft:[2,2], et:[3, 1]})
+)
+
+---
+
+A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, P 5-1)
+A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, PEN 5-1)
+
+A 3-1 B (HT 1-0, AGG 3-3, AWAY)
+A 3-1 B (HT 1-0, AGG 3-3, AWAY 2-3)
+
+=>
+
+_2x(
+    MatchLine.new( team1: 'A', team2: 'B',  
+                   score: {p:[5,1], ht:[1,0], ft:[2,2], et:[3, 1], agg: [3,3]})
+   ),
+
+MatchLine.new( team1: 'A', team2: 'B',  
+               score: {ht:[1,0], ft:[3,1], agg:[3, 3], away:true}),
+MatchLine.new( team1: 'A', team2: 'B',  
+               score: {ht:[1,0], ft:[3,1], agg:[3, 3], away:[2,3]})
+
+

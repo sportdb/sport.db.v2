@@ -62,10 +62,10 @@ def test_score
       ## pp score
        puts "OK #{text}  -  #{score.pretty_inspect}"
        assert_equal exp_score, score
-    else
+     else
        puts "!! score (full) NOT matching - #{text}"
        assert false
-    end
+     end
   end
 end
 

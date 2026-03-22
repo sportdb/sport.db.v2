@@ -246,7 +246,7 @@ end
 
 
 MatchLineBye   = Struct.new( :team, :note ) do
- def pretty_print( printer )
+  def pretty_print( printer )
     printer.text( "<MatchLineBye " )
     printer.text( "#{self.team} bye")
     printer.text( " note=#{self.note.pretty_inspect}" )  if self.note
@@ -255,7 +255,7 @@ MatchLineBye   = Struct.new( :team, :note ) do
 end
 
 MatchLineWalkover   = Struct.new( :team1, :team2, :note ) do
- def pretty_print( printer )
+  def pretty_print( printer )
     printer.text( "<MatchLineWalkover " )
     printer.text( "#{self.team1} w/o #{self.team2}")
     printer.text( " note=#{self.note.pretty_inspect}" )  if self.note
@@ -265,7 +265,7 @@ end
 
 MatchLineLegs   = Struct.new( :team1, :team2, 
                               :score )  do   ## change to geos - why? why not?
- def pretty_print( printer )
+  def pretty_print( printer )
     printer.text( "<MatchLineLegs " )
     printer.text( "#{self.team1} v #{self.team2}")
     printer.breakable
@@ -325,6 +325,15 @@ GoalLine    = Struct.new( :goals1, :goals2 ) do
     printer.breakable
     printer.text( "goals2=" + self.goals2.pretty_inspect + ">" )
   end  
+
+##  def clone
+##         _clone = GoalLine.new( goals1: goals1.clone, 
+##                           goals2: goals2.clone )
+##                  
+##         puts "[debug] clone #{self.pretty_inspect} => #{_clone.pretty_inspect}"
+##
+##         _clone
+##  end
 end
 
 
@@ -352,6 +361,12 @@ Goal        = Struct.new( :player, :minutes, :count ) do
     printer.text( to_s )
   end  
 
+##  def clone
+##      puts "[debug] clone #{self.pretty_inspect}"
+##      Goal.new( player: player.clone,
+##                minutes: minutes.clone,
+##                count: count.clone )
+##  end
 end
 
 
@@ -466,6 +481,18 @@ GoalMinute      = Struct.new( :m, :offset, :secs,
            nil   ## note - return nil; if no goal type present!!
         end
     end
+
+##    def clone
+##        puts "[debug] clone #{self.pretty_inspect}"
+##        GoalMinute.new( m: m.clone, 
+##                        offset: offset.clone, 
+##                        secs: secs.clone,
+##                        og: og.clone, 
+##                        pen: pen.clone, 
+##                        header: header.clone, 
+##                        freekick: freekick.clone )
+##                 
+##    end
 end
 
 

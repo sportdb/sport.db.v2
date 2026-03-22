@@ -1,6 +1,6 @@
 ####
 #  to run use:
-#    $ ruby sandbox/test_goal_counts.rb
+#    $ ruby sandbox/test_nota_bene.rb
 
 
 $LOAD_PATH.unshift( './lib' )
@@ -35,7 +35,7 @@ TXT
 
 
   txt.gsub( SportDb::Lexer::PREPROC_NOTA_BENE_RE ) do |m| 
-    puts "!! match:"
+    puts "==> match:"
     puts m
     m = m.gsub( "\n", '↵' )
     puts m

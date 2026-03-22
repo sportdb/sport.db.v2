@@ -1,0 +1,79 @@
+#########
+##    ft + agg 
+
+Rapid v Austria  3-2 (win 4-5 on aggregate)
+Rapid v Austria  3-2 (4-5 on aggregate)
+Rapid v Austria  3-2 (4-5 on agg)
+Rapid v Austria  3-2 (4-5 agg)
+Rapid v Austria  3-2 (4-5 agg.)
+Rapid v Austria  3-2 (agg 4-5)
+
+Rapid 3-2 Austria (win 4-5 on aggregate)
+Rapid 3-2 Austria (4-5 on aggregate)
+Rapid 3-2 Austria (4-5 on agg)
+Rapid 3-2 Austria (4-5 agg)
+Rapid 3-2 Austria (4-5 agg.)
+Rapid 3-2 Austria (agg 4-5)
+
+=>
+
+_12x( 
+  MatchLine.new( team1: 'Rapid', team2: 'Austria',  
+                 score: {ft:[3, 2], agg:[4, 5]})
+)
+
+---
+
+########
+##    aet + agg + pen
+
+Rapid v Austria   2-1 (aet, 3-3 on aggregate, win 5-2 on pens)
+Rapid v Austria   2-1 (aet, 3-3 agg, 5-2 pen.)
+
+Rapid 2-1 Austria (aet, 3-3 on aggregate, win 5-2 on pens)
+Rapid 2-1 Austria (aet, 3-3 agg, 5-2 pen.)
+
+=>
+
+_4x(
+  MatchLine.new( team1: 'Rapid', team2: 'Austria',  
+                 score: {p:[5,2], et:[2, 1], agg:[3, 3]})
+)
+
+---
+
+####
+##  ft + agg + away
+
+Rapid v Austria   2-1 (3-3 on aggregate, win on away goals)
+Rapid v Austria   2-1 (agg 3-3, win on away goals)
+Rapid v Austria   2-1 (agg 3-3, on away goals)
+Rapid v Austria   2-1 (AGG 3-3, AWAY)
+
+Rapid 2-1 Austria (3-3 on aggregate, win on away goals)
+Rapid 2-1 Austria (agg 3-3, win on away goals)
+Rapid 2-1 Austria (agg 3-3, on away goals)
+Rapid 2-1 Austria (AGG 3-3, AWAY)
+
+
+Rapid v Austria   2-1 (3-3 on aggregate, win 2-1 on away goals)
+Rapid v Austria   2-1 (AGG 3-3, AWAY 2-1)
+
+Rapid 2-1 Austria (3-3 on aggregate, win 2-1 on away goals)
+Rapid 2-1 Austria (AGG 3-3, AWAY 2-1)
+
+
+=>
+
+_8x(
+  MatchLine.new( team1: 'Rapid', team2: 'Austria',  
+                 score: {ft:[2, 1], agg:[3, 3], away: true})
+),
+_4x(
+  MatchLine.new( team1: 'Rapid', team2: 'Austria',  
+                 score: {ft:[2, 1], agg:[3, 3], away: [2,1]})
+)
+
+
+
+

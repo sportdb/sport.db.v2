@@ -1,0 +1,48 @@
+
+  (Batshuayi 90')
+  (Batshuayi 90)
+
+=>
+
+   _2x(
+     GoalLine.new( goals1: [Goal.new( player: 'Batshuayi', minutes: [GoalMinute.new(m:90)])],
+                   goals2: [])
+      )
+
+---
+
+  (R. Lukaku 16' Batshuayi 90')          
+  (R. Lukaku 16 Batshuayi 90)          
+  (R. Lukaku 16, Batshuayi 90)    
+        
+  (R. Lukaku 16, 
+   Batshuayi 90)          
+  (R. Lukaku 16 
+   Batshuayi 90)          
+
+=>
+
+  _5x(
+    GoalLine.new( goals1: [Goal.new( player: 'R. Lukaku', minutes: [GoalMinute.new(m:16)]),
+                           Goal.new( player: 'Batshuayi', minutes: [GoalMinute.new(m:90)])],
+                  goals2: [])
+    )
+
+---
+
+  (R. Lukaku 45'+3 Batshuayi 90')          
+  (R. Lukaku 45+3 Batshuayi 90)          
+  (R. Lukaku 45+3, Batshuayi 90)          
+  (R. Lukaku 45+3, 
+   Batshuayi 90)          
+   
+=>
+
+   _4x(
+    GoalLine.new( goals1: [Goal.new( player: 'R. Lukaku', minutes: [GoalMinute.new(m:45,offset:3)]),
+                           Goal.new( player: 'Batshuayi', minutes: [GoalMinute.new(m:90)])],
+                  goals2: [])
+   )
+  
+
+
