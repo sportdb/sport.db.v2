@@ -2,28 +2,8 @@
 #  to run use:
 #    $ ruby ./fbtok.rb         (in /fbtxt)
 
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
+require_relative 'helper'
 
-
-
-
-##
-## note - use File.file? instead of File.exist? 
-##            (checks if file exists AND file is a file NOT a directory)
-
-
-def find_file( name, path: )
-    return name    if File.file?( name )
-
-    path.each do |dir|
-        filepath = File.join( dir, name )
-        return filepath   if File.file?(  filepath )
-    end
-
-    puts "!! ERROR - file <#{name}> not found; looking in path: #{path.inspect}"
-    exit 1
-end
 
 
 
@@ -32,6 +12,15 @@ PATH = [
    '../fbtxt-rsssf',
    '../../../../openfootball', 
 ]
+
+
+WORLD_MORE = parse_names( <<TXT ) 
+  world.more/2023-24/de.1.txt
+  world.more/2023-24/at.1.txt
+TXT
+
+
+
 
 
 def fbtok( args, path: PATH )
@@ -72,6 +61,11 @@ end
 if __FILE__ == $0
 
   args = ARGV
+
+  if args.size == 1 && (args[0] == 'world.more' || args[0] == 'worldmore' || args[0] == 'more')
+    args = WORLD_MORE
+  end
+
   fbtok( args )
   puts "bye" 
 end

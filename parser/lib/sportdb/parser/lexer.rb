@@ -140,6 +140,36 @@ def tokenize_with_errors
                         puts m
                         '  ' 
                    end
+
+
+   ##  quick hack - remove later
+   ##    auto-convert "old" legacy round markers (») 
+   txt = txt.gsub( %r{^ [ ]*
+                          »
+                        (?= [ ]+)  ## require one trailing space for now!!
+                        }ix ) do |_|
+                     puts "!! WARN - auto-fix format; replacing old (alternate/legacy) round marker (»)"
+                        '▪'
+                    end   
+
+###  16.00 => 16:00
+##     todo/check - use space for positive lookbehind & ahead
+##                      (instead of \b) - why? why not?
+##  note - check for/exclude 12.12.  date in match
+##             use negative lookahead
+   txt = txt.gsub(  %r{  \b
+                        (?<h>\d{1,2})
+                           \.
+                        (?<m>\d{2})
+                          \b
+                        (?! [.] )   ## do NOT match 12.12.  
+                        }ix ) do |_|
+                           m = $~   ## is $LAST_MATCH_DATA
+                        puts "!! WARN - auto-fix format; replacing old (alternate/legacy) time format #{m[0]}"
+                           "#{m[:h]}:#{m[:m]}"   ## '\1:\2'
+                        end
+
+
     ###
     ## add more "native" multi-line comment-styles
     ##  e.g.    #[[ ... ]]  or  #<<< .. >>> or #<< .. >>

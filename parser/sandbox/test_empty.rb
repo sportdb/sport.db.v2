@@ -1,13 +1,12 @@
 ####
 #  to run use:
-#    $ ruby ./main_empty.rb  (in /fbtxt)
+#    $ ruby sandbox/test_empty.rb
 
+$LOAD_PATH.unshift( './lib' )
+require 'sportdb/parser'
 
 ## try empty doc
 
-
-$LOAD_PATH.unshift( '../lib' )
-require 'sportdb/parser'
 
 
 ### check tokenizer - 
