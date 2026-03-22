@@ -142,6 +142,9 @@ def tokenize_with_errors
                    end
 
 
+=begin                    
+##
+##  todo/fix - add a command line switch/option for auto-format fixes !!!
    ##  quick hack - remove later
    ##    auto-convert "old" legacy round markers (») 
    txt = txt.gsub( %r{^ [ ]*
@@ -151,6 +154,7 @@ def tokenize_with_errors
                      puts "!! WARN - auto-fix format; replacing old (alternate/legacy) round marker (»)"
                         '▪'
                     end   
+
 
 ###  16.00 => 16:00
 ##     todo/check - use space for positive lookbehind & ahead
@@ -168,6 +172,7 @@ def tokenize_with_errors
                         puts "!! WARN - auto-fix format; replacing old (alternate/legacy) time format #{m[0]}"
                            "#{m[:h]}:#{m[:m]}"   ## '\1:\2'
                         end
+=end
 
 
     ###

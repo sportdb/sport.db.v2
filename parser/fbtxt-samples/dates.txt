@@ -18,6 +18,16 @@ Fr,     July 10
 Fr,     July 10, 2026
 Friday, July 10, 2026
 
+## more max style
+Monday, December 22, 2025
+Wednesday, May 11, 2022
+Tuesday, February 6, 2024
+
+Monday,    December 22, 2025
+Wednesday, May 11, 2022
+Tuesday,   February 6, 2024
+
+
 Sat, May 2
 Sat, May 02
 Sat, May 9
