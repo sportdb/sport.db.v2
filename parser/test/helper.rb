@@ -21,10 +21,16 @@ class Minitest::Test
 
   BlankLine  = RaccMatchParser::BlankLine
 
+  Heading1  = RaccMatchParser::Heading1
+  Heading2  = RaccMatchParser::Heading2
+  Heading3  = RaccMatchParser::Heading3
+
+  RoundOutline  = RaccMatchParser::RoundOutline
+
 
 
   ### helper to flatten _2x, etc.
-  def self._flatten_exp( ary )
+  def _flatten_exp( ary )
      exp = []
      ary.each do |item|
           if item.is_a?(Array)   ## e.g. _2x, etc.
@@ -35,57 +41,6 @@ class Minitest::Test
      end
      exp
   end
-
-
-
-  def self.parse_tests( txt )
-
-     tests = []   ## note - holds [txt,exp] pairs
-
-
-    ##
-    #  quick support for  __END__
-     txt = txt.sub( %r{ ^
-                          [ ]* __END__ [ ]*
-                            .*?
-                         \z   ## note - until end-of-string/file !!!
-                      }mx, 
-                     '' )
-
-      
-    ## split by "---"
-    sections = txt.split(   %r{^
-                                 [ ]* --- [ ]*
-                              $}x )
-
- 
-    sections.each_with_index do |sect,i|
-       ## puts ">>> start #{i+1}"
-       ## pp sect
-       ## puts "<<< end #{i+1}"
-
-      ## split by "  => "
-      txt, exp = sect.split( %r{^
-                                [ ]* => [ ]*
-                              $}x )
-
-      ## puts
-      ## puts "txt:"
-      ## pp txt
-      ## puts "=>"
-      ## puts "exp:"
-      ## pp exp
-      exp = eval( "[ #{exp} ]" )     # note - wrap inside array!!!
-      exp = _flatten_exp( exp )
-      ## pp exp
-  
-      tests << [txt,exp]
-    end
-    tests
-  end
-
-  def self.read_tests( path ) parse_tests( read_text( path )); end  
-
 
 
   def parse_matches( txt )
@@ -112,33 +67,55 @@ class Minitest::Test
 
 
   def read_n_assert_tests( path )
-     tests = self.class.read_tests( path )
-     tests.each do |txt, exp_tree|
-        tree = parse_matches( txt )
-        assert_equal exp_tree, tree
+
+     tests =  read_blocktxt( path )
+    
+     tests.each_with_index do |(txt, exp_txt),i|
+
+
+        ## skip sections w/o (without) expected parse tree
+        if exp_txt.nil?
+             puts "NOTE - #{path} [#{i+1}/#{tests.size}]  -  skipping test (assertions) for parse tree"
+             next
+        else
+
+         ## note - (i) convert exp in text to parse tree !!
+         exp_tree = eval( "[ #{exp_txt} ]" )     # note - wrap inside array!!!
+         exp_tree = _flatten_exp( exp_tree )
+
+          puts
+          puts "==> #{path} [#{i+1}/#{tests.size}] parsing..."
+          tree = parse_matches( txt )
+    
+          puts "-- #{path} [#{i+1}/#{tests.size}]  -  test (assertions) for parse tree:"
+          pp exp_tree
+    
+          assert_equal exp_tree, tree
+          puts "    OK - parse trees equal / match"
+        end
      end
   end
 
   
 
-  def self._2x( node )  [node, node.clone];  end
-  def self._3x( node )  [node, node.clone, node.clone];  end
-  def self._4x( node )  [node, node.clone, node.clone, node.clone];  end
-  def self._5x( node )  [node, node.clone, node.clone, node.clone, node.clone];  end
-  def self._6x( node )  [node, node.clone, node.clone, node.clone, node.clone,
+  def _2x( node )  [node, node.clone];  end
+  def _3x( node )  [node, node.clone, node.clone];  end
+  def _4x( node )  [node, node.clone, node.clone, node.clone];  end
+  def _5x( node )  [node, node.clone, node.clone, node.clone, node.clone];  end
+  def _6x( node )  [node, node.clone, node.clone, node.clone, node.clone,
                          node.clone];  end
-  def self._7x( node )  [node, node.clone, node.clone, node.clone, node.clone,
+  def _7x( node )  [node, node.clone, node.clone, node.clone, node.clone,
                          node.clone, node.clone];  end
-  def self._8x( node )  [node, node.clone, node.clone, node.clone, node.clone,
+  def _8x( node )  [node, node.clone, node.clone, node.clone, node.clone,
                           node.clone, node.clone, node.clone];  end
-  def self._9x( node )  [node, node.clone, node.clone, node.clone, node.clone,
+  def _9x( node )  [node, node.clone, node.clone, node.clone, node.clone,
                           node.clone, node.clone, node.clone, node.clone];  end
-  def self._10x( node )  [node, node.clone, node.clone, node.clone, node.clone,
+  def _10x( node )  [node, node.clone, node.clone, node.clone, node.clone,
                           node.clone, node.clone, node.clone, node.clone, node.clone];  end
-  def self._11x( node )  [node, node.clone, node.clone, node.clone, node.clone,
+  def _11x( node )  [node, node.clone, node.clone, node.clone, node.clone,
                           node.clone, node.clone, node.clone, node.clone, node.clone,
                           node.clone];  end
-  def self._12x( node )  [node, node.clone, node.clone, node.clone, node.clone,
+  def _12x( node )  [node, node.clone, node.clone, node.clone, node.clone,
                           node.clone, node.clone, node.clone, node.clone, node.clone,
                           node.clone, node.clone];  end
   

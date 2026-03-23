@@ -23,7 +23,7 @@ _2x( MatchLine.new( team1: 'A', team2: 'B',
 )
 
 
----
+   §
 
 A 3-1 B (HT 1-0, FT 2-2, AET)
 
@@ -39,7 +39,7 @@ _2x( MatchLine.new( team1: 'A', team2: 'B',
                     score: {p:[5,1], ht:[1,0], ft:[2,2], et:[3, 1]})
 )
 
----
+   §
 
 A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, P 5-1)
 A 3-1 B (HT 1-0, FT 2-2, AET, AGG 3-3, PEN 5-1)

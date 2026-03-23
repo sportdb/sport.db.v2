@@ -37,9 +37,12 @@ PATH = [
 ###  16.00 => 16:00
 ##     todo/check - use space for positive lookbehind & ahead
 ##                      (instead of \b) - why? why not?
-##  note - check for/exclude 12.12.  date in match
+##  note - check for/exclude 12.12.  and 12.12.96  date in match
 ##             use negative lookahead
-TIME_RE = %r{  \b
+TIME_RE = %r{  
+                  ## check NEGATIVE lookbehind
+                  (?<! [.])  ## do NOT match 12.94 in 12.12.94  
+                     \b
                    (\d{1,2})
                       \.
                   (\d{2})

@@ -142,7 +142,7 @@ def tokenize_with_errors
                    end
 
 
-=begin                    
+=begin                 
 ##
 ##  todo/fix - add a command line switch/option for auto-format fixes !!!
    ##  quick hack - remove later
@@ -161,7 +161,15 @@ def tokenize_with_errors
 ##                      (instead of \b) - why? why not?
 ##  note - check for/exclude 12.12.  date in match
 ##             use negative lookahead
-   txt = txt.gsub(  %r{  \b
+##   check for 12.12.94
+##      use   positive lookbehind   !!!
+##               must be space, comma or begin-of-line [ ,]|^
+##    or use negative lookbehind
+##               must NOT be dot 
+   txt = txt.gsub(  %r{  
+                        ## check NEGATIVE lookbehind
+                         (?<! [.])  ## do NOT match 12.94 in 12.12.94  
+                          \b
                         (?<h>\d{1,2})
                            \.
                         (?<m>\d{2})
@@ -173,6 +181,8 @@ def tokenize_with_errors
                            "#{m[:h]}:#{m[:m]}"   ## '\1:\2'
                         end
 =end
+
+
 
 
     ###
@@ -191,7 +201,6 @@ def tokenize_with_errors
          m 
        end 
     end
-
 
 
    ##

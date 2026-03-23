@@ -12,23 +12,67 @@
 === Heading 3
 === Heading 3 ========================
 
+=>
 
-###
+ Heading1.new( text: "Heading 1" ),
+ Heading1.new( text: "Heading 1" ),
+ Heading1.new( text: "Bundesliga" ),
+ Heading1.new( text: "Bundesliga 2025/26" ),
+ Heading2.new( text: "Heading 2" ),
+ Heading2.new( text: "Heading 2" ),
+ Heading2.new( text: "League Phase" ),
+ Heading2.new( text: "Knockout Phase" ),
+ Heading2.new( text: "Finals" ),
+ Heading3.new( text: "Heading 3" ),
+ Heading3.new( text: "Heading 3" ),
+
+  §
+
+
+############
 ##  check round outlines with different round markers
 
 ▪ Round of 16 - 2nd Leg
 :: Round of 16 - 2nd Leg
 
+=>
+
+  RoundOutline.new( outline: "Round of 16 - 2nd Leg", level: 1 ),
+  RoundOutline.new( outline: "Round of 16 - 2nd Leg", level: 1 ),
+
+  §
 
 
+#######
 ### check geo "inline"
 
 Jul 16 @ Stuttgart    Slovenia           1-1 Denmark     
                          (Janza 77; Eriksen 17)
+
 Jul 16 @ Arena Auf Schalke, Gelsenkirchen  Serbia             0-1 England    
                                              (Bellingham 13)
 
 
+ =>
+
+  MatchLine.new( team1: "Slovenia", team2: "Denmark",
+                 date: { m: 7, d: 16},
+                 score: [1, 1],
+                 geo: ["Stuttgart"] ),
+
+  GoalLine.new( goals1:[Goal.new( player: "Janza", minutes: [GoalMinute.new(m:77)])], 
+                goals2:[Goal.new( player: "Eriksen", minutes: [GoalMinute.new(m:17)])] ),
+
+  MatchLine.new( team1: "Serbia", team2: "England",
+                 date: { m: 7, d: 16},
+                 score: [0, 1],
+                 geo: ["Arena Auf Schalke", "Gelsenkirchen"] ),
+
+  GoalLine.new( goals1:[Goal.new( player: "Bellingham", minutes: [GoalMinute.new(m:13)])], 
+                goals2:[] )
+
+
+  §
 
 
 Oct 7 

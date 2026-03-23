@@ -9,7 +9,7 @@
                    goals2: [])
       )
 
----
+   §  
 
   (R. Lukaku 16' Batshuayi 90')          
   (R. Lukaku 16 Batshuayi 90)          
@@ -28,7 +28,7 @@
                   goals2: [])
     )
 
----
+   § 
 
   (R. Lukaku 45'+3 Batshuayi 90')          
   (R. Lukaku 45+3 Batshuayi 90)          

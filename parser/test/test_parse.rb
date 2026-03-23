@@ -6,7 +6,7 @@
 require_relative 'helper'
 
 
-class TestParseGoals < Minitest::Test
+class TestParse < Minitest::Test
 
   def test_parse_goals
       read_n_assert_tests( "./test/parse_goals.txt" )
@@ -22,5 +22,5 @@ class TestParseGoals < Minitest::Test
       read_n_assert_tests( "./test/parse_score_fuller-min.txt" )
   end
  
-end # class TestParseGoals
+end # class TestParse
 

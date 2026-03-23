@@ -15,6 +15,11 @@ require 'cocos'
 
 require_relative 'parser/version'
 
+##
+## generic helper
+require_relative 'parser/blocktxt'
+
+## core machinery
 
 require_relative 'parser/token-score'
 require_relative 'parser/token-score_fuller'
