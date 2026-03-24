@@ -40,28 +40,31 @@ GEO_TEXT_RE = %r{
                ##    for single spaces only (and _/ MUST not be surround by spaces) 
 
               (?: 
-                  [ ]?   # only single (inline) space allowed - double spaces are breaks!!!  
                   (?:
-                     \p{L} | \d  | [.&'°]
-                      |
-                     (?: (?<! [ ])  ## no space allowed before (but possible after)
-                          [-]
-                     )
-                       |
-                     (?: (?<! [ ])  ## no spaces allowed around these characters
-                          [_/]
-                         (?! [ ])
-                     )
-                  )+
-              )*
-
+                    [ ]?   # only single (inline) space allowed - double spaces are breaks!!!  
+                    (?:
+                       \p{L} | \d  | [.&'°]
+                        |
+                       (?: (?<! [ ])  ## no space allowed before (but possible after)
+                            [-]
+                       )
+                         |
+                       (?: (?<! [ ])  ## no spaces allowed around these characters
+                           [_/]
+                          (?! [ ])
+                       )
+                    )+
+                  )
+                  |
               ## for now allow auto-add optional
               ##   parenthesis enclosed closed text
               ##   e.g. Dublin (Dalymount Park)
               ##        Bucuresti (23 August)
               ##        Paris (Parc des Princes)
               ##        Ost-Berlin (Walter-Ulbricht)
-              ##        Athinai (OAKA - Maroussi)  
+              ##        Athinai (OAKA - Maroussi)
+              ##
+              ##   or   Valencia (Spain) or Solna   
               (?:
                     [ ]
                     \(
@@ -69,8 +72,10 @@ GEO_TEXT_RE = %r{
                                             ##   maybe list only allowed ones??
                                             ##   make pattern more strict - why? why not?
                     \)
-              )?
-         
+              )
+          )*
+
+
               ## must NOT end with space or dash(-)
               ##  todo/fix - possible in regex here
               ##     only end in alphanum a-z0-9 (not dot or & ???)

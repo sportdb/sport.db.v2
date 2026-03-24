@@ -26,16 +26,46 @@ config = [
   ['2024/euro.json', ['euro/2024--germany/euro.txt']],    
   ['2028/euro.json', ['euro/2028--united_kingdom-ireland/euro.txt']],    
 ]
+
+
+config = [
+  ['2025/clubworldcup.json', ['club-worldcup/2025/clubworldcup.txt']],
+]
+
 =end
 
 config = [
-  ['2026/worldcup.json', ['worldcup/2026--usa/cup.txt',   'worldcup/2026--usa/cup_finals.txt']],
-  ['2022/worldcup.json', ['worldcup/2022--qatar/cup.txt', 'worldcup/2022--qatar/cup_finals.txt']],    
-  ['2018/worldcup.json', ['worldcup/2018--russia/cup.txt', 'worldcup/2018--russia/cup_finals.txt']],    
-  ['2014/worldcup.json', ['worldcup/2014--brazil/cup.txt', 'worldcup/2014--brazil/cup_finals.txt']],    
 
-  ['2025/clubworldcup.json', ['club-worldcup/2025/clubworldcup.txt']],
+  ['1930/worldcup.json', ['worldcup/1930--uruguay/cup.txt']],
+  ['1934/worldcup.json', ['worldcup/1934--italy/cup.txt']],
+  ['1938/worldcup.json', ['worldcup/1938--france/cup.txt']],
+  
+  ['1950/worldcup.json', ['worldcup/1950--brazil/cup.txt']],
+  ['1954/worldcup.json', ['worldcup/1954--switzerland/cup.txt']],
+  ['1958/worldcup.json', ['worldcup/1958--sweden/cup.txt']],
+  ['1962/worldcup.json', ['worldcup/1962--chile/cup.txt']],
+  ['1966/worldcup.json', ['worldcup/1966--england/cup.txt']],
+  ['1970/worldcup.json', ['worldcup/1970--mexico/cup.txt']],
+  ['1974/worldcup.json', ['worldcup/1974--west-germany/cup.txt']],
+  ['1978/worldcup.json', ['worldcup/1978--argentina/cup.txt']],
+  ['1982/worldcup.json', ['worldcup/1982--spain/cup.txt']],
+  ['1986/worldcup.json', ['worldcup/1986--mexico/cup.txt', 'worldcup/1986--mexico/cup_finals.txt']],
+  ['1990/worldcup.json', ['worldcup/1990--italy/cup.txt', 'worldcup/1990--italy/cup_finals.txt']],
+  ['1994/worldcup.json', ['worldcup/1994--usa/cup.txt', 'worldcup/1994--usa/cup_finals.txt']],
+  ['1998/worldcup.json', ['worldcup/1998--france/cup.txt', 'worldcup/1998--france/cup_finals.txt']],
+  ['2002/worldcup.json', ['worldcup/2002--south-korea-n-japan/cup.txt', 'worldcup/2002--south-korea-n-japan/cup_finals.txt']],
+  ['2006/worldcup.json', ['worldcup/2006--germany/cup.txt', 'worldcup/2006--germany/cup_finals.txt']],
+  ['2010/worldcup.json', ['worldcup/2010--south-africa/cup.txt', 'worldcup/2010--south-africa/cup_finals.txt']],
+
+  ['2014/worldcup.json', ['worldcup/2014--brazil/cup.txt', 'worldcup/2014--brazil/cup_finals.txt']],    
+  ['2018/worldcup.json', ['worldcup/2018--russia/cup.txt', 'worldcup/2018--russia/cup_finals.txt']],    
+  ['2022/worldcup.json', ['worldcup/2022--qatar/cup.txt', 'worldcup/2022--qatar/cup_finals.txt']],    
+=begin
+  ['2026/worldcup.json',                ['worldcup/2026--usa/cup.txt',   'worldcup/2026--usa/cup_finals.txt']],
+  ['2026/worldcup.quali_playoffs.json', ['worldcup/2026--usa/quali_playoffs.txt']],
+=end
 ]
+
 
 
 

@@ -22,6 +22,14 @@ class MatchTree
 
 
   def _build_date( m:, d:, y:, yy:, wday:,   start:  )
+
+    if m.nil? || d.nil?
+      puts "[debug] !! ERROR - _build_date required month or day missing:"
+      pp [m,d,y,yy,wday,start]
+      exit 1
+    end
+
+
    ## quick debug hack
    if m == 2 && d == 29
       puts "quick check  feb/29 dates"
@@ -91,7 +99,13 @@ class MatchTree
     @last_year    = nil
     @last_date    = nil
     @last_time    = nil
-    @last_round   = nil
+
+    ## todo/fix - use stack push/pop in the future - why? why not?
+    @last_round   = nil  ##  merge - "top-level" - Round struct
+    @last_round_name1  = nil  ## level 1 - string
+    @last_round_name2  = nil  ## level 2 - string
+    @last_round_name3  = nil  ## level 3 - string
+    
     @last_group   = nil
 
 
@@ -179,9 +193,9 @@ class MatchTree
   def on_round_def( node )
     logger.debug "on round def: >#{node}<"
 
-    ## e.g. [[:round_def, "Matchday 1"], [:duration, "Fri Jun/14 - Tue Jun/18"]]
-    ##      [[:round_def, "Matchday 2"], [:duration, "Wed Jun/19 - Sat Jun/22"]]
-    ##      [[:round_def, "Matchday 3"], [:duration, "Sun Jun/23 - Wed Jun/26"]]
+    ## e.g. [[:round_def, "Matchday 1"], [:duration, "Fri Jun 14 - Tue Jun 18"]]
+    ##      [[:round_def, "Matchday 2"], [:duration, "Wed Jun 19 - Sat Jun 22"]]
+    ##      [[:round_def, "Matchday 3"], [:duration, "Sun Jun 23 - Wed Jun 26"]]
 
     name  = node.name
     # NB: use extracted round name for knockout check
@@ -195,18 +209,22 @@ class MatchTree
                                              wday: node.date[:wday],
                                               start: @start)
     elsif node.duration
+      ## reuse year in start date e.g. July 26-27 1930
+      ##                               July 26 [1930], [July] 27 1930
       start_date  = _build_date( m: node.duration[:start][:m],
                                  d: node.duration[:start][:d],
-                                 y: node.duration[:start][:y],
-                                 yy: node.duration[:start][:yy],
+                                 y: node.duration[:start][:y]   ||node.duration[:end][:y],
+                                 yy: node.duration[:start][:yy] || node.duration[:end][:yy],
                                  wday: node.duration[:start][:wday],
                                    start: @start)
-      end_date    = _build_date( m: node.duration[:end][:m],
+
+      ## reuse month in end date e.g.  July 26-27       
+      ##                               July 26, [July] 27      
+      end_date    = _build_date( m: node.duration[:end][:m] || node.duration[:start][:m],
                                  d: node.duration[:end][:d],
                                  y: node.duration[:end][:y],                                         
-                                yy: node.duration[:end][:yy],
-                                wday: node.duration[:end][:wday],
-
+                                 yy: node.duration[:end][:yy],
+                                 wday: node.duration[:end][:wday],
                                    start: @start)
     else
        puts "!! PARSE ERROR - expected date or duration for round def; got:"
@@ -269,46 +287,70 @@ class MatchTree
     ##         track last_year with extra variable
     
     name  = node.outline
+    level = node.level
 
-    ####
-    # check for "old" group header in ("automagic") round outline for now
-    ##
-    ##  todo/fix - use only names from group def for lookup/is_group match!!!
-    ##    do NOT use (generic) regex!!
-    if is_group?( name )
-      logger.debug "on group header: >#{node}<"
+  
+      ####
+      # check for "old" group header in ("automagic") round outline for now
+      ##
+      ##  todo/fix - use only names from group def for lookup/is_group match!!!
+      ##    do NOT use (generic) regex!!
+      if level == 1 && is_group?( name )
+        logger.debug "on group header: >#{node}<"
 
-      group = @groups[ name ]
+        group = @groups[ name ]
       
-      if group
-       # set group for matches
-        @last_group = group
+        if group
+          # set group for matches
+          @last_group = group
             # note: group header resets (last) round  (allows, for example):
-        #  e.g.
-        #  Group Playoffs/Replays       -- round header
-        #    team1 team2                -- match
-        #  Group B                      -- group header
-        #    team1 team2 - match  (will get new auto-matchday! not last round)
-        @last_round     = nil
-        return  ## note - return here; do NOT fall through to std round processing! 
-      else
-        puts "!! WARN - no group def found for >#{name}<; will use a (plain) round"
-      end  
-    end 
+            #  e.g.
+            #  Group Playoffs/Replays       -- round header
+            #    team1 team2                -- match
+            #  Group B                      -- group header
+            #    team1 team2 - match  (will get new auto-matchday! not last round)
+          @last_round     = nil
+          return  ## note - return here; do NOT fall through to std round processing! 
+        else
+          puts "!! WARN - no group def found for >#{name}<; will use a (plain) round"
+        end  
+      end  ## is_group? 
     
-    round = @rounds[ name ]
-    if round.nil?    ## auto-add / create if missing
-      ## todo/check: add num (was pos) if present - why? why not?
-      round = Import::Round.new( name: name )
-      @rounds[ name ] = round
-    end
 
-    @last_round = round
-    @last_group = nil   # note: always reset group to no group - why? why not?  
+      ##
+      ## todo/fix - also reset round name levels on heading 1/2/3 etc.
+      ##                why? why not?
 
-    ## todo/fix/check
-    ##  make round a scope for date(time) - why? why not?
-    ##   reset date/time e.g. @last_date = nil !!!!  
+      if level == 1
+        @last_round_name1 = name
+        @last_round_name2 = nil
+        @last_round_name3 = nil
+      elsif level == 2
+        @last_round_name2 = name
+        @last_round_name3 = nil
+        name = [@last_round_name1, name].join( ', ' )
+      elsif level == 3
+        @last_round_name3 == name
+        name = [@last_round_name1, @last_round_name2, name].join( ', ')
+      else
+         puts "!! ERROR - unsupported round outline level #{level}; use 1-3 - sorry"
+         exit 1
+      end      
+
+
+      round = @rounds[ name ]
+      if round.nil?    ## auto-add / create if missing
+        ## todo/check: add num (was pos) if present - why? why not?
+        round = Import::Round.new( name: name )
+        @rounds[ name ] = round
+      end
+
+      @last_round = round
+      @last_group = nil   # note: always reset group to no group - why? why not?  
+
+      ## todo/fix/check
+      ##  make round a scope for date(time) - why? why not?
+      ##   reset date/time e.g. @last_date = nil !!!!  
   end
 
 
@@ -472,7 +514,7 @@ class GoalStruct
     time_local = nil
     if node.time_local
       time_local  =  ('%d:%02d' % [node.time_local[:h], node.time_local[:m]])  
-      time_local +=  ' '+node.time_local[:timezone]    if node.time_local[:timezone] 
+      time_local +=  " #{node.time_local[:timezone]}"   if node.time_local[:timezone] 
     end
   
 
