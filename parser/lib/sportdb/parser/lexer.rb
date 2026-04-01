@@ -307,9 +307,20 @@ def tokenize_with_errors
                    "  "   ## replace with two spaces
                  end
 
+                 
+        ## U+00A0 (160)  -- non-breaking space (unicode)
+        line = line.gsub( "\u00A0" ) do |uni|
+                  ## report error here
+                  ## todo/add error here
+                  puts "!! WARN - auto-fix; replacing non-breaking unicode space (#{uni}/#{uni.ord}) w/ ascii space ( /#{" ".ord}) in line #{line.inspect}"
+                   " "   ## replace with space
+                 end
+
         ###
         ## todo/fix - print unicode numbers for [–−]
-        ##                different candidates to differentiate and document!!!         
+        ##                different candidates to differentiate and document!!! 
+        ##   – => U+2013 (8211)     -- En Dash     (unicode) 
+        ##   − => U+2212 (8722)     -- Minus Sign  (unicode)
         line = line.gsub( /[–−]/ ) do |uni|
                   ## report error here
                   ## todo/add error here

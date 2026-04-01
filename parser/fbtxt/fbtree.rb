@@ -133,8 +133,36 @@ WORLDCUP = parse_names( <<TXT )
    worldcup/2026--usa/cup_finals.txt
 TXT
 
+WORLDCUP2 = parse_names( <<TXT )
+   ###
+   ## check samples in /more
+   worldcup/more/1930.txt
+   worldcup/more/1934.txt
+   worldcup/more/1938.txt
+   worldcup/more/1950.txt   
+   worldcup/more/1954.txt
+   worldcup/more/1958.txt
+   worldcup/more/1962.txt
+   worldcup/more/1966.txt
+   worldcup/more/1970.txt
+   worldcup/more/1974.txt
+   worldcup/more/1978.txt
+   worldcup/more/1982.txt
+   worldcup/more/1986.txt
+   worldcup/more/1990.txt
+   worldcup/more/1994.txt
+   worldcup/more/1998.txt
+   worldcup/more/2002.txt
+   worldcup/more/2006.txt
+   worldcup/more/2010.txt
+   worldcup/more/2014.txt
+   worldcup/more/2018.txt
+   worldcup/more/2022.txt   
+TXT
 
-WORLDCUP2 = parse_names( <<TXT )  
+
+
+WORLDCUP3 = parse_names( <<TXT )  
    ##########
    ## check some planetworldcup samples
    worldcup/planetworldcup/wc10.txt
@@ -229,6 +257,8 @@ if __FILE__ == $0
     args = WORLDCUP
   elsif args.size == 1 && (args[0] == 'worldcup2' || args[0] == 'wc2')
     args = WORLDCUP2
+  elsif args.size == 1 && (args[0] == 'worldcup3' || args[0] == 'wc3')
+    args = WORLDCUP3
   elsif args.size == 1 && args[0] == 'euro'
     args = EURO
   elsif args.size == 1 && (args[0] == 'austria' || args[0] == 'at')

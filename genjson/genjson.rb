@@ -60,18 +60,49 @@ config = [
   ['2014/worldcup.json', ['worldcup/2014--brazil/cup.txt', 'worldcup/2014--brazil/cup_finals.txt']],    
   ['2018/worldcup.json', ['worldcup/2018--russia/cup.txt', 'worldcup/2018--russia/cup_finals.txt']],    
   ['2022/worldcup.json', ['worldcup/2022--qatar/cup.txt', 'worldcup/2022--qatar/cup_finals.txt']],    
-=begin
+]
+
+
+config = [
   ['2026/worldcup.json',                ['worldcup/2026--usa/cup.txt',   'worldcup/2026--usa/cup_finals.txt']],
   ['2026/worldcup.quali_playoffs.json', ['worldcup/2026--usa/quali_playoffs.txt']],
-=end
+]
+pp config
+
+
+config = [
+  ['more/1930.json',['worldcup/more/1930.txt']],
+  ['more/1934.json',['worldcup/more/1934.txt']],
+  ['more/1938.json',['worldcup/more/1938.txt']],
+  ['more/1950.json',['worldcup/more/1950.txt']],   
+  ['more/1954.json',['worldcup/more/1954.txt']],
+  ['more/1958.json',['worldcup/more/1958.txt']],
+  ['more/1962.json',['worldcup/more/1962.txt']],
+  ['more/1966.json',['worldcup/more/1966.txt']],
+  ['more/1970.json',['worldcup/more/1970.txt']],
+  ['more/1974.json',['worldcup/more/1974.txt']],
+  ['more/1978.json',['worldcup/more/1978.txt']],
+  ['more/1982.json',['worldcup/more/1982.txt']],
+  ['more/1986.json',['worldcup/more/1986.txt']],
+  ['more/1990.json',['worldcup/more/1990.txt']],
+  ['more/1994.json',['worldcup/more/1994.txt']],
+  ['more/1998.json',['worldcup/more/1998.txt']],
+  ['more/2002.json',['worldcup/more/2002.txt']],
+  ['more/2006.json',['worldcup/more/2006.txt']],
+  ['more/2010.json',['worldcup/more/2010.txt']],
+  ['more/2014.json',['worldcup/more/2014.txt']],
+  ['more/2018.json',['worldcup/more/2018.txt']],
+  ['more/2022.json',['worldcup/more/2022.txt']],   
 ]
 
 
 
-
-pp config
-
-
+config = [
+   ['rsssf/30full.json', ['worldcup/rsssf/30full.txt']],
+   ['rsssf/34f.json',    ['worldcup/rsssf/34f.txt']],
+   ['rsssf/38f.json',    ['worldcup/rsssf/38f.txt']],
+]
+ 
 
 ## SportDb::MatchParser.debug = true
 SportDb::MatchParser.debug = true

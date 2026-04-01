@@ -66,7 +66,19 @@ class QuickMatchReader
     tree   = []
     parser = RaccMatchParser.new( @txt, debug: debug? )   ## use own parser instance (not shared) - why? why not?
     tree = parser.parse
-   
+
+    
+##
+## !! (QUICK) PARSE ERROR - source MUST start with Heading1; got 34 nodes:
+## [<BlankLine>,
+##  <BlankLine>,
+## <Heading1 World Cup 1930>,
+
+      ## remove leading BlankLines if any!!
+      while tree[0].is_a? RaccMatchParser::BlankLine
+          tree.shift  ## remove (leading) blank line from parse tree 
+      end
+
 
     if tree[0].is_a? RaccMatchParser::Heading1
          ## try to get league and season
