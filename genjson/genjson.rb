@@ -93,14 +93,42 @@ config = [
   ['more/2014.json',['worldcup/more/2014.txt']],
   ['more/2018.json',['worldcup/more/2018.txt']],
   ['more/2022.json',['worldcup/more/2022.txt']],   
+
+ ## add/try full too 
+  ['more/1930-full.json',['worldcup/more/1930_full.txt']],
+  ['more/1934-full.json',['worldcup/more/1934_full.txt']],
+  ['more/1938-full.json',['worldcup/more/1938_full.txt']],
+  ['more/1950-full.json',['worldcup/more/1950_full.txt']],   
+  ['more/1954-full.json',['worldcup/more/1954_full.txt']],
+  ['more/1958-full.json',['worldcup/more/1958_full.txt']],
+  ['more/1962-full.json',['worldcup/more/1962_full.txt']],
+  ['more/1966-full.json',['worldcup/more/1966_full.txt']],
+  ['more/1970-full.json',['worldcup/more/1970_full.txt']],
+  ['more/1974-full.json',['worldcup/more/1974_full.txt']],
+  ['more/1978-full.json',['worldcup/more/1978_full.txt']],
+  ['more/1982-full.json',['worldcup/more/1982_full.txt']],
+  ['more/1986-full.json',['worldcup/more/1986_full.txt']],
+  ['more/1990-full.json',['worldcup/more/1990_full.txt']],
+  ['more/1994-full.json',['worldcup/more/1994_full.txt']],
+  ['more/1998-full.json',['worldcup/more/1998_full.txt']],
+  ['more/2002-full.json',['worldcup/more/2002_full.txt']],
+  ['more/2006-full.json',['worldcup/more/2006_full.txt']],
+  ['more/2010-full.json',['worldcup/more/2010_full.txt']],
+  ['more/2014-full.json',['worldcup/more/2014_full.txt']],
+  ['more/2018-full.json',['worldcup/more/2018_full.txt']],
+  ['more/2022-full.json',['worldcup/more/2022_full.txt']],   
 ]
 
 
 
-config = [
+xx_config = [
    ['rsssf/30full.json', ['worldcup/rsssf/30full.txt']],
-#   ['rsssf/34f.json',    ['worldcup/rsssf/34f.txt']],
-#   ['rsssf/38f.json',    ['worldcup/rsssf/38f.txt']],
+   ['rsssf/34f.json',    ['worldcup/rsssf/34f.txt']],
+   ['rsssf/38f.json',    ['worldcup/rsssf/38f.txt']],
+    ['rsssf/2014f.json',  ['worldcup/rsssf/2014f.txt']],
+    ['rsssf/2022f.json',  ['worldcup/rsssf/2022f.txt']],
+    ['rsssf/2022q.json',  ['worldcup/rsssf/2022q.txt']],
+  ##  ['rsssf/worldcup.json',  ['worldcup/rsssf/worldcup.txt']],
 ]
  
 

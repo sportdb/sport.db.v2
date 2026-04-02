@@ -71,13 +71,16 @@ DEFAULT =  parse_names( <<TXT )
    country.txt
    year.txt
    tty.txt
-
+ 
+   penalties.txt
+   referees.txt
+   lineups.txt
+   
    todos_complete.txt
 
    quick.txt
 
    ##  todos.txt
-   ##  penalties.txt  -- fix
    ##  defs.txt  -- fix
 TXT
 
@@ -131,7 +134,10 @@ WORLDCUP = parse_names( <<TXT )
 
    worldcup/2026--usa/cup.txt
    worldcup/2026--usa/cup_finals.txt
+
+   worldcup/2026--usa/quali_playoffs.txt
 TXT
+
 
 WORLDCUP2 = parse_names( <<TXT )
    ###
@@ -158,6 +164,31 @@ WORLDCUP2 = parse_names( <<TXT )
    worldcup/more/2014.txt
    worldcup/more/2018.txt
    worldcup/more/2022.txt   
+
+###
+#  check full too
+   worldcup/more/1930_full.txt
+   worldcup/more/1934_full.txt
+   worldcup/more/1938_full.txt
+   worldcup/more/1950_full.txt   
+   worldcup/more/1954_full.txt
+   worldcup/more/1958_full.txt
+   worldcup/more/1962_full.txt
+   worldcup/more/1966_full.txt
+   worldcup/more/1970_full.txt
+   worldcup/more/1974_full.txt
+   worldcup/more/1978_full.txt
+   worldcup/more/1982_full.txt
+   worldcup/more/1986_full.txt
+   worldcup/more/1990_full.txt
+   worldcup/more/1994_full.txt
+   worldcup/more/1998_full.txt
+   worldcup/more/2002_full.txt
+   worldcup/more/2006_full.txt
+   worldcup/more/2010_full.txt
+   worldcup/more/2014_full.txt
+   worldcup/more/2018_full.txt
+   worldcup/more/2022_full.txt   
 TXT
 
 

@@ -89,5 +89,25 @@ Netherlands: Andries NOPPERT - Jurrien TIMBER [Y 43'], Virgil VAN DIJK [c],
 
 
 
+## some more
+
+  Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt - Andrich [Y] (46' Groß),
+              Kroos (80' Can) - Musiala (74' Müller), Gündogan, Wirtz (63' Sane) - 
+              Havertz (63' Füllkrug)
+
+  Scotland:   Gunn - Porteous [R 44'], Hendry, Tierney (78' McKenna) - Ralston [Y],
+              McTominay, McGregor (67' Gilmour), Robertson - Christie (82' Shankland),
+              Adams (46' Hanley), McGinn (67' McLean)
+
+  Hungary:     Gulacsi - Lang (46' Bolla [Y]), Orban, Szalai [Y] (79' Dardai) - Fiola,
+               Nagy (67' Kleinheisler), Schäfer, Kerkez (79' Adam) - 
+               Sallai, Varga, Szoboszlai
+
+  Switzerland: Sommer - Schär, Akanji, Rodriguez - Widmer [Y] (68' Stergiou), Xhaka,
+               Freuler [Y] (86' Sierro), Aebischer - Ndoye (86' Rieder), Duah (68' Amdouni),
+               Vargas (73' Embolo)
+
+
+
 ##
 #  try (recursive) sub of sub here !!!
