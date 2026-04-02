@@ -1,0 +1,28 @@
+###
+# check ref/refs/referee/referees samples
+
+ref: Marciniak (Poland)
+
+Ref: Marciniak (Poland)
+
+Referee: Marciniak (Poland)
+
+Referees: Rego (BRA), Saucedo (BOL), Balway (FRA)
+
+referees:  Langenus (BEL), Vallejo (MEX), Warnken (CHI)
+
+Refs: Jean LANGENUS (BEL), Ulises SAUCEDO (BOL), Henry CRISTOPHE (BEL)
+
+
+Refs: Szymon MARCINIAK (POL), Pawel SOKOLNICKI (POL), Tomasz LISTKIEWICZ (POL)
+
+Refs: Abdulrahman AL JASSIM (QAT), Taleb AL MARRI (QAT), Saoud AL MAQALEH (QAT)
+
+
+refs: Hans WUETHRICH (SUI), Gustav KRIST (TCH), Alfred BIRLEM (GER)
+
+refs: Alois BERANEK (AUT), D. BOUTOURE (FRA), D. TREHOU (FRA)
+
+refs: Alois BERANEK, D. BOUTOURE, D. TREHOU
+ref: Alois BERANEK
+

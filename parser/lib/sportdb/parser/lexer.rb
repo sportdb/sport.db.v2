@@ -612,25 +612,35 @@ def _tokenize_line( line )
         key = m[:key]
 
 
-        ### todo - add prop yellow/red cards too - why? why not?
-        if ['sent off', 'red cards'].include?( key.downcase) 
+        ### todo/fix - add prop yellow/red cards too - why? why not?
+        ##  todo/fix - separate sent off and red card
+        ##     sent-off - incl. red card, yellow/red card and the era before red cards!!
+        if ['sent off'].include?( key.downcase) 
+          @re = PROP_CARDS_RE    ## use CARDS_RE ???
+          tokens << [:PROP_SENTOFF, m[:key]]   
+        elsif ['red cards'].include?( key.downcase ) 
           @re = PROP_CARDS_RE    ## use CARDS_RE ???
           tokens << [:PROP_REDCARDS, m[:key]]
         elsif ['yellow cards'].include?( key.downcase )
           @re = PROP_CARDS_RE  
           tokens << [:PROP_YELLOWCARDS, m[:key]]
-        elsif ['ref', 'referee'].include?( key.downcase )
+        elsif ['ref', 'referee', 
+               'refs', 'referees'   ## note - allow/support assistant refs
+              ].include?( key.downcase )
           @re = PROP_REFEREE_RE     
           tokens << [:PROP_REFEREE, m[:key]]
         elsif ['att', 'attn', 'attendance'].include?( key.downcase )
           @re = PROP_ATTENDANCE_RE
           tokens << [:PROP_ATTENDANCE, m[:key]]         
+  
      #   elsif ['goals'].include?( key.downcase )
      #     @re = PROP_GOAL_RE
      #     tokens << [:PROP_GOALS, m[:key]]
          
-         ## todo - add penalty kicks 
-        elsif ['penalties', 'penalty shootout'].include?( key.downcase )
+        elsif ['penalties', 
+               'penalty shootout',
+               'penalty shoot-out',
+               'penalty kicks'].include?( key.downcase )
           @re = PROP_PENALTIES_RE
           tokens << [:PROP_PENALTIES, m[:key]]
         else   ## assume (team) line-up
@@ -902,19 +912,29 @@ def _tokenize_line( line )
                 ## report error - for unknown (inline) prop key in lineup
                 nil
               end
+         elsif m[:inline_captain]
+              [:INLINE_CAPTAIN, m[:inline_captain]]
+         elsif m[:inline_yellow]
+              card = {}
+              card[:m]      = m[:minute].to_i(10)  if m[:minute]
+              card[:offset] = m[:offset].to_i(10)  if m[:offset]
+              [:INLINE_YELLOW, [m[:inline_yellow], card]]       
+         elsif m[:inline_red]
+              card = {}
+              card[:m]      = m[:minute].to_i(10)  if m[:minute]
+              card[:offset] = m[:offset].to_i(10)  if m[:offset]
+              [:INLINE_RED, [m[:inline_red], card]]       
+         elsif m[:inline_yellow_red]
+              card = {}
+              card[:m]      = m[:minute].to_i(10)  if m[:minute]
+              card[:offset] = m[:offset].to_i(10)  if m[:offset]
+              [:INLINE_YELLOW_RED, [m[:inline_yellow_red], card]]       
          elsif m[:prop_name]
-               if m[:name] == 'Y'
-                 [:YELLOW_CARD, m[:name]]
-               elsif m[:name] == 'R'
-                 [:RED_CARD, m[:name]]
-               else 
-                 [:PROP_NAME, m[:name]]
-               end
+              [:PROP_NAME, m[:name]]
          elsif m[:minute]
               minute = {}
               minute[:m]      = m[:value].to_i(10)
               minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-             ## note - for debugging keep (pass along) "literal" minute
              [:MINUTE, [m[:minute], minute]]
          elsif m[:sym]
             sym = m[:sym]
@@ -1009,9 +1029,8 @@ def _tokenize_line( line )
               ## must always have ft for now e.g. 1-1 or such
               ###  change to (generic) score from ft -
               ##     might be score a.e.t. or such - why? why not?
-              score[:ft] = [m[:ft1].to_i(10),
-                            m[:ft2].to_i(10)]  
-              ## note - for debugging keep (pass along) "literal" score
+              score[:score] = [m[:score1].to_i(10),
+                               m[:score2].to_i(10)]  
               [:SCORE, [m[:score], score]]
          elsif m[:sym]
             sym = m[:sym]

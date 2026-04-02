@@ -4,6 +4,7 @@
 
 class RaccMatchParser
 
+=begin
 RefereeLine = Struct.new( :name, :country ) do 
   def pretty_print( printer )
     printer.text( "<RefereeLine " )
@@ -11,6 +12,29 @@ RefereeLine = Struct.new( :name, :country ) do
     printer.text( " (#{self.country})" )  if self.country
     printer.text( ">" )
   end
+end
+=end
+
+## support multiple referees (incl. assistant refs etc.)
+RefereeLine = Struct.new( :referees ) do 
+  def pretty_print( printer )
+    printer.text( "<RefereeLine " )
+    printer.text( self.referees.pretty_inspect )
+    printer.text( ">" )
+  end
+end
+
+Referee = Struct.new( :name, :country ) do
+  def to_s
+    buf = String.new
+    buf <<  self.name
+    buf << " (#{self.country})"    if self.country 
+    buf
+  end
+
+  def pretty_print( printer )
+    printer.text( to_s )
+  end  
 end
 
 AttendanceLine = Struct.new( :att ) do 
@@ -29,14 +53,16 @@ PenaltiesLine = Struct.new( :penalties ) do
   end
 end
 
+
 Penalty = Struct.new( :name, :score, :note ) do
   def to_s
     buf = String.new
-    buf << "#{self.score} "   if self.score
+    buf << "#{self.score[0]}-#{self.score[1]} "   if self.score
     buf <<  self.name
     buf << " (#{self.note})"    if self.note 
     buf
   end
+
 
   def pretty_print( printer )
     printer.text( to_s )
@@ -82,11 +108,12 @@ LineupLine = Struct.new( :team, :lineup, :coach ) do
 end
 
 
-Lineup     = Struct.new( :name, :card, :sub ) do
+Lineup     = Struct.new( :name, :captain, :cards, :sub ) do
   def pretty_print( printer )
     buf = String.new
     buf <<  self.name 
-    buf << " card=" + self.card.pretty_inspect    if card
+    buf << " [c]"   if captain
+    buf << " cards=" + self.cards.pretty_inspect    if cards
     buf << " sub=" + self.sub.pretty_inspect      if sub
     printer.text( buf ) 
   end

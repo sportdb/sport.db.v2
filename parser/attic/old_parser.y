@@ -43,4 +43,22 @@
                   }
      
 
+
+##       card         :   '[' card_body ']'
+##                          {
+##                              kwargs = val[1]
+##                              result = Card.new( **kwargs )
+##                          }
+##       
+##       card_body    :     card_type
+##                           { result = { name: val[0] } }                           
+##                    |     card_type MINUTE
+##                           { result = { name: val[0],
+##                                        minute: Minute.new(val[1][1]) } 
+##                           }
+##                     
+##       card_type    :  YELLOW_CARD | RED_CARD 
+
+
+
               

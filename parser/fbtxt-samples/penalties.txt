@@ -1,4 +1,42 @@
 
+############
+## samples from world cup 2022
+
+Penalties:     Takumi MINAMINO (missed), 0-1 Nikola VLASIC,
+               Kaoru MITOMA (missed), 0-2 Marcelo BROZOVIC,
+           1-2 Takuma ASANO,     Marko LIVAJA (missed),
+               Maya YOSHIDA (missed), 1-3 Mario PASALIC
+
+Penalties: 1-0 Abdelhamid SABIRI,     Pablo SARABIA (missed),
+           2-0 Hakim ZIYECH,     Carlos SOLER (missed),
+               Badr BENOUN (missed),     Sergio BUSQUETS (missed),
+           3-0 Achraf HAKIMI
+
+Penalties: 1-0 Nikola VLASIC,     RODRYGO (missed),
+           2-0 Lovro MAJER, 2-1 CASEMIRO,
+           3-1 Luka MODRIC, 3-2 PEDRO,
+           4-2 Mislav ORSIC,     MARQUINHOS (missed)
+
+Penalties:     Virgil VAN DIJK (missed), 0-1 Lionel MESSI,
+               Steven BERGHUIS (missed), 0-2 Leandro PAREDES,
+           1-2 Teun KOOPMEINERS, 1-3 Gonzalo MONTIEL,
+           2-3 Wout WEGHORST,     Enzo FERNANDEZ (missed),
+           3-3 Luuk DE JONG, 3-4 Lautaro MARTINEZ
+
+Penalties: 0-1 Kylian MBAPPE, 1-1 Lionel MESSI,
+               Kingsley COMAN (missed), 2-1 Paulo DYBALA,
+               Aurelien TCHOUAMENI (missed), 3-1 Leandro PAREDES,
+           3-2 Randal KOLO MUANI, 4-2 Gonzalo MONTIEL
+
+
+Penalty kicks: 0-1 Mbappé,            1-1 Messi, 
+                   Coman (stopped),   2-1 Dybala,
+                   Tchouaméni (wide), 3-1 Paredes, 
+               3-2 Kolo Muani,        4-2 Montiel 
+
+
+
+
 Penalties:       1-0  Mario Gavranović, 1-1 Paul Pogba, 
                  2-1  Fabian Schär, 2-2 Olivier Giroud,
                  3-2  Manuel Akanji, 3-3 Marcus Thuram, 
@@ -33,8 +71,8 @@ Penalty shootout:     Zinho (held),  0-1 Dudamel;
 
 
 
-## Penalties: 1-0 K.Allofs, 1-1 Negrete, 2-1 Brehme, (2-1) Quirarte (save
-## Schumacher), 3-1 Matthäus, (3-1) Servin (save Schumacher), 4-1 Littbarski
+Penalties: 1-0 K.Allofs, 1-1 Negrete, 2-1 Brehme,  Quirarte (save Schumacher), 
+           3-1 Matthäus,  Servin (save Schumacher), 4-1 Littbarski
 
 Penalties: 1-0 K.Allofs,  1-1 Negrete, 
            2-1 Brehme,        Quirarte (save Schumacher), 
@@ -42,9 +80,10 @@ Penalties: 1-0 K.Allofs,  1-1 Negrete,
            4-1 Littbarski
 
 
-## Penalties: (0-0) Socrates (save Bats), 1-0 Stopyra, 1-1 Alemão, 2-1 Amoros,
-##  2-2 Zico, 3-2 Bellone, 3-3 Branco, (3-3) Platini (out), (3-3) Julio Cesar
-##  (out), 4-3 Fernandez
+
+Penalties:  Socrates (save Bats), 1-0 Stopyra, 1-1 Alemão, 2-1 Amoros,
+            2-2 Zico, 3-2 Bellone, 3-3 Branco,  Platini (out),  Julio Cesar (out), 
+            4-3 Fernandez
 
 Penalties:      Socrates (save Bats), 1-0 Stopyra, 
             1-1 Alemão,               2-1 Amoros,
@@ -52,9 +91,11 @@ Penalties:      Socrates (save Bats), 1-0 Stopyra,
             3-3 Branco,                   Platini (out), 
                 Julio Cesar (out),    4-3 Fernandez
 
-## Penalties: 0-1 Señor, 1-1 Claesen, (1-1) Eloy (save Pfaff), 2-1 Scifo,
-## 2-2 Chendo, 3-2 Broos, 3-3 Butragueno, 4-3 Vervoort, 4-4 Victor, 5-4 L.van
-## der Elst
+
+
+Penalties: 0-1 Señor, 1-1 Claesen, Eloy (save Pfaff), 2-1 Scifo,
+           2-2 Chendo, 3-2 Broos, 3-3 Butragueno, 4-3 Vervoort, 4-4 Victor, 
+           5-4 L.van der Elst
 
 Penalties:  0-1 Señor,             1-1 Claesen, 
                 Eloy (save Pfaff), 2-1 Scifo,

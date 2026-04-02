@@ -1017,10 +1017,9 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                               }
 
         ## note - allow inline attendance prop in same line
-        referee_line   :  PROP_REFEREE  referee  attendance_opt PROP_END NEWLINE
+        referee_line   :  PROP_REFEREE  referees  attendance_opt PROP_END NEWLINE
                             {
-                               kwargs = val[1] 
-                               @tree << RefereeLine.new( **kwargs ) 
+                               @tree << RefereeLine.new( referees: val[1] ) 
                             }
 
        attendance_opt   : /* empty */   
@@ -1029,11 +1028,15 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                  @tree << AttendanceLine.new( att: val[2][1][:value] )
                            }
                   
+        referees  :     referee
+                          { result = [val[0]] }
+                  |     referees ',' referee
+                          {  result = (val[0] << val[2]) }
 
         referee  :      PROP_NAME
-                         {  result = { name: val[0]} }
+                         {  result = Referee.new( name: val[0] ) }
                  |      PROP_NAME  ENCLOSED_NAME  
-                         {  result = { name: val[0], country: val[1] } }   
+                         {  result = Referee.new( name: val[0], country: val[1] ) }   
                  
 
         penalties_lines : PROP_PENALTIES penalties_body PROP_END NEWLINE
@@ -1135,14 +1138,24 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                      | '-' NEWLINE  { result = val[0]   }
                      
 
-      lineup_name    :    PROP_NAME  lineup_card_opts  lineup_sub_opts   
+
+       lineup_cards_opts      : /* empty */   { result = {} }
+                              |  cards         { result = { cards: val[0] } }
+
+       lineup_captain_opt     : /* empty */   { result = {} }
+                              | INLINE_CAPTAIN  { result = { captain: true }}
+
+       lineup_name_plus_cards_opts :  PROP_NAME  lineup_captain_opt  lineup_cards_opts 
+                                      {
+                                        result = { name: val[0] }.merge( val[1]).merge( val[2] )
+                                      }
+
+      lineup_name   :   lineup_name_plus_cards_opts   lineup_sub_opts   
                            {
-                              kwargs = { name: val[0] }.merge( val[1] ).merge( val[2] )
+                              kwargs = {}.merge(val[0] ).merge( val[1])
                               result = Lineup.new( **kwargs )
                            }
 
-       lineup_card_opts      : /* empty */   { result = {} }
-                             |  card         { result = { card: val[0] } }
 
 
         ##  allow nested subs e.g. 
@@ -1160,11 +1173,11 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
          lineup_sub_opts : /* empty */   { result = {} }
-                         | '(' PROP_NAME  lineup_card_opts  MINUTE  lineup_sub_opts ')'    
+                         | '(' lineup_name_plus_cards_opts  MINUTE  lineup_sub_opts ')'    
                           {
-                              kwargs = { name: val[1] }.merge( val[2] ).merge( val[4] )
+                              kwargs = {}.merge( val[1] ).merge( val[3] )
                               sub    = Sub.new( sub:    Lineup.new( **kwargs ),
-                                                minute: Minute.new(val[3][1]) 
+                                                minute: Minute.new(val[2][1]) 
                                               )
                               result = { sub: sub }
                           }
@@ -1173,7 +1186,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                               sub = Sub.new( sub: val[1] )
                               result = { sub: sub }
                            }      
-                  ## allow both styles? minute first or last? keep - why? why not?
+                  ## allow both styles? minute first or last? keep - yes, yes, yes
+                  ##  why? why not?
                     |   '(' MINUTE lineup_name ')'    
                           {
                               sub = Sub.new( sub:    val[2],
@@ -1183,22 +1197,20 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                           }
 
 
-
-       card         :   '[' card_body ']'
-                          {
-                              kwargs = val[1]
-                              result = Card.new( **kwargs )
-                          }
-       
-       card_body    :     card_type
-                           { result = { name: val[0] } }                           
-                    |     card_type MINUTE
-                           { result = { name: val[0],
-                                        minute: Minute.new(val[1][1]) } 
-                           }
-                     
-
-       card_type    :  YELLOW_CARD | RED_CARD 
+      cards 
+        :         INLINE_YELLOW
+                     { result = [{ card: 'YELLOW' }.merge( val[0][1] )] }
+        |         INLINE_YELLOW INLINE_YELLOW_RED
+                     { result = [{ card: 'YELLOW' }.merge( val[0][1] ),
+                                 { card: 'YELLOW_RED' }.merge( val[1][1])]  }       
+        |         INLINE_YELLOW INLINE_RED
+                    { result = [{ card: 'YELLOW' }.merge( val[0][1] ),
+                                { card: 'RED' }.merge( val[1][1])]  }
+        |         INLINE_RED
+                    {  result = [{ card: 'RED' }.merge( val[0][1])] }
+        |         INLINE_YELLOW_RED
+                    {  result = [{ card: 'YELLOW_RED' }.merge( val[0][1])] }
+            
 
 
 end

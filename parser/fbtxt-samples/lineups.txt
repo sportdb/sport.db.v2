@@ -1,0 +1,93 @@
+###
+#  line-ups from world cup 1930
+
+ARG: Botasso - Della Tore, Paternoster - J.Evaristo, Monti,
+     Orlandini - Peucelle, Scopelli, Stábile, Ferreira [c], M.Evaristo
+USA: Douglas - Wood, Moorhouse - Gallagher, Tracey, Auld -
+     Brown, Florie [c], Patenaude, Gonsalves, McGhee
+
+
+
+URU: Ballestero - Mascheroni, Nasazzi [c] - Andrade, Fernández, Gestido -
+     Dorado, Scarone, Castro, Cea, Iriarte
+ARG: Botasso - Della Torre, Paternoster - J.Evaristo, Monti, Arico Suárez - 
+     Peucelle, Varallo, Stábile, Ferreira [c], M.Evaristo
+
+
+###
+# line-ups from world cup 2022
+
+Argentina: E. Martínez, Molina (Montiel 91'), Romero, Otamendi, 
+           Tagliafico (Dybala 120+1'), De Paul (Paredes 102'), Fernández, 
+           Mac Allister (Pezzella 116'), Messi, Álvarez (La. Martínez 103'), 
+           Di María (Acuña 64') 
+France: Lloris, Koundé (Disasi 120+1'), Varane (Konaté 113'), Upamecano,
+        Th. Hernandez (Camavinga 71'), Dembélé (Kolo Muani 41'), Tchoauméni,
+        Griezmann (Coman 71'), Rabiot (Fofana 96'), Mbappé, Giroud (Thuram 41')
+
+
+Argentina: E. Martínez, Molina (Montiel 91), Romero, Otamendi, 
+           Tagliafico (Dybala 120+1), De Paul (Paredes 102), Fernández, 
+           Mac Allister (Pezzella 116), Messi, Álvarez (La. Martínez 103), 
+           Di María (Acuña 64) 
+France: Lloris, Koundé (Disasi 120+1), Varane (Konaté 113), Upamecano,
+        Th. Hernandez (Camavinga 71), Dembélé (Kolo Muani 41), Tchoauméni,
+        Griezmann (Coman 71), Rabiot (Fofana 96), Mbappé, Giroud (Thuram 41)
+
+
+Argentina: E. Martínez, Molina (91 Montiel), Romero, Otamendi, 
+           Tagliafico (120+1 Dybala), De Paul (102 Paredes), Fernández, 
+           Mac Allister (116 Pezzella), Messi, Álvarez (103 La. Martínez), 
+           Di María (64 Acuña) 
+France: Lloris, Koundé (120+1 Disasi), Varane (113 Konaté), Upamecano,
+        Th. Hernandez (71 Camavinga), Dembélé (41 Kolo Muani), Tchoauméni,
+        Griezmann (71 Coman), Rabiot (96 Fofana), Mbappé, Giroud (41 Thuram)
+
+
+Argentina: E. Martínez, Molina (Montiel), Romero, Otamendi, 
+           Tagliafico (Dybala), De Paul (Paredes), Fernández, 
+           Mac Allister (Pezzella), Messi, Álvarez (La. Martínez), 
+           Di María (Acuña) 
+France: Lloris, Koundé (Disasi), Varane (Konaté), Upamecano,
+        Th. Hernandez (Camavinga), Dembélé (Kolo Muani), Tchoauméni,
+        Griezmann (Coman), Rabiot (Fofana), Mbappé, Giroud (Thuram)
+
+
+
+###
+# try with cards and captains
+
+Argentina: Emiliano MARTINEZ [Y 125'] - Nicolas TAGLIAFICO (120+1' Paulo DYBALA),
+      Cristian ROMERO, Nicolas OTAMENDI, Nahuel MOLINA (91' Gonzalo MONTIEL [Y 116']) -
+      Rodrigo DE PAUL (102' Leandro PAREDES [Y 114']), Alexis MAC ALLISTER (116' German PEZZELLA),
+      Enzo FERNANDEZ [Y 45+7'] - Julian ALVAREZ (102' Lautaro MARTINEZ), Lionel MESSI [c],
+      Angel DI MARIA (64' Marcos ACUNA [Y 90+8'])
+
+France: Hugo LLORIS [c] - Raphael VARANE (113' Ibrahima KONATE), Jules KOUNDE (120+1' Axel DISASI),
+      Dayot UPAMECANO, Theo HERNANDEZ (71' Eduardo CAMAVINGA) - Antoine GRIEZMANN (71' Kingsley COMAN),
+      Aurelien TCHOUAMENI, Adrien RABIOT [Y 55'] (96' Youssouf Fofana) - Olivier GIROUD [Y 90+5'] (41' Marcus THURAM [Y 87']),
+      Kylian MBAPPE, Ousmane DEMBELE (41' Randal KOLO MUANI)
+
+
+##
+#  try yellow/red [Y/R]
+
+Cameroon: Devis EPASSY - Christopher WOOH, Collins FAI [Y 32'], Enzo EBOSSE, 
+      Nouhou TOLO [Y 6'] - Nicolas NGAMALEU (86' Jerome NGOM MBEKELI), 
+      Andre-Frank ZAMBO ANGUISSA, Pierre KUNDE [Y 28'] (68' Olivier NTCHAM), 
+      Bryan MBEUMO (64' Karl TOKO EKAMBI) - Vincent ABOUBAKAR [c] [Y 81'] [Y/R 90+3'], 
+      Eric Maxim CHOUPO-MOTING
+
+
+Netherlands: Andries NOPPERT - Jurrien TIMBER [Y 43'], Virgil VAN DIJK [c], 
+      Nathan AKE - Cody GAKPO (113' Noa LANG [Y 129']), 
+      Marten DE ROON (46' Teun KOOPMEINERS),
+      Daley BLIND (64' Luuk DE JONG), 
+      Frenkie DE JONG, Denzel DUMFRIES [Y 128'] [Y/R 129'] -
+      Steven BERGWIJN [Y 91'] (46' Steven BERGHUIS [Y 88']), 
+      Memphis DEPAY [Y 76'] (78' Wout WEGHORST [Y 45+2'])
+
+
+
+##
+#  try (recursive) sub of sub here !!!

@@ -86,6 +86,60 @@ class Lexer
 ##     add [c] for captain too
 
 
+##  [c] or [C] for marking player as captain
+##   support [y ] too - or require Y - why? why not?
+  INLINE_CAPTAIN = %r{ (?<inline_captain>
+                           \[ [cC] \]
+                       )}x
+
+  INLINE_YELLOW  = %r{ (?<inline_yellow>
+                          \[ [yY]
+                              ## optional minute
+                              (?: [ ]+
+                                (?<minute> \d{1,3})
+                                   '?
+                                (?:
+                                   \+
+                                   (?<offset>\d{1,2})
+                                    '?
+                                )? 
+                              )? 
+                          \]
+                     )}x
+
+  INLINE_RED  = %r{ (?<inline_red>
+                          \[ [rR] 
+                              ## optional minute
+                              (?: [ ]+
+                                (?<minute> \d{1,3})
+                                   '?
+                                (?:
+                                   \+
+                                   (?<offset>\d{1,2})
+                                    '?
+                                )? 
+                              )? 
+                          \]
+                     )}x
+
+  INLINE_YELLOW_RED  = %r{ (?<inline_yellow_red>
+                          \[ (?:y/r |
+                                Y/R  ) 
+                              ## optional minute
+                              (?: [ ]+
+                                (?<minute> \d{1,3})
+                                   '?
+                                (?:
+                                   \+
+                                   (?<offset>\d{1,2})
+                                    '?
+                                )? 
+                              )? 
+                          \]
+                     )}x
+
+
+
 
 ### simple prop key for inline use e.g.
 ###    Coach:  or Trainer:  or ...  add more here later
@@ -146,9 +200,17 @@ PROP_BASICS_RE = %r{
     )   
 }ix
 
+
+
 PROP_RE = Regexp.union(
-   MINUTE_RE,
-   PROP_KEY_INLINE_RE,
+   MINUTE_RE,   ## e.g.  44 or 44' or 45+1 or 45+1' etc.
+
+   INLINE_CAPTAIN,  ## e.g. [c]
+   INLINE_YELLOW,   ## e.g. [Y] or [Y 44] or [Y 44'] or [Y 45+1']
+   INLINE_YELLOW_RED,  ## e.g. [Y/R] or [Y/R 78]
+   INLINE_RED,         ## e.g. [R] or [R 42] or [R 42']
+
+   PROP_KEY_INLINE_RE,   
    PROP_NAME_RE,
    PROP_BASICS_RE, 
    ## todo/fix - add ANY_RE here too!!!

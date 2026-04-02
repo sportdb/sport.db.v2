@@ -99,8 +99,8 @@ config = [
 
 config = [
    ['rsssf/30full.json', ['worldcup/rsssf/30full.txt']],
-   ['rsssf/34f.json',    ['worldcup/rsssf/34f.txt']],
-   ['rsssf/38f.json',    ['worldcup/rsssf/38f.txt']],
+#   ['rsssf/34f.json',    ['worldcup/rsssf/34f.txt']],
+#   ['rsssf/38f.json',    ['worldcup/rsssf/38f.txt']],
 ]
  
 
