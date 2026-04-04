@@ -1,40 +1,16 @@
 ##
 ##  to run use:
-##   $ ruby genjson.rb        (in /genjson)
+##   $ ruby worldcup.rb        (in /genjson)
+
+require_relative 'helper'
 
 
-## note: use the local version of gems
-$LOAD_PATH.unshift( File.expand_path( '../sportdb-structs/lib' ))
-$LOAD_PATH.unshift( File.expand_path( '../parser/lib' ))
-$LOAD_PATH.unshift( File.expand_path( '../quick/lib' ))
 
 
-## our own code
-require 'sportdb/quick'
 
 
-OPENFOOTBALL_PATH = '../../../openfootball'
 
-indir = OPENFOOTBALL_PATH
-## outdir =   "#{OPENFOOTBALL_PATH}/worldcup.json"   
-## outdir =   "#{OPENFOOTBALL_PATH}/euro.json"   
-outdir = './tmp'
-
-=begin
-config = [
-  ['2020/euro.json', ['euro/2021--europe/euro.txt']],
-  ['2024/euro.json', ['euro/2024--germany/euro.txt']],    
-  ['2028/euro.json', ['euro/2028--united_kingdom-ireland/euro.txt']],    
-]
-
-
-config = [
-  ['2025/clubworldcup.json', ['club-worldcup/2025/clubworldcup.txt']],
-]
-
-=end
-
-config = [
+config_history = [
 
   ['1930/worldcup.json', ['worldcup/1930--uruguay/cup.txt']],
   ['1934/worldcup.json', ['worldcup/1934--italy/cup.txt']],
@@ -63,14 +39,13 @@ config = [
 ]
 
 
-config = [
+config_2026 = [
   ['2026/worldcup.json',                ['worldcup/2026--usa/cup.txt',   'worldcup/2026--usa/cup_finals.txt']],
   ['2026/worldcup.quali_playoffs.json', ['worldcup/2026--usa/quali_playoffs.txt']],
 ]
-pp config
 
 
-config = [
+config_more = [
   ['more/1930.json',['worldcup/more/1930.txt']],
   ['more/1934.json',['worldcup/more/1934.txt']],
   ['more/1938.json',['worldcup/more/1938.txt']],
@@ -120,75 +95,59 @@ config = [
 ]
 
 
+config_min = [
+  ['min/1930.json',['worldcup/min/1930.txt']],
+  ['min/1934.json',['worldcup/min/1934.txt']],
+  ['min/1938.json',['worldcup/min/1938.txt']],
+  ['min/1950.json',['worldcup/min/1950.txt']],   
+  ['min/1954.json',['worldcup/min/1954.txt']],
+  ['min/1958.json',['worldcup/min/1958.txt']],
+  ['min/1962.json',['worldcup/min/1962.txt']],
+  ['min/1966.json',['worldcup/min/1966.txt']],
+  ['min/1970.json',['worldcup/min/1970.txt']],
+  ['min/1974.json',['worldcup/min/1974.txt']],
+  ['min/1978.json',['worldcup/min/1978.txt']],
+  ['min/1982.json',['worldcup/min/1982.txt']],
+  ['min/1986.json',['worldcup/min/1986.txt']],
+  ['min/1990.json',['worldcup/min/1990.txt']],
+  ['min/1994.json',['worldcup/min/1994.txt']],
+  ['min/1998.json',['worldcup/min/1998.txt']],
+  ['min/2002.json',['worldcup/min/2002.txt']],
+  ['min/2006.json',['worldcup/min/2006.txt']],
+  ['min/2010.json',['worldcup/min/2010.txt']],
+  ['min/2014.json',['worldcup/min/2014.txt']],
+  ['min/2018.json',['worldcup/min/2018.txt']],
+  ['min/2022.json',['worldcup/min/2022.txt']],   
+]
 
-xx_config = [
+
+
+config_rsssf = [
    ['rsssf/30full.json', ['worldcup/rsssf/30full.txt']],
    ['rsssf/34f.json',    ['worldcup/rsssf/34f.txt']],
    ['rsssf/38f.json',    ['worldcup/rsssf/38f.txt']],
     ['rsssf/2014f.json',  ['worldcup/rsssf/2014f.txt']],
     ['rsssf/2022f.json',  ['worldcup/rsssf/2022f.txt']],
-    ['rsssf/2022q.json',  ['worldcup/rsssf/2022q.txt']],
-  ##  ['rsssf/worldcup.json',  ['worldcup/rsssf/worldcup.txt']],
+
+    ## ['rsssf/2022q.json',  ['worldcup/rsssf/2022q.txt']],
+    ## !! (QUICK) PARSE ERROR - no season found in Heading1 >World Cup Qualifying; sorry
 ]
- 
 
-## SportDb::MatchParser.debug = true
-SportDb::MatchParser.debug = true
-SportDb::QuickMatchReader.debug = true
+config_rsssf_fix = [
+ ['rsssf/worldcup.json',  ['worldcup/rsssf/worldcup.txt']],
+  ## ! (QUICK) PARSE ERROR - no season found in Heading1 >World Cup Finals; sorry 
+]
 
 
+indir = OPENFOOTBALL_PATH
+## outdir =   "#{OPENFOOTBALL_PATH}/worldcup.json"   
+outdir = './tmp-worldcup'
 
-config.each do |outfile, infiles|
-    last_name = nil
-    matches = []
+config = config_rsssf
 
-    outpath = File.join( outdir, outfile )
 
-    infiles.each do |infile|
-      inpath = File.join( indir, infile )
-
-      puts "==> reading #{inpath}..."
-      txt = read_text( inpath )
-
-      quick = SportDb::QuickMatchReader.new( txt )
-      more_matches = quick.parse
-      name         = quick.league_name   ## quick hack - get league+season via league_name
- 
-      if quick.errors?
-        puts "!! #{quick.errors.size} parse error(s) in #{inpath}:"
-        pp quick.errors
-        exit 1
-      end
-
-      if last_name && name != last_name
-         puts "!! ERROR - league names do NOT match; cannot merge/concat - sorry"
-         puts "   #{last_name} != #{name}"
-         exit 1
-      end
-
-      last_name = name
-      matches += more_matches
-    end
-
-    puts
-    puts "  try json for matches:"
-
-    data = { 'name'    => last_name,
-             'matches' => matches.map {|match| match.as_json }}
- 
-    ## hack - use pretty_inspect for json pretty print         
-    txtjson =  data.pretty_inspect 
-    puts txtjson = txtjson.gsub( '=>', ': ' )
-    ## double check for syntax errors
-    json = JSON.parse( txtjson )
-##
-## try alternate pretty print
-##   puts JSON.pretty_generate( data, object_nl: "\n", array_nl: "\n", indent: 2)
-
-    write_text( outpath, txtjson )
-    # write_json( outpath, data )
-end
-
+genjson( config, outdir: outdir, 
+                 indir: indir)
 
 
 puts "bye"

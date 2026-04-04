@@ -1,0 +1,12 @@
+
+## 
+# ignore more tmp dirs
+tmp/
+tmp-worldcup/
+tmp-misc/
+
+
+###
+# ignore logs 
+logs.txt
+

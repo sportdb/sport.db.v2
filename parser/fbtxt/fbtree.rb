@@ -192,6 +192,35 @@ WORLDCUP2 = parse_names( <<TXT )
 TXT
 
 
+WORLDCUP2MIN = parse_names( <<TXT )
+   ###
+   ## check samples in /min
+   worldcup/min/1930.txt
+   worldcup/min/1934.txt
+   worldcup/min/1938.txt
+   worldcup/min/1950.txt   
+   worldcup/min/1954.txt
+   worldcup/min/1958.txt
+   worldcup/min/1962.txt
+   worldcup/min/1966.txt
+   worldcup/min/1970.txt
+   worldcup/min/1974.txt
+   worldcup/min/1978.txt
+   worldcup/min/1982.txt
+   worldcup/min/1986.txt
+   worldcup/min/1990.txt
+   worldcup/min/1994.txt
+   worldcup/min/1998.txt
+   worldcup/min/2002.txt
+   worldcup/min/2006.txt
+   worldcup/min/2010.txt
+   worldcup/min/2014.txt
+   worldcup/min/2018.txt
+   worldcup/min/2022.txt   
+TXT
+
+
+
 
 WORLDCUP3 = parse_names( <<TXT )  
    ##########
@@ -288,6 +317,9 @@ if __FILE__ == $0
     args = WORLDCUP
   elsif args.size == 1 && (args[0] == 'worldcup2' || args[0] == 'wc2')
     args = WORLDCUP2
+  elsif args.size == 1 && (['worldcup2min','wc2min', 'wc2m', 
+                            'wcmin', 'wcm'].include?(args[0]))
+    args = WORLDCUP2MIN
   elsif args.size == 1 && (args[0] == 'worldcup3' || args[0] == 'wc3')
     args = WORLDCUP3
   elsif args.size == 1 && args[0] == 'euro'
