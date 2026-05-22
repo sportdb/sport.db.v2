@@ -4,31 +4,37 @@
 ##      racc -o ../lib/sportdb/parser/parser.rb parser.y
 
 
+##
+# If you want to include the Racc runtime module with your parser.
+# This can be done by using '-E' option:
+#
+#   $ racc -E -omyparser.rb myparser.y
+
 
 #
 #
 # todo/try/check:
-#    use/add empty production to 
+#    use/add empty production to
 #     match_pre and match_post options to simplify production if possible?
 
 
 
 class RaccMatchParser
 
-     rule 
+     rule
        document : {}  # note - allow empty documents - why? why not?
                 | elements
 
-       elements : element 
+       elements : element
                 | elements element
-               
-                        
+
+
        element
           : heading       # e.g. h1,h2,h3, etc.
           | group_def
           | round_def
-          | round_outline   
-          | date_header 
+          | round_outline
+          | date_header
           | match_line_with_header
           | match_line
           | match_line_alt
@@ -36,38 +42,38 @@ class RaccMatchParser
           | date_header_legs
           | match_line_legs
 
-          
+
 
           ## todo/fix - change (inline) NOTE to INLINE_NOTE
           ##              and only use NOTE for "standalone" NOTE (lines)
-          | note_line  
-          | nota_bene 
+          | note_line
+          | nota_bene
           | hruler
- 
+
           | table_line
- 
-          ## check - goal_lines MUST follow match_line - why? why not?     
-          | goal_lines     
+
+          ## check - goal_lines MUST follow match_line - why? why not?
+          | goal_lines
           | goal_lines_alt     ## allow differnt style/variant e.g. 1-0 Player
-                               ##  starting with score 
+                               ##  starting with score
           | goal_lines_compat
- 
+
 
           | BLANK        ##  was empty_line
-             { 
-               trace( "REDUCE BLANK" ) 
+             {
+               trace( "REDUCE BLANK" )
                @tree << BlankLine.new
-             } 
+             }
           | lineup_lines
           | yellowcard_lines   ## use _line only - why? why not?
           | redcard_lines
-          | penalties_lines   ## rename to penalties_line or ___ - why? why not? 
+          | penalties_lines   ## rename to penalties_line or ___ - why? why not?
           | referee_line
           | attendance_line
           | error      ## todo/check - move error sync up to elements - why? why not?
               { puts "!! skipping invalid content (trying to recover from parse error):"
                 pp val[0]
-                ##  note - do NOT report recover errors for now 
+                ##  note - do NOT report recover errors for now
                 ##  @errors << "parser error (recover) - skipping #{val[0].pretty_inspect}"
               }
          ### use   error NEWLINE - why? why not?
@@ -89,22 +95,22 @@ class RaccMatchParser
 
         note_line
             : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0]) }
-      
+
         nota_bene
             : NOTA_BENE NEWLINE    { @tree << NotaBene.new( text: val[0]) }
 
         hruler
             : HRULER NEWLINE   { @tree << HRuler.new  }
 
-        ######  
-        # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland   
+        ######
+        # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland
         ##  or  Group A  :    Germany, Scotland, Hungary, Switzerland
 
         group_def_sep  : '|'
                        | ':'
-        
+
         group_def
-              :   GROUP_DEF group_def_sep   team_values   NEWLINE  
+              :   GROUP_DEF group_def_sep   team_values   NEWLINE
                   {
                       @tree << GroupDef.new( name:  val[0],
                                              teams: val[2] )
@@ -112,7 +118,7 @@ class RaccMatchParser
 
         team_values
               :   TEAM                       { result = val
-                                               ## e.g. val is ["Austria"] 
+                                               ## e.g. val is ["Austria"]
                                              }
               |   team_values TEAM           { result.push( val[1] )  }
               |   team_values ',' TEAM       { result.push( val[2] )  }
@@ -120,15 +126,15 @@ class RaccMatchParser
 
         ####
         ##   round ouline -  note: is an all-in-one line/text
-        ##                          NOT tokens separated by comma(,) or dash(-) 
+        ##                          NOT tokens separated by comma(,) or dash(-)
         round_outline :    ROUND_OUTLINE NEWLINE
-                              { 
+                              {
                                   kwargs = val[0][1]
                                   @tree << RoundOutline.new( **kwargs )
                               }
 
         #####
-        # e.g.  Matchday 1  |  Fri Jun 14 - Tue Jun 18  
+        # e.g.  Matchday 1  |  Fri Jun 14 - Tue Jun 18
         #       Matchday 1  :  Fri Jun 14 - Tue Jun 18
         round_def_sep :  ':'
                       |  '|'
@@ -149,7 +155,7 @@ class RaccMatchParser
                       @tree << RoundOutline.new( outline: val[0], level: 1 )
                   }
 
-       round_date_opts  :   DATE        { result = { date: val[0][1] } } 
+       round_date_opts  :   DATE        { result = { date: val[0][1] } }
                          |  DURATION     { result = { duration: val[0][1] } }
 
 
@@ -158,17 +164,17 @@ class RaccMatchParser
 #  date & time rules / productions
     date
       :   DATE    { result = { date: val[0][1] } }
-      |   YEAR    { result = { year: val[0] } } 
-    
+      |   YEAR    { result = { year: val[0] } }
+
     datetime
       :   DATETIME              { result = {}.merge( val[0][1] ) }
 
-    time 
+    time
       :   TIME                  { result = {}.merge( val[0][1] ) }
-     
+
      ## note - does NOT incl. time only
      ##   todo/check - rename to date_or_datetime - why? why not?
-    date_clause  
+    date_clause
       :  date
       |  datetime
 
@@ -178,23 +184,23 @@ class RaccMatchParser
       ## | date
       ## | datetime
       | date_clause    #  note: is same as date | datetime
-      | time     
+      | time
 
 
 
         ## note - only one option (DATE) allowed for "standalone" header now
-        ##            use match header (with geo tree) 
+        ##            use match header (with geo tree)
         date_header
               :     date  NEWLINE
                   {
-                     @tree <<  DateHeader.new( **val[0] )  
+                     @tree <<  DateHeader.new( **val[0] )
                   }
-            
+
         date_header_legs
              :     DATE_LEGS  NEWLINE
                   {
-                     kwargs =  val[0][1]  
-                     @tree <<  DateHeaderLegs.new( **kwargs )                      
+                     kwargs =  val[0][1]
+                     @tree <<  DateHeaderLegs.new( **kwargs )
                   }
 
            opt_blank_lines :   ## optional; empty
@@ -204,40 +210,40 @@ class RaccMatchParser
                        | blank_lines BLANK
 
 
-        
+
 
          ###
-         #  note - match_line_with_header 
+         #  note - match_line_with_header
          #     support less variants (no geo/date/time) in match line (already in header)
          #             use match_line_header to syntax check via parser
-         match_line_with_header 
+         match_line_with_header
                :  match_header  opt_blank_lines  match_line_header
                   {
                      ## note - header flag (header: true)
-                     ##    used downstream for scope / e.g. DateHeader merge/inheritance or such                     
+                     ##    used downstream for scope / e.g. DateHeader merge/inheritance or such
                       kwargs = { header: true }.merge( val[0], val[2] )
-                      @tree << MatchLine.new( **kwargs )  
+                      @tree << MatchLine.new( **kwargs )
                   }
 
-         match_line_header    
-               :  opt_ord  match  more_match_header_opts 
-                  { 
+         match_line_header
+               :  opt_ord  match  more_match_header_opts
+                  {
                       result = {}.merge( val[0], val[1], val[2] )
                   }
                 |  match_line_alt_props
-           
+
               # |  match_alt NEWLINE
               #     {
               #        result = {}.merge( val[0] )
-              #     }  
-                                
-     
+              #     }
+
+
 
         ### note - no geo_opts in (more_)match_line (w/ header)
         ##               always incl. in header
         more_match_header_opts
-             : STATUS NEWLINE     
-                 { 
+             : STATUS NEWLINE
+                 {
                       result = {}.merge( val[0][1] )
                  }
              | NOTE NEWLINE        { result = { note: val[0] } }
@@ -247,18 +253,18 @@ class RaccMatchParser
        ###
        ## fix - rename geo_opts to geo_tree - why? why not?
 
-       ### note - match_header REQUIRES 
+       ### note - match_header REQUIRES
        ##          (i) geo_opts/tree or
        ##          (ii) or inline_attendance
-       ##           
-       match_header       
-            :     date_clause geo_opts opt_inline_attendance  NEWLINE 
-                   { 
-                      result = {}.merge( val[0], val[1], val[2] ) 
+       ##
+       match_header
+            :     date_clause geo_opts opt_inline_attendance  NEWLINE
+                   {
+                      result = {}.merge( val[0], val[1], val[2] )
                    }
-            |      date_clause inline_attendance  NEWLINE 
-                   { 
-                      result = {}.merge( val[0], val[1] ) 
+            |      date_clause inline_attendance  NEWLINE
+                   {
+                      result = {}.merge( val[0], val[1] )
                    }
 
          ## todo/fix - allow (inline) attendance in match w/o header too
@@ -266,14 +272,14 @@ class RaccMatchParser
          ##
          ##  note - use "hack" with INLINE_ATTENDANCE_SEP (a.k.a comma (,))
          ##           to help with shift/reduce conflict
-         inline_attendance 
-                : INLINE_ATTENDANCE   
-                    { 
+         inline_attendance
+                : INLINE_ATTENDANCE
+                    {
                        result = { att: val[0][1][:value] }
                     }
-              ## |  ','  INLINE_ATTENDANCE  
-                 |  INLINE_ATTENDANCE_SEP  INLINE_ATTENDANCE  
-                    { 
+              ## |  ','  INLINE_ATTENDANCE
+                 |  INLINE_ATTENDANCE_SEP  INLINE_ATTENDANCE
+                    {
                        result = { att: val[1][1][:value] }
                     }
 
@@ -291,7 +297,7 @@ class RaccMatchParser
               : match_fixture  SCORE_LEGS  NEWLINE
                 {
                       kwargs = { score: val[1][1] }.merge( val[0] )
-                      @tree << MatchLineLegs.new( **kwargs )             
+                      @tree << MatchLineLegs.new( **kwargs )
                 }
 
 
@@ -304,30 +310,30 @@ class RaccMatchParser
 
         match_line
               :   match_opts  match  more_match_opts NEWLINE
-                    {      
+                    {
                        kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
                     }
               |   match_opts  match  NEWLINE
-                    {      
+                    {
                        kwargs = {}.merge( val[0], val[1])
                        @tree << MatchLine.new( **kwargs )
                     }
               |  match  more_match_opts NEWLINE
-                    {     
+                    {
                        kwargs = {}.merge( val[0], val[1] )
                        @tree << MatchLine.new( **kwargs )
                     }
               |  match  NEWLINE
-                    {     
+                    {
                        kwargs = {}.merge( val[0] )
                        @tree << MatchLine.new( **kwargs )
                     }
-          
+
               |  match_bye  opt_inline_note  NEWLINE
                       {
                          kwargs = {}.merge( val[0], val[1] )
-                         @tree << MatchLineBye.new( **kwargs ) 
+                         @tree << MatchLineBye.new( **kwargs )
                       }
               |  match_walkover  opt_inline_note   NEWLINE
                      {
@@ -341,25 +347,25 @@ class RaccMatchParser
                ###           make more flexible (allow leading date/time etc. too)
                ###   plus allow  match status/note - why? why not?
                |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  NEWLINE
-                  { 
+                  {
                       kwargs = {}.merge( val[0] )
                       @tree << MatchLine.new( **kwargs )
 
                       kwargs = val[2]
-                      @tree << GoalLine.new( **kwargs ) 
+                      @tree << GoalLine.new( **kwargs )
                   }
 
-        ###### 
+        ######
         ### (experimental) alternate style with "split" score
         match_line_alt  : match_line_alt_props
                            {
                              kwargs = {}.merge( val[0] )
-                             @tree << MatchLine.new( **kwargs )                           
+                             @tree << MatchLine.new( **kwargs )
                            }
 
-       ## use match_line_alt_props   for reuse (gets you all props 
-       ##                          BUT will NOT create MatchLine) 
-        match_line_alt_props 
+       ## use match_line_alt_props   for reuse (gets you all props
+       ##                          BUT will NOT create MatchLine)
+        match_line_alt_props
             : match_alt_inline NEWLINE
                               {
                                   result = {}.merge( val[0] )
@@ -368,137 +374,137 @@ class RaccMatchParser
                            {
                                result = {}.merge( val[0], val[2] )
                            }
-         
 
-        opt_status_line 
-                 :  ## optional; empty  
-                    { result = {}  }         
+
+        opt_status_line
+                 :  ## optional; empty
+                    { result = {}  }
                  | STATUS NEWLINE
-                    { 
+                    {
                       puts "status_line:"
                       pp val[0]
-                      result = val[0][1]   
+                      result = val[0][1]
                     }
 
 
 
 
-    
-        ### block style  one team record/entry per line 
-        match_alt_block    
-            : TEAMALT NEWLINE TEAMALT 
+
+        ### block style  one team record/entry per line
+        match_alt_block
+            : TEAMALT NEWLINE TEAMALT
                    {
                            ## puts "debug match_alt reduce:"
                            ## pp val[0]
                            ## pp val[2]
 
-                           ## assume ht/ft  
+                           ## assume ht/ft
                            ## or let's use [[0,1],[1,2]] - why? why not?
                            score_team1 = val[0][1][:score]
                            score_team2 = val[2][1][:score]
 
-  
-                           score =  [[score_team1[0], score_team2[0]],
-                                     [score_team1[1], score_team2[1]]] 
 
-                           result = { team1: val[0][1][:team], 
+                           score =  [[score_team1[0], score_team2[0]],
+                                     [score_team1[1], score_team2[1]]]
+
+                           result = { team1: val[0][1][:team],
                                       team2: val[2][1][:team],
                                       score: score
                                     }
 
                            ## puts "  result:"
-                           ## pp result   
+                           ## pp result
                    }
-          | TEAMALT_PEN  NEWLINE  TEAMALT_PEN 
+          | TEAMALT_PEN  NEWLINE  TEAMALT_PEN
                    {
                            ## assume pen for score_ii
                            ##    score_i might be ft or et???
                            ## or let's use [[0,1],[1,2]] - why? why not?
                            score_team1 = val[0][1][:score]
                            score_team2 = val[2][1][:score]
-  
+
                            score =  { '_': [score_team1[0], score_team2[0]],
-                                      pen: [score_team1[1], score_team2[1]] 
-                                    } 
+                                      pen: [score_team1[1], score_team2[1]]
+                                    }
 
-                           result = { team1: val[0][1][:team], 
-                                      team2: val[2][1][:team],
-                                      score: score
-                                    }   
-                   }
-               | TEAMALT_NUM NEWLINE TEAMALT_NUM 
-                   {
-                           score_team1 = val[0][1][:score]
-                           score_team2 = val[2][1][:score]
-  
-                           score =  [score_team1, score_team2] 
-
-                           result = { team1: val[0][1][:team], 
+                           result = { team1: val[0][1][:team],
                                       team2: val[2][1][:team],
                                       score: score
                                     }
                    }
-               | TTY_TEXT TTY_NUM NEWLINE TTY_TEXT TTY_NUM 
+               | TEAMALT_NUM NEWLINE TEAMALT_NUM
                    {
-                           result = { team1: val[0], 
+                           score_team1 = val[0][1][:score]
+                           score_team2 = val[2][1][:score]
+
+                           score =  [score_team1, score_team2]
+
+                           result = { team1: val[0][1][:team],
+                                      team2: val[2][1][:team],
+                                      score: score
+                                    }
+                   }
+               | TTY_TEXT TTY_NUM NEWLINE TTY_TEXT TTY_NUM
+                   {
+                           result = { team1: val[0],
                                       team2: val[3],
                                       score: [val[1], val[4]]
                                     }
                    }
-   
- 
+
+
 
 
         ## rename to compact or ??
-        ##     all-in-one line style 
-        match_alt_inline 
-           : TEAMALT TEAMALT 
+        ##     all-in-one line style
+        match_alt_inline
+           : TEAMALT TEAMALT
                    {
-                           ## assume ht/ft  
+                           ## assume ht/ft
                            ## or let's use [[0,1],[1,2]] - why? why not?
                            score_team1 = val[0][1][:score]
                            score_team2 = val[1][1][:score]
 
                            score =  [[score_team1[0], score_team2[0]],
-                                     [score_team1[1], score_team2[1]]] 
+                                     [score_team1[1], score_team2[1]]]
 
-                           result = { team1: val[0][1][:team], 
+                           result = { team1: val[0][1][:team],
                                       team2: val[1][1][:team],
                                       score: score
                                     }
                }
-           | TEAMALT_PEN TEAMALT_PEN 
+           | TEAMALT_PEN TEAMALT_PEN
                    {
                            ## assume pen for score_ii
                            ##    score_i might be ft or et???
                            ## or let's use [[0,1],[1,2]] - why? why not?
                            score_team1 = val[0][1][:score]
                            score_team2 = val[1][1][:score]
-  
+
                            score =  { '_': [score_team1[0], score_team2[0]],
-                                      pen: [score_team1[1], score_team2[1]] 
-                                    } 
+                                      pen: [score_team1[1], score_team2[1]]
+                                    }
 
-                           result = { team1: val[0][1][:team], 
-                                      team2: val[1][1][:team],
-                                      score: score
-                                    }   
-                   }
-           | TEAMALT_NUM TEAMALT_NUM 
-                   {
-                           score_team1 = val[0][1][:score]
-                           score_team2 = val[1][1][:score]
-  
-                           score =  [score_team1, score_team2] 
-
-                           result = { team1: val[0][1][:team], 
+                           result = { team1: val[0][1][:team],
                                       team2: val[1][1][:team],
                                       score: score
                                     }
                    }
-          | TTY_TEXT TTY_NUM TTY_TEXT TTY_NUM 
+           | TEAMALT_NUM TEAMALT_NUM
                    {
-                           result = { team1: val[0], 
+                           score_team1 = val[0][1][:score]
+                           score_team2 = val[1][1][:score]
+
+                           score =  [score_team1, score_team2]
+
+                           result = { team1: val[0][1][:team],
+                                      team2: val[1][1][:team],
+                                      score: score
+                                    }
+                   }
+          | TTY_TEXT TTY_NUM TTY_TEXT TTY_NUM
+                   {
+                           result = { team1: val[0],
                                       team2: val[2],
                                       score: [val[1], val[3]]
                                     }
@@ -506,35 +512,35 @@ class RaccMatchParser
 
 
 
-       opt_newline :  ## empty; optional  
-                    | NEWLINE           
+       opt_newline :  ## empty; optional
+                    | NEWLINE
 
         ## optional ord(inal) match number e.g (1), (42), etc.
         opt_ord
-           :        {  result = {}  }     ## empty; optional 
+           :        {  result = {}  }     ## empty; optional
            | ord
 
-        ord 
+        ord
            : ORD    {  result = { num: val[0][1][:value] } }
-       
+
 
         match_opts
              : ord  opt_date opt_geo {
                                      result = {}.merge( val[0], val[1], val[2] )
-                                }    
+                                }
              | date_clause  opt_geo   {
                                      result = {}.merge( val[0], val[1] )
-                                } 
+                                }
              | time   opt_geo   {
                                      result = {}.merge( val[0], val[1] )
-                                } 
-             | geo_opts         
-             
+                                }
+             | geo_opts
+
 
         ## note - you cannot use both STATUS and NOTE - why? why not?
         ##
         ##  todo/check - allow attendance w/o geo_tree - why? why not?
-    
+
          ###
          ## todo/check/fix - use more_match_geo_opts rule/clause - why? why not?
          ## geo_opts_with_opt_newline
@@ -543,76 +549,76 @@ class RaccMatchParser
 
 
         ### :   { result = {} }   ## empty; optional
-     
+
         more_match_opts
              : STATUS       ## note - for now status must be BEFORE geo_opts!!
                  {
-                      result = {}.merge( val[0][1] ) 
+                      result = {}.merge( val[0][1] )
                  }
-             | STATUS geo_opts opt_inline_attendance       
-                 { 
-                     result = {}.merge( val[0][1], val[1], val[2] ) 
+             | STATUS geo_opts opt_inline_attendance
+                 {
+                     result = {}.merge( val[0][1], val[1], val[2] )
                  }
-             | geo_opts opt_inline_attendance opt_inline_note  
-                 { 
-                   result = {}.merge( val[0], val[1], val[2] ) 
+             | geo_opts opt_inline_attendance opt_inline_note
+                 {
+                   result = {}.merge( val[0], val[1], val[2] )
                  }
              | NOTE   { result = { note: val[0] } }
-          
 
 
-        opt_geo  
+
+        opt_geo
              :   { result = {} }   ## empty; optional
              |  geo_opts
 
 
         ## e.g.  @ Parc des Princes, Paris
-        ##       @ München 
+        ##       @ München
         geo_opts : '@' geo_values           { result = { geo: val[1] } }
-         
+
         geo_values
                :  GEO                         {  result = val }
-               |  geo_values ',' GEO          {  result.push( val[2] )  }      
+               |  geo_values ',' GEO          {  result.push( val[2] )  }
 
 
 
 
          match  :   match_result
-                |   match_fixture 
+                |   match_fixture
                 ### note - match_fixtures with (match) status - do not use with scores
                 ##                       e.g. Rapid v Austria 3-1
                 |   match_fixture_not_played    ## note - uses n/p or canc/canc. as match separator
                 |   match_fixture_postponed     ## note - uses ppd/ppd. or postp/postp. as match separator
                 ### note - separarte match fixtures & results
                 ##               with "built-in" team using (A), (H), (N) shortcut
-                |   match_fixture_base 
-                |   match_result_base                       
+                |   match_fixture_base
+                |   match_result_base
 
 
          ##########################
-         ####  shortcuts (H), (A), (N) with base team 
-         ##         (H) = Home, (A) = Away, (N) = Neutral 
+         ####  shortcuts (H), (A), (N) with base team
+         ##         (H) = Home, (A) = Away, (N) = Neutral
          ##     note: use underscore (_) for base team placeholder for now
-                      
-         match_fixture_base 
+
+         match_fixture_base
                    :  TEAM_HOME    TEAM  { result = { team1: '_', team2: val[1] } }
                    |  TEAM_AWAY    TEAM  { result = { team1: val[1], team2: '_' } }
                    |  TEAM_NEUTRAL TEAM  { result = { team1: '_', team2: val[1],
                                                        neutral: true } }
-                      
 
 
-         match_bye 
-              :   TEAM INLINE_BYE       ## e.g.  Queen's Park   bye     
+
+         match_bye
+              :   TEAM INLINE_BYE       ## e.g.  Queen's Park   bye
                     {
                       result = { team: val[0] }
                     }
-        
+
         ###
         ##  fix/fix/fix  - remove special walkover (w/o) handling!!!
         ##                      add nodate/notime and hrule etc.
          match_walkover
-              :   TEAM INLINE_WO TEAM    ## e.g.  Oxford University  w/o  Queen's Park 
+              :   TEAM INLINE_WO TEAM    ## e.g.  Oxford University  w/o  Queen's Park
                    {
                       result = { team1: val[0],
                                  team2: val[2] }
@@ -626,7 +632,7 @@ class RaccMatchParser
                            {
                                trace( "RECUDE match_fixture" )
                                result = { team1: val[0],
-                                          team2: val[2] }   
+                                          team2: val[2] }
                            }
 
 
@@ -639,39 +645,39 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
                                result = { team1: val[0],
                                           team2: val[2],
-                                          status_inline: 'canceled' }   
+                                          status_inline: 'canceled' }
                              }
                           | TEAM INLINE_CANC TEAM
                              {
                                result = { team1: val[0],
                                           team2: val[2],
-                                          status_inline: 'canceled' }   
+                                          status_inline: 'canceled' }
                             }
 
  match_fixture_postponed  :  TEAM INLINE_PPD TEAM
                              {
                                result = { team1: val[0],
                                           team2: val[2],
-                                          status_inline: 'postponed' }   
+                                          status_inline: 'postponed' }
                             }
 
-   
-         score_full_or_fuller   
+
+         score_full_or_fuller
                 : SCORE_FULL      ## full format    1-1 (0-1)
                                   ##             or 2-1 a.e.t. etc.
                 | SCORE_FULLER    ## note - SCORE_FULLER NOT supported inline!!
                                   ##       only after  Team1 v Team2 !!
-                   
 
-    
-        match_result :  TEAM  SCORE  TEAM      
+
+
+        match_result :  TEAM  SCORE  TEAM
                          {
                            trace( "REDUCE => match_result : TEAM SCORE TEAM" )
- 
+
                           ## note - use/keep generic score (as array!! NOT hash!!!)
                            result = { team1: val[0], team2: val[2],
                                       score: val[1][1][:score]  ## note - as array e.g. [1,1] !!
-                                    }   
+                                    }
                            ## pp result
                         }
                      | TEAM SCORE_AWD TEAM
@@ -679,84 +685,84 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                            result = { team1: val[0], team2: val[2],
                                       score: val[1][1],
                                       status_inline: 'awarded'
-                                    }                          
+                                    }
                           }
                     | TEAM INLINE_AWD TEAM
                           {
-                           result = { team1: val[0], team2: val[2], 
-                                      status_inline: 'awarded' 
-                                    }                          
+                           result = { team1: val[0], team2: val[2],
+                                      status_inline: 'awarded'
+                                    }
                           }
                      | TEAM SCORE_ABD TEAM
                           {
                            result = { team1: val[0], team2: val[2],
                                       score: val[1][1],
                                       status_inline: 'abandoned'
-                                    }                          
+                                    }
                           }
                      | TEAM INLINE_ABD TEAM
                           {
-                           result = { team1: val[0], team2: val[2], 
-                                      status_inline: 'abandoned' 
-                                    }                          
+                           result = { team1: val[0], team2: val[2],
+                                      status_inline: 'abandoned'
+                                    }
                           }
                      | TEAM INLINE_VOID TEAM
                           {
-                           result = { team1: val[0], team2: val[2], 
-                                      status_inline: 'annulled' 
-                                    }                          
+                           result = { team1: val[0], team2: val[2],
+                                      status_inline: 'annulled'
+                                    }
                           }
                      | TEAM INLINE_SUSP TEAM
                           {
-                           result = { team1: val[0], team2: val[2], 
-                                      status_inline: 'suspended' 
-                                    }                          
+                           result = { team1: val[0], team2: val[2],
+                                      status_inline: 'suspended'
+                                    }
                           }
 
                      | TEAM SCORE TEAM SCORE_FULLER_MORE
                           {
                             trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
                             score = nil
-                            score =  if val[3][1][:score] && 
-                                        val[3][1][:score]=='et'   ## check aet flag present? 
+                            score =  if val[3][1][:score] &&
+                                        val[3][1][:score]=='et'   ## check aet flag present?
                                          val[3][1].delete( :score )  ## note - remove/delete  flag
                                            { et: val[1][1][:score] }
-                                     elsif val[3][1][:score] && 
+                                     elsif val[3][1][:score] &&
                                            val[3][1][:score]=='ht' ## check ht flag present?
                                          val[3][1].delete( :score ) ## note - remove/delete flag
-                                           { ht: val[1][1][:score] }      
-                                     elsif val[3][1][:score] && 
+                                           { ht: val[1][1][:score] }
+                                     elsif val[3][1][:score] &&
                                            val[3][1][:score]=='ft'  ## check ft flag present?
                                          val[3][1].delete( :score )  ## note - remove/delete flag
                                            { ft: val[1][1][:score] }
                                      else   ## assume full-time (ft)
                                             { ft: val[1][1][:score] }
-                                     end 
+                                     end
 
                            result = {  team1: val[0],
                                       team2: val[2],
                                       score: score.merge( val[3][1] )
-                                    }                                    
+                                    }
                           }
                      | TEAM SCORE_FULL TEAM
                          {
                            result = { team1: val[0],
                                       team2: val[2],
                                       score: val[1][1]
-                                    }                          
-                         } 
+                                    }
+                         }
                      |  match_fixture  SCORE   ## note - keep "plain/generic" score separate rule
                         {
                           trace( "REDUCE  => match_result : match_fixture SCORE" )
                           ## note - use/keep generic score (as array!! NOT hash!!!)
-                          result = { score: val[1][1][:score]  ## note - as array e.g. [1,1] !! 
-                                   }.merge( val[0] )  
+                          result = { score: val[1][1][:score]  ## note - as array e.g. [1,1] !!
+                                   }.merge( val[0] )
                           ## pp result
                         }
                      |  match_fixture  score_full_or_fuller
                         {
                           trace( "REDUCE  => match_result : match_fixture score" )
-                          result = { score: val[1][1] }.merge( val[0] )  
+                          result = { score: val[1][1] }.merge( val[0] )
                           ## pp result
                         }
 
@@ -766,41 +772,41 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                         {
                           trace( "REDUCE  => match_result_base : match_fixture_base SCORE" )
                           ## note - use/keep generic score (as array!! NOT hash!!!)
-                          result = { score: val[1][1][:score]  ## note - as array e.g. [1,1] !! 
-                                   }.merge( val[0] )  
+                          result = { score: val[1][1][:score]  ## note - as array e.g. [1,1] !!
+                                   }.merge( val[0] )
                           ## pp result
                         }
                     |  match_fixture_base  score_full_or_fuller
                         {
                           trace( "REDUCE  => match_result_base : match_fixture_base score" )
-                          result = { score: val[1][1] }.merge( val[0] )  
+                          result = { score: val[1][1] }.merge( val[0] )
                           ## pp result
                         }
 
 
 
         #######
-        ## e.g. (Wirtz 10' Musiala 19' Havertz 45'+1 (pen)  Füllkrug 68' Can 90'+3;  
+        ## e.g. (Wirtz 10' Musiala 19' Havertz 45'+1 (pen)  Füllkrug 68' Can 90'+3;
         ##      Rüdiger 87' (og))
         ##         or
-        ##      (Wirtz 10 Musiala 19 Havertz 45+1p Füllkrug 68 Can 90+3;  
+        ##      (Wirtz 10 Musiala 19 Havertz 45+1p Füllkrug 68 Can 90+3;
         ##        Rüdiger 87og)
         ##
         ##    (Higuaín 2', 9' (pen); Kane 35' Eriksen 71')
         ##      or
         ##    (Higuaín 2, 9p; Kane 35 Eriksen 71)
- 
+
         #
         # note:  newlines allowed between goals
-        #   for now possible after goals separator ; and -   
-        #    (Higuaín 2, 9p; 
+        #   for now possible after goals separator ; and -
+        #    (Higuaín 2, 9p;
         #     Kane 35 Eriksen 71)
-        #    (Higuaín 2, 9p - 
+        #    (Higuaín 2, 9p -
         #      Kane 35 Eriksen 71)
         #
         #         and after goal separator ,
         #      (Wirtz 10, Musiala 19, Havertz 45+1p,
-        #       Füllkrug 68, Can 90+3;  
+        #       Füllkrug 68, Can 90+3;
         #        Rüdiger 87og)
         #
         #     BUT now allowed in-between comma-separated minutes!!!
@@ -814,24 +820,24 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                          kwargs = val[1]
                          @tree << GoalLine.new( **kwargs )
                       }
-        
+
 
         goal_lines_body : goals                 {  result = { goals1: val[0],
-                                                              goals2: [] } 
+                                                              goals2: [] }
                                                 }
                         | GOALS_NONE goals           {  result = { goals1: [],
-                                                              goals2: val[1] } 
+                                                              goals2: val[1] }
                                                 }
                         | goals goals_sep goals  {  result = { goals1: val[0],
                                                               goals2: val[2] }
                                                 }
 
-     
+
         goals_sep    : ';'
                      | ';' NEWLINE
                      | GOAL_SEP_ALT   ## note - dash (-) with leading & trailing spaces required
                      | GOAL_SEP_ALT NEWLINE
-                       
+
 
          opt_goal_sep   :  {}        ## none; optional!!
                         | ','
@@ -842,18 +848,18 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                  | goals opt_goal_sep  goal  { result.push( val[2])  }
 
          #####
-         ## todo -  make comma required for player only 
+         ## todo -  make comma required for player only
          ##        (that is, no minutes or count)
 
-         goal    : PLAYER goal_minutes 
-                    {  
+         goal    : PLAYER goal_minutes
+                    {
                        result = Goal.new( player:  val[0],
-                                          minutes: val[1] )   
+                                          minutes: val[1] )
                     }
                  | PLAYER GOAL_COUNT
                      {
                         ### todo/check:
-                        ##    auto convert/expand 
+                        ##    auto convert/expand
                         ##    count to minutes - why? why not?
                         ##  todo/fix - pass in empty minutes ary [] - why? why not?
                         result = Goal.new( player: val[0],
@@ -864,12 +870,12 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                         result = Goal.new( player: val[0],
                                            minutes: [] )
                      }
-                 
 
-         ## note - hacky: lexer MUST change comma 
+
+         ## note - hacky: lexer MUST change comma
          ##                  between GOAL_MINUTES to GOAL_MINUTE_SEP!!
          opt_goal_minute_sep : {}    ## none; optional!!!
-                             | GOAL_MINUTE_SEP   
+                             | GOAL_MINUTE_SEP
 
          goal_minutes  : goal_minute   {  result = val }
                        | goal_minutes opt_goal_minute_sep goal_minute   {  result.push( val[2])  }
@@ -877,18 +883,18 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
          goal_minute : GOAL_MINUTE
                           {
                              kwargs = {}.merge( val[0][1] )
-                             result = GoalMinute.new( **kwargs )  
+                             result = GoalMinute.new( **kwargs )
                           }
-                                      
+
 
 ##########
 ##   alternate goal lines starting with score e.g.
 ##
-##    (1-0 Messi     23'(pen.), 
+##    (1-0 Messi     23'(pen.),
 ##     2-0 Di María  36',
 ##     2-1 Mbappé    80'(pen.),
-##     2-2 Mbappé    81', 
-##     3-2 Messi    108', 
+##     2-2 Mbappé    81',
+##     3-2 Messi    108',
 ##     3-3 Mbappé   118'(pen.))
 
         goal_lines_alt : GOALS_ALT goals_alt GOALS_END NEWLINE
@@ -899,16 +905,16 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         goals_alt   :  goal_alt
                         { result = val }
                        ## note - allow optional comma sep (or comma sep w/ newline)
-                    |  goals_alt  opt_goal_sep  goal_alt   
-                        { result.push( val[2])  } 
-                    
-                 
+                    |  goals_alt  opt_goal_sep  goal_alt
+                        { result.push( val[2])  }
+
+
 
         goal_alt    :  SCORE PLAYER     ## note - minute is optinal in alt goalline style!!!
                         {
                            result = GoalAlt.new( score:   val[0][1][:score],
                                                  player:  val[1] )
-                        }   
+                        }
                     |  SCORE PLAYER GOAL_MINUTE
                         {
                            goal_minute = GoalMinute.new( **val[2][1] )
@@ -918,7 +924,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                                  minute:    goal_minute.to_minute,
                                                  goal_type: goal_minute.to_goal_type )
                         }
-                   |  SCORE PLAYER GOAL_TYPE  
+                   |  SCORE PLAYER GOAL_TYPE
                        {
                            result = GoalAlt.new( score:     val[0][1][:score],
                                                  player:    val[1],
@@ -926,17 +932,17 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                        }
                   ###  allow score on the right-side (that is, the end NOT the beginning) e.g.
                   ##       Player      1-1
-                  ##       Player 14' 1-1 
+                  ##       Player 14' 1-1
                   ##       Player (og) 1-1
                    |  PLAYER SCORE
                          {
                            result = GoalAlt.new( player:  val[0],
-                                                 score:   val[1][1][:score] )                         
-                         } 
+                                                 score:   val[1][1][:score] )
+                         }
                    |  PLAYER GOAL_MINUTE SCORE
                         {
                            goal_minute = GoalMinute.new( **val[1][1] )
- 
+
                            result = GoalAlt.new( player:    val[0],
                                                  minute:    goal_minute.to_minute,
                                                  goal_type: goal_minute.to_goal_type,
@@ -961,17 +967,17 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
         goals_compat   :  goal_compat
                            { result = val }
-                       |  goals_compat  opt_goal_sep  goal_compat   
-                           { result.push( val[2])  } 
-                    
+                       |  goals_compat  opt_goal_sep  goal_compat
+                           { result.push( val[2])  }
+
 /**
   * note - for now SCORE required - why? why not?
-        goal_compat    :  MINUTE PLAYER     
+        goal_compat    :  MINUTE PLAYER
                         {
                            result = GoalCompat.new( minute:  Minute.new(**val[0][1]),
                                                     player:  val[1] )
-                        }   
-                      |  MINUTE PLAYER GOAL_TYPE  
+                        }
+                      |  MINUTE PLAYER GOAL_TYPE
                          {
                            result = GoalCompat.new( minute: Minute.new(**val[0][1]),
                                                     player: val[1],
@@ -984,7 +990,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                            result = GoalCompat.new( minute:  Minute.new(**val[0][1]),
                                                     player:  val[1],
                                                     score:  val[2][1][:score] )
-                        } 
+                        }
                       | MINUTE PLAYER GOAL_TYPE SCORE
                         {
                            result = GoalCompat.new( minute: Minute.new(**val[0][1]),
@@ -992,20 +998,20 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                                     goal_type: GoalType.new( **val[2][1] ),
                                                     score:  val[3][1][:score] )
                        }
-                       | MINUTE SCORE PLAYER 
+                       | MINUTE SCORE PLAYER
                         {
                            result = GoalCompat.new( minute:  Minute.new(**val[0][1]),
                                                     score:  val[1][1][:score],
                                                     player:  val[2] )
-                        } 
-                      | MINUTE SCORE PLAYER GOAL_TYPE 
+                        }
+                      | MINUTE SCORE PLAYER GOAL_TYPE
                         {
                            result = GoalCompat.new( minute: Minute.new(**val[0][1]),
                                                     score:  val[1][1][:score],
                                                     player: val[2],
                                                     goal_type: GoalType.new( **val[3][1] ))
                        }
-                        
+
 
 ##########################################################################
 ##     level 2 support for properties - line-up, penalties, etc.
@@ -1019,15 +1025,15 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         ## note - allow inline attendance prop in same line
         referee_line   :  PROP_REFEREE  referees  attendance_opt PROP_END NEWLINE
                             {
-                               @tree << RefereeLine.new( referees: val[1] ) 
+                               @tree << RefereeLine.new( referees: val[1] )
                             }
 
-       attendance_opt   : /* empty */   
+       attendance_opt   : /* empty */
                         | ';' ATTENDANCE  PROP_NUM
-                           { 
+                           {
                                  @tree << AttendanceLine.new( att: val[2][1][:value] )
                            }
-                  
+
         referees  :     referee
                           { result = [val[0]] }
                   |     referees ',' referee
@@ -1035,25 +1041,25 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
         referee  :      PROP_NAME
                          {  result = Referee.new( name: val[0] ) }
-                 |      PROP_NAME  ENCLOSED_NAME  
-                         {  result = Referee.new( name: val[0], country: val[1] ) }   
-                 
+                 |      PROP_NAME  ENCLOSED_NAME
+                         {  result = Referee.new( name: val[0], country: val[1] ) }
+
 
         penalties_lines : PROP_PENALTIES penalties_body PROP_END NEWLINE
                             {
-                               @tree << PenaltiesLine.new( penalties: val[1] )                                                            
+                               @tree << PenaltiesLine.new( penalties: val[1] )
                             }
 
-        penalties_body  :  penalty                             {  result = [val[0]]  }  
+        penalties_body  :  penalty                             {  result = [val[0]]  }
                         |  penalties_body penalty_sep penalty  {  result << val[2]  }
 
-  
+
         penalty_sep     :  ','
                         |  ',' NEWLINE
                         |  ';'
                         |  ';' NEWLINE
 
-        penalty         :  SCORE PROP_NAME 
+        penalty         :  SCORE PROP_NAME
                               {
                                  result = Penalty.new( score: val[0][1][:score],
                                                        name: val[1] )
@@ -1066,26 +1072,26 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                }
                         | PROP_NAME
                                {
-                                 result = Penalty.new( name: val[0] )                                
+                                 result = Penalty.new( name: val[0] )
                                }
                         |  PROP_NAME ENCLOSED_NAME        ## e.g. (save), (post), etc
                                {
                                  result = Penalty.new( name: val[0],
-                                                       note: val[1] )                                
+                                                       note: val[1] )
                                }
 
 
-        yellowcard_lines : PROP_YELLOWCARDS card_body PROP_END NEWLINE 
+        yellowcard_lines : PROP_YELLOWCARDS card_body PROP_END NEWLINE
                              {
-                               @tree << CardsLine.new( type: 'Y', bookings: val[1] )                               
+                               @tree << CardsLine.new( type: 'Y', bookings: val[1] )
                              }
         redcard_lines    : PROP_REDCARDS card_body PROP_END NEWLINE
                              {
-                               @tree << CardsLine.new( type: 'R', bookings: val[1] )                    
+                               @tree << CardsLine.new( type: 'R', bookings: val[1] )
                              }
 
-         ## use player_booking or such 
-         ##   note - ignores possible team separator (;) for now 
+         ## use player_booking or such
+         ##   note - ignores possible team separator (;) for now
          ##               returns/ builds all-in-one "flat" list/array
          card_body :  player_w_minute
                         {   result = [val[0]]  }
@@ -1094,11 +1100,11 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
          card_sep  :  ','
                    |  ';'
-                   |  ';' NEWLINE  
+                   |  ';' NEWLINE
 
          player_w_minute : PROP_NAME
                               { result = Booking.new( name: val[0] )  }
-                         | PROP_NAME MINUTE  
+                         | PROP_NAME MINUTE
                               { result = Booking.new( name: val[0], minute: val[1][1] )  }
 
 
@@ -1106,20 +1112,20 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         ## change PROP to LINEUP_TEAM
         ## change PROP_NAME to NAME or LINEUP_NAME
        lineup_lines  : PROP lineup coach_opt PROP_END NEWLINE     ## fix add NEWLINE here too!!!
-                        {  
+                        {
                           kwargs = { team:    val[0],
-                                     lineup:  val[1]  }.merge( val[2] ) 
-                          @tree << LineupLine.new( **kwargs ) 
+                                     lineup:  val[1]  }.merge( val[2] )
+                          @tree << LineupLine.new( **kwargs )
                         }
 
-       coach_opt   : /* empty */   
+       coach_opt   : /* empty */
                            { result = {}  }
                    | ';' COACH  PROP_NAME
                            {  result = { coach: val[2] } }
                    | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
                            {  result = { coach: val[3] } }
- 
-       lineup :   lineup_name       
+
+       lineup :   lineup_name
                     { result = [[val[0]]] }
               |   lineup lineup_sep lineup_name
                     {
@@ -1134,9 +1140,9 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
        lineup_sep  :  ','
                      | ',' NEWLINE  { result = val[0]   }
-                     | '-' 
+                     | '-'
                      | '-' NEWLINE  { result = val[0]   }
-                     
+
 
 
        lineup_cards_opts      : /* empty */   { result = {} }
@@ -1145,12 +1151,12 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
        lineup_captain_opt     : /* empty */   { result = {} }
                               | INLINE_CAPTAIN  { result = { captain: true }}
 
-       lineup_name_plus_cards_opts :  PROP_NAME  lineup_captain_opt  lineup_cards_opts 
+       lineup_name_plus_cards_opts :  PROP_NAME  lineup_captain_opt  lineup_cards_opts
                                       {
                                         result = { name: val[0] }.merge( val[1]).merge( val[2] )
                                       }
 
-      lineup_name   :   lineup_name_plus_cards_opts   lineup_sub_opts   
+      lineup_name   :   lineup_name_plus_cards_opts   lineup_sub_opts
                            {
                               kwargs = {}.merge(val[0] ).merge( val[1])
                               result = Lineup.new( **kwargs )
@@ -1158,26 +1164,26 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
 
-        ##  allow nested subs e.g. 
-        ##     Clément Lenglet 
-        ##          (Kingsley Coman 46' 
+        ##  allow nested subs e.g.
+        ##     Clément Lenglet
+        ##          (Kingsley Coman 46'
         ##             (Marcus Thuram 111'))
         ##
-        ##  note -  lineup_name MINUTE is NOT working as expected, expects  
-        ##     Clément Lenglet 
-        ##          ( Kingsley Coman 
-        ##              ( Marcus Thuram 111' ) 
+        ##  note -  lineup_name MINUTE is NOT working as expected, expects
+        ##     Clément Lenglet
+        ##          ( Kingsley Coman
+        ##              ( Marcus Thuram 111' )
         ##            46'
-        ##          ) 
+        ##          )
         ##   thus use a "special" hand-coded recursive rule
 
 
          lineup_sub_opts : /* empty */   { result = {} }
-                         | '(' lineup_name_plus_cards_opts  MINUTE  lineup_sub_opts ')'    
+                         | '(' lineup_name_plus_cards_opts  MINUTE  lineup_sub_opts ')'
                           {
                               kwargs = {}.merge( val[1] ).merge( val[3] )
                               sub    = Sub.new( sub:    Lineup.new( **kwargs ),
-                                                minute: Minute.new(val[2][1]) 
+                                                minute: Minute.new(val[2][1])
                                               )
                               result = { sub: sub }
                           }
@@ -1185,24 +1191,24 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                            {
                               sub = Sub.new( sub: val[1] )
                               result = { sub: sub }
-                           }      
+                           }
                   ## allow both styles? minute first or last? keep - yes, yes, yes
                   ##  why? why not?
-                    |   '(' MINUTE lineup_name ')'    
+                    |   '(' MINUTE lineup_name ')'
                           {
                               sub = Sub.new( sub:    val[2],
-                                             minute: Minute.new(val[1][1]) 
+                                             minute: Minute.new(val[1][1])
                                             )
                               result = { sub: sub }
                           }
 
 
-      cards 
+      cards
         :         INLINE_YELLOW
                      { result = [{ card: 'YELLOW' }.merge( val[0][1] )] }
         |         INLINE_YELLOW INLINE_YELLOW_RED
                      { result = [{ card: 'YELLOW' }.merge( val[0][1] ),
-                                 { card: 'YELLOW_RED' }.merge( val[1][1])]  }       
+                                 { card: 'YELLOW_RED' }.merge( val[1][1])]  }
         |         INLINE_YELLOW INLINE_RED
                     { result = [{ card: 'YELLOW' }.merge( val[0][1] ),
                                 { card: 'RED' }.merge( val[1][1])]  }
@@ -1210,8 +1216,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                     {  result = [{ card: 'RED' }.merge( val[0][1])] }
         |         INLINE_YELLOW_RED
                     {  result = [{ card: 'YELLOW_RED' }.merge( val[0][1])] }
-            
+
 
 
 end
-

@@ -8,6 +8,7 @@ lib/sportdb/parser/lexer.rb
 lib/sportdb/parser/lexer_buffer.rb
 lib/sportdb/parser/lexer_tty.rb
 lib/sportdb/parser/parser.rb
+lib/sportdb/parser/parser_runtime.rb
 lib/sportdb/parser/racc_parser.rb
 lib/sportdb/parser/racc_tree.rb
 lib/sportdb/parser/token-date.rb

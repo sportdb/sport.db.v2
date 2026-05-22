@@ -8,9 +8,7 @@ How-to Update the paser and quick parser gems
 
 **sportdb-parser**
 
-depends on:  cocos, racc
-
-- racc - check if  inline runtime later if possible - why? why not?
+depends on:  cocos
 
 
 

@@ -22,7 +22,6 @@ Hoe.spec 'sportdb-parser' do
 
   self.extra_deps = [
        ['cocos', '>= 0.4.1'],
-       ['racc'],   ## maybe inline runtime later if possible - why? why not?
   ]
 
   self.spec_extras = {
