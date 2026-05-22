@@ -3,13 +3,11 @@
 
 require_relative 'helper'
 
+
+
 OPENFOOTBALL_PATH = '../../../openfootball'
 
-
-
-
-# path = "#{OPENFOOTBALL_PATH}/euro/2024--germany/euro.txt"
-path =  "#{OPENFOOTBALL_PATH}/deutschland/2024-25/1-bundesliga.txt"
+path =  "#{OPENFOOTBALL_PATH}/worldcup/2022--qatar/cup_finals.txt"
 
 matches = SportDb::QuickMatchReader.read( path )
 ## pp matches

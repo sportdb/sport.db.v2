@@ -1,14 +1,16 @@
+##
+# move (simpler) struct version inline to MatchTree for now
+#
+module SportDb
+class MatchTree
 
-module Sports
 
 
 class Match
 
-
 ### note - use inline Score class Match::Score - why? why not?
 ##      note - score might internally be an array [2,3]
 ##                 or hash { ft:, } etc.
-
 
 ## note - score for now might be
 ##            1) array e.g. [1,0] or []
@@ -19,23 +21,15 @@ class Match
               :time,
               :time_local,
               :team1,     :team2,      ## todo/fix: use team1_name, team2_name or similar - for compat with db activerecord version? why? why not?
-              :score,  
-              :winner,    # return 1,2,0   1 => team1, 2 => team2, 0 => draw/tie
+              :score,
               :round,     ## todo/fix:  use round_num or similar - for compat with db activerecord version? why? why not?
-              :leg,      ## e.g. '1','2','3','replay', etc.   - use leg for marking **replay** too - keep/make leg numeric?! - why? why not?
-              :stage,
               :group,
               :status,    ## e.g. replay, cancelled, awarded, abadoned, postponed, etc.
-              :conf1,    :conf2,      ## special case for mls e.g. conference1, conference2 (e.g. west, east, central)
-              :country1, :country2,    ## special case for champions league etc. - uses FIFA country code
-              :comments,
-              :league,      ## (optinal) added as text for now (use struct?)
               :ground,       ## (optional) add as text line for now (incl. city, timezone etc.)
-              :timezone,      ## (optional) as a string
-              :att            ## (optional) attentance as (integer) number
+              :att            ## (optional) attendance as (integer) number
 
-  attr_accessor :goals  ## todo/fix: make goals like all other attribs!!
 
+  attr_accessor :goals      ## todo/fix: make goals like all other attribs!!
 
   def initialize( **kwargs )
     @score = []
@@ -50,38 +44,6 @@ class Match
   end
 
 
-  #################################################
-  ###  "legacy"  attribute readers
-  ##            :score1,    :score2,     ## full time
-  ##            :score1i,   :score2i,    ## half time (first (i) part)
-  ##            :score1et,  :score2et,   ## extra time
-  ##            :score1p,   :score2p,    ## penalty
-  ##            :score1agg, :score2agg,  ## full time (all legs) aggregated
-  def score1()  score.is_a?(Array)  ?   score[0] : (score[:ft]||[])[0]; end
-  def score2()  score.is_a?(Array)  ?   score[1] : (score[:ft]||[])[1]; end
-
-  def score1i()  score.is_a?(Array)  ?   nil : (score[:ht]||[])[0]; end
-  def score2i()  score.is_a?(Array)  ?   nil : (score[:ht]||[])[1]; end
-  
-  def score1et() score.is_a?(Array)  ?   nil : (score[:et]||[])[0]; end
-  def score2et() score.is_a?(Array)  ?   nil : (score[:et]||[])[1]; end
-
-  def score1p()  score.is_a?(Array)  ?   nil : (score[:p]||[])[0]; end
-  def score2p()  score.is_a?(Array)  ?   nil : (score[:p]||[])[1]; end
-
-  def score1agg() score.is_a?(Array)  ?   nil : (score[:agg]||[])[0]; end
-  def score2agg() score.is_a?(Array)  ?   nil : (score[:agg]||[])[1]; end
-
-## def score
-##    Score.new( @score1i,   @score2i,    ## half time (first (i) part)
-##               @score1,    @score2,     ## full time
-##               @score1et,  @score2et,   ## extra time
-##               @score1p,   @score2p )   ## penalty
-##  end
-
-
-  
-
   def update( **kwargs )
     @num      = kwargs[:num]     if kwargs.has_key?( :num )
 
@@ -94,23 +56,13 @@ class Match
     @team1    = kwargs[:team1]    if kwargs.has_key?( :team1 )
     @team2    = kwargs[:team2]    if kwargs.has_key?( :team2 )
 
-    @conf1    = kwargs[:conf1]    if kwargs.has_key?( :conf1 )
-    @conf2    = kwargs[:conf2]    if kwargs.has_key?( :conf2 )
-    @country1 = kwargs[:country1]  if kwargs.has_key?( :country1 )
-    @country2 = kwargs[:country2]  if kwargs.has_key?( :country2 )
-
     ## note: round is a string!!!  e.g. '1', '2' for matchday or 'Final', 'Semi-final', etc.
     ##   todo: use to_s - why? why not?
     @round    = kwargs[:round]    if kwargs.has_key?( :round )
-    @stage    = kwargs[:stage]    if kwargs.has_key?( :stage )
-    @leg      = kwargs[:leg]      if kwargs.has_key?( :leg )
     @group    = kwargs[:group]    if kwargs.has_key?( :group )
     @status   = kwargs[:status]   if kwargs.has_key?( :status )
-    @comments = kwargs[:comments] if kwargs.has_key?( :comments )
 
-    @league   = kwargs[:league]   if kwargs.has_key?( :league )
     @ground   = kwargs[:ground]   if kwargs.has_key?( :ground )
-    @timezone = kwargs[:timezone] if kwargs.has_key?( :timezone )
     @att      = kwargs[:att]      if kwargs.has_key?( :att )
 
 
@@ -125,7 +77,7 @@ class Match
         if score.is_a?( Array )
            @score = score    ## e.g. [3,2]
         else  ## assume hash
-           @score = score 
+           @score = score
            # @score1,    @score2    =    score[:ft]  || []
            # @score1i,   @score2i   =    score[:ht]  || []
            # @score1et,  @score2et  =    score[:et]  || []
@@ -164,40 +116,10 @@ class Match
     ##  ## exit 1
     ## end
 
-    ## todo/fix: auto-calculate winner
-    # return 1,2,0   1 => team1, 2 => team2, 0 => draw/tie
-    ### calculate winner - use 1,2,0
-    ##
-    ##  move winner calc to score class - why? why not?
-    if @score 
-      if @score.is_a?( Array ) && !@score.empty?
-        if @score[0] > @score[1]
-          @winner = 1
-        elsif @score[1] > @score[0]
-           @winner = 2
-        elsif @score[0] == @score[1]
-           @winner = 0
-        end
-      else  ## assume Hash
-        ## to be one 
-        ##   check for agg, pen, ft, etc.
-        @winner = nil   # unknown / undefined
-      end
-    else
-      @winner = nil   # unknown / undefined
-    end
-
 
     self   ## note - MUST return self for chaining
   end
 
-
-
-  def over?()      true; end  ## for now all matches are over - in the future check date!!!
-  def complete?()  true; end  ## for now all scores are complete - in the future check scores; might be missing - not yet entered
-
-
- 
 
   ####
   ##  deprecated - use score.to_s and friends - why? why not?
@@ -238,31 +160,33 @@ def as_json
 
   data['team1'] =  @team1.is_a?( String ) ? @team1 : @team1.name
 
-  ## note - for match status bye  team2 is nil!!! 
+  ## note - for match status bye  team2 is nil!!!
   ##           e.g.     Queen's Park       bye
-  ##                    Wanderers          bye   
+  ##                    Wanderers          bye
   ##   todo/check - keep bye as a match - why? why not?
   ##                      has no date/time & venue & score etc.
   if @team2
     data['team2'] =  @team2.is_a?( String ) ? @team2 : @team2.name
   end
 
-  ## note - score might be 
+  ## note - score might be
   ##           1) array e.g. [0,1]
-  ##           2) hash  e.g. { ft: [0,1] } etc.   
-  ##  note - w/o (walkout)  do NOT add empty score   
+  ##           2) hash  e.g. { ft: [0,1] } etc.
+  ##  note - w/o (walkout)  do NOT add empty score
   if @score.is_a?(Hash)
       # note: make sure hash keys are always strings
       data['score'] = @score.transform_keys(&:to_s)
   elsif @score.is_a?(Array)
-      ## note: 
+      ## note:
       ##   for now always assume full-time (ft)
       ##     in future check for score note or such
-      ##      to  use "plain" array or such - why? why not?   
-      data['score'] = { 'ft' => @score }   if !@score.empty?
+      ##      to  use "plain" array or such - why? why not?
+      ## data['score'] = { 'ft' => @score }   if !@score.empty?
+
+      data['score'] = @score     if !@score.empty?
   end
 
-                  
+
   ## data['score']['ht'] = [@score1i,   @score2i]     if @score1i && @score2i
   ## data['score']['ft'] = [@score1,    @score2]      if @score1 && @score2
   ## data['score']['et'] = [@score1et,  @score2et]    if @score1et && @score2et
@@ -278,13 +202,19 @@ def as_json
     @goals.each do |goal|
           node = {}
           node['name']    = goal.player
-          node['minute']  = goal.minute
-          node['offset']  = goal.offset  if goal.offset
+
+          ## note - use a string for minutes for now
+          ##           allows e.g.  45+2 etc. too
+          minute_str  = "#{goal.minute}"
+          minute_str += "+#{goal.offset}"   if goal.offset
+
+          node['minute']  = minute_str
+
           node['owngoal'] = true         if goal.owngoal
           node['penalty'] = true         if goal.penalty
-          
+
           if goal.team == 1
-            data['goals1']  << node   
+            data['goals1']  << node
           else  ## assume 2
             data['goals2']  << node
           end
@@ -295,28 +225,23 @@ def as_json
   data['status'] = @status  if @status
 
   data['group']  = @group   if @group
-  data['stage']  = @stage   if @stage
 
   if @ground
        ## note: might be array of string e.g. ['Wembley', 'London']
-       ## data['ground'] = {}
-       ## data['ground']['name']      = @ground
-       ## data['ground']['timezone']  = @timezone   if @timezone
-
-       ## note - keep timezone for now out of ground!!
+       ##
        ##  todo/check - auto-join to string - why? why not?
        ##                   e.g.  ['Wembley', 'London']
        ##                     to   'Wembley, London'
        ##   note - auto-join geo tree for now
        data['ground'] = @ground.join(', ')
   end
-  
-  data['attendance'] = @att   if @att    
+
+  data['attendance'] = @att   if @att
   data
 end
-
-
 end  # class Match
-end # module Sports
 
 
+
+end # class MatchTree
+end # module SportDb

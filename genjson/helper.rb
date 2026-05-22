@@ -1,6 +1,5 @@
 
 ## note: use the local version of gems
-$LOAD_PATH.unshift( File.expand_path( '../sportdb-structs/lib' ))
 $LOAD_PATH.unshift( File.expand_path( '../parser/lib' ))
 $LOAD_PATH.unshift( File.expand_path( '../quick/lib' ))
 
@@ -33,7 +32,7 @@ def parse_matches( *infiles, indir: '.' )
       quick = SportDb::QuickMatchReader.new( txt )
       more_matches = quick.parse
       name         = quick.league_name   ## quick hack - get league+season via league_name
- 
+
       if quick.errors?
         puts "!! #{quick.errors.size} parse error(s) in #{inpath}:"
         pp quick.errors
@@ -60,17 +59,17 @@ end
 
 
 
-def genjson( config, outdir: '.', 
+def genjson( config, outdir: '.',
                      indir: '.' )
 
   config.each do |outfile, infiles|
- 
+
     data = parse_matches( *infiles, indir: indir )
 
     outpath = File.join( outdir, outfile )
 
-    ## hack - use pretty_inspect for json pretty print         
-    txtjson =  data.pretty_inspect 
+    ## hack - use pretty_inspect for json pretty print
+    txtjson =  data.pretty_inspect
     txtjson = txtjson.gsub( '=>', ': ' )
     puts txtjson[0,100] + "..."
     ## double check for syntax errors
@@ -84,4 +83,3 @@ def genjson( config, outdir: '.',
     # write_json( outpath, data )
   end
 end
-

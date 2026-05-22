@@ -1,16 +1,15 @@
+module SportDb
+class MatchTree
 
-module Sports
+
 
 class Goal  ### nested (non-freestanding) inside match (match is parent)
-  attr_reader :score1,
-              :score2,
-              :team,
+  attr_reader :team,                ## note - 1|2 expected
               :player,
               :minute,
               :offset,
-              :owngoal,
-              :penalty,
-              :notes
+              :owngoal,            ## true|false
+              :penalty             ## true|false
 
   ## add alias for player => name - why? why not?
   alias_method :name, :player
@@ -28,28 +27,19 @@ class Goal  ### nested (non-freestanding) inside match (match is parent)
                   minute:,
                   offset:  nil,
                   owngoal: false,
-                  penalty: false,
-                  score1:  nil,
-                  score2:  nil,
-                  notes:   nil
+                  penalty: false
                 )
-    @score1  = score1
-    @score2  = score2
-
-    @team    = team     # 1 or 2
+    @team    = team     # 1|2
     @player  = player
     @minute  = minute
     @offset  = offset
     @owngoal = owngoal
     @penalty = penalty
-    @notes   = notes
   end
 
   def state
-    [@score1, @score2,
-     @team,
-     @player, @minute, @offset, @owngoal, @penalty,
-     @notes
+    [@team,
+     @player, @minute, @offset, @owngoal, @penalty
      ]
   end
 
@@ -59,14 +49,13 @@ class Goal  ### nested (non-freestanding) inside match (match is parent)
 
   def pretty_print( printer )
     buf = String.new
-    buf << "<Goal: #{@score1 ? @score1 : '?'}-#{@score2 ? @score2 : '?'}"
+    buf << "<Goal"
     buf << " #{@player} #{@minute}"
     buf << "+#{@offset}"    if @offset && @offset > 0
     buf << "'"
-    buf << " (o.g.)"  if @owngoal
-    buf << " (pen.)"  if @penalty
+    buf << " (og)"  if @owngoal
+    buf << " (p)"  if @penalty
     buf << " for #{@team}"     ### team 1 or 2 - use home/away
-    buf << " -- #{@notes}"   if @notes
     buf << ">"
 
     printer.text( buf )
@@ -74,5 +63,5 @@ class Goal  ### nested (non-freestanding) inside match (match is parent)
 end # class Goal
 
 
-end # module Sports
-
+end # class MatchTree
+end # module SportDb

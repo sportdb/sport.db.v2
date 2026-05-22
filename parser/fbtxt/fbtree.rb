@@ -9,7 +9,7 @@ require_relative 'helper'
 PATH = [
    '../fbtxt-samples',
    '../fbtxt-rsssf',
-   '../../../../openfootball', 
+   '../../../../openfootball',
 ]
 
 def fbtree( args, path: PATH )
@@ -18,10 +18,10 @@ def fbtree( args, path: PATH )
    args.each_with_index do |name,i|
       puts "==> #{i+1}/#{args.size} #{name}..."
 
-      filename = find_file( name, path: path )
+      filename = find_file!( name, path: path )
 
       ## txt = read_text( filename )
-      txt = read_blocktxt( filename ).text  
+      txt = read_blocktxt( filename ).text
 
       parser = RaccMatchParser.new( txt, debug: true )
       tree = parser.parse
@@ -44,6 +44,9 @@ def fbtree( args, path: PATH )
    puts "log - #{log.size} file(s):"
    pp log
 end
+
+
+
 
 
 
@@ -71,11 +74,11 @@ DEFAULT =  parse_names( <<TXT )
    country.txt
    year.txt
    tty.txt
- 
+
    penalties.txt
    referees.txt
    lineups.txt
-   
+
    todos_complete.txt
 
    quick.txt
@@ -145,7 +148,7 @@ WORLDCUP2 = parse_names( <<TXT )
    worldcup/more/1930.txt
    worldcup/more/1934.txt
    worldcup/more/1938.txt
-   worldcup/more/1950.txt   
+   worldcup/more/1950.txt
    worldcup/more/1954.txt
    worldcup/more/1958.txt
    worldcup/more/1962.txt
@@ -163,14 +166,14 @@ WORLDCUP2 = parse_names( <<TXT )
    worldcup/more/2010.txt
    worldcup/more/2014.txt
    worldcup/more/2018.txt
-   worldcup/more/2022.txt   
+   worldcup/more/2022.txt
 
 ###
 #  check full too
    worldcup/more/1930_full.txt
    worldcup/more/1934_full.txt
    worldcup/more/1938_full.txt
-   worldcup/more/1950_full.txt   
+   worldcup/more/1950_full.txt
    worldcup/more/1954_full.txt
    worldcup/more/1958_full.txt
    worldcup/more/1962_full.txt
@@ -188,7 +191,7 @@ WORLDCUP2 = parse_names( <<TXT )
    worldcup/more/2010_full.txt
    worldcup/more/2014_full.txt
    worldcup/more/2018_full.txt
-   worldcup/more/2022_full.txt   
+   worldcup/more/2022_full.txt
 TXT
 
 
@@ -198,7 +201,7 @@ WORLDCUP2MIN = parse_names( <<TXT )
    worldcup/min/1930.txt
    worldcup/min/1934.txt
    worldcup/min/1938.txt
-   worldcup/min/1950.txt   
+   worldcup/min/1950.txt
    worldcup/min/1954.txt
    worldcup/min/1958.txt
    worldcup/min/1962.txt
@@ -216,13 +219,13 @@ WORLDCUP2MIN = parse_names( <<TXT )
    worldcup/min/2010.txt
    worldcup/min/2014.txt
    worldcup/min/2018.txt
-   worldcup/min/2022.txt   
+   worldcup/min/2022.txt
 TXT
 
 
 
 
-WORLDCUP3 = parse_names( <<TXT )  
+WORLDCUP3 = parse_names( <<TXT )
    ##########
    ## check some planetworldcup samples
    worldcup/planetworldcup/wc10.txt
@@ -239,7 +242,7 @@ WORLDCUP3 = parse_names( <<TXT )
    worldcup/rsssf/2014f.txt
    worldcup/rsssf/2022f.txt
    worldcup/rsssf/worldcup.txt
-   
+
    worldcup/rsssf/2022q.txt
 TXT
 
@@ -278,7 +281,7 @@ AUSTRIA =  parse_names( <<TXT )
 TXT
 
 
-ENGLAND =  parse_names( <<TXT )   
+ENGLAND =  parse_names( <<TXT )
   england/rsssf/eng2020-facup.txt
   england/rsssf/eng2020-leaguecup.txt
   england/rsssf/eng2024-playoffs.txt
@@ -311,13 +314,13 @@ if __FILE__ == $0
 
   args = ARGV
 
-  if args.size == 0  
-    args = DEFAULT 
+  if args.size == 0
+    args = DEFAULT
   elsif args.size == 1 && (args[0] == 'worldcup' || args[0] == 'wc')
     args = WORLDCUP
   elsif args.size == 1 && (args[0] == 'worldcup2' || args[0] == 'wc2')
     args = WORLDCUP2
-  elsif args.size == 1 && (['worldcup2min','wc2min', 'wc2m', 
+  elsif args.size == 1 && (['worldcup2min','wc2min', 'wc2m',
                             'wcmin', 'wcm'].include?(args[0]))
     args = WORLDCUP2MIN
   elsif args.size == 1 && (args[0] == 'worldcup3' || args[0] == 'wc3')
@@ -332,8 +335,16 @@ if __FILE__ == $0
     args = SPEC
   elsif args.size == 1 && args[0] == 'rsssf'
     args = RSSSF
+  elsif args.size == 1 && File.directory?( args[0] )
+    ### special case - check fo directory
+    ##   - get all .txt files with glob search
+    glob = "#{args[0]}/**/*.txt"
+    files = Dir.glob( glob )
+    puts "   #{files.size} .txt datafile(s) found using glob >#{glob}<"
+
+    args = files
   end
 
   fbtree( args )
-  puts "bye" 
+  puts "bye"
 end
