@@ -9,6 +9,14 @@
 
 ## Football.TXT v2 Update
 
-- [ ]   /england
+- [x]   /england
 - [ ]   /...
 - ...
+
+
+
+how-to autofix / update format:
+
+```
+$  ruby fmtfix/fbi2ii.rb   england/2000-01/1-premierleague.txt
+```
