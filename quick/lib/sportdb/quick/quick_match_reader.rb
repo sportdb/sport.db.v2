@@ -26,7 +26,7 @@ class QuickMatchReader
     @errors = []
     @txt    = txt
 
-    @league_name = ''     
+    @league_name = ''
     @matches     = []
   end
 
@@ -41,7 +41,7 @@ class QuickMatchReader
   ##  note - may or may not include season
   def league_name() @league_name; end
   def matches() @matches; end
-  
+
 
   ##  try to find season in heading
   ##  e.g. Österr. Bundesliga 2015/16  or 2015-16
@@ -57,17 +57,21 @@ class QuickMatchReader
   def parse
     ## note: every (new) read call - resets errors list to empty
     @errors = []
-    
-    @league_name = ''     
+
+    @league_name = ''
     @matches     = []
-  
+
 
     ## note - source file MUST always start with heading 1 for now
     tree   = []
     parser = RaccMatchParser.new( @txt, debug: debug? )   ## use own parser instance (not shared) - why? why not?
+
+
+    ### fix-fix-fix  - use parse_with_errors!!!
+
     tree = parser.parse
 
-    
+
 ##
 ## !! (QUICK) PARSE ERROR - source MUST start with Heading1; got 34 nodes:
 ## [<BlankLine>,
@@ -76,14 +80,14 @@ class QuickMatchReader
 
       ## remove leading BlankLines if any!!
       while tree[0].is_a? RaccMatchParser::BlankLine
-          tree.shift  ## remove (leading) blank line from parse tree 
+          tree.shift  ## remove (leading) blank line from parse tree
       end
 
 
     if tree[0].is_a? RaccMatchParser::Heading1
          ## try to get league and season
          @league_name = tree[0].text
-    else  
+    else
         ### report error - source MUST start with heading 1
        puts "!! (QUICK) PARSE ERROR - source MUST start with Heading1; got #{tree.size} nodes:"
        pp tree
@@ -95,7 +99,7 @@ class QuickMatchReader
       m = SEASON_IN_HEADING_RE.match( @league_name )
       if m.nil?
         puts "!! (QUICK) PARSE ERROR - no season found in Heading1 >#{@league_name}; sorry"
-        exit 
+        exit
       end
       season = Season.parse( m[:season] )   ## convert (str) to season obj!!!
       start =  if season.year?
@@ -108,7 +112,7 @@ class QuickMatchReader
     ############
     ### "walk" tree to get structs (matches/teams/etc.)
     conv = MatchTree.new( tree, start: start )
-    
+
     auto_conf_teams, matches, rounds, groups = conv.convert
 
 
@@ -134,4 +138,3 @@ end # method parse
 
 end # class QuickMatchReader
 end # module SportDb
-
