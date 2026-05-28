@@ -70,6 +70,7 @@ args = ARGV
 
   opts = {
       edit:  false,    ## edit (sub/change/remove) inplace
+      all:   false,
   }
 
 parser = OptionParser.new do |parser|
@@ -80,6 +81,12 @@ parser = OptionParser.new do |parser|
              "edit files inplace (default: #{opts[:edit]})" ) do |edit|
     opts[:edit] = true
   end
+
+  parser.on( "-a", "--all",
+             "do NOT filter .txt files; include all (default: #{opts[:all]})" ) do |all|
+    opts[:all] = true
+  end
+
 end
 parser.parse!( args )
 
@@ -108,8 +115,13 @@ parser.parse!( args )
       puts "==> #{i+1}/#{args.size} #{name}..."
 
      if Dir.exist?( name )
-        datafiles = SportDb::Pathspec._find( name )
+        datafiles = if opts[:all]
+                         Dir.glob( "#{name}/**/*.txt" )
+                     else
+                         SportDb::Pathspec._find( name )
+                     end
         pp datafiles
+
         datafiles.each_with_index do |filename, j|
            puts "==> #{i+1}/#{args.size} #{j+1}/#{datafiles.size} #{filename}..."
             fbi2ii( filename, edit: opts[:edit], ts: ts )

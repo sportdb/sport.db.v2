@@ -18,6 +18,18 @@
 - [x]   /europe
 - [x]   /italy
 
+- [x]  /deutschland
+- [x]  /espana
+- [ ]  /internationals
+- [x]  /club-worldcup
+- [x]  /austria
+- [x]  /belgium
+- [ ]  /world
+- [ ]  /worldcup.more
+- [ ]  /world.more
+- [ ]  /north-america-gold-cup
+- [ ]  /copa-america
+
 
 - ...
 

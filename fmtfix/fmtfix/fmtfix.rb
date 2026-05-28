@@ -60,6 +60,16 @@ GOAL_NONE_RE = %r{  ^
 GOAL_NONE_REPLACE = '\1'
 
 
+
+FIX_HEADING_RE = %r{   ^
+                   [ ]*
+                     =+  (?! =)
+                    [ ]*
+                    (?: .+?  )
+                 $
+              }ix
+
+
 def fmtfix( txt )
 
    ## auto-remove match numbers
@@ -74,6 +84,11 @@ def fmtfix( txt )
 
 
    txt = fix_dates( txt )
+
+   ## replace underscore in headings with space
+   ## txt = txt.gsub( FIX_HEADING_RE ) do |match|
+   ##                   match.gsub( '_', ' ' )
+   ##           end
 
   txt
 end
