@@ -4,32 +4,28 @@
 - [ ] update all /openfootball datasets to football.txt v2 !!!
 
 
-
-
-
 ## Football.TXT v2 Update
 
 - [x]   /euro
 - [x]   /worldcup
+- [x]  /north-america-gold-cup
+- [x]  /copa-america
 
 - [x]   /england
 - [x]   /south-america
 - [x]   /champions-league
 - [x]   /europe
 - [x]   /italy
-
 - [x]  /deutschland
 - [x]  /espana
-- [ ]  /internationals
 - [x]  /club-worldcup
 - [x]  /austria
 - [x]  /belgium
-- [ ]  /world
-- [ ]  /worldcup.more
-- [ ]  /world.more
-- [ ]  /north-america-gold-cup
-- [ ]  /copa-america
+- [x]  /world
+- [x]  /world.more
 
+- [ ]  /internationals
+- [ ]  /worldcup.more
 
 - ...
 

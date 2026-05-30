@@ -2,12 +2,12 @@
 ##  team prop mode e.g.
 ##
 ##
-##    Fri Jun 14 21:00  @ München Fußball Arena, München        
-##     Germany  v  Scotland   5-1 (3-0)     
+##    Fri Jun 14 21:00  @ München Fußball Arena, München
+##     Germany  v  Scotland   5-1 (3-0)
 ##  (Wirtz 10' Musiala 19' Havertz 45+1' (pen.) Füllkrug 68' Can 90+3'; Rüdiger 87' (o.g.))
-## 
+##
 ## Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt - Andrich [Y] (Groß 46'),
-##       Kroos (Can 80') - Musiala (Müller 74'), Gündogan, Wirtz (Sane 63') - 
+##       Kroos (Can 80') - Musiala (Müller 74'), Gündogan, Wirtz (Sane 63') -
 ##       Havertz (Füllkrug 63')
 ## Scotland:   Gunn - Porteous [R 44'], Hendry, Tierney (McKenna 78') - Ralston [Y],
 ##       McTominay, McGregor (Gilmour 67'), Robertson - Christie (Shankland 82'),
@@ -20,7 +20,7 @@ class Lexer
 
 ##############
 #  add support for props/ attributes e.g.
-# 
+#
 #    Germany:    Neuer - Kimmich, Rüdiger, Tah [Y], Mittelstädt - Andrich [Y] (46' Groß),
 #      Kroos (80' Can) - Musiala (74' Müller), Gündogan,
 #      Wirtz (63' Sane) - Havertz (63' Füllkrug)
@@ -40,37 +40,131 @@ class Lexer
 ##
 ##  note - use special \G - Matches first matching position !!!!
 
+
+
+
 ###
-##  todo/fix/fix
+##  todo/fix/fix  - fix- fix -fix -fix
 ##  change ^ to \A
 ##    change name to START_WITH_PROP_KEY_RE !!!
 
-  PROP_KEY_RE = %r{ 
+
+
+  ## (ia) starting w/ letters
+  ##          e.g. a1, a2000, etc.
+  ##       note - no trailing dot here (see abbrev break out/rule!!!)
+  ##              dot (.) only used in token abbrev/num  (NOT in connectors) - keep why? why not?
+
+  ## note - add back optional trailing dot (.)  !!!
+  PROP_KEY_WORD_RE = %r{
+                           \p{L}
+                             [\p{L}\d]*
+
+                             \.?
+
+  }ix
+
+  ## (ib) abbrevations
+  ##        e.g. u.s.a., c.f. etc.
+  ##              st. etc.
+  ##
+  ##  todo/check -  use    (?:
+  ##                          #{PROP_KEY_WORD_RE} \.
+  ##                        )+
+  ##  or was:
+  ##
+  ##                      (?:    \p{L}  \.         ## single letter
+  ##                          |  \p{L}{2,} \.      ## multiple-letters, add word here - why? why not?
+  ##                      )+
+  ##    why? why not?
+  ##     check for \G like backreference of regex tokens/parts if possible/available in ruby?
+
+  ## note - abbrev incl. abbrev words too  e.g.  st. polten, etc.
+  ##             not only single letter abbrevs (e.g. u.s.a., f.c., c.f., etc.)
+  ## PROP_KEY_ABBREV_RE =  %r{  (?:
+  ##                               #{PROP_KEY_WORD_RE} \.
+  ##                            )+
+  ## }ix
+
+
+
+
+  ## note - incl. optional dot or numsign e.g. 1. or 1°
+  PROP_KEY_NUM_RE = %r{
+                              \d+
+                              [.°]?
+  }ix
+
+
+
+
+
+  PROP_KEY_RE = %r{
                     ^     # note - MUST start line; leading spaces optional (eat-up)
-                    [ ]*  
+                    [ ]*
                  (?<prop_key>
                    (?<key>
-                       (?:\p{L}+
-                           |
-                           \d+  # check for num lookahead (MUST be space or dot)
-                        ## MUST be followed by (optional dot) and
-                        ##                      required space !!!
-                        ## MUST be follow by a to z!!!!
-                         \.?     ## optional dot
-                         [ ]?   ## make space optional too  - why? why not?
-                             ##  yes - eg. 1st, 2nd, 5th etc.
-                         \p{L}+
-                        )
-                        [\d\p{L}'/° -]*?   ## allow almost anyting 
-                                          ## fix - add negative lookahead 
-                                          ##         no space and dash etc.
-                                          ##    only allowed "inline" not at the end
-                                          ## must end with latter or digit!
-                   )
+                       (?:
+                           ## (i) starting w/ letters
+                             #{PROP_KEY_WORD_RE}
+                           ## (ii) starting w/ number
+                           ##      followed by optional dot) and
+                           ##                  optional space
+                           ##      MUST be follow by letter (a to z)!!!!
+                           ##   eg. 1.fc, 1 fc, 1. fc, 1fc, 1a, etc.
+                           | #{PROP_KEY_NUM_RE}
+                                [ ]?    ## note - make space optional too
+                                        ##  eg. 1st, 2nd, 5th etc.
+                            ##  add abbrev here too for now
+                            ##       1. K. or 1.K. possible?
+                             #{PROP_KEY_WORD_RE}
+
+                       )
+                       (?:
+                           ## connectors  - note - no dot (.), must match with abbrev or num!!
+                            (?: ## (i)   single space or WITHOUT surrounding spaces!! - slash (/), dash (-)
+                                ##     e.g. do NOT macht   one - two  or one / two
+                                ##                        only one-two   or one/two
+
+                                  [ /-]
+
+                                ## (ii)     surrounded by leading or trailing optional space
+                                ##            c & a, etc.
+                                ##            d'ivoire, d' ivoire
+                                ##            borusia 'gladbach etc.
+                                ##              exclude space ' space - why? why not? (or ignore for now)
+                                ##
+                                ##    check for quotes  ('') - not realy supported here
+                                ##              e.g. leading or trailing ' will NOT match
+
+                                 | [ ]? ['&] [ ]?
+
+                                #### (iii)
+                                ##   note - special "hack"
+                                ##     for   Union 1.FC  and SKN St.Pölten or St.Pölten
+                                ##       connects      1.FC  => NUM+WORD
+                                ##                     St.Pölten =>  ABBREV+WORD
+                                |   (?<=  \. )
+                                    (?=  \p{L})
+                            )
+                             (?:
+                                 ## note - match WITHOUT (space) connector
+                                 ##                  1.FC  (Union 1.FC Stein)
+                                 ##               [WORD: "Union"], [NUM: "1."], [WORD: "FC"]
+                                 ##                  St.Pölten (SKN St.Pölten)
+                                 ##                [WORD: "SKN"], [ABBREV: "St."], [WORD: "Pölten"]
+                                   #{PROP_KEY_NUM_RE}
+                                |  #{PROP_KEY_WORD_RE}
+                               )
+                       )*
+                      )   ## close <key> capture
                     [ ]*?     # slurp trailing spaces
                      :
-                    (?=[ ]+)  ## possitive lookahead (must be followed by space!!)
-                   )
+
+                ## positive lookahead (must be followed by space!!)
+                ##     or allow end-of-line too
+                    (?= [ ]+|$)
+                   )  ## close <prop_key> capture
                  }ix
 
 
@@ -81,8 +175,8 @@ class Lexer
 ##                 [:YELLOW_CARD, m[:name]]
 ##               elsif m[:name] == 'R'
 ##                 [:RED_CARD, m[:name]]
-##           -  [Y], [R], [Y/R]  Yellow-Red Card 
-##    check if minutes possible inside [Y 46'] 
+##           -  [Y], [R], [Y/R]  Yellow-Red Card
+##    check if minutes possible inside [Y 46']
 ##     add [c] for captain too
 
 
@@ -102,13 +196,13 @@ class Lexer
                                    \+
                                    (?<offset>\d{1,2})
                                     '?
-                                )? 
-                              )? 
+                                )?
+                              )?
                           \]
                      )}x
 
   INLINE_RED  = %r{ (?<inline_red>
-                          \[ [rR] 
+                          \[ [rR]
                               ## optional minute
                               (?: [ ]+
                                 (?<minute> \d{1,3})
@@ -117,14 +211,14 @@ class Lexer
                                    \+
                                    (?<offset>\d{1,2})
                                     '?
-                                )? 
-                              )? 
+                                )?
+                              )?
                           \]
                      )}x
 
   INLINE_YELLOW_RED  = %r{ (?<inline_yellow_red>
                           \[ (?:y/r |
-                                Y/R  ) 
+                                Y/R  )
                               ## optional minute
                               (?: [ ]+
                                 (?<minute> \d{1,3})
@@ -133,8 +227,8 @@ class Lexer
                                    \+
                                    (?<offset>\d{1,2})
                                     '?
-                                )? 
-                              )? 
+                                )?
+                              )?
                           \]
                      )}x
 
@@ -144,13 +238,13 @@ class Lexer
 ### simple prop key for inline use e.g.
 ###    Coach:  or Trainer:  or ...  add more here later
 
-  PROP_KEY_INLINE_RE = %r{ 
-                    \b  
+  PROP_KEY_INLINE_RE = %r{
+                    \b
                  (?<prop_key>    ## note: use prop_key (NOT prop_key_inline or such)
                    (?<key>
                        \p{L}+
                    )
-                    ## note - NO spaces allowed for key for now!!! 
+                    ## note - NO spaces allowed for key for now!!!
                      :
                     (?=[ ]+)  ## possitive lookahead (must be followed by space!!)
                    )
@@ -164,9 +258,9 @@ PROP_NUM_RE = %r{
                     ##  5_000
                     ##  allow space inline (e.g. 5 000) - why? why not?
                   (?<value> [1-9]
-                            (?: _? 
+                            (?: _?
                                 [0-9]+
-                             )* 
+                             )*
                   )
               )
              \b
@@ -175,29 +269,29 @@ PROP_NUM_RE = %r{
 ### todo/fix - allow more chars in enclosed name  - why? why not?
 ##                     e.g.  (') - Cote D'Ivore etc.
 ##  change to PAREN_NAME or PARENTHESIS or such - why? why not?
-ENCLOSED_NAME_RE = %r{ 
-                 (?<enclosed_name>  
-                    \( 
-                   (?<name>   
+ENCLOSED_NAME_RE = %r{
+                 (?<enclosed_name>
+                    \(
+                   (?<name>
                        \p{L}+
                        (?:
-                          [ ] 
-                            \p{L}+ 
+                          [ ]
+                            \p{L}+
                        )*
                    )
                      \)
                  )
          }ix
 
-                 
+
 
 PROP_BASICS_RE = %r{
     (?<spaces> [ ]{2,}) |
     (?<space>  [ ])
         |
-    (?<sym>  
-        [;,\(\)\[\]-] 
-    )   
+    (?<sym>
+        [;,\(\)\[\]-]
+    )
 }ix
 
 
@@ -210,9 +304,9 @@ PROP_RE = Regexp.union(
    INLINE_YELLOW_RED,  ## e.g. [Y/R] or [Y/R 78]
    INLINE_RED,         ## e.g. [R] or [R 42] or [R 42']
 
-   PROP_KEY_INLINE_RE,   
+   PROP_KEY_INLINE_RE,
    PROP_NAME_RE,
-   PROP_BASICS_RE, 
+   PROP_BASICS_RE,
    ## todo/fix - add ANY_RE here too!!!
 )
 
@@ -221,18 +315,18 @@ PROP_RE = Regexp.union(
 PROP_CARDS_RE =  Regexp.union(
    MINUTE_RE,
    PROP_NAME_RE,
-   PROP_BASICS_RE, 
+   PROP_BASICS_RE,
    ## todo/fix - add ANY_RE here too!!!
-) 
+)
 
 
 PROP_PENALTIES_RE = Regexp.union(
    SCORE_RE,               # e.g. 1-1 etc.
    ENCLOSED_NAME_RE,       # e.g. (save), (post), etc.
    PROP_NAME_RE,
-   PROP_BASICS_RE, 
+   PROP_BASICS_RE,
    ## todo/fix - add ANY_RE here too!!!
-) 
+)
 
 
 PROP_REFEREE_RE = Regexp.union(
@@ -240,16 +334,16 @@ PROP_REFEREE_RE = Regexp.union(
    PROP_NUM_RE,                 # e.g. 28 000 or 28_000  (NOT 28,000 is not valid!!!)
    PROP_KEY_INLINE_RE,
    PROP_NAME_RE,
-   PROP_BASICS_RE, 
+   PROP_BASICS_RE,
    ## todo/fix - add ANY_RE here too!!!
-)  
+)
 
 PROP_ATTENDANCE_RE  = Regexp.union(
    ENCLOSED_NAME_RE,       # e.g. (sold out) etc.  why? why not?
    PROP_NUM_RE,                 # e.g. 28 000 or 28_000  (NOT 28,000 is not valid!!!)
-   PROP_BASICS_RE, 
+   PROP_BASICS_RE,
    ## todo/fix - add ANY_RE here too!!!
-)  
-    
+)
+
 end  # class Lexer
 end  # module SportDb
