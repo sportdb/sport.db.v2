@@ -11,9 +11,11 @@ PROP_KEY_RE  = SportDb::Lexer::PROP_KEY_RE
 PROP_NAME_RE = SportDb::Lexer::PROP_NAME_RE
 
 
+
 texts = [## try  teams
-          "1.K.: ",
-          "Union 1.K.: ",
+          "1A 1A: ",             ## [NUMALPHA: "1A"], [NUMALPHA: "1A"]
+          "1.K.: ",              ## [NUM: "1."], [WORD: "K."]
+          "Union 1.K.: ",        ## [WORD: "Union"], [NUM: "1."], [WORD: "K."]
           "1 FC: ",
           "1.FC: ",
           "1FC: ",
@@ -29,8 +31,13 @@ texts = [## try  teams
           "A.C.Milan: ",
           "1° Mayo: ",
           "1°Mayo: ",
+          "21°Mayo: ",
+          "21° Mayo: ",
+          "21.Mayo: ",
+          "21. Mayo: ",
           "Borussia 'gladbach: ",
           "Borussia M'gladbach: ",
+          "D' La Santa: ",
           "Real Madrid C.F.: ",
           "Real C.F.: ",
           "C.F.Madrid: ",
@@ -47,19 +54,22 @@ texts = [## try  teams
          "1. FC Köln: ",     ##=>     [NUM+WORD: "1. FC"], [WORD: "Köln"]
          "1 FC Köln : ",     ##=>     [NUM+WORD: "1 FC"], [WORD: "Köln"]
          "1.FC Köln:",
+         "Brighton & Hove Albion F.C.: ",
+         "Brighton&Hove Albion FC: ",
+         "Brighton&Hove: ",
          "A: ",
          "b: ",
          "  c : ",
          "A1: ",             ##=>     [WORD: "A1"]
-         "1B: ",             ##=>     [NUM+WORD: "1B"]
+         "1B: ",             ##=>     [NUMALPHA: "1B"]
          ## generic names:
          "Penalties: ",
          "Penalties:",   ## without space
          ## numbers & dates
-         "111: ",
-         "1: ",
-         "10/11/92: ",
-         "Fri Apr 11 18:20 ",
+         "111: ",                    ## number only
+         "1: ",                      ## number only
+         "10/11/92: ",               ## numbers only
+         "Fri Apr 11 18:20 ",        ##     colon (:)  requires trailing space rule!!!
          ]
 
 texts.each do |text|

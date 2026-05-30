@@ -95,6 +95,12 @@ class Lexer
                               [.°]?
   }ix
 
+  ## e.g. 1A, 1FC etc.
+  PROP_KEY_NUMALPHA_RE = %r{
+                              \d+
+                              \p{L}
+                               [\p{L}\d]*
+  }ix
 
 
 
@@ -107,18 +113,15 @@ class Lexer
                        (?:
                            ## (i) starting w/ letters
                              #{PROP_KEY_WORD_RE}
+
                            ## (ii) starting w/ number
                            ##      followed by optional dot) and
                            ##                  optional space
                            ##      MUST be follow by letter (a to z)!!!!
-                           ##   eg. 1.fc, 1 fc, 1. fc, 1fc, 1a, etc.
-                           | #{PROP_KEY_NUM_RE}
-                                [ ]?    ## note - make space optional too
-                                        ##  eg. 1st, 2nd, 5th etc.
-                            ##  add abbrev here too for now
-                            ##       1. K. or 1.K. possible?
-                             #{PROP_KEY_WORD_RE}
-
+                           ##  e.g. 1fc, 1a,
+                           | #{PROP_KEY_NUMALPHA_RE}
+                           ##   eg. 1[ fc], 1.[ fc], 1.[fc],  etc.
+                           | #{PROP_KEY_NUM_RE}    (?= [ ]? \p{L})
                        )
                        (?:
                            ## connectors  - note - no dot (.), must match with abbrev or num!!
@@ -140,20 +143,23 @@ class Lexer
                                  | [ ]? ['&] [ ]?
 
                                 #### (iii)
-                                ##   note - special "hack"
+                                ##   note - special "hack"  to connect WITHOUT space
                                 ##     for   Union 1.FC  and SKN St.Pölten or St.Pölten
-                                ##       connects      1.FC  => NUM+WORD
-                                ##                     St.Pölten =>  ABBREV+WORD
-                                |   (?<=  \. )
-                                    (?=  \p{L})
-                            )
-                             (?:
+                                ##       connects      1.FC      => NUM+WORD
+                                ##                     1°Mayo    => NUM+WORD
+                                ##                     St.Pölten => ABBREV+WORD
+                                ##
                                  ## note - match WITHOUT (space) connector
                                  ##                  1.FC  (Union 1.FC Stein)
                                  ##               [WORD: "Union"], [NUM: "1."], [WORD: "FC"]
                                  ##                  St.Pölten (SKN St.Pölten)
                                  ##                [WORD: "SKN"], [ABBREV: "St."], [WORD: "Pölten"]
-                                   #{PROP_KEY_NUM_RE}
+                                |   (?<=  [.°] )
+                                    (?=  \p{L})
+                            )
+                             (?:
+                                   #{PROP_KEY_NUMALPHA_RE}  ## note - inside also allow 1a or 1bc3 or whatever
+                                |  #{PROP_KEY_NUM_RE}
                                 |  #{PROP_KEY_WORD_RE}
                                )
                        )*
