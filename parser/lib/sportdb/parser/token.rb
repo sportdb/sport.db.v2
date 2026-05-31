@@ -5,11 +5,17 @@ class Lexer
 
 
 
+##
+## note VS
+##  remove VS for now
+##  e.g.     Olympia Wijgmaal v VS Kortenaken
+
+
 BASICS_RE = %r{
     (?<vs>
        (?<=[ ])	# positive lookbehind for space
        (?-i:
-           vs\.?|v|VS
+           vs\.?|v
        )        # note - only match case sensitive (downcased letters)!!!
                 # note -  bigger match first e.g. vs than v etc.
        (?=[ ])   # positive lookahead for space

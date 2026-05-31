@@ -1,13 +1,13 @@
 ##############################
-##  check goal lines 
+##  check goal lines
 
 
         (Franck Ribéry 77, Ivica Olić 90+2;
              Wayne Rooney 2)
         (Franck Ribéry 77 Ivica Olić 90+2;
              Wayne Rooney 2)
-        
-        (Franck Ribéry 77 
+
+        (Franck Ribéry 77
          Ivica Olić 90+2;
          Wayne Rooney 2)
 
@@ -15,12 +15,12 @@
 
         (Darron Gibson 3, Nani 7,41;
                 Ivica Olić 43, Arjen Robben 74)
-  
+
         (Darron Gibson 3
          Nani 7 41;
          Ivica Olić 43
          Arjen Robben 74)
-   
+
 
         (Theo Walcott 69, Cesc Fàbregas 85pen;
                Zlatan Ibrahimović 46,59)
@@ -36,14 +36,14 @@
                   (Diego Milito 35hdr,70fk)
                 (Diego Milito 35 (hdr),70 (fk))
 
-               
+
 
 ## try seconds
    (Wayne Rooney 2 (92 secs))
 
 
 ####
-## try style with no minutes (optional count)                  
+## try style with no minutes (optional count)
 
        (Theo Walcott, Cesc Fàbregas (p); Zlatan Ibrahimović (2))
        (Theo Walcott, Cesc Fàbregas (pen.); Zlatan Ibrahimović (2))
@@ -67,10 +67,10 @@
             (Lionel Messi (4); N.N.)
             (Lionel Messi (4); N.N. (2))
 
-            
+
 
 ###
-#  allow mix'n'match for now, that is, 
+#  allow mix'n'match for now, that is,
 #    (i) goal scorers with minutes
 #   (ii) goal scorers w/o minutes
 #  (iii) goal scorers w/o minutes with count e.g. (2) or (2/p) or (p), (og), etc.
@@ -84,18 +84,48 @@
       (Theo Walcott,Cesc Fàbregas;Zlatan Ibrahimović)
       (Theo Walcott 69,Cesc Fàbregas 85p;Zlatan Ibrahimović (2))
       (Theo Walcott,Cesc Fàbregas (p);Zlatan Ibrahimović 46,59)
-   
+
 
 ################
-##  add question mark (?) for n/a, unknown - why? why not? 
+##  add question mark (?) for n/a, unknown - why? why not?
 #    -  use N.N. (1) as alternative - why? why not?
 #   samples:
 #                  (Lionel Messi 21,37,42,?)
 #                  (Lionel Messi 21,?,42,?)
 #                  (Lionel Messi ?,?,?,?)
 #                  (Lionel Messi 21,37,42,88; Nicklas Bendtner ?)
-#                  (Lionel Messi (4); ? (1))  
-#                  (Lionel Messi (4); ? (2))  
+#
+#                  (Lionel Messi (4); ? (1))  =>  (Lionel Messi (4); N.N. (1))
+#                  (Lionel Messi (4); ? (2))  =>  (Lionel Messi (4); N.N. (2))
+
+
+###
+##  question mark - experimental support for (unknown) minutes
+
+(N.N. ??')
+(N.N. ??)
+(N.N. ??',??')
+(N.N. ??',??',??'(p),??')
+(N.N. ?? ?? ??(p) ??)
+
+(N.N. ?')
+(N.N. ?)
+(N.N. ?',?')
+(N.N. ?',?',?'(p),?')
+(N.N. ? ? ?(p) ?)
+
+
+(Lionel Messi 21,37,42,??)
+(Lionel Messi 21,??,42,??)
+(Lionel Messi ??,??,??,??)
+(Lionel Messi 21,37,42,88; Nicklas Bendtner ??)
+
+(Lionel Messi 21,37,42,?)
+(Lionel Messi 21,?,42,?)
+(Lionel Messi ?,?,?,?)
+(Lionel Messi 21,37,42,88; Nicklas Bendtner ?)
+
+
 
 
 ##
@@ -115,11 +145,11 @@
 #  try "inline" style
 
 Werder      3-2 Dortmund    (Soya 34, Schütz 36, Klöckner 50; Konietzka 1, 90)
-Werder      3-2 Dortmund    (Soya 34, Schütz 36, Klöckner 50; 
+Werder      3-2 Dortmund    (Soya 34, Schütz 36, Klöckner 50;
                              Konietzka 1, 90)
-Werder      3-2 Dortmund    (Soya 34 
+Werder      3-2 Dortmund    (Soya 34
                              Schütz 36
-                             Klöckner 50; 
+                             Klöckner 50;
                              Konietzka 1 90)
 
 
@@ -158,9 +188,5 @@ Arsenal 2-1 Chelsea (HT 1-1)
    Timber 66';
    Hincapié 45'+2' (OG))
 
-  (Saliba 20, Timber 65; 
+  (Saliba 20, Timber 65;
     Hincapie 45+1 og)
-    
-
-    
-

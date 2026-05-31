@@ -7,10 +7,12 @@ require_relative 'helper'
 
 
 PATH = [
+   '../fbtxt-specs',
    '../fbtxt-samples',
    '../fbtxt-rsssf',
    '../../../../openfootball',
 ]
+
 
 def fbtree( args, path: PATH )
    log = []
@@ -47,16 +49,8 @@ end
 
 
 
-
-
-
-DEFAULT =  parse_names( <<TXT )
-   main.txt
-   chat.txt
-   chat2.txt
-   chat3.txt
+DEFAULT = parse_names( <<TXT )
    dates.txt
-   formats.txt
 
    ### check goal formats
    goals.txt
@@ -64,27 +58,46 @@ DEFAULT =  parse_names( <<TXT )
    goals_compat.txt
 
    ### check more
-   header.txt
+   headers.txt
+
    home_away.txt
    note.txt
-   ord.txt
-   score.txt
-   status.txt
    table.txt
-   country.txt
-   year.txt
-   tty.txt
+   status.txt
 
    penalties.txt
    referees.txt
    lineups.txt
+
+   rounds_add.txt
+   geos_inline.txt
+
+   score_team.txt
+   tty.txt
+
+    ##  defs.txt  -- fix
+TXT
+
+
+
+## more samples  (in fbtxt-samples)
+MORE_SAMPLES =  parse_names( <<TXT )
+   main.txt
+   chat.txt
+   chat2.txt
+   chat3.txt
+   formats.txt
+
+   ord.txt
+   score.txt
+   country.txt
+   year.txt
 
    todos_complete.txt
 
    quick.txt
 
    ##  todos.txt
-   ##  defs.txt  -- fix
 TXT
 
 
@@ -316,6 +329,8 @@ if __FILE__ == $0
 
   if args.size == 0
     args = DEFAULT
+  elsif args.size == 1 && args[0] == 'more'
+    args = MORE_SAMPLES
   elsif args.size == 1 && (args[0] == 'worldcup' || args[0] == 'wc')
     args = WORLDCUP
   elsif args.size == 1 && (args[0] == 'worldcup2' || args[0] == 'wc2')

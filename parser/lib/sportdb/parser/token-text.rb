@@ -22,8 +22,8 @@ ANY_RE = %r{
 ##       plus as "legacy" shortcut for (simple) group or round names e.g.
 ##                       Group A, Group 1, ..
 ##                        Matchday 1, 1. Round,
-##        note - no exception for (shortcut) group or round (MUST match team name pattern!) 
-      
+##        note - no exception for (shortcut) group or round (MUST match team name pattern!)
+
 
 
 ##  note - do NOT allow single alpha text for now
@@ -39,7 +39,7 @@ ANY_RE = %r{
 # 1 FC   ##    allow 1-FC or 1FC   - why? why not?
 # 1FC"
 # 1. FC
-# 1.FC  
+# 1.FC
 # 23° Noviembre
 # 1890 Munich
 # 1-FC    - XXXX  - not allowed for now, parse error
@@ -76,7 +76,7 @@ TEXT_RE = %r{
                       ## MUST be followed by (optional dot) and
                       ##                      required space !!!
                       ## MUST be follow by a to z!!!!
-                      [.°]?     ## optional dot (.) or degree(°) - todo - add number sign too!! 
+                      [.°]?     ## optional dot (.) or degree(°) - todo - add number sign too!!
                       [ ]?   ## make space optional too  - why? why not?
                              ##  yes - eg. 1st, 2nd, 5th etc.
                        \p{L}+
@@ -91,10 +91,10 @@ TEXT_RE = %r{
                           ## note - exclude (v[ ]/vs[ ]/vs.[ ])
                           ##    AND switch to case-sensitive (via -i!!!)
                         (?! (?-i: (?:  ## note - (big) V not matching for versus!!!
-                                      vs\.?|v|VS|   
-                                         
-                                      n/p|N/P|  
-                                      w/o|W/O| 
+                                      vs\.?|v|
+
+                                      n/p|N/P|
+                                      w/o|W/O|
                                       abd\.?|ABD|
                                       aban\.?|ABAN|
                                       susp\.?|SUSP|
@@ -103,20 +103,20 @@ TEXT_RE = %r{
                                       po?stp\.?|PO?STP|P-P|
                                       x-x|X-X|
                                       awd\.?|AWD|
-                                      canc\.?|CANC ) [ ] 
+                                      canc\.?|CANC ) [ ]
                                         |
                                   (?: bye|BYE ) (?:[ ]|$))
-                          )    
+                          )
                       )
-                      |     
-                     [/-]   ## must NOT be surrounded by spaces 
+                      |
+                     [/-]   ## must NOT be surrounded by spaces
                   )?
                 (?:
-                  \p{L} 
+                  \p{L}
                      |
                   (?:   ## note - restrict [.&'] to single char usage (no doubled e.g. && etc.)
                     \. (?! \.)  ## allow single points only (now two or more etc.)
-                     | 
+                     |
                     & (?! &)
                      |
                     ' (?! ')
@@ -126,11 +126,11 @@ TEXT_RE = %r{
                    \d+
                    (?!
                      [0-9h'+] |    ## protected break on 12h / 12' / 1-1
-                                    ##  check usege for 3+4 - possible? where ? why?     
+                                    ##  check usege for 3+4 - possible? where ? why?
                      (?:[.:-]\d)     ## protected/exclude/break on 12.03 / 12:03 / 12-12
                                       ##  BUT allow Park21-Arena for example e.g. 21-A :-)
                     )
-                    [°]?  ## followed by optional ord                 
+                    [°]?  ## followed by optional ord
                    ## negative lookahead for numbers
                    ##   note - include digits itself!!!
                    ##   note - remove / (slash) e.g. allows UDI'19/Beter Bed
@@ -176,15 +176,15 @@ TEXT_RE = %r{
                 #       e.g. (AUT) or ,AUT or AUT
                 (?:
                [ ]   ## note - do NOT allow more than one space!!! - why? why not?
-                   \( 
+                   \(
                        ## note - auto-exclude reserved (aet)  from SCORE_FULLER_MORE!!!
                        ##     plus golden goal (gg)/sudden death (sd), silver goal (sg)
-                       ##    (ht), (ft)  
+                       ##    (ht), (ft)
                        (?! (?: aet | agget | asdet | asget | ht | ft )
                              \)
-                       )    
+                       )
                      (?:
-                       [A-Z]{1,5}   
+                       [A-Z]{1,5}
                      )
                   \)
                 )

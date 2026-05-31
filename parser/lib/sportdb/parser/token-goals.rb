@@ -264,7 +264,7 @@ GOAL_MINUTE_NA_RE = %r{
        # positive lookbehind
        (?<=[ ,;])
 
-       (?<value> \?{2})
+       (?<value> \?{1,2})
             '?    ## optional minute marker
      ## note - add goal minute qualifiers here inline!!!
         (?:
@@ -461,7 +461,7 @@ def _build_goal_minute( m ) self.class._build_goal_minute( m ); end
 def self._build_goal_minute_na( m )
     minute = {}
 
-    minute[:m]     =  nil   ## or use 999 or -1 or ???
+    minute[:m]     =  '?'   ##  or use nil or 999 or -1 or ???
 
     minute[:og]  = true       if m[:og]
     minute[:pen] = true       if m[:pen]

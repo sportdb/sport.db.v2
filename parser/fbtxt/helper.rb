@@ -13,6 +13,11 @@ require 'sportdb/parser'
 ##     try to find common ground for reuse!!!
 
 
+##
+##  naming -  or use parse_strings?
+##    read_lines/parse_lines already in use
+##          returns array (unfilterd - comments, blanks) AND incl. newline!!!
+
 def parse_names( txt )
    names = []
    txt.each_line do |line|

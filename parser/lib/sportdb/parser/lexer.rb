@@ -1175,8 +1175,10 @@ def _tokenize_line( line )
              [:GOAL_MINUTE, [m[:goal_minute], minute]]
          elsif m[:goal_minute_na]
               minute = _build_goal_minute_na( m )
-              ## todo/check - use own _NA token or simply merge into GOAL_MINUTE - why? why not?
-             [:GOAL_MINUTE_NA, [m[:goal_minute_na], minute]]
+              ## note -  (re)use GOAL_MINUTE token; no extra GOAL_MINUTE_NA or such - why? why not?
+              ##          make sure to handle 'm' => nil upstream!!!
+              ##                     change to  999 or -1 or such - why? why not?
+             [:GOAL_MINUTE, [m[:goal_minute_na], minute]]
          elsif m[:goal_count]
               count = _build_goal_count( m )
               [:GOAL_COUNT, [m[:goal_count], count]]

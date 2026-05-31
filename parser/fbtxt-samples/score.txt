@@ -89,7 +89,7 @@ April 7
                (Darron Gibson 3, Nani 7,41;
                 Ivica Olić 43, Arjen Robben 74)
      [4-4 on aggregate; Bayern Munich won on away goals]
-     
+
 
 March 31
    20:45  (19:45 BST/UTC+1) Arsenal F.C. (ENG)  2-2  FC Barcelona (ESP)  @ Emirates Stadium, London   att: 59572
@@ -107,35 +107,35 @@ April 6
 May 22
    20:45   FC Bayern Munich (GER)  0-2  Inter Milan (ITA)  @ Santiago Bernabéu, Madrid,  att: 73490
                (Diego Milito 35,70)
-             
-               
+
+
 ##########
 ### try different style  with MatchHeader
 ###   only use country code e.g. (GER), (ENG) for first time
 
 ▪ Quarter-finals, 1st leg
 March 30 20:45 @ Allianz Arena, Munich   att: 66000
-   Bayern Munich (GER)  2-1  Manchester United (ENG)   
+   Bayern Munich (GER)  2-1  Manchester United (ENG)
       (Franck Ribéry 77, Ivica Olić 90+2;
        Wayne Rooney 2)
 March 31 20:45 (19:45 BST/UTC+1) @ Emirates Stadium, London   att: 59572
-   Arsenal FC (ENG)  2-2  FC Barcelona (ESP)  
+   Arsenal FC (ENG)  2-2  FC Barcelona (ESP)
       (Theo Walcott 69, Cesc Fàbregas 85pen;
        Zlatan Ibrahimović 46,59)
 
 ▪ Quarter-finals, 2nd leg
-April 6 20:45 @ Camp Nou, Barcelona    att: 93330     
+April 6 20:45 @ Camp Nou, Barcelona    att: 93330
    FC Barcelona   4-1   Arsenal FC   (win 6-3 on aggregate)
       (Lionel Messi 21,37,42,88;
        Nicklas Bendtner 18)
 April 7 20:45 (19:45 BST/UTC+1) @ Old Trafford, Manchester    att: 74482
-   Manchester United  3-2  Bayern Munich  (agg 4-4, win 1-2 on away goals)  
+   Manchester United  3-2  Bayern Munich  (agg 4-4, win 1-2 on away goals)
       (Darron Gibson 3, Nani 7,41;
-       Ivica Olić 43, Arjen Robben 74)    
-  
+       Ivica Olić 43, Arjen Robben 74)
+
 ▪ Final
-May 22 20:45 @ Santiago Bernabéu, Madrid    att: 73490  
-  FC Bayern Munich   0-2  Inter Milan   
+May 22 20:45 @ Santiago Bernabéu, Madrid    att: 73490
+  FC Bayern Munich   0-2  Inter Milan
       (Diego Milito 35,70)
 
 
@@ -147,13 +147,13 @@ May 22 20:45 @ Santiago Bernabéu, Madrid    att: 73490
 #
 #   note - try/use SCORE_LEGS, DATE_LEGS "compact" style
 
-▪ Quarter-Finals 
+▪ Quarter-Finals
 Mar 30 & Apr 7
   Bayern München (Ger) v Manchester United (Eng)   2-1 2-3 (agg 4-4, win on away goals)
 Mar 31 & Apr 6
   Arsenal (Eng)        v FC Barcelona (Esp)        2-2 1-4 (agg 3-6)
 
-▪ Final 
+▪ Final
 May 22 @ Santiago Bernabeu, Madrid
   Internazionale (Ita) v Bayern München (Ger)      2-0
     (Milito 35',70')
@@ -177,7 +177,7 @@ Apr 25
   Real Madrid 2-1 Bayern München  (aet, agg 3-3, win 1-3 on pens)
 
 
-#########  
+#########
 ###  with (all) half-time, full-time (90min) scores
 
 Bayern München 2-1 Real Madrid  (HT 1-0)
@@ -190,11 +190,11 @@ Real Madrid 2-1 Bayern München  (HT 2-1, FT 2-1, AET, AGG 3-3, PEN 1-3)
 #      https://en.wikipedia.org/wiki/2011–12_UEFA_Champions_League
 #      https://en.wikipedia.org/wiki/2011–12_UEFA_Champions_League_knockout_phase
 #
-#   Times are CET/CEST, as listed by UEFA 
+#   Times are CET/CEST, as listed by UEFA
 #     (local times, if different, are in parentheses).
 
 
-▪ Semi-finals 
+▪ Semi-finals
 
 April 17
    20:45   FC Bayern Munich (GER)  2-1  Real Madrid CF (ESP)  @ Allianz Arena, Munich  att: 66000
@@ -209,7 +209,7 @@ April 25
               David Alaba, Mario Gómez, Toni Kroos (miss),
               Philipp Lahm (miss), Bastian Schweinsteiger
     [3-3 on aggregate; Bayern Munich won 3-1 on penalties]
-  
+
 
 # |penalties1 =
 # *[[Cristiano Ronaldo|Ronaldo]] {{penmiss}}
@@ -226,7 +226,7 @@ April 25
 
 April 18
   20:45 (19:45 UTC+1)  Chelsea F.C. (ENG)  1-0  FC Barcelona (ESP)   @ Stamford Bridge, London   att: 38039
-                        (Didier Drogba 45+2)                  
+                        (Didier Drogba 45+2)
 April 24
   20:45               Barcelona (ESP)   2-2     Chelsea (ENG)   @ Camp Nou, Barcelona   att: 95845
                        (Sergio Busquets 35, Andrés Iniesta 43;
@@ -242,7 +242,7 @@ Penalties:  Philipp Lahm, Mario Gómez, Manuel Neuer, Ivica Olić (miss),
             Bastian Schweinsteiger (miss);
             Juan Mata (miss), David Luiz, Frank Lampard,
             Ashley Cole, Didier Drogba
-                 
+
 # |penalties1 =
 # *[[Philipp Lahm|Lahm]] {{pengoal}}
 # *[[Mario Gómez|Gómez]] {{pengoal}}
@@ -257,7 +257,7 @@ Penalties:  Philipp Lahm, Mario Gómez, Manuel Neuer, Ivica Olić (miss),
 # *{{pengoal}} [[Ashley Cole|Cole]]
 # *{{pengoal}} [[Didier Drogba|Drogba]]
 
-            
+
 
 
 ##########
@@ -265,38 +265,38 @@ Penalties:  Philipp Lahm, Mario Gómez, Manuel Neuer, Ivica Olić (miss),
 
 ▪ Semi-finals, 1st leg
 April 17 20:45   @ Allianz Arena, Munich    att: 66000
-  Bayern Munich (GER)  2-1  Real Madrid (ESP)  
+  Bayern Munich (GER)  2-1  Real Madrid (ESP)
              (Franck Ribéry 17, Mario Gómez 90;
               Mesut Özil 53)
 April 18 20:45 (19:45 UTC+1) @ Stamford Bridge, London    att: 38039
-  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
-      (Didier Drogba 45+2)                  
+  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
+      (Didier Drogba 45+2)
 
 ▪ Semi-finals, 2nd leg
-April 24 20:45 @ Camp Nou, Barcelona    att: 95845              
+April 24 20:45 @ Camp Nou, Barcelona    att: 95845
     FC Barcelona         2-2  Chelsea FC  (win 2-3 on aggregate)
       (Sergio Busquets 35, Andrés Iniesta 43;
        Ramires 45+1, Fernando Torres 90+1)
 April 25 20:45   @ Santiago Bernabéu, Madrid   att: 71654
-   Real Madrid   2-1  Bayern Munich  (aet, 3-3 on agg, win 1-3 on pens)  
+   Real Madrid   2-1  Bayern Munich  (aet, 3-3 on agg, win 1-3 on pens)
             (Cristiano Ronald 6pen,14;
              Arjen Robben 27pen)
 
-▪ Final   
-May 5 20:45 @ Allianz Arena, Munich   att: 62500     
-    FC Bayern Munich    1-1 Chelsea FC  (aet, win 3-4 on pens) 
+▪ Final
+May 5 20:45 @ Allianz Arena, Munich   att: 62500
+    FC Bayern Munich    1-1 Chelsea FC  (aet, win 3-4 on pens)
         (Thomas Müller 83; Didier Drogba 88)
 
 
 ###
 #  try alternate "inline" local time style instead of  20:45 (19:45 UTC+1)
 April 18 19:45 UTC+1 @ Stamford Bridge, London   att: 38039
-   Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+   Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
 
-April 18 19:45 UTC+1        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
-April 18 19:45 UTC+01        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
-April 18 19:45 UTC+0100        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
-April 18 20:45 (19:45 UTC+1)  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)    
+April 18 19:45 UTC+1        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
+April 18 19:45 UTC+01        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
+April 18 19:45 UTC+0100        Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
+April 18 20:45 (19:45 UTC+1)  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
 
 
 
@@ -306,13 +306,13 @@ April 18 20:45 (19:45 UTC+1)  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
 #
 #   note - try/use SCORE_LEGS, DATE_LEGS "compact" style
 
-▪ Semi-Finals 
+▪ Semi-Finals
 Apr 17 & 25
    Bayern München (Ger)  v Real Madrid (Esp)    2-1, 1-2 aet (agg 3-3, win 3-1 on pens)
 Apr 28 & 24
   Chelsea (Eng)         v FC Barcelona (Esp)   1-0, 2-2     (agg 3-2)
 
-▪ Final 
+▪ Final
 May 19 @ Allianz Arena, München     att: 66000
   Bayern München (Ger)  v Chelsea (Eng)       1-1 aet, 3-4 pen
     (Müller 83'; Drogba 89')
@@ -331,15 +331,15 @@ Bayern München 1-1 Chelsea (HT 0-0, FT 1-1, AET, PEN 3-4)
 
 Bayern München v Chelsea  1-1 aet (1-1, 0-0) 3-4 pen
 Bayern München v Chelsea  1-1 aet, 3-4 pen
-Bayern München v Chelsea  3-4 pen (1-1, 1-1, 0-0) 
+Bayern München v Chelsea  3-4 pen (1-1, 1-1, 0-0)
 Bayern München v Chelsea  3-4 pen 1-1 aet (1-1, 0-0)
 Bayern München v Chelsea  3-4 pen 1-1 aet
 
-Bayern München  1-1 aet (1-1, 0-0) 3-4 pen  Chelsea 
-Bayern München  1-1 aet, 3-4 pen  Chelsea 
-Bayern München  3-4 pen (1-1, 1-1, 0-0)  Chelsea  
-Bayern München   3-4 pen 1-1 aet (1-1, 0-0)  Chelsea 
-Bayern München   3-4 pen. 1-1 a.e.t.   Chelsea 
+Bayern München  1-1 aet (1-1, 0-0) 3-4 pen  Chelsea
+Bayern München  1-1 aet, 3-4 pen  Chelsea
+Bayern München  3-4 pen (1-1, 1-1, 0-0)  Chelsea
+Bayern München   3-4 pen 1-1 aet (1-1, 0-0)  Chelsea
+Bayern München   3-4 pen. 1-1 a.e.t.   Chelsea
 
 
 ###
@@ -350,32 +350,31 @@ Germany          2-1 Czech Republic   (aet/gg)
 Germany          2-1 Czech Republic   (a.e.t./g.g.)
 Germany          2-1 Czech Republic   (a.e.t/g.g)
 Germany          2-1 Czech Republic   (agget)
-Germany          2-1 Czech Republic   (asdet)      
+Germany          2-1 Czech Republic   (asdet)
 
 Germany          v Czech Republic   2-1 (aet/gg)
 Germany          v Czech Republic   2-1 (a.e.t./g.g.)
 Germany          v Czech Republic   2-1 (a.e.t/g.g)
 Germany          v Czech Republic   2-1 (agget)
-Germany          v Czech Republic   2-1 (asdet)      
+Germany          v Czech Republic   2-1 (asdet)
 
 
 France             2-1 Italy           (aet)
 France             2-1 Italy           (aet/gg)
 
 
-Greece             1-0 Czech Republic   (aet/sg) 
-Greece             1-0 Czech Republic   (a.e.t./s.g.) 
-Greece             1-0 Czech Republic   (asget) 
+Greece             1-0 Czech Republic   (aet/sg)
+Greece             1-0 Czech Republic   (a.e.t./s.g.)
+Greece             1-0 Czech Republic   (asget)
 
 
 
-France             2-1 aet/gg Italy          
-France             2-1aet/gg Italy          
-France             2-1 a.e.t./g.g. Italy          
-France             2-1 agget Italy          
-France             2-1 asdet Italy          
+France             2-1 aet/gg Italy
+France             2-1aet/gg Italy
+France             2-1 a.e.t./g.g. Italy
+France             2-1 agget Italy
+France             2-1 asdet Italy
 
-France             2-1 aet/gg (1-1, 1-0) Italy          
-France             2-1 aet/gg (1-1,) Italy          
-France             2-1 aet/gg (1-1) Italy          
-
+France             2-1 aet/gg (1-1, 1-0) Italy
+France             2-1 aet/gg (1-1,) Italy
+France             2-1 aet/gg (1-1) Italy

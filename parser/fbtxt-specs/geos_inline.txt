@@ -1,0 +1,20 @@
+###
+#  check (inline) geo
+
+25.03.23 @ Glasgow        Scotland           3-0 Cyprus
+25.03.23 @ Málaga         Spain              3-0 Norway
+28.03.23 @ Batumi         Georgia            1-1 Norway
+28.03.23 @ Glasgow        Scotland           2-0 Spain
+
+#  starting w/ (inline) geo
+  @ Glasgow        Scotland           3-0 Cyprus
+  @ Málaga         Spain              3-0 Norway
+  @ Batumi         Georgia            1-1 Norway
+  @ Glasgow        Scotland           2-0 Spain
+
+
+###
+##  start match_line with location
+Dec 11
+15:30  @ Cardiff     WALES v NORTHERN IRELAND
+       @ London      ENGLAND v SCOTLAND

@@ -3,7 +3,7 @@
 
 
 ## with month abbrev & day  (and year - yyyy only)
-July 10 
+July 10
 Jul 10
 July 10 2026
 Fri July 10
@@ -60,12 +60,12 @@ Friday, 10 July 2026
 Friday, 10 July 26
 Fr, 10 July
 
-Sun  1 Mar        
-Sun 01 Mar   
+Sun  1 Mar
+Sun 01 Mar
 
-Wed  4 Mar        
-Wed 04 Mar         
-Sat 14 Mar  
+Wed  4 Mar
+Wed 04 Mar
+Sat 14 Mar
 Sat 11 Apr
 
 
@@ -94,7 +94,7 @@ Fr,  10.7.2026
 
 ###
 # iso style
-2026-07-10 
+2026-07-10
 2026-7-10
 
 ##  starting with day-month-year
@@ -121,15 +121,15 @@ Fr,    7/10/2026
 
 1/3/26
 1/03/26
-01/03/26    
+01/03/26
 1/3
 1/03
-01/03      
+01/03
 Su  1/3
 Su 1/03
-Su 01/03      
+Su 01/03
 
-We  4/3   
+We  4/3
 Sa 14/3
 Sa 11/4
 Sa 11/04

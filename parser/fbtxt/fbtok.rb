@@ -8,13 +8,14 @@ require_relative 'helper'
 
 
 PATH = [
+   '../fbtxt-specs',
    '../fbtxt-samples',
    '../fbtxt-rsssf',
-   '../../../../openfootball', 
+   '../../../../openfootball',
 ]
 
 
-WORLD_MORE = parse_names( <<TXT ) 
+WORLD_MORE = parse_names( <<TXT )
   world.more/2023-24/de.1.txt
   world.more/2023-24/at.1.txt
 TXT
@@ -33,7 +34,7 @@ def fbtok( args, path: PATH )
 
       txt = read_text( filename )
 
-     
+
      lexer = SportDb::Lexer.new( txt, debug: true )
      tokens, errors = lexer.tokenize_with_errors
      pp tokens
@@ -41,11 +42,11 @@ def fbtok( args, path: PATH )
      if errors.size > 0
        puts "!! #{errors.size} tokenize error(s):"
        pp errors
-    
+
       log << [filename, "!! - #{errors.size} tokenize error(s)", errors]
       else
        puts "--  OK - no tokenize errors found"
- 
+
        log << [filename, "OK"]
      end
    end
@@ -67,5 +68,5 @@ if __FILE__ == $0
   end
 
   fbtok( args )
-  puts "bye" 
+  puts "bye"
 end
