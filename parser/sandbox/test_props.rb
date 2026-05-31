@@ -26,6 +26,7 @@ texts = [## try  teams
           "St. Pölten: ",
           "St.Pölten: ",
           "St.Pauli: ",
+          "FC St.Pauli: ",
           "Paris St.-Germain: ",
           "A.C. Milan: ",
           "A.C.Milan: ",
@@ -37,6 +38,7 @@ texts = [## try  teams
           "21. Mayo: ",
           "Borussia 'gladbach: ",
           "Borussia M'gladbach: ",
+          "Borussia M'Gladbach: ",
           "D' La Santa: ",
           "Real Madrid C.F.: ",
           "Real C.F.: ",
@@ -62,14 +64,33 @@ texts = [## try  teams
          "  c : ",
          "A1: ",             ##=>     [WORD: "A1"]
          "1B: ",             ##=>     [NUMALPHA: "1B"]
+         ## nore names
+         "St. Patrick's: ",
+         "St.Patrick's: ",
+         "St.Gallen: ",
+         "Lausanne-Sport: ",
+         "Union Saint-Gilloise: ",
+         "Sint-Truiden: ",
+         "FC Blau-Weiß Linz: ",
+         "Bodö/Glimt: ",
+         "SV Stripfing/Weiden: ",
+         "Kapfenberg 1919: ",
+         "Grazer AK 1902: ",
+         "Bayer 04 Leverkusen: ",
+         "1.FSV Mainz 05: ",
+         "1.FC Heidenheim 1846: ",
          ## generic names:
          "Penalties: ",
          "Penalties:",   ## without space
+
+         ################################
          ## numbers & dates
          "111: ",                    ## number only
          "1: ",                      ## number only
          "10/11/92: ",               ## numbers only
          "Fri Apr 11 18:20 ",        ##     colon (:)  requires trailing space rule!!!
+         "5.-6. Playoff: ",          ## starting number MUST be follow by word !!
+         "1/8 Final: ",              ## starting number MUST be follow by word !!
          ]
 
 texts.each do |text|

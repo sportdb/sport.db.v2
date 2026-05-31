@@ -35,11 +35,35 @@ class Lexer
 ##           limit to 30 chars max
 ##          only allow  chars incl. intl but (NOT ()[]/;)
 ##
-## todo/fix:
-##   check if   St. Pölten     works; with starting St. ???
 ##
 ##  note - use special \G - Matches first matching position !!!!
+##     check for \G like backreference of regex tokens/parts if possible/available in ruby?
 
+
+
+  ## (i) starting w/ letters
+  ##          e.g. a1, a2000, etc.
+  ##
+  ## note - added back optional trailing dot (.) for abbrev. word  !!!
+  PROP_KEY_WORD_ = %r{
+                           \p{L}
+                             [\p{L}\d]*
+                             \.?
+                    }ix
+
+  ## note - incl. optional dot or numsign e.g. 1. or 1°
+  PROP_KEY_NUM_ = %r{
+                              \d+
+                              [.°]?
+                   }ix
+
+  ## e.g. 1A, 1FC etc.
+  ##  note - no trailing dot (.) for now - check if any cases exist in real world
+  PROP_KEY_NUMALPHA_ = %r{
+                              \d+
+                              \p{L}
+                               [\p{L}\d]*
+                     }ix
 
 
 
@@ -48,86 +72,29 @@ class Lexer
 ##  change ^ to \A
 ##    change name to START_WITH_PROP_KEY_RE !!!
 
-
-
-  ## (ia) starting w/ letters
-  ##          e.g. a1, a2000, etc.
-  ##       note - no trailing dot here (see abbrev break out/rule!!!)
-  ##              dot (.) only used in token abbrev/num  (NOT in connectors) - keep why? why not?
-
-  ## note - add back optional trailing dot (.)  !!!
-  PROP_KEY_WORD_RE = %r{
-                           \p{L}
-                             [\p{L}\d]*
-
-                             \.?
-
-  }ix
-
-  ## (ib) abbrevations
-  ##        e.g. u.s.a., c.f. etc.
-  ##              st. etc.
-  ##
-  ##  todo/check -  use    (?:
-  ##                          #{PROP_KEY_WORD_RE} \.
-  ##                        )+
-  ##  or was:
-  ##
-  ##                      (?:    \p{L}  \.         ## single letter
-  ##                          |  \p{L}{2,} \.      ## multiple-letters, add word here - why? why not?
-  ##                      )+
-  ##    why? why not?
-  ##     check for \G like backreference of regex tokens/parts if possible/available in ruby?
-
-  ## note - abbrev incl. abbrev words too  e.g.  st. polten, etc.
-  ##             not only single letter abbrevs (e.g. u.s.a., f.c., c.f., etc.)
-  ## PROP_KEY_ABBREV_RE =  %r{  (?:
-  ##                               #{PROP_KEY_WORD_RE} \.
-  ##                            )+
-  ## }ix
-
-
-
-
-  ## note - incl. optional dot or numsign e.g. 1. or 1°
-  PROP_KEY_NUM_RE = %r{
-                              \d+
-                              [.°]?
-  }ix
-
-  ## e.g. 1A, 1FC etc.
-  PROP_KEY_NUMALPHA_RE = %r{
-                              \d+
-                              \p{L}
-                               [\p{L}\d]*
-  }ix
-
-
-
-
   PROP_KEY_RE = %r{
-                    ^     # note - MUST start line; leading spaces optional (eat-up)
-                    [ ]*
                  (?<prop_key>
+                    ^         ## note - MUST start line; leading spaces optional (eat-up)
+                     [ ]*     ##  optional leading spaces
                    (?<key>
                        (?:
                            ## (i) starting w/ letters
-                             #{PROP_KEY_WORD_RE}
+                             #{PROP_KEY_WORD_}
 
                            ## (ii) starting w/ number
+                           ##  e.g. 1fc, 1a,
+                           | #{PROP_KEY_NUMALPHA_}
                            ##      followed by optional dot) and
                            ##                  optional space
                            ##      MUST be follow by letter (a to z)!!!!
-                           ##  e.g. 1fc, 1a,
-                           | #{PROP_KEY_NUMALPHA_RE}
                            ##   eg. 1[ fc], 1.[ fc], 1.[fc],  etc.
-                           | #{PROP_KEY_NUM_RE}    (?= [ ]? \p{L})
+                           | #{PROP_KEY_NUM_}   (?= [ ]? \p{L})
                        )
                        (?:
-                           ## connectors  - note - no dot (.), must match with abbrev or num!!
+                           ## connectors  - note - no dot (.), must match with abbrev word or num!!
                             (?: ## (i)   single space or WITHOUT surrounding spaces!! - slash (/), dash (-)
-                                ##     e.g. do NOT macht   one - two  or one / two
-                                ##                        only one-two   or one/two
+                                ##     e.g. do NOT match   one - two     or one / two
+                                ##                        only one-two   or  one/two
 
                                   [ /-]
 
@@ -140,7 +107,9 @@ class Lexer
                                 ##    check for quotes  ('') - not realy supported here
                                 ##              e.g. leading or trailing ' will NOT match
 
-                                 | [ ]? ['&] [ ]?
+                                 |  [ ]? & [ ]?
+                                 |  [ ]? '
+                                 |  ' [ ]?
 
                                 #### (iii)
                                 ##   note - special "hack"  to connect WITHOUT space
@@ -149,22 +118,22 @@ class Lexer
                                 ##                     1°Mayo    => NUM+WORD
                                 ##                     St.Pölten => ABBREV+WORD
                                 ##
-                                 ## note - match WITHOUT (space) connector
-                                 ##                  1.FC  (Union 1.FC Stein)
-                                 ##               [WORD: "Union"], [NUM: "1."], [WORD: "FC"]
-                                 ##                  St.Pölten (SKN St.Pölten)
-                                 ##                [WORD: "SKN"], [ABBREV: "St."], [WORD: "Pölten"]
+                                ## note - match WITHOUT (space) connector
+                                ##                  1.FC  (Union 1.FC Stein)
+                                ##               [WORD: "Union"], [NUM: "1."], [WORD: "FC"]
+                                ##                  St.Pölten (SKN St.Pölten)
+                                ##                [WORD: "SKN"], [ABBREV: "St."], [WORD: "Pölten"]
                                 |   (?<=  [.°] )
                                     (?=  \p{L})
                             )
                              (?:
-                                   #{PROP_KEY_NUMALPHA_RE}  ## note - inside also allow 1a or 1bc3 or whatever
-                                |  #{PROP_KEY_NUM_RE}
-                                |  #{PROP_KEY_WORD_RE}
+                                   #{PROP_KEY_NUMALPHA_}
+                                |  #{PROP_KEY_NUM_}
+                                |  #{PROP_KEY_WORD_}
                                )
                        )*
-                      )   ## close <key> capture
-                    [ ]*?     # slurp trailing spaces
+                      )       ## close <key> capture
+                    [ ]*?     ## slurp trailing spaces
                      :
 
                 ## positive lookahead (must be followed by space!!)

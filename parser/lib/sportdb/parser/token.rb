@@ -8,8 +8,8 @@ class Lexer
 BASICS_RE = %r{
     (?<vs>
        (?<=[ ])	# positive lookbehind for space
-       (?-i: 
-           vs\.?|v|VS 
+       (?-i:
+           vs\.?|v|VS
        )        # note - only match case sensitive (downcased letters)!!!
                 # note -  bigger match first e.g. vs than v etc.
        (?=[ ])   # positive lookahead for space
@@ -41,20 +41,22 @@ ATTENDANCE_RE = %r{
 )}ix
 
 
+
+
 ## "inline" match status e.g.
-##  Clapham Rovers     w/o  Hitchin            
+##  Clapham Rovers     w/o  Hitchin
 ##  Queen's Park       bye
-         
+
 ## add support for WO or W-0 too - why? why not?
 INLINE_WO_RE = %r{
                    (?<inline_wo>
                        \b (?: w/o | W/O ) \b
-               )}x   ## note - NOT case insensitive 
+               )}x   ## note - NOT case insensitive
 
-INLINE_BYE_RE = %r{ 
+INLINE_BYE_RE = %r{
                   (?<inline_bye>
                       \b (?: bye | BYE ) \b
-               )}x   ## note - NOT case insensitive 
+               )}x   ## note - NOT case insensitive
 
 
 ###
@@ -63,7 +65,7 @@ INLINE_BYE_RE = %r{
 INLINE_NP_RE = %r{
                    (?<inline_np>
                        \b (?: n/p | N/P ) \b
-               )}x   ## note - NOT case insensitive 
+               )}x   ## note - NOT case insensitive
 
 
 ###
@@ -74,10 +76,10 @@ INLINE_ABD_RE = %r{
                        \b (?: abd\.? |
                               aban\.? |
                               ABD | ABAN
-                          ) 
+                          )
                   ## POSITIVE lookahead - requires space
                          (?= [ ])
-               )}x  ## note - NOT case insensitive 
+               )}x  ## note - NOT case insensitive
 
 ####
 #  susp/susp.  [suspended]
@@ -85,15 +87,15 @@ INLINE_ABD_RE = %r{
 INLINE_SUSP_RE = %r{
                    (?<inline_susp>
                        \b (?: susp\.? |
-                               SUSP ) 
+                               SUSP )
                   ## POSITIVE lookahead - requires space
                          (?= [ ])
-               )}x  ## note - NOT case insensitive 
+               )}x  ## note - NOT case insensitive
 
 
 ####
-# ppd/ppd. or pst/pst. or pstp/pstp. or postp/postp.   [postponed] 
-#  PPD/PSTP/POSTP/P-P              
+# ppd/ppd. or pst/pst. or pstp/pstp. or postp/postp.   [postponed]
+#  PPD/PSTP/POSTP/P-P
 #   todo/check - add/allow p-p too - why? why not?
 INLINE_PPD_RE = %r{
                    (?<inline_ppd>
@@ -101,10 +103,10 @@ INLINE_PPD_RE = %r{
                               pst\.? |
                               po?stp\.? |
                               PPD | PST | PO?STP | P-P
-                           ) 
+                           )
                   ## POSITIVE lookahead - requires space
                          (?= [ ])
-               )}x   ## note - NOT case insensitive 
+               )}x   ## note - NOT case insensitive
 
 ####
 #  void via   x-x X-X
@@ -112,7 +114,7 @@ INLINE_PPD_RE = %r{
 INLINE_VOID_RE = %r{
                       (?<inline_void>
                           \b (?: x-x |
-                                 X-X 
+                                 X-X
                              )
                         ## POSITIVE lookahead - requires space
                            (?= [ ])
@@ -126,25 +128,25 @@ INLINE_VOID_RE = %r{
 #            thus, use/prefer SCORE_AWD e.g. 0-3 awd
 INLINE_AWD_RE =  %r{
                    (?<inline_awd>
-                       \b (?: awd\.? | AWD ) 
+                       \b (?: awd\.? | AWD )
                   ## POSITIVE lookahead - requires space
                          (?= [ ])
-               )}x   ## note - NOT case insensitive 
+               )}x   ## note - NOT case insensitive
 
 ###
 #  canc/canc.           [cancelled]
 #    CANC
 INLINE_CANC_RE =  %r{
                    (?<inline_canc>
-                       \b (?: canc\.?  | CANC ) 
+                       \b (?: canc\.?  | CANC )
                   ## POSITIVE lookahead - requires space
                          (?= [ ])
-               )}x   ## note - NOT case insensitive 
+               )}x   ## note - NOT case insensitive
 
 
 ###
 ##   home/away/neutral  - (h), (a), (n)
-##    add support for h/a/n  
+##    add support for h/a/n
 ##       with (?-i \b [han] \b) lower-case and \b boundry - why? why not?
 
 TEAM_HOME_RE     = %r{  (?<team_home> \(h\) )}xi
@@ -167,11 +169,11 @@ RE = Regexp.union(
                     INLINE_BYE_RE,   ## (inline) match status - bye (advance to next round)
                     INLINE_ABD_RE,   ## (inline) match status - abd/abd. (abandoned)
                     INLINE_SUSP_RE,  ## (inline) match status - susp/susp.  (suspended)
-                    INLINE_PPD_RE,   ## (inline) match status - ppd/ppd. or pstp/pstp. or postp/postp. or p-p (postponed)            
-                    INLINE_VOID_RE,  ## (inline) match status - x-x (voided) 
+                    INLINE_PPD_RE,   ## (inline) match status - ppd/ppd. or pstp/pstp. or postp/postp. or p-p (postponed)
+                    INLINE_VOID_RE,  ## (inline) match status - x-x (voided)
                     INLINE_AWD_RE,   ## (inline) match status - awd/awd. (awarded)
                     INLINE_CANC_RE,  ## (inline) match status - canc/canc. (cancelled/canceled)
-                   
+
 
                     TEAM_HOME_RE,     ## (H)
                     TEAM_AWAY_RE,     ## (A)
@@ -181,23 +183,23 @@ RE = Regexp.union(
                     DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
                      TIME_RE,
-                    ATTENDANCE_RE,   # note - allow att: for now inline in matches too - why? why not? 
+                    ATTENDANCE_RE,   # note - allow att: for now inline in matches too - why? why not?
                     SCORE_LEGS_RE,
-                    SCORE_FULL_RE, 
+                    SCORE_FULL_RE,
                     SCORE_FULLER_RE,
                     SCORE_FULLER_MORE_RE,
                     SCORE_AWD_RE,   #  (inline) score awarded e.g. 3-0 awd or 0-1 awd. etc.
                     SCORE_ABD_RE,   #  (inline) score abandoned e.g. 2-1 abd.
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
-                    
+
                     ## note - add "experimental" "split" scores for now
                     SCORE_TEAM_RE,   ##  e.g. (2) 1  for "split" scores
-                    SCORE_TEAM_PEN_RE,   ##  e.g. 1 (2)  
-                    
-                    BASICS_RE, 
+                    SCORE_TEAM_PEN_RE,   ##  e.g. 1 (2)
+
+                    BASICS_RE,
                    TEXT_RE,
                      ## note - score_team_num (e.g. 0 or 10 etc.)
-                     ##            MUST BE after TEXT 
+                     ##            MUST BE after TEXT
                      ##              only match if nothing else matches (expect ANY)
                     SCORE_TEAM_NUM_RE,   ## e.g. 0 or 1 or 9 or 11 etc. (<100)
                    ANY_RE,
@@ -210,25 +212,25 @@ RE = Regexp.union(
 
 ##  ord (for ordinal number)
 ##   e.g. (51) or (1) etc.  - limit digits of number - why? why not???
- 
+
 START_WITH_ORD = %r{
-   \A  
+   \A
     [ ]*    ## ignore leading spaces (if any)
      (?<ord>
-       \(  
-        (?<value>\d+) 
+       \(
+        (?<value>\d+)
        \)
      )}ix
 
 
-###  
+###
 ##   e.g. 1930, 1986, 2002, 2010, 2022, 2026
 ##         note - only YYYY
 ##    note - look out for clubs like  1860 München (de) !!!
 ##                                    1899 Hoffenheim (de)
 ##                                    1896 Löwenherz  (ch - a.k.a. FC Winterthur ??)
 ##                    any others starting with YYYY ?!
-##    note - YEAR requires TWO (trailing) spaces !!!!! e.g. 
+##    note - YEAR requires TWO (trailing) spaces !!!!! e.g.
 ##       1930    Uruguay             4-2 Argentina
 ##       1934    Italy               2-1 Czechoslovakia   (AET)
 ##       2022    Argentina           3-3 France           (AET, 4-2 pen)
@@ -243,17 +245,17 @@ START_WITH_YEAR = %r{
      (?<year>
         \d{4}
      )
-     ## positive lookahead 
-       (?= [ ]{2} |   ## min. TWO spaces or 
+     ## positive lookahead
+       (?= [ ]{2} |   ## min. TWO spaces or
            [ ]@ |   ##   space with geo marker or
            [ ]* \z  ##    year (date) header (end-of-line/string)
-        )   
+        )
 }x
 
 
 
 ###
-## check for headings 
+## check for headings
 ##    e.g.  = heading 1
 ##          == heading 2  etc.
 ##          =Eurochampionship=
@@ -265,13 +267,13 @@ START_WITH_YEAR = %r{
 
 HEADING_RE = %r{   \A
                            [ ]*  ## ignore leading spaces (if any)
-                         (?<heading_marker> ={1,6} ) 
+                         (?<heading_marker> ={1,6} )
                            [ ]*
                             (?<heading>
                                ## must start with letter - why? why not?
                                ###   1st round
-                               ##  allow numbers e.g. Group A - 1 
-                               [^=]+?   ## use non-greedy 
+                               ##  allow numbers e.g. Group A - 1
+                               [^=]+?   ## use non-greedy
                             )
                            [ ]*  ## ignore trailing spaces (if any)
                             (?: =* )  ## allow any trailing heading markers
@@ -284,7 +286,7 @@ HRULER_RE = %r{
                  \A
                            [ ]*  ## ignore leading spaces (if any)
                     -{3,}  ## must be at least three dashes!!!
-                           [ ]*  ## ignore trailing spaces (if any)                   
+                           [ ]*  ## ignore trailing spaces (if any)
                  \z
 }ix
 

@@ -3,9 +3,9 @@ class Lexer
 
 
 ######################################################
-## goal mode (switched to by PLAYER_WITH_MINUTE_RE)  
+## goal mode (switched to by PLAYER_WITH_MINUTE_RE)
 ##
-##  note - must be enclosed in ()!!! 
+##  note - must be enclosed in ()!!!
 ##          todo - add () in basics - why? why not?
 
 
@@ -13,16 +13,16 @@ class Lexer
 ##
 ##  todo/fix - split up BASICS!!!
 ##      break out SPACES_RE  for general reuse!!!
-##       makes it easier to  use "custom" symbols (<sym>) 
+##       makes it easier to  use "custom" symbols (<sym>)
 
 
 GOAL_BASICS_RE = %r{
     (?<spaces> [ ]{2,}) |
     (?<space>  [ ])
         |
-    (?<sym>  
-        [;,)]   ##  add (-) dash too - why? why not?   
-    )   
+    (?<sym>
+        [;,)]   ##  add (-) dash too - why? why not?
+    )
 }ix
 
 
@@ -39,37 +39,37 @@ GOAL_BASICS_RE = %r{
 ##  todo/fix -- exclude (a), (h), (n)  - TEAM_AWAY, TEAM_HOME, TEAM_NEUTRAL tokens!!
 
 START_GOAL_LINE_RE = %r{
-                     \A                        
-                        [ ]*    ## ignore leading spaces (if any) 
+                     \A
+                        [ ]*    ## ignore leading spaces (if any)
                        \(
 
                        # check NEGATIVE lookahead
-                       (?! 
+                       (?!
                              ##  exclude (a), (h), (n)
                              ##    TEAM_AWAY, TEAM_HOME, TEAM_NEUTRAL
-                             (?: a|h|n )  
-                             \)  
+                             (?: a|h|n )
+                             \)
                         )
 
  }xi
 
-=begin                      
+=begin
                        # check NEGATIVE lookahead
-                       (?! 
+                       (?!
                              ##  exclude ord
-                             (?: \d+ \))  
+                             (?: \d+ \))
                                  |
                             ## exclude score - goal_line_alt!!!
                              (?: [ ]* \b
                                         \d-\d   ## score e.g. 1-0
-                                      \b  )   
-                       )	 	
+                                      \b  )
+                       )
 =end
 
 
 #############
 ##  check for goal compat(ility) "legacy" line
-##         e.g.   
+##         e.g.
 ## (6' Puskás 0-1, 9' Czibor 0-2, 11' Morlock 1-2, 18' Rahn 2-2,
 ##   84' Rahn 3-2)
 ## (6 Puskás 0-1, 9 Czibor 0-2, 11 Morlock 1-2, 18 Rahn 2-2,
@@ -78,43 +78,43 @@ START_GOAL_LINE_RE = %r{
 
 START_GOAL_LINE_COMPAT_RE = %r{
                    \A
-                        [ ]*    ## ignore leading spaces (if any) 
-                      \(  
-                      
+                        [ ]*    ## ignore leading spaces (if any)
+                      \(
+
                       ## (i) check NEGATIVE lookahead
-                      ##    exclude score e.g. 1-1 etc.        
+                      ##    exclude score e.g. 1-1 etc.
                           (?! [ ]* \b \d-\d \b)
 
-                      ## (ii) check POSITIVE lookahead                                    
+                      ## (ii) check POSITIVE lookahead
                           (?= [ ]*
                                \d{1,3}
                                    '?    ## optional minute marker
                                   (?: \+
-                                      \d{1,2}   
+                                      \d{1,2}
                                     '?    ## optional minute marker
-                                  )?     
-                            )    
+                                  )?
+                            )
 }xi
 
 
 
 ###
 ##  check for goal line (alternate syntax)
-##    (1-0 Player, 1-1 Player, ...)       
-#    must start-off OR yes, include score      
-##    
-##    note - allow "centered" style e.g. 
-##           (    Player 44' (p)  1-0  
+##    (1-0 Player, 1-1 Player, ...)
+#    must start-off OR yes, include score
+##
+##    note - allow "centered" style e.g.
+##           (    Player 44' (p)  1-0
 ##                                1-1 Player 64'   )
 START_GOAL_LINE_ALT_RE = %r{
                      \A
-                        [ ]*    ## ignore leading spaces (if any) 
-                      \(  
-                      
-                      # check POSITIVE lookahead                                    
-                       (?=  .*?         ## note - non-greedy 
-                                \b \d-\d \b    ## score e.g. 0-1 
-                         )	 	
+                        [ ]*    ## ignore leading spaces (if any)
+                      \(
+
+                      # check POSITIVE lookahead
+                       (?=  .*?         ## note - non-greedy
+                                \b \d-\d \b    ## score e.g. 0-1
+                         )
                  }xi
 
 
@@ -132,10 +132,10 @@ GOAL_NONE_RE = %r{ (?<goals_none>
 #    e.g.   (Metzger - Krämer (2), Cichy, Rahn)
 #            (Brunnenmeier 17 - Gerwien 74)
 #            (Brunnenmeier - Gerwien)
-#    that is,  NOT allowed  
+#    that is,  NOT allowed
 #    e.g.   (Metzger 83-Krämer 29, 88, Cichy 33, Rahn 37)
 #            (Brunnenmeier 17-Gerwien 74)
-#            (Brunnenmeier-Gerwien) 
+#            (Brunnenmeier-Gerwien)
 #
 #   note - allow split by - e.g.
 #     Frankfurt   4-2 Schalke     (Kreß 45, Solz 55, Trimhold 58, Huberts 73 p -
@@ -151,11 +151,11 @@ GOAL_SEP_ALT_RE = %r{
 
 
 ## e.g.  (2)
-##       (2/p), (2/pen.), (3/2p), (3/ 2 pen.) 
+##       (2/p), (2/pen.), (3/2p), (3/ 2 pen.)
 ##      -or-  (2,1pen), (3, 2 pens)
-## 
-##       (p), (pen.) (2 pen.), (2p)               
-##       (og), (o.g.), 
+##
+##       (p), (pen.) (2 pen.), (2p)
+##       (og), (o.g.),
 ##        (2og), (2 o.g.), (2ogs)
 #
 ##
@@ -173,8 +173,8 @@ GOAL_COUNT_RE = %r{
           ## opt own goals (og)
             (?<og>
              (?: (?<og_value> \d{1,2}) [ ]? )?
-                (?:ogs?|o\.g\.|o) 
-            )          
+                (?:ogs?|o\.g\.|o)
+            )
             |
           ## opt fallback - classic count/number
           (?:  (?<value> [1-9])
@@ -185,7 +185,7 @@ GOAL_COUNT_RE = %r{
                      (?:pens|pen\.?|p)
                 )?
            )
-         )  
+         )
       \)
 )}ix
 
@@ -194,20 +194,6 @@ GOAL_COUNT_RE = %r{
 
 
 
-## minute variant for  N/A not/available
-##     todo/check - find a better syntax - why? why not?
-##
-##   note  "??".to_i(10) returns 0 or
-##         "__".to_i(10) returns 0
-##   quick hack - assume 0 for n/a for now 
-
-MINUTE_NA_RE = %r{
-   (?<minute>
-      (?<=[ (])	 # positive lookbehind for space or opening 
-        (?<value> \?{2} | _{2} )
-        '   ## must have minute marker!!!!
-    )
-}ix
 
 =begin
 MINUTE_RE = %r{
@@ -216,8 +202,8 @@ MINUTE_RE = %r{
                      #    todo - add more lookbehinds e.g.  ,) etc. - why? why not?
              (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
                    (?: \+
-                     (?<value2>\d{1,3})   
-                   )?           
+                     (?<value2>\d{1,3})
+                   )?
         '     ## must have minute marker!!!!
      )
 }ix
@@ -236,19 +222,81 @@ MINUTE_RE = %r{
              (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
                 \b
                 '?    ## optional minute marker
-                
-                (?: \+ (?<value2>\d{1,2}) 
-                       \b   
+
+                (?: \+ (?<value2>\d{1,2})
+                       \b
                       '?    ## optional minute marker
                  )?
-                      
+
       )
 }ix
+
+
+
+
+
+
+
+## minute variant for  N/A not/available
+##     todo/check - find a better syntax - why? why not?
+##
+##   note  "??".to_i(10) returns 0 or
+##         "__".to_i(10) returns 0
+##   quick hack - assume 0 for n/a for now
+
+=begin
+MINUTE_NA_RE = %r{
+   (?<minute>
+      (?<=[ (])	 # positive lookbehind for space or opening
+        (?<value> \?{2} | _{2} )
+        '   ## must have minute marker!!!!
+    )
+}ix
+=end
+
+
+##
+##  keep separate? or add simply inside GOAL_MINUTE_RE - why? why not?
+
+GOAL_MINUTE_NA_RE = %r{
+     (?<goal_minute_na>
+
+       # positive lookbehind
+       (?<=[ ,;])
+
+       (?<value> \?{2})
+            '?    ## optional minute marker
+     ## note - add goal minute qualifiers here inline!!!
+        (?:
+            (?: [ ]? (?<og>   (?: \((?:og|o\.g\.|o)\))   ## allow (og)
+                                   |
+                              (?: (?:og|o\.g\.|o))      ## allow plain og
+                      )
+            )
+            |
+            (?: [ ]? (?<pen>  (?: \((?:pen\.?|p)\))   ## allow ()
+                                   |
+                              (?: (?:pen\.?|p))
+                      )
+            )
+            |
+            ## add experimental header qualifier
+            (?: [ ]? (?<hdr> \( (?:hdr\.?|h ) \) | (?: hdr\.?|h ) ))
+            |
+            ## add experimental free kick qualifier
+            (?: [ ]? (?<fk> \( (?:fk\.?|f ) \) | (?: fk\.?|f) ))
+        )?
+
+     ## note - check positive lookahead
+     (?=[ ,;)]|$)
+   )
+}ix
+
 
 ##   goal types
 # (pen.) or (pen) or (p.) or (p)
 ## (o.g.) or (og)
-##   todo/check - keep case-insensitive 
+##   todo/check - keep case-insensitive
 ##                   or allow OG or P or PEN or
 ##                   only lower case - why? why not?
 ##
@@ -260,12 +308,12 @@ GOAL_MINUTE_RE = %r{
                \b
              (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
                 '?    ## optional minute marker
-                
+
                  (?: \+ (?<value2>\d{1,2})
                       '?    ## optional minute marker
-                 )?          
-                   
-        ## note - add goal minute qualifiers here inline!!! 
+                 )?
+
+        ## note - add goal minute qualifiers here inline!!!
         (?:
             (?: [ ]? (?<og>   (?: \((?:og|o\.g\.|o)\))   ## allow (og)
                                    |
@@ -276,7 +324,7 @@ GOAL_MINUTE_RE = %r{
             (?: [ ]? (?<pen>  (?: \((?:pen\.?|p)\))   ## allow ()
                                    |
                               (?: (?:pen\.?|p))
-                      )    
+                      )
             )
             |
             ## add experimental header qualifier
@@ -287,16 +335,16 @@ GOAL_MINUTE_RE = %r{
         )?
 
         ##  add experimental seconds
-        ##    e.g. (95 secs) or (95sec) etc. 
+        ##    e.g. (95 secs) or (95sec) etc.
         (?: [ ]*  \(
                       (?<secs>\d{1,3})
                          [ ]?secs?
-                   \) 
+                   \)
         )?
      )
 
-     ## note - check positive lookahead 
-     (?=[ ,;)]|$)   
+     ## note - check positive lookahead
+     (?=[ ,;)]|$)
 }ix
 
 
@@ -308,6 +356,7 @@ GOAL_RE = Regexp.union(
     GOAL_BASICS_RE,
     GOAL_NONE_RE,
     GOAL_MINUTE_RE,
+    GOAL_MINUTE_NA_RE,
     GOAL_COUNT_RE,
    ## MINUTE_NA_RE,   ## note - add/allow not/available (n/a,na) minutes hack for now
    ## GOAL_OG_RE, GOAL_PEN_RE,
@@ -323,9 +372,9 @@ GOAL_TYPE_RE = %r{
      (?<goal_type>
                \(
                  (?:
-                      (?<og>  og|o\.g\.|o )  
+                      (?<og>  og|o\.g\.|o )
                          |
-                      (?<pen> pen\.?|p )  
+                      (?<pen> pen\.?|p )
                          |
                      ## add experimental header qualifier
                       (?<hdr>  hdr\.?|h )
@@ -371,7 +420,7 @@ PROP_GOAL_RE =  Regexp.union(
 
 
 
-def self._parse_goal_minute( str )  
+def self._parse_goal_minute( str )
     ## note - strip - leading/trailing spaces
     m = GOAL_MINUTE_RE.match( str.strip )
     if m && m.pre_match == '' && m.post_match == ''
@@ -379,11 +428,13 @@ def self._parse_goal_minute( str )
     elsif  m
         ## note - match BUT not anchored to start and end-of-string!!!
         ##  report, error somehow??
-      nil   
+      nil
     else
       nil  ## no match - return nil
     end
 end
+
+
 
 
 def self._build_goal_minute( m )
@@ -393,24 +444,41 @@ def self._build_goal_minute( m )
 
     ## stoppage/injury time (offset)
     minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-    
+
     minute[:og]  = true       if m[:og]
     minute[:pen] = true       if m[:pen]
     minute[:freekick] = true  if m[:fk]
     minute[:header] = true    if m[:hdr]
-  
+
     minute[:secs] = m[:secs].to_i(10)   if m[:secs]
-  
+
     minute
 end
 def _build_goal_minute( m ) self.class._build_goal_minute( m ); end
-    
+
+
+
+def self._build_goal_minute_na( m )
+    minute = {}
+
+    minute[:m]     =  nil   ## or use 999 or -1 or ???
+
+    minute[:og]  = true       if m[:og]
+    minute[:pen] = true       if m[:pen]
+    minute[:freekick] = true  if m[:fk]
+    minute[:header] = true    if m[:hdr]
+
+    minute
+end
+def _build_goal_minute_na( m ) self.class._build_goal_minute_na( m ); end
+
+
 
 def self._build_minute( m )
     minute = {}
     minute[:m]      = m[:value].to_i(10)   ## always required
 
-    ## stoppage/injury time (offset)   
+    ## stoppage/injury time (offset)
     minute[:offset] = m[:value2].to_i(10)   if m[:value2]
 
     minute
@@ -419,7 +487,7 @@ def _build_minute( m ) self.class._build_minute( m ); end
 
 
 
-def self._parse_goal_count( str )  
+def self._parse_goal_count( str )
     ## note - strip - leading/trailing spaces
     m = GOAL_COUNT_RE.match( str.strip )
     if m && m.pre_match == '' && m.post_match == ''
@@ -427,7 +495,7 @@ def self._parse_goal_count( str )
     elsif  m
         ## note - match BUT not anchored to start and end-of-string!!!
         ##  report, error somehow??
-      nil   
+      nil
     else
       nil  ## no match - return nil
     end
