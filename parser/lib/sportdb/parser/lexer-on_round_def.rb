@@ -2,6 +2,22 @@ module SportDb
 class Lexer
 
 
+
+ROUND_DEF_BASICS_RE = %r{
+      (?<spaces> [ ]{2,})
+    | (?<space>  [ ])
+
+    | (?<sym> [:|,] )    ### note - add comma (,) as optional separator
+}ix
+
+ROUND_DEF_RE = Regexp.union(  ROUND_DEF_BASICS_RE,
+                              DURATION_RE,  # note - duration MUST match before date
+                              DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
+                              ANY_RE,
+                           )
+
+
+
 def _on_round_def( m, ctx: )      ## note - m is MatchData object
 
 
@@ -18,23 +34,17 @@ def _on_round_def( m, ctx: )      ## note - m is MatchData object
               when ':' then  [:':']
               when ',' then  [:',']
               else
-                puts "!!! TOKENIZE ERROR (sym) - ignore sym >#{sym}<"
+                ctx.warn_ignore_sym( sym, mode: 'ROUND_DEF' )
                 nil  ## ignore others (e.g. brackets [])
               end
-           elsif m[:any]
-              ## todo/check log error
-               msg = "parse error (tokenize round_def) - skipping any match>#{m[:any]}< @#{ctx.offsets[0]},#{ctx.offsets[1]} in line >#{ctx.line}<"
-               puts "!! WARN - #{msg}"
-
-               ctx.errors << msg
-               log( "!! WARN - #{msg}" )
-
-               nil
-            else
-              ## report error/raise expection
-               puts "!!! TOKENIZE ERROR - no match found"
-               nil
-            end
+          else
+              if m[:any]
+                ctx.warn_skip_any( m[:any], mode: 'ROUND_DEF' )
+              else
+                ctx.warn_unknown_match( m, mode: 'ROUND_DEF' )
+              end
+              nil
+          end
 end
 
 end ## class Lexer

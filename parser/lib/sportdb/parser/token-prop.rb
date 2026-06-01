@@ -67,14 +67,11 @@ class Lexer
 
 
 
-###
-##  todo/fix/fix  - fix- fix -fix -fix
-##  change ^ to \A
-##    change name to START_WITH_PROP_KEY_RE !!!
 
-  PROP_KEY_RE = %r{
+
+  START_WITH_PROP_KEY_RE = %r{
+                   \A         ## note - MUST start line; leading spaces optional (eat-up)
                  (?<prop_key>
-                    ^         ## note - MUST start line; leading spaces optional (eat-up)
                      [ ]*     ##  optional leading spaces
                    (?<key>
                        (?:
@@ -141,6 +138,8 @@ class Lexer
                     (?= [ ]+|$)
                    )  ## close <prop_key> capture
                  }ix
+
+
 
 
 
@@ -271,54 +270,11 @@ PROP_BASICS_RE = %r{
 
 
 
-PROP_RE = Regexp.union(
-   MINUTE_RE,   ## e.g.  44 or 44' or 45+1 or 45+1' etc.
-
-   INLINE_CAPTAIN,  ## e.g. [c]
-   INLINE_YELLOW,   ## e.g. [Y] or [Y 44] or [Y 44'] or [Y 45+1']
-   INLINE_YELLOW_RED,  ## e.g. [Y/R] or [Y/R 78]
-   INLINE_RED,         ## e.g. [R] or [R 42] or [R 42']
-
-   PROP_KEY_INLINE_RE,
-   PROP_NAME_RE,
-   PROP_BASICS_RE,
-   ## todo/fix - add ANY_RE here too!!!
-)
-
-## note - no inline keys possible
-##         todo/fix - use custom (limited) prop basics too
-PROP_CARDS_RE =  Regexp.union(
-   MINUTE_RE,
-   PROP_NAME_RE,
-   PROP_BASICS_RE,
-   ## todo/fix - add ANY_RE here too!!!
-)
 
 
-PROP_PENALTIES_RE = Regexp.union(
-   SCORE_RE,               # e.g. 1-1 etc.
-   ENCLOSED_NAME_RE,       # e.g. (save), (post), etc.
-   PROP_NAME_RE,
-   PROP_BASICS_RE,
-   ## todo/fix - add ANY_RE here too!!!
-)
 
 
-PROP_REFEREE_RE = Regexp.union(
-   ENCLOSED_NAME_RE,       # e.g. (sold out) etc.  why? why not?
-   PROP_NUM_RE,                 # e.g. 28 000 or 28_000  (NOT 28,000 is not valid!!!)
-   PROP_KEY_INLINE_RE,
-   PROP_NAME_RE,
-   PROP_BASICS_RE,
-   ## todo/fix - add ANY_RE here too!!!
-)
 
-PROP_ATTENDANCE_RE  = Regexp.union(
-   ENCLOSED_NAME_RE,       # e.g. (sold out) etc.  why? why not?
-   PROP_NUM_RE,                 # e.g. 28 000 or 28_000  (NOT 28,000 is not valid!!!)
-   PROP_BASICS_RE,
-   ## todo/fix - add ANY_RE here too!!!
-)
 
 end  # class Lexer
 end  # module SportDb

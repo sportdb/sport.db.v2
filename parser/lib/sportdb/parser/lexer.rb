@@ -208,7 +208,7 @@ def tokenize_with_errors
             ###    ## check letter
         else
 
-          more_tokens, more_errors = _tokenize_line( line )
+          more_tokens, more_errors = _tokenize_line( line, lineno )
 
           tokens_by_line  << more_tokens
           errors          += more_errors

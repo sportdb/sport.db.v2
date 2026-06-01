@@ -44,14 +44,20 @@ require_relative 'parser/token'
 require_relative 'parser/token_helpers'
 
 
+
 require_relative 'parser/lexer_buffer'   ## incl. Tokens (aka TokenBuffer)
 
 require_relative 'parser/lexer-prep_doc'
 require_relative 'parser/lexer-prep_line'
+
 require_relative 'parser/lexer-tokenize'
 require_relative 'parser/lexer-on_round_def'
 require_relative 'parser/lexer-on_group_def'
-require_relative 'parser/lexer-on_prop_cards'
+require_relative 'parser/lexer-on_prop_misc'
+require_relative 'parser/lexer-on_prop_lineup'
+require_relative 'parser/lexer-on_prop_penalties'
+require_relative 'parser/lexer-on_goal'
+require_relative 'parser/lexer-on_top'
 require_relative 'parser/lexer'
 require_relative 'parser/lexer_tty'      ## teletype (tty) mode
 
