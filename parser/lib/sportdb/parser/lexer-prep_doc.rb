@@ -20,12 +20,7 @@ PREPROC_NOTA_BENE_RE = %r{
 
     ## positive lookahead
     ##    note - must end with blank line or end-of-file/document
-    ##    note - do NOT eat-up trailing hrule (---)
-    ##
-    ##   todo/check - check/revisit again for hrule case/excepion sample
-    ##      add here  or remove - why? why not?
-      (?=      (?: \n [ ]* -{3,} [ ]*)?
-                   \n[ ]*\n
+      (?=          \n[ ]*\n
                  | \z
         )
 }xim

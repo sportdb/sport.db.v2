@@ -1,0 +1,13 @@
+
+
+####
+##
+##  check hruler ---  (note: must be three or more dashes)
+##
+##  todo/check - still in use - or moved to table mode???
+
+---
+--------
+-----
+  ---
+      ------

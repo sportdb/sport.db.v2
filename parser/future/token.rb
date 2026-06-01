@@ -2,6 +2,17 @@
 ## "top-level" regex used for:
 
 
+HRULER_RE = %r{
+                 \A
+                           [ ]*  ## ignore leading spaces (if any)
+                    -{3,}  ## must be at least three dashes!!!
+                           [ ]*  ## ignore trailing spaces (if any)
+                 \z
+}ix
+
+
+
+
 RE = Regexp.union(
 
                     ## note - add "experimental" "split" scores for now

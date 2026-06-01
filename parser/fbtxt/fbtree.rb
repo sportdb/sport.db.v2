@@ -72,6 +72,7 @@ DEFAULT = parse_names( <<TXT )
    home_away.txt
    note.txt
    table.txt
+   notabene.txt
    status.txt
 
    penalties.txt
@@ -81,9 +82,9 @@ DEFAULT = parse_names( <<TXT )
    round_adds.txt
    geos_inline.txt
 
-   group_defs.txt
+   attendance.txt
 
-   tty.txt
+   group_defs.txt
 
     ##  round_defs.txt  -- fix
 TXT

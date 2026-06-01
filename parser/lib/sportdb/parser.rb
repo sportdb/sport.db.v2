@@ -30,6 +30,7 @@ require_relative 'parser/token-date_duration'
 require_relative 'parser/token-text'
 require_relative 'parser/token-prop_name'    ## a.k.a token-text_ii
 require_relative 'parser/token-status'
+require_relative 'parser/token-status_inline'
 require_relative 'parser/token-note'
 require_relative 'parser/token-goals'
 require_relative 'parser/token-prop'    ## team prop(erty) mode (note - must be before token)
@@ -59,7 +60,6 @@ require_relative 'parser/lexer-on_prop_penalties'
 require_relative 'parser/lexer-on_goal'
 require_relative 'parser/lexer-on_top'
 require_relative 'parser/lexer'
-require_relative 'parser/lexer_tty'      ## teletype (tty) mode
 
 
 ## note - use "embeded" racc parser runtime

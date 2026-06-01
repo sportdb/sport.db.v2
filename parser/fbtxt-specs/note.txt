@@ -1,5 +1,5 @@
 ######################
-##  check lines w/ notes
+##  check lines w/   (match)notes
 
 
 ▪ Round 18
@@ -18,11 +18,11 @@ Schwarz-Weiß     1-4 Austria W             [annulled]
 Apr 14
 Rapid            1-1 GAK
   (Wallner 62; Tutu 72)
-  [protest Rapid as referee disallowed a 45' goal by Wallner (Rapid) after the 
+  [protest Rapid as referee disallowed a 45' goal by Wallner (Rapid) after the
    break, restarting the match with a referee's ball rather than the second half
    kick-off (officially the match was interrupted until the re-start rather than
-   a break having been held); the GAK defenders had stopped playing before the 
-   goal because of a whistle from the stands which they believed to come from 
+   a break having been held); the GAK defenders had stopped playing before the
+   goal because of a whistle from the stands which they believed to come from
    the referee (for off-side - which would probably have been the correct
    decision in any case); Rapid want a replay of the 2nd half starting at 1-0;
    then GAK have requested a replay (one assumes from scratch); after the result
@@ -34,24 +34,23 @@ Rapid            1-1 GAK
 #####
 ##  check inline notes
 
-Chichester City         bye      
-Chichester City         bye        [Bury bankrupted]     
+Chichester City         bye
+Chichester City         bye        [Bury bankrupted]
 
 ▪ Round 1
-  Sheffield Wednesday     w/o Bury 
+  Sheffield Wednesday     w/o Bury
   Sheffield Wednesday     w/o Bury   [Bury bankrupted]
 
 ▪ National League, Promotion Playoff, Round 1
-  Altrincham    w/o Gateshead  
-  Altrincham    w/o Gateshead  [Gateshead not admitted due to not meeting 
-                                ground ownership requirements; 
-                                match not fixtured]    
+  Altrincham    w/o Gateshead
+  Altrincham    w/o Gateshead  [Gateshead not admitted due to not meeting
+                                ground ownership requirements;
+                                match not fixtured]
 
 
-▪ 1st Round                                              
-Nov 11  
+▪ 1st Round
+Nov 11
   Crystal Palace      0-0  Hitchin            [both qualified]
 ▪ Quarter-finals
-Jan 20  
+Jan 20
   Wanderers           0-0  Crystal Palace      [both qualified]
-

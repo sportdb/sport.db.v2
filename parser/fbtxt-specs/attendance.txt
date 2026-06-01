@@ -1,0 +1,11 @@
+
+
+## "inline" (match) attendance
+
+
+
+## todo: check grammar if geo required
+##          or only use in match header!!
+##
+##   A v B 2-1  att: 18000
+##   A 2-1 B   att: 18000

@@ -1,4 +1,6 @@
 
+####
+#  awarded  (awd/awd.)
 SW Bregenz      3-0 awd Liefering
 SW Bregenz      3-0awd Liefering
 SW Bregenz      3-0awd. Liefering
@@ -7,3 +9,10 @@ SW Bregenz 0-1 awd Liefering
 SW Bregenz 0-1awd Liefering
 SW Bregenz 0-1awd. Liefering
 SW Bregenz 0-1 awd. Liefering
+
+
+####
+#  abandoned (abd/abd.)
+SW Bregenz      2-1 abd. Liefering
+SW Bregenz      2-1 abd Liefering
+SW Bregenz      2-1abd Liefering
