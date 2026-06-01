@@ -53,13 +53,7 @@ def _on_top( m, ctx: )      ## note - m is MatchData object
             [:DATE, [m[:date], _build_date(m)]]
         elsif m[:date_legs]
             [:DATE_LEGS, [m[:date_legs], _build_date_legs(m)]]
-        elsif m[:score_team]
-            [:SCORE_TEAM, [m[:score_team], _build_score_team(m)]]
-        elsif m[:score_team_pen]
-            [:SCORE_TEAM_PEN, [m[:score_team_pen], _build_score_team_pen(m)]]
-        elsif m[:score_team_num]
-            [:SCORE_TEAM_NUM, [m[:score_team_num], _build_score_team_num(m)]]
-          elsif m[:score_legs]
+        elsif m[:score_legs]
               legs = {}
 
               ### leg1
@@ -200,12 +194,6 @@ def _on_top( m, ctx: )      ## note - m is MatchData object
             ## add score[:awarded] = true ???
             ##    or only use match status to avoid duplicate?
             [:SCORE_ABD, [m[:score_abd], score]]
-      elsif m[:minute]
-              minute = {}
-              minute[:m]      = m[:value].to_i(10)
-              minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-             ## note - for debugging keep (pass along) "literal" minute
-             [:MINUTE, [m[:minute], minute]]
         elsif m[:vs]
            [:VS, m[:vs]]
         elsif m[:sym]

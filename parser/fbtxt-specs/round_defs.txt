@@ -1,29 +1,14 @@
 ###################
-##  check definition lines  (groups, rounds/matchdays, etc.)
+##  check  rounds/matchdays, etc.
 
 
-▪ Final | July 10 
-▪ Final: July 10 
-▪ Final : July 10 
+▪ Final | July 10
+▪ Final: July 10
+▪ Final : July 10
 
-Group A  |  Brazil       Croatia              Mexico         Cameroon
-Group B  |  Spain        Netherlands          Chile          Australia
-Group C  |  Colombia     Greece               Côte d'Ivoire  Japan
-Group D  |  Uruguay      Costa Rica           England        Italy
-Group E  |  Switzerland  Ecuador              France         Honduras
-Group F  |  Argentina    Bosnia-Herzegovina   Iran           Nigeria
-Group G  |  Germany      Portugal             Ghana          United States
-Group H  |  Belgium      Algeria              Russia         South Korea
-
-
-Group A:  Brazil,  Croatia,   Mexico,   Cameroon
-Group A:  Brazil       Croatia              Mexico         Cameroon
-Group A  :  Brazil       Croatia              Mexico         Cameroon
-
-
-▪ Matchday 1  
-▪ Matchday 2  
-▪ Matchday 3  
+▪ Matchday 1
+▪ Matchday 2
+▪ Matchday 3
 
 ▪ Matchday 1  |  Thu Jun 12
 ▪ Matchday 2  |  Fri Jun 13
@@ -43,11 +28,6 @@ Group A  :  Brazil       Croatia              Mexico         Cameroon
 ▪ Matchday 13 :  Tue Jun 24
 ▪ Matchday 14:   Wed Jun 25
 
-
-Group 1  |   Brazil   Mexico   Switzerland    Yugoslavia
-Group 2  |   England  Chile    Spain          United States
-Group 3  |   Italy    India    Paraguay       Sweden
-Group 4  |   Uruguay  Bolivia  France
 
 ▪ First round | June 24 - July 2
 ▪ Final Round | July 9-16
@@ -73,7 +53,5 @@ Group 4  |   Uruguay  Bolivia  France
 ▪ Round 30 | May 31-Jun 2
 
 ## mark out of order dates in rounds - why? why not?
-##   e.g.   ca. Apr 18  
+##   e.g.   ca. Apr 18
 ▪ Round 19  | Mar 24/25,  ca. Apr 18
-
-

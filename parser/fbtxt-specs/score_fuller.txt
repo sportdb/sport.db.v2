@@ -1,0 +1,56 @@
+
+Bayern München 1-1 Chelsea (aet, win 3-4 on pens)
+
+Bayern München 1-1 Chelsea (HT 0-0, FT 1-1, AET, PEN 3-4)
+
+
+Barcelona 2-2 Chelsea  (win 2-3 on aggregate)
+
+Real Madrid 2-1 Bayern München  (aet, agg 3-3, win 1-3 on pens)
+
+
+#########
+###  with (all) half-time, full-time (90min) scores
+
+Bayern München 2-1 Real Madrid  (HT 1-0)
+Chelsea 1-0 Barcelona  (HT 1-0)
+Barcelona 2-2 Chelsea  (HT 2-1, AGG 2-3)
+Real Madrid 2-1 Bayern München  (HT 2-1, FT 2-1, AET, AGG 3-3, PEN 1-3)
+
+
+
+Barcelona 4-1 Arsenal   (6-3 on agg)
+Barcelona 4-1 Arsenal  (HT 3-1, AGG 6-3)
+
+Manchester United 3-2 Bayern München  (agg 4-4, win 1-2 on away goals)
+Manchester United 3-2 Bayern München  (HT 3-1, AGG 4-4, AWAY 1-2)
+
+Bayern München 2-1 Manchester United  (HT 0-1)
+Arsenal 2-2 Barcelona  (HT 0-0)
+
+
+
+###
+#  check golden goal (sudden death) and silver goal in extra time
+
+Germany          2-1 Czech Republic   (aet)
+Germany          2-1 Czech Republic   (aet/gg)
+Germany          2-1 Czech Republic   (a.e.t./g.g.)
+Germany          2-1 Czech Republic   (a.e.t/g.g)
+Germany          2-1 Czech Republic   (agget)
+Germany          2-1 Czech Republic   (asdet)
+
+Germany          v Czech Republic   2-1 (aet/gg)
+Germany          v Czech Republic   2-1 (a.e.t./g.g.)
+Germany          v Czech Republic   2-1 (a.e.t/g.g)
+Germany          v Czech Republic   2-1 (agget)
+Germany          v Czech Republic   2-1 (asdet)
+
+
+France             2-1 Italy           (aet)
+France             2-1 Italy           (aet/gg)
+
+
+Greece             1-0 Czech Republic   (aet/sg)
+Greece             1-0 Czech Republic   (a.e.t./s.g.)
+Greece             1-0 Czech Republic   (asget)

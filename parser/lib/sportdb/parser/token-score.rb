@@ -2,7 +2,7 @@ module SportDb
 class Lexer
 
 
-   
+
 
     ## todo/check: use ‹› (unicode chars) to mark optional parts in regex constant name - why? why not?
 
@@ -10,11 +10,11 @@ class Lexer
     #  english helpers (penalty, extra time, ...)
     ##   note - p must go last (shortest match)
     #     pso = penalty shootout
-    ###  - note - remove PSO for now (may add later back) - why? why not? 
+    ###  - note - remove PSO for now (may add later back) - why? why not?
     #
     #  todo/fix/clean-up - keep it simple -  remove optional trailing dot (.)
     #                       from pen., p., agg. etc. - why? why not?
-    #                        always use (simply) pen, p, agg 
+    #                        always use (simply) pen, p, agg
     #                      (also) remove  a.e.t. / a.e.t option - why? why not?
     #
     ##  UPDATE mar/2026:  addd pens too - keep - why? why not?
@@ -39,12 +39,12 @@ class Lexer
     ## after (silver goal) extra time
     AETSG_EN  = '(?-i: AET/SG | ASGET | ' +
                       'aet/sg | a\.e\.t\.?/s\.g\.? | asget  )'
-    
+
     ##  agg/agg.  or AGG
     AGG_EN = '(?-i: AGG | agg\.? )'   ## aggregate e..g  4-4 agg etc.
-  
 
-    
+
+
     ## regex score helpers
     ##    note - MUST double escape \d e.g. \\d!!!   if not "simple" string (e.g. '' but %Q<>)
 
@@ -62,7 +62,7 @@ class Lexer
                   >
     SCORE_LOOKAHEAD = '(?= [ ,\]] | $)'
 
-    
+
     ####
     ## after extra-time with golden goal/sudden death & silver goal rule
     ##        note - golden goal & silver goal EXCLUDE penalties!!!
@@ -97,7 +97,7 @@ class Lexer
                       )?
                    )? # note: make half time (HT) score optional for now
                  \)
-             )?                     
+             )?
             #{SCORE_LOOKAHEAD}
     )}ix
 
@@ -109,7 +109,7 @@ class Lexer
     SCORE__P_ET__RE = %r{
         (?<score_full>
            \b
-            (?: #{SCORE_P} [ ]+ 
+            (?: #{SCORE_P} [ ]+
              )?             ## note: make penalty (P) score optional for now
             #{SCORE_ET}
             #{SCORE_LOOKAHEAD}
@@ -118,16 +118,16 @@ class Lexer
                 ## note: \b works only after non-alphanum e.g. )
 
 
-    ##  note: allow SPECIAL cases WITHOUT full time scores 
+    ##  note: allow SPECIAL cases WITHOUT full time scores
     ##         AND with pen in last position!
-    ##           2-2 a.e.t., 3-4 pen. 
-    ##           2-2 a.e.t.  3-4 pen.  ## or without comma separator - why? why not?   
+    ##           2-2 a.e.t., 3-4 pen.
+    ##           2-2 a.e.t.  3-4 pen.  ## or without comma separator - why? why not?
     SCORE__ET_P__RE = %r{
         (?<score_full>
            \b
-            #{SCORE_ET}  
+            #{SCORE_ET}
                (?: [ ]*,[ ]* | [ ]+ )
-            #{SCORE_P}  
+            #{SCORE_P}
             #{SCORE_LOOKAHEAD}
         )}ix
                 ## todo/check:  remove loakahead assertion here - why require space?
@@ -138,9 +138,9 @@ class Lexer
     SCORE__FT_P__RE = %r{
         (?<score_full>
            \b
-            (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})  
-                [ ]*,[ ]*    ## note - comma required!!! 
-            #{SCORE_P}  
+            (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
+                [ ]*,[ ]*    ## note - comma required!!!
+            #{SCORE_P}
             #{SCORE_LOOKAHEAD}
         )}ix
 
@@ -154,8 +154,8 @@ class Lexer
                  \(
                      (?<ht1>\d{1,2}) - (?<ht2>\d{1,2})
                  \)
-                [ ]*,[ ]*    ## note - comma required!!! 
-            #{SCORE_P}  
+                [ ]*,[ ]*    ## note - comma required!!!
+            #{SCORE_P}
             #{SCORE_LOOKAHEAD}
         )}ix
 
@@ -167,7 +167,7 @@ class Lexer
     SCORE__P__RE = %r{
         (?<score_full>
            \b
-             #{SCORE_P}  
+             #{SCORE_P}
              #{SCORE_LOOKAHEAD}
          )}ix
                 ## todo/check:  remove loakahead assertion here - why require space?
@@ -176,12 +176,12 @@ class Lexer
    ####
    ## support short all-in-one e.g.
    ##  e.g.      3-4 pen. 2-2 a.e.t. ( 1-1, 1-1 ) becomes
-   ##   3-4 pen. (2-2, 1-1, 1-1)            
-         
+   ##   3-4 pen. (2-2, 1-1, 1-1)
+
    SCORE__P_ET_FT_HT_V2__RE = %r{
           (?<score_full>
                \b
-                #{SCORE_P} [ ]+       
+                #{SCORE_P} [ ]+
                    \(
                    [ ]*
                (?<et1>\d{1,2}) - (?<et2>\d{1,2})
@@ -196,7 +196,7 @@ class Lexer
                                ## note: \b works only after non-alphanum e.g. )
 
 
-    # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen. 
+    # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen.
     SCORE__ET_FT_HT_P__RE = %r{
           (?<score_full>
                \b
@@ -218,7 +218,7 @@ class Lexer
             )}ix       ## todo/check:  remove loakahead assertion here - why require space?
                                ## note: \b works only after non-alphanum e.g. )
 
-    
+
 
     ## e.g. 3-4 pen. 2-2 a.e.t. (1-1, 1-1)  or
     ##      3-4p 2-2aet (1-1, )     or
@@ -287,19 +287,25 @@ class Lexer
 
 
 
-             
+
 #############################################
 # map tables
 #  note: order matters; first come-first matched/served
 
+##  note   2-2, 5-1 pen.   must get priority (get before SCORE_LEGS!!!)
+##                          break out
+##   note - no need for Regexp.union for now (only single regex!)
+
+SCORE_FULL_1ST_RE  = SCORE__FT_P__RE        # e.g. 2-2, 5-1 pen.
+
+
 SCORE_FULL_RE = Regexp.union(
-  SCORE__ET_GG_SG__RE,       # e.g. 3-1 aet/gg  
-  SCORE__P_ET_FT_HT_V2__RE,  # e.g. 5-1 pen. (2-2, 1-1, 1-0)  
-  SCORE__ET_FT_HT_P__RE,    # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen. 
+  SCORE__ET_GG_SG__RE,       # e.g. 3-1 aet/gg
+  SCORE__P_ET_FT_HT_V2__RE,  # e.g. 5-1 pen. (2-2, 1-1, 1-0)
+  SCORE__ET_FT_HT_P__RE,    # e.g. 2-2 a.e.t. (1-1, 1-0), 5-1 pen.
   SCORE__P_ET_FT_HT__RE,    # e.g. 5-1 pen. 2-2 a.e.t. (1-1, 1-0)
   SCORE__P_FT_HT__RE,     # e.g. 5-1 pen. (1-1)
   SCORE__ET_P__RE,        # e.g. 2-2 a.e.t., 5-1 pen.
-  SCORE__FT_P__RE,        # e.g. 2-2, 5-1 pen.
   SCORE__FT_HT_P__RE,     # e.g. 2-2 (1-1), 5-1 pen.
   SCORE__P_ET__RE,        # e.g.  5-1 pen. 2-2 a.e.t.  or  2-2 a.e.t. (w/o pen)
   SCORE__P__RE,           # e.g. 5-1 pen.
@@ -313,7 +319,7 @@ SCORE_FULL_RE = Regexp.union(
 ###
 ##
 ##  add support for score awarded (inline style)
-##    3-0 awd  3-0 awd. 3-0awd 
+##    3-0 awd  3-0 awd. 3-0awd
 ##    0-1 awd  or 0-1 AWD etc.
 
 ##
@@ -327,7 +333,7 @@ SCORE_AWD_RE  = %r{
                    (?-i: awd\.? | AWD )
                ## POSITIVE lookahead - requires space
                (?= [ ])
-             )}ix  
+             )}ix
 
 ###
 ##
@@ -341,7 +347,7 @@ SCORE_ABD_RE  = %r{
                   (?-i: abd\.? | ABD )
                ## POSITIVE lookahead - requires space
                (?= [ ])
-             )}ix  
+             )}ix
 
 #####
 ##      2-1
@@ -349,10 +355,10 @@ SCORE_ABD_RE  = %r{
 ###  note - was SCORE__FT__RE
 ###           changed to "generic" SCORE_RE
 ###                and
-##             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2}) 
+##             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
 ##      changed
-##             (?<score1>\d{1,2}) - (?<score2>\d{1,2}) 
-##                to 
+##             (?<score1>\d{1,2}) - (?<score2>\d{1,2})
+##                to
 ##             pattern match not necessarily the full-time (ft) scoreline!!!
 ##    - pattern also used for goal seq(uence) e.g. 1-0 Kane, 1-1 Johnson
 SCORE_RE  = %r{
@@ -360,84 +366,8 @@ SCORE_RE  = %r{
               \b
                (?<score1>\d{1,2}) - (?<score2>\d{1,2})
               \b
-             )}ix  
+             )}ix
 
-
-######
-#  add support for "split" score
-#    note - for now (2) 1  is REQUIRED
-
-SCORE_TEAM_RE = %r{
-            (?<score_team>
-                 \(
-                    (?<score_i> \d{1,2}) 
-                 \)
-                 [ ]*   ## note - space optional- why? why not?
-                    (?<score_ii> \d{1,2})
-                \b 
-            )
-        }ix   
-
-#     "penalty"-style  (4) is assumed penalty score
-#    note - for now 1 (4) is REQUIRED
-
-SCORE_TEAM_PEN_RE = %r{
-            (?<score_team_pen>
-                 \b
-                    (?<score_i> \d{1,2})
-                 \b
-                   [ ]*  ## note - space optional- why? why not?  
-                 \(
-                    (?<score_pen> \d{1,2}) 
-                 \)
-            )
-        }ix   
-
-########
-## note - score_team_num (<100) e.g. 0, 1, .., 10, 11, .. 99
-##      use a different name - why? why not? 
-##   note - must be surrouned by space
-SCORE_TEAM_NUM_RE = %r{
-    ## positive lookbehind
-     (?<= [ ])
-
-      (?<score_team_num> \d{1,2} )
-
-     ## positive lookahead
-     (?= [ ]|\z)
-}x
-
-
-
-def self._build_score_team( m )
-            score = {}
-            ##  note - score team is "generic"
-            ##      might be full-time (ft) or
-            ##         after extra-time (aet) or such
-            ##         or even undecided/unknown
-            ##    thus, use score_i/score_ii 
-            score[:score] = [m[:score_i].to_i(10),
-                             m[:score_ii].to_i(10)]  
-            score
-end 
-def _build_score_team( m ) self.class._build_score_team( m ); end 
-
-
-def self._build_score_team_pen( m )
-            score = {}
-            score[:score] = [m[:score_i].to_i(10),
-                             m[:score_pen].to_i(10)]  
-            score
-end 
-def _build_score_team_pen( m ) self.class._build_score_team_pen( m ); end 
-
-
-def self._build_score_team_num( m )
-            score = {}
-            score[:score] = m[:score_team_num].to_i(10)
-            score
-end 
-def _build_score_team_num( m ) self.class._build_score_team_num( m ); end 
 
 
 end  #  class Lexer

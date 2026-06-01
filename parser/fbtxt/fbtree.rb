@@ -51,6 +51,15 @@ end
 
 DEFAULT = parse_names( <<TXT )
    dates.txt
+   date_legs.txt
+
+   ## check score formats
+   score_full.txt
+   score_full2.txt
+   score_fuller.txt
+   score_fuller2.txt
+   score_legs.txt
+   score_status.txt
 
    ### check goal formats
    goals.txt
@@ -69,13 +78,14 @@ DEFAULT = parse_names( <<TXT )
    referees.txt
    lineups.txt
 
-   rounds_add.txt
+   round_adds.txt
    geos_inline.txt
 
-   score_team.txt
+   group_defs.txt
+
    tty.txt
 
-    ##  defs.txt  -- fix
+    ##  round_defs.txt  -- fix
 TXT
 
 

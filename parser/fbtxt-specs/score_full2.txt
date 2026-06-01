@@ -1,0 +1,47 @@
+
+##
+#  check for special cases
+
+
+## full-time, penalty-shootout  - no extra time!!!
+
+Rapid v Austria    2-2, 5-4 pen.
+
+
+Rapid v Austria    5-4 pen. (2-2)
+Rapid v Austria    5-4 pen. (2-2, 1-1)
+
+
+### special case (ii)  - full-time & half-time with penalties
+Rapid v Austria     2-2 (1-1), 3-4 pen.
+
+
+## penalty & extra-time
+Rapid v Austria    2-2 aet, 5-4 pen.
+Rapid v Austria    2-2 aet 5-4 pen.
+
+Rapid v Austria    5-4 pen. 2-2 aet
+
+
+
+## penalty only
+Rapid v Austria    5-4 pen.
+
+## extra-time only
+Rapid v Austria    5-4 a.e.t.
+Rapid v Austria    5-4 aet
+
+
+#########
+### "inline" versions
+
+Rapid   2-2, 5-4 pen.  Austria
+Rapid   5-4 pen. (2-2)   Austria
+Rapid   5-4 pen. (2-2, 1-1)  Austria
+Rapid    2-2 (1-1), 3-4 pen.  Austria
+Rapid  2-2 aet, 5-4 pen.   Austria
+Rapid  2-2 aet 5-4 pen.  Austria
+Rapid  5-4 pen. 2-2 aet   Austria
+Rapid   5-4 pen.   Austria
+Rapid  5-4 a.e.t.  Austria
+Rapid  5-4 aet  Austria

@@ -140,19 +140,6 @@ May 22 20:45 @ Santiago Bernabéu, Madrid    att: 73490
 
 
 
-
-####
-#  via rsssf
-#     https://www.rsssf.org/ec/ec200910.html
-#
-#   note - try/use SCORE_LEGS, DATE_LEGS "compact" style
-
-▪ Quarter-Finals
-Mar 30 & Apr 7
-  Bayern München (Ger) v Manchester United (Eng)   2-1 2-3 (agg 4-4, win on away goals)
-Mar 31 & Apr 6
-  Arsenal (Eng)        v FC Barcelona (Esp)        2-2 1-4 (agg 3-6)
-
 ▪ Final
 May 22 @ Santiago Bernabeu, Madrid
   Internazionale (Ita) v Bayern München (Ger)      2-0
@@ -300,81 +287,9 @@ April 18 20:45 (19:45 UTC+1)  Chelsea FC (ENG)  1-0  FC Barcelona (ESP)
 
 
 
-####
-#  via rsssf
-#     https://www.rsssf.org/ec/ec20112.html
-#
-#   note - try/use SCORE_LEGS, DATE_LEGS "compact" style
-
-▪ Semi-Finals
-Apr 17 & 25
-   Bayern München (Ger)  v Real Madrid (Esp)    2-1, 1-2 aet (agg 3-3, win 3-1 on pens)
-Apr 28 & 24
-  Chelsea (Eng)         v FC Barcelona (Esp)   1-0, 2-2     (agg 3-2)
-
 ▪ Final
 May 19 @ Allianz Arena, München     att: 66000
   Bayern München (Ger)  v Chelsea (Eng)       1-1 aet, 3-4 pen
     (Müller 83'; Drogba 89')
   Penalties:  Lahm, Gomez, Neuer, Olic (miss), Schweinsteiger (miss);
               Mata (miss), David Luiz, Lampard, Cole, Drogba
-
-
-###
-# more styles
-
-▪ Final
-May 19 @ Allianz Arena, München
-  Bayern München 1-1 Chelsea (aet, win 3-4 on pens)
-
-Bayern München 1-1 Chelsea (HT 0-0, FT 1-1, AET, PEN 3-4)
-
-Bayern München v Chelsea  1-1 aet (1-1, 0-0) 3-4 pen
-Bayern München v Chelsea  1-1 aet, 3-4 pen
-Bayern München v Chelsea  3-4 pen (1-1, 1-1, 0-0)
-Bayern München v Chelsea  3-4 pen 1-1 aet (1-1, 0-0)
-Bayern München v Chelsea  3-4 pen 1-1 aet
-
-Bayern München  1-1 aet (1-1, 0-0) 3-4 pen  Chelsea
-Bayern München  1-1 aet, 3-4 pen  Chelsea
-Bayern München  3-4 pen (1-1, 1-1, 0-0)  Chelsea
-Bayern München   3-4 pen 1-1 aet (1-1, 0-0)  Chelsea
-Bayern München   3-4 pen. 1-1 a.e.t.   Chelsea
-
-
-###
-#  check golden goal (sudden death) and silver goal in extra time
-
-Germany          2-1 Czech Republic   (aet)
-Germany          2-1 Czech Republic   (aet/gg)
-Germany          2-1 Czech Republic   (a.e.t./g.g.)
-Germany          2-1 Czech Republic   (a.e.t/g.g)
-Germany          2-1 Czech Republic   (agget)
-Germany          2-1 Czech Republic   (asdet)
-
-Germany          v Czech Republic   2-1 (aet/gg)
-Germany          v Czech Republic   2-1 (a.e.t./g.g.)
-Germany          v Czech Republic   2-1 (a.e.t/g.g)
-Germany          v Czech Republic   2-1 (agget)
-Germany          v Czech Republic   2-1 (asdet)
-
-
-France             2-1 Italy           (aet)
-France             2-1 Italy           (aet/gg)
-
-
-Greece             1-0 Czech Republic   (aet/sg)
-Greece             1-0 Czech Republic   (a.e.t./s.g.)
-Greece             1-0 Czech Republic   (asget)
-
-
-
-France             2-1 aet/gg Italy
-France             2-1aet/gg Italy
-France             2-1 a.e.t./g.g. Italy
-France             2-1 agget Italy
-France             2-1 asdet Italy
-
-France             2-1 aet/gg (1-1, 1-0) Italy
-France             2-1 aet/gg (1-1,) Italy
-France             2-1 aet/gg (1-1) Italy

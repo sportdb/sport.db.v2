@@ -1,0 +1,22 @@
+
+
+Group A  |  Brazil       Croatia              Mexico         Cameroon
+Group B  |  Spain        Netherlands          Chile          Australia
+Group C  |  Colombia     Greece               Côte d'Ivoire  Japan
+Group D  |  Uruguay      Costa Rica           England        Italy
+Group E  |  Switzerland  Ecuador              France         Honduras
+Group F  |  Argentina    Bosnia-Herzegovina   Iran           Nigeria
+Group G  |  Germany      Portugal             Ghana          United States
+Group H  |  Belgium      Algeria              Russia         South Korea
+
+
+Group A:  Brazil,  Croatia,   Mexico,   Cameroon
+Group A:  Brazil       Croatia              Mexico         Cameroon
+Group A  :  Brazil       Croatia              Mexico         Cameroon
+
+
+
+Group 1  |   Brazil   Mexico   Switzerland    Yugoslavia
+Group 2  |   England  Chile    Spain          United States
+Group 3  |   Italy    India    Paraguay       Sweden
+Group 4  |   Uruguay  Bolivia  France

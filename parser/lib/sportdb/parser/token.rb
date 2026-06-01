@@ -188,8 +188,12 @@ RE = Regexp.union(
                     NOTE_RE,  ### fix - change to INLINE_NOTE !!!
                     DATE_LEGS_RE,  # note - must go before date!!!
                     DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
-                     TIME_RE,
+                    TIME_RE,
+
                     ATTENDANCE_RE,   # note - allow att: for now inline in matches too - why? why not?
+
+                    SCORE_FULL_1ST_RE, # note - MUST go before SCORE_LEGS_RE!!
+                                       ##   e.g. 2-2, 5-1 pen.
                     SCORE_LEGS_RE,
                     SCORE_FULL_RE,
                     SCORE_FULLER_RE,
@@ -198,16 +202,9 @@ RE = Regexp.union(
                     SCORE_ABD_RE,   #  (inline) score abandoned e.g. 2-1 abd.
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
 
-                    ## note - add "experimental" "split" scores for now
-                    SCORE_TEAM_RE,   ##  e.g. (2) 1  for "split" scores
-                    SCORE_TEAM_PEN_RE,   ##  e.g. 1 (2)
 
                     BASICS_RE,
                    TEXT_RE,
-                     ## note - score_team_num (e.g. 0 or 10 etc.)
-                     ##            MUST BE after TEXT
-                     ##              only match if nothing else matches (expect ANY)
-                    SCORE_TEAM_NUM_RE,   ## e.g. 0 or 1 or 9 or 11 etc. (<100)
                    ANY_RE,
                       )
 
