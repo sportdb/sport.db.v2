@@ -1,23 +1,10 @@
-## pulls in
 require 'cocos'
 
 
-####
-# try a (simple) tokenizer/parser with regex
-
-## note - match line-by-line
-#            avoid massive backtracking by definition
-#             that is, making it impossible
-
-## sym(bols) -
-##  text - change text to name - why? why not?
 
 
 require_relative 'parser/version'
 
-##
-## generic helper
-require_relative 'parser/blocktxt'
 
 
 ## core machinery

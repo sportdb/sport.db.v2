@@ -18,19 +18,19 @@ def _on_round_def( m, ctx: )      ## note - m is MatchData object
            if m[:spaces] || m[:space]
                nil    ## skip spaces
            elsif m[:date]
-            [:DATE, [m[:date], _build_date( m )]]
-          elsif m[:duration]
-            [:DURATION, [m[:duration], _build_duration( m )]]
-          elsif m[:sym]
+             [:DATE, [m[:date], _build_date( m )]]
+           elsif m[:duration]
+             [:DURATION, [m[:duration], _build_duration( m )]]
+           elsif m[:sym]
               [m[:sym].to_sym]   ## e.g. [:'|'],[:':'],[:',']
-          else
+           else
               if m[:any]
                 ctx.warn_skip_any( m[:any], mode: 'ROUND_DEF' )
               else
                 ctx.warn_unknown_match( m, mode: 'ROUND_DEF' )
               end
               nil
-          end
+           end
 end
 
 end ## class Lexer

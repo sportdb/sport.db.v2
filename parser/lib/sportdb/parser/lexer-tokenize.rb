@@ -325,14 +325,14 @@ def _tokenize_line( line, lineno )
               else
                  [m[:sym].to_sym]
               end
-          else
+           else
              if m[:any]
                 ctx.warn_skip_any( m[:any], mode: 'GEO' )
              else
                 ctx.warn_unknown_match( m, mode: 'GEO' )
              end
              nil
-          end
+           end
       elsif @re == PROP_CARDS_RE       then  _on_prop_cards( m, ctx: ctx )
       elsif @re == PROP_LINEUP_RE      then  _on_prop_lineup( m, ctx: ctx )
       elsif @re == PROP_ATTENDANCE_RE  then  _on_prop_attendance( m, ctx: ctx )

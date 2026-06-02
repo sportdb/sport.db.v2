@@ -151,8 +151,8 @@ def tokenize_with_errors
                         { date: date[1] }.merge( time[1] )
                       ]
                nodes << [:DATETIME, val]
-         ### support  date time with comma too - why? why not?
-         elsif buf.match?( :DATE, :',', :TIME )
+          ### support  date time with comma too - why? why not?
+          elsif buf.match?( :DATE, :',', :TIME )
                date  = buf.next[1]
                _    = buf.next  ## ignore comma
                time = buf.next[1]
@@ -162,7 +162,7 @@ def tokenize_with_errors
                         { date: date[1] }.merge( time[1] )
                       ]
                nodes << [:DATETIME, val]
-         elsif buf.match?( :GOAL_MINUTE, :',', :GOAL_MINUTE )
+          elsif buf.match?( :GOAL_MINUTE, :',', :GOAL_MINUTE )
              ## note - only advance by two tokens!
              ##     allows more :GOAL_MINUTE sequences!! e.g. 12,13,14 etc!!!
              ##
@@ -172,7 +172,7 @@ def tokenize_with_errors
              _ = buf.next  ## eat-up goal_minute_sep a.k.a. comma (,)
                            ##   and replace with dedicated sep(arator)
              nodes << [:GOAL_MINUTE_SEP,"<|GOAL_MINUTE_SEP|>"]
-         elsif buf.match?( :',', :INLINE_ATTENDANCE )
+          elsif buf.match?( :',', :INLINE_ATTENDANCE )
              ## note  - allow optional comma before inline attendance
              ## help parser with comma shift/reduce conflict
              ##   change ',' to INLINE_ATTENDANCE_SEP !!!

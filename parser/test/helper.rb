@@ -8,16 +8,20 @@ require 'sportdb/parser'
 
 
 
+require_relative 'blocktxt'     ## read/parse_blocktxt
+
+
+
 ########
 ## add shortcut helpers
 class Minitest::Test
-  
+
   MatchLine = RaccMatchParser::MatchLine
 
   GoalLine    = RaccMatchParser::GoalLine
   Goal        = RaccMatchParser::Goal
   GoalMinute  = RaccMatchParser::GoalMinute
-  Minute      = RaccMatchParser::Minute     #  Struct.new( :m, :offset )  
+  Minute      = RaccMatchParser::Minute     #  Struct.new( :m, :offset )
 
   BlankLine  = RaccMatchParser::BlankLine
 
@@ -69,7 +73,7 @@ class Minitest::Test
   def read_n_assert_tests( path )
 
      tests =  read_blocktxt( path )
-    
+
      tests.each_with_index do |(txt, exp_txt),i|
 
 
@@ -86,17 +90,17 @@ class Minitest::Test
           puts
           puts "==> #{path} [#{i+1}/#{tests.size}] parsing..."
           tree = parse_matches( txt )
-    
+
           puts "-- #{path} [#{i+1}/#{tests.size}]  -  test (assertions) for parse tree:"
           pp exp_tree
-    
+
           assert_equal exp_tree, tree
           puts "    OK - parse trees equal / match"
         end
      end
   end
 
-  
+
 
   def _2x( node )  [node, node.clone];  end
   def _3x( node )  [node, node.clone, node.clone];  end
@@ -118,7 +122,5 @@ class Minitest::Test
   def _12x( node )  [node, node.clone, node.clone, node.clone, node.clone,
                           node.clone, node.clone, node.clone, node.clone, node.clone,
                           node.clone, node.clone];  end
-  
-end  # class Minitest::Test  
 
-
+end  # class Minitest::Test

@@ -175,7 +175,7 @@ def self._parse_score_full( str )
 
     if m && m.pre_match == '' && m.post_match == ''
        pp m
-       score = _build_score_full( m )
+       _build_score_full( m )
     elsif  m
         ## note - match BUT not anchored to start and end-of-string!!!
         ##  report, error somehow??

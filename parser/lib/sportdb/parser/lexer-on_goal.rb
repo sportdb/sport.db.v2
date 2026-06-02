@@ -67,7 +67,7 @@ GOAL_ALT_RE = Regexp.union(
 
 def _on_goal_alt( m, ctx: )
 
-          if m[:space] || m[:spaces]
+         if m[:space] || m[:spaces]
               nil    ## skip space(s)
          elsif m[:prop_name]    ## note - change prop_name to player
              [:PLAYER, m[:name]]

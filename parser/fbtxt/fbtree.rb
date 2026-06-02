@@ -22,8 +22,8 @@ def fbtree( args, path: PATH )
 
       filename = find_file!( name, path: path )
 
-      ## txt = read_text( filename )
-      txt = read_blocktxt( filename ).text
+      txt = read_text( filename )
+      ## txt = read_blocktxt( filename ).text
 
       parser = RaccMatchParser.new( txt, debug: true )
       tree = parser.parse

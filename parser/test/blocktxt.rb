@@ -1,11 +1,17 @@
 ###
 #  generic block text/txt helper
+#
+#
+#    move to cocos - why? why not?
 
-## todo/chekc - find a better name SectTxt or ??
+
+## todo/check - find a better name SectTxt or ??
+
+
 
 class BlockTxt
 
-def self.parse( txt ) new( txt); end 
+def self.parse( txt ) new( txt); end
 def self.read( path ) parse( read_text( path )); end
 
 
@@ -33,14 +39,6 @@ def dump   ## for debugging
 end
 
 
-##
-#  quick support for  __END__
-END_RE = %r{ ^
-                          [ ]* __END__ [ ]*
-                            .*?
-                         \z   ## note - until end-of-string/file !!!
-                      }mx
-
 
 ##    SECT_RE (old) = %r{^
 ##                                 [ ]* --- [ ]*
@@ -52,18 +50,28 @@ END_RE = %r{ ^
 ## e.g.  §  or §§ or § § § or such
 ##    maybe allow  :: § :: or such too   or --- § --- or such
 SECT_RE = %r{^
-                     [ ]* § 
-                         ([ ]*§)* 
+                     [ ]* §
+                         ([ ]*§)*
                      [ ]*
                  $}x
 
 ## split by " => or  =====> "
-## todo/check - subsect?? find a better name?  in/out or txt1/txt2 
+## todo/check - subsect?? find a better name?  in/out or txt1/txt2
 SUBSECT_RE = %r{^
-                        [ ]* 
-                            =+ > 
+                        [ ]*
+                            =+ >
                         [ ]*
                   $}x
+
+
+##
+#  quick support for  __END__
+END_RE = %r{ ^
+                          [ ]* __END__ [ ]*
+                            .*?
+                         \z   ## note - until end-of-string/file !!!
+                      }mx
+
 
 
 
