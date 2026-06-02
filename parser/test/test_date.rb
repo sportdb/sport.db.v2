@@ -13,10 +13,10 @@ class TestDate < Minitest::Test
 
 TESTS = [
       ## "european"-style
-      ['20.01.2026',          { d:20, m:1, y:2026} ],  
-      ['20.1.26',             { d:20, m:1, yy:26} ],  
+      ['20.01.2026',          { d:20, m:1, y:2026} ],
+      ['20.1.26',             { d:20, m:1, yy:26} ],
       ['20.1.',               { d:20, m:1} ],
-      ## "classic" american  - month/day 
+      ## "classic" american  - month/day
       ['Tu July 9 2024',      { wday:2, m:7, d:9, y:2024}],
       ['Sunday Jul 14 2024',  { wday:7, m:7, d:14, y:2024}],
       ['Tue Feb 13',          { wday:2, m:2, d:13}],
@@ -25,23 +25,39 @@ TESTS = [
       ['Sunday 14 Jul 2024',  { wday:7, m:7, d:14, y:2024}],
       ['Tue 13 Feb',          { wday:2, m:2, d:13}],
       ## iso date   (YYYY-MM-DD)
-      ['2026-01-20',          { d:20, m:1, y:2026} ],  
+      ['2026-01-20',          { d:20, m:1, y:2026} ],
       ['2026-1-20',           { d:20, m:1, y:2026} ],
-      ['2026-01-02',          { d:2, m:1, y:2026} ],  
-      ['2026-1-2',            { d:2, m:1, y:2026} ],  
+      ['2026-01-02',          { d:2, m:1, y:2026} ],
+      ['2026-1-2',            { d:2, m:1, y:2026} ],
 ]
 
+TESTS_DATE = [
+      ## "european"-style
+      ['20.01.2026',          Date.new( 2026, 1, 20 )],
+      ['20.1.26',             Date.new( 2026, 1, 20 )],
+      ## "classic" american  - month/day
+      ['Tu July 9 2024',      Date.new( 2024, 7, 9 )],
+      ['Sunday Jul 14 2024',  Date.new( 2024, 7, 14)],
+      ## "classic" - day/month
+      ['Tu 9 July 2024',      Date.new( 2024, 7, 9)],
+      ['Sunday 14 Jul 2024',  Date.new( 2024, 7, 14)],
+      ## iso date   (YYYY-MM-DD)
+      ['2026-01-20',          Date.new( 2026, 1, 20)],
+      ['2026-1-20',           Date.new( 2026, 1, 20)],
+      ['2026-01-02',          Date.new( 2026, 1, 2)],
+      ['2026-1-2',            Date.new( 2026, 1, 2)],
+]
 
 
 def test_date
   TESTS.each do |text, exp_date|
-  
+
      ## puts "==> #{text}"
      date=SportDb::Lexer._parse_date( text )
      ## pp date
      ## pp SportDb::Lexer::DATE_RE.match( text )
 
-     if date 
+     if date
        ## pp date
        puts "OK >#{text}<  -  #{date.pretty_inspect}"
        assert_equal exp_date, date
@@ -52,6 +68,21 @@ def test_date
   end
 end
 
+def test_date_obj
+  TESTS_DATE.each do |text, exp_date|
+
+     date=SportDb::Lexer.parse_date( text )
+
+     if date
+       ## pp date
+       puts "OK >#{text}<  -  #{date.pretty_inspect}"
+       assert_equal exp_date, date
+     else
+       puts "!! date NOT matching - #{text}"
+       assert false
+     end
+  end
+end
 
 
 end  # class TestDate

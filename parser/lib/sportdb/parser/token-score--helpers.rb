@@ -49,15 +49,6 @@ def self._build_score_full( m )
                             m[:ft2].to_i(10)]  if m[:ft1] && m[:ft2]
               score[:ht] = [m[:ht1].to_i(10),
                             m[:ht2].to_i(10)]  if m[:ht1] && m[:ht2]
-              score[:agg] = [m[:agg1].to_i(10),
-                             m[:agg2].to_i(10)]  if m[:agg1] && m[:agg2]
-
-              if m[:away1] && m[:away2]
-                 score[:away] = [m[:away1].to_i(10),
-                                 m[:away2].to_i(10)]
-              elsif m[:away]    ## fallback if no away score; check away flag
-                 score[:away] = true
-              end
 
               ## add golden/silver flags
               score[:golden] = true   if m[:aetgg]  ## golden goal (gg)/sudden death (sd)
@@ -168,6 +159,33 @@ def _build_score_full( m )        self.class._build_score_full( m ); end
 def _build_score_fuller( m )      self.class._build_score_fuller( m ); end
 def _build_score_fuller_more( m ) self.class._build_score_fuller_more( m ); end
 def _build_score_legs( m )        self.class._build_score_legs( m ); end
+
+
+
+
+###
+## add parser helpers
+
+def self._parse_score_full( str )
+    ## note - strip - leading/trailing spaces automatic - why? why not?
+
+    m = Regexp.union(
+              SCORE_FULL_1ST_RE,
+              SCORE_FULL_RE ).match( str.strip )
+
+    if m && m.pre_match == '' && m.post_match == ''
+       pp m
+       score = _build_score_full( m )
+    elsif  m
+        ## note - match BUT not anchored to start and end-of-string!!!
+        ##  report, error somehow??
+      nil
+    else
+      nil  ## no match - return nil
+    end
+end
+
+
 
 end  # class Lexer
 end  # module SportDb

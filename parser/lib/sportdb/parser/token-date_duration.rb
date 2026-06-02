@@ -52,7 +52,7 @@ DURATION_I_RE =  %r{
       [ ]
    )?
    (?<month_name1>#{MONTH_NAMES})
-      [ ] 
+      [ ]
    (?<day1>\d{1,2})
    ## optional year
    (  ,?   # optional comma
@@ -68,7 +68,7 @@ DURATION_I_RE =  %r{
       [ ]
    )?
    (?<month_name2>#{MONTH_NAMES})
-      [ ] 
+      [ ]
    (?<day2>\d{1,2})
    ## optional year
    (  ,?   # optional comma
@@ -81,14 +81,14 @@ DURATION_I_RE =  %r{
 
 
 
-#   FIX - remove this variant 
+#   FIX - remove this variant
 #         "standardize on month day [year]" !!!!
 
 =begin
 ###
 #   variant ii
 # e.g. 26 July - 27 July
-#      26 July, 
+#      26 July,
 XXX_DURATION_II_RE =  %r{
 (?<duration>
     \b
@@ -101,7 +101,7 @@ XXX_DURATION_II_RE =  %r{
       [ ]
    (?<month_name1>#{MONTH_NAMES})
    ## optional year
-   (  
+   (
        [ ]
       (?<year1>\d{4})
    )?
@@ -128,12 +128,12 @@ XXX_DURATION_II_RE =  %r{
 
 #  variant ii
 #  add support for shorthand
-#     August 16-18, 2011     
+#     August 16-18, 2011
 #     September 13-15, 2011
 #      October 18-20, 2011
 #      March 6-8 2012
 #      March 6-8
-#     
+#
 #   - add support for August 16+17 or such (and check 16+18)
 #       use <op> to check if day2 is a plus or range or such - why? why not?
 
@@ -150,7 +150,7 @@ DURATION_II_RE =  %r{
             ,?     ## optional comma
             [ ]
             (?<year1>\d{4})
-          )?     ## optional year   
+          )?     ## optional year
    )
    \b
 )}ix
@@ -166,25 +166,6 @@ DURATION_RE = Regexp.union(
 )
 
 
-def self._build_duration( m )
-            ## todo/check/fix - if end: works for kwargs!!!!!
-            duration = { start: {}, end: {}}
-
-            duration[:start][:y] = m[:year1].to_i(10)  if m[:year1]
-            duration[:start][:m] = MONTH_MAP[ m[:month_name1].downcase ]   if m[:month_name1]
-            duration[:start][:d]  = m[:day1].to_i(10)   if m[:day1]
-            duration[:start][:wday] = DAY_MAP[ m[:day_name1].downcase ]   if m[:day_name1]
-
-            duration[:end][:y] = m[:year2].to_i(10)  if m[:year2]
-            duration[:end][:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
-            duration[:end][:d]  = m[:day2].to_i(10)   if m[:day2]
-            duration[:end][:wday] = DAY_MAP[ m[:day_name2].downcase ]   if m[:day_name2]
-
-            duration
-end
-def _build_duration(m) self.class._build_duration( m ); end
-
 
 end  #   class Lexer
 end  # module SportDb
-

@@ -207,5 +207,26 @@ TEXT_RE = %r{
 }ix
 
 
+
+
+
+###
+## helper for testing regex match for team names
+
+def self._parse_team( str )
+    ## note - strip - leading/trailing spaces
+    m = TEXT_RE.match( str.strip )
+    if m && m.pre_match == '' && m.post_match == ''
+      m
+    elsif  m
+        ## note - match BUT not anchored to start and end-of-string!!!
+        ##  report, error somehow??
+      nil
+    else
+      nil  ## no match - return nil
+    end
+end
+
+
 end # class Lexer
 end # module SportDb
