@@ -71,7 +71,6 @@ DEFAULT = parse_names( <<TXT )
 
    home_away.txt
    note.txt
-   table.txt
    notabene.txt
    status.txt
 

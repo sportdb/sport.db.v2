@@ -7,7 +7,7 @@ $LOAD_PATH.unshift( './lib' )
 require 'sportdb/parser'
 
 
-PROP_KEY_RE  = SportDb::Lexer::PROP_KEY_RE
+PROP_KEY_RE  = SportDb::Lexer::START_WITH_PROP_KEY_RE
 PROP_NAME_RE = SportDb::Lexer::PROP_NAME_RE
 
 
@@ -97,7 +97,11 @@ texts.each do |text|
   puts "==> #{text}"
   m=PROP_KEY_RE.match( text )
 
-  if m
+  if m && m.begin(0) == 0
+    print "  "
+    pp m
+  elsif m
+    puts "!! prop key matching starting at pos #{m.begin(0)}"
     print "  "
     pp m
   else
@@ -108,26 +112,28 @@ end
 
 
 texts = [## try teams
-         "Achilles'29 II  xxxx",
+         "Achilles'29 II  xxxx",   #=> !! "II"   note - numbers NOT supported
          "  UDI/Beter Bed  ",
          "  UDI / Beter Bed  ",
          "  UDI/ Beter Bed  ",
          "  UDI /Beter Bed  ",
          "UDI'Beter Bed",
          "UDI' Beter Bed",
-         "UDI 'Beter Bed",
-         "UDI ' Beter Bed",
+         "UDI 'Beter Bed",    #=> "UDI 'Beter Bed"
+         "UDI ' Beter Bed",   #=> "UDI"
          "One/Two ",
          "One-Two ",
          "One - Two ",
          "111 ",
-         "FC Köln: ",
-         "Stop. ",
-         "Frank V. 24'.",
-         "Frank V. 24'. ",
+         "FC Köln: ",       #=> !! "FC"   note - colon(:) NOT defined in lookahead!!!
+         "Stop. ",          #> "Stop."
+         "Frank V. 24'",    #=> "Frank V."
+         "Frank V. 24",     #=> "Frank V."
+         "Frank V.24",      #=> "Frank"
          "Frank V.",
          "J.Doe",
          "J. Doe",
+         "K.-H.Förster",    #=> "K.-H.Förster"
          ]
 
 
@@ -138,7 +144,11 @@ texts.each do |text|
   puts "==> #{text}"
   m=PROP_NAME_RE.match( text )
 
-  if m
+  if m && m.begin(0) == 0
+    print "  "
+    pp m
+  elsif m
+    puts "!! prop name matching starting at pos #{m.begin(0)}"
     print "  "
     pp m
   else

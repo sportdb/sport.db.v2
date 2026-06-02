@@ -81,8 +81,7 @@ def tokenize_with_errors
 
 
         next  if line.start_with?('#')   ###  skip comments
-
-        line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
+        ## note - (inline) end-of-line comments NOT supported
 
 
         ####
@@ -116,27 +115,6 @@ def tokenize_with_errors
            ## note - nota bene always resets parser mode to std/top-level!!!
            @re = RE
            tokens_by_line << [[:NOTA_BENE, m[:nota_bene]]]
-       elsif @re == RE && (m = TABLE_RE.match(line))
-            @re = TABLE_MORE_RE  ## switch into table mode
-            if m[:table_heading]
-              tokens_by_line << [[:TABLE_HEADING, m[:table_heading]]]
-            else  ## assume table (line) e.g. m[:table]
-              tokens_by_line << [[:TABLE_LINE, line]]
-            end
-        elsif @re == TABLE_MORE_RE
-            ### todo/fix - check if no match and report/add error!!
-            ##        for now (ummatched) line gets auto-added as table line!!!
-            ##
-            ##   note - MUST be followed by blank line (or nota bene/heading)
-            ##            to switch back into to top-level!!!!
-            m = TABLE_MORE_RE.match(line)
-            if m[:table_note]
-              tokens_by_line << [[:TABLE_NOTE, m[:table_note]]]
-            elsif m[:table_divider]
-              tokens_by_line << [[:TABLE_DIVIDER, m[:table_divider]]]
-            else  ## assume table (line) e.g. m[:table]
-              tokens_by_line << [[:TABLE_LINE, line]]
-            end
         else
 
           more_tokens, more_errors = _tokenize_line( line, lineno )

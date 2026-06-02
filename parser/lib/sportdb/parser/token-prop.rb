@@ -42,6 +42,7 @@ class Lexer
 
 
   ## (i) starting w/ letters
+  ##                   note - incl./allows digits (0-9)
   ##          e.g. a1, a2000, etc.
   ##
   ## note - added back optional trailing dot (.) for abbrev. word  !!!
@@ -220,25 +221,27 @@ class Lexer
                    )
                     ## note - NO spaces allowed for key for now!!!
                      :
-                    (?=[ ]+)  ## possitive lookahead (must be followed by space!!)
+                    ## possitive lookahead (must be followed by space!!)
+                    (?=[ ]+)
                    )
                  }ix
 
 
+
+## note allow underscore inline e.g.
+##  5_000
+## discuss/check - allow space inline (e.g. 5 000) - why? why not?
+
 PROP_NUM_RE = %r{
              \b
               (?<num>
-                    ## note allow underscore inline or space e.g.
-                    ##  5_000
-                    ##  allow space inline (e.g. 5 000) - why? why not?
-                  (?<value> [1-9]
-                            (?: _?
-                                [0-9]+
-                             )*
+                  (?<value> [0-9]+
+                             (?: _ [0-9]+)*
                   )
               )
              \b
-            }ix
+            }x
+
 
 ### todo/fix - allow more chars in enclosed name  - why? why not?
 ##                     e.g.  (') - Cote D'Ivore etc.

@@ -52,6 +52,13 @@ MAGIC_COMMENT_RE = %r{  \A
         end
 
 
+      line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
+
+
+
+
+
+
         elsif @re != TABLE_MORE_RE &&  (m = HRULER_RE.match(line))
            ## note - hruler (---)
            ##          will only match if NOT in table mode!!!
@@ -140,3 +147,26 @@ MAGIC_COMMENT_RE = %r{  \A
                   tokens.pop  if tokens[-1][0] == :NEWLINE
                 end
            end
+
+
+                  elsif @re == RE && (m = TABLE_RE.match(line))
+            @re = TABLE_MORE_RE  ## switch into table mode
+            if m[:table_heading]
+              tokens_by_line << [[:TABLE_HEADING, m[:table_heading]]]
+            else  ## assume table (line) e.g. m[:table]
+              tokens_by_line << [[:TABLE_LINE, line]]
+            end
+        elsif @re == TABLE_MORE_RE
+            ### todo/fix - check if no match and report/add error!!
+            ##        for now (ummatched) line gets auto-added as table line!!!
+            ##
+            ##   note - MUST be followed by blank line (or nota bene/heading)
+            ##            to switch back into to top-level!!!!
+            m = TABLE_MORE_RE.match(line)
+            if m[:table_note]
+              tokens_by_line << [[:TABLE_NOTE, m[:table_note]]]
+            elsif m[:table_divider]
+              tokens_by_line << [[:TABLE_DIVIDER, m[:table_divider]]]
+            else  ## assume table (line) e.g. m[:table]
+              tokens_by_line << [[:TABLE_LINE, line]]
+            end
