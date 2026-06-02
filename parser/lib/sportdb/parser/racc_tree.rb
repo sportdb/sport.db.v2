@@ -5,7 +5,7 @@
 class RaccMatchParser
 
 =begin
-RefereeLine = Struct.new( :name, :country ) do 
+RefereeLine = Struct.new( :name, :country ) do
   def pretty_print( printer )
     printer.text( "<RefereeLine " )
     printer.text( self.name )
@@ -16,7 +16,7 @@ end
 =end
 
 ## support multiple referees (incl. assistant refs etc.)
-RefereeLine = Struct.new( :referees ) do 
+RefereeLine = Struct.new( :referees ) do
   def pretty_print( printer )
     printer.text( "<RefereeLine " )
     printer.text( self.referees.pretty_inspect )
@@ -28,16 +28,16 @@ Referee = Struct.new( :name, :country ) do
   def to_s
     buf = String.new
     buf <<  self.name
-    buf << " (#{self.country})"    if self.country 
+    buf << " (#{self.country})"    if self.country
     buf
   end
 
   def pretty_print( printer )
     printer.text( to_s )
-  end  
+  end
 end
 
-AttendanceLine = Struct.new( :att ) do 
+AttendanceLine = Struct.new( :att ) do
   def pretty_print( printer )
     printer.text( "<AttendanceLine #{self.att}>" )
   end
@@ -45,7 +45,7 @@ end
 
 
 
-PenaltiesLine = Struct.new( :penalties ) do   
+PenaltiesLine = Struct.new( :penalties ) do
   def pretty_print( printer )
     printer.text( "<PenaltiesLine " )
     printer.text( self.penalties.pretty_inspect )
@@ -59,21 +59,21 @@ Penalty = Struct.new( :name, :score, :note ) do
     buf = String.new
     buf << "#{self.score[0]}-#{self.score[1]} "   if self.score
     buf <<  self.name
-    buf << " (#{self.note})"    if self.note 
+    buf << " (#{self.note})"    if self.note
     buf
   end
 
 
   def pretty_print( printer )
     printer.text( to_s )
-  end  
+  end
 end
 
 
 
 
 ##  find a better name for player (use bookings?) - note - red/yellow card for trainer possible
-CardsLine = Struct.new( :type, :bookings ) do   
+CardsLine = Struct.new( :type, :bookings ) do
   def pretty_print( printer )
     printer.text( "<CardsLine " )
     printer.text( self.type )
@@ -92,7 +92,7 @@ Booking = Struct.new( :name, :minute ) do
 
   def pretty_print( printer )
     printer.text( to_s )
-  end  
+  end
 end
 
 
@@ -111,11 +111,11 @@ end
 Lineup     = Struct.new( :name, :captain, :cards, :sub ) do
   def pretty_print( printer )
     buf = String.new
-    buf <<  self.name 
+    buf <<  self.name
     buf << " [c]"   if captain
     buf << " cards=" + self.cards.pretty_inspect    if cards
     buf << " sub=" + self.sub.pretty_inspect      if sub
-    printer.text( buf ) 
+    printer.text( buf )
   end
 end
 
@@ -130,18 +130,18 @@ Card       = Struct.new( :name, :minute ) do
 
   def pretty_print( printer )
     printer.text( to_s )
-  end  
+  end
 end
 
 
 Sub        = Struct.new( :minute, :sub )  do
   def pretty_print( printer )
-    buf = String.new 
+    buf = String.new
     buf << "("    ## note - possibly recursive (thus, let minute go first/print first/upfront)
-    buf << "#{self.minute.to_s} "   if self.minute  
-    buf << "#{self.sub.pretty_inspect}" 
+    buf << "#{self.minute.to_s} "   if self.minute
+    buf << "#{self.sub.pretty_inspect}"
     buf << ")"
-    printer.text( buf ) 
+    printer.text( buf )
   end
 end
 
@@ -201,13 +201,6 @@ class BlankLine
   end
 end
 
-## todo/check - find a better name for hruler - divider?  or ??? - why? why not?
-class HRuler   ## h(orizontal) ruler (for breaks; new scopes) 
-  def pretty_print( printer )
-    printer.text( "<HRuler>" )
-  end
-end
-
 
 
 NoteLine = Struct.new( :text ) do
@@ -222,32 +215,6 @@ NotaBene = Struct.new( :text ) do
   end
 end
 
-
-##  todo/check - rename TableHeading to TableHeader - why? why not?
-TableHeading = Struct.new( :text ) do
-  def pretty_print( printer )
-    printer.text( "<TableHeading #{self.text}>" )
-  end
-end
-
-##  todo/check - rename TableDivider to TableRule/TableRuler/TableLine - why? why not?
-TableDivider = Struct.new( :text ) do
-  def pretty_print( printer )
-    printer.text( "<TableDivider #{self.text}>" )
-  end
-end
-
-TableLine = Struct.new( :text ) do
-  def pretty_print( printer )
-    printer.text( "<TableLine #{self.text}>" )
-  end
-end
-
-TableNote = Struct.new( :text ) do
-  def pretty_print( printer )
-    printer.text( "<TableNote #{self.text}>" )
-  end
-end
 
 
 
@@ -278,7 +245,7 @@ MatchLineBye   = Struct.new( :team, :note ) do
     printer.text( "#{self.team} bye")
     printer.text( " note=#{self.note.pretty_inspect}" )  if self.note
     printer.text( ">" )
-  end  
+  end
 end
 
 MatchLineWalkover   = Struct.new( :team1, :team2, :note ) do
@@ -287,10 +254,10 @@ MatchLineWalkover   = Struct.new( :team1, :team2, :note ) do
     printer.text( "#{self.team1} w/o #{self.team2}")
     printer.text( " note=#{self.note.pretty_inspect}" )  if self.note
     printer.text( ">" )
-  end  
+  end
 end
 
-MatchLineLegs   = Struct.new( :team1, :team2, 
+MatchLineLegs   = Struct.new( :team1, :team2,
                               :score )  do   ## change to geos - why? why not?
   def pretty_print( printer )
     printer.text( "<MatchLineLegs " )
@@ -300,26 +267,26 @@ MatchLineLegs   = Struct.new( :team1, :team2,
     members.zip(values) do |name, value|
       next if [:team1, :team2].include?( name )
       next if value.nil?
-      
+
       printer.text( "#{name}=#{value.pretty_inspect}" )
-    end    
+    end
 
     printer.text( ">" )
-  end  
+  end
 end
 
 
 #
 #  note: use two status attributes for now
 #         1) inline_status and 2) (note_)status
-#              for now  e.g.  A abd. B     vs   A  v B [abadoned] 
+#              for now  e.g.  A abd. B     vs   A  v B [abadoned]
 #                             A 3-0 awd B  vs   A  3-0 B [awarded]
 #   note - BOTH might be present at the same time
 
 
 MatchLine   = Struct.new( :header,  :tty,   ## tty = TELETYPE MODE for teams and score!!
                           :num, :date, :time, :time_local, :year,
-                          :team1, :team2, 
+                          :team1, :team2,
                           :score,
                           :status,  :status_inline, :status_note,
                           :geo,
@@ -335,12 +302,12 @@ MatchLine   = Struct.new( :header,  :tty,   ## tty = TELETYPE MODE for teams and
     members.zip(values) do |name, value|
       next if [:team1, :team2].include?( name )
       next if value.nil?
-      
+
       printer.text( "#{name}=#{value.pretty_inspect}" )
-    end    
+    end
 
     printer.text( ">" )
-  end  
+  end
 
 end
 
@@ -351,12 +318,12 @@ GoalLine    = Struct.new( :goals1, :goals2 ) do
     printer.text( "goals1=" + self.goals1.pretty_inspect + "," )
     printer.breakable
     printer.text( "goals2=" + self.goals2.pretty_inspect + ">" )
-  end  
+  end
 
 ##  def clone
-##         _clone = GoalLine.new( goals1: goals1.clone, 
+##         _clone = GoalLine.new( goals1: goals1.clone,
 ##                           goals2: goals2.clone )
-##                  
+##
 ##         puts "[debug] clone #{self.pretty_inspect} => #{_clone.pretty_inspect}"
 ##
 ##         _clone
@@ -386,7 +353,7 @@ Goal        = Struct.new( :player, :minutes, :count ) do
 
   def pretty_print( printer )
     printer.text( to_s )
-  end  
+  end
 
 ##  def clone
 ##      puts "[debug] clone #{self.pretty_inspect}"
@@ -402,7 +369,7 @@ GoalLineAlt = Struct.new( :goals ) do
   def pretty_print( printer )
     printer.text( "<GoalLineAlt " )
     printer.text( "goals=" + self.goals.pretty_inspect + ">" )
-  end  
+  end
 end
 
 
@@ -423,7 +390,7 @@ GoalAlt   = Struct.new( :score, :player, :minute, :goal_type ) do
 
   def pretty_print( printer )
     printer.text( to_s )
-  end  
+  end
 end
 
 
@@ -432,7 +399,7 @@ GoalLineCompat = Struct.new( :goals ) do
   def pretty_print( printer )
     printer.text( "<GoalLineCompat " )
     printer.text( "goals=" + self.goals.pretty_inspect + ">" )
-  end  
+  end
 end
 
 ##
@@ -443,7 +410,7 @@ end
 GoalCompat    = Struct.new( :score, :player, :minute, :goal_type ) do
   def to_s
     buf = String.new
-    buf << "#{self.minute}"    
+    buf << "#{self.minute}"
     buf << " #{self.player}"
     buf << " #{self.goal_type}"                  if self.goal_type
     buf << " #{self.score[0]}-#{self.score[1]}"  if self.score
@@ -452,7 +419,7 @@ GoalCompat    = Struct.new( :score, :player, :minute, :goal_type ) do
 
   def pretty_print( printer )
     printer.text( to_s )
-  end  
+  end
 end
 
 
@@ -477,7 +444,7 @@ GoalMinute      = Struct.new( :m, :offset, :secs,
       buf = String.new
       buf << "#{self.m}"
       buf << "'"
-      buf << "+#{self.offset}"  if self.offset 
+      buf << "+#{self.offset}"  if self.offset
       buf << " (og)"   if self.og
       buf << " (pen)"  if self.pen
       buf << " (f)"  if self.freekick
@@ -485,23 +452,23 @@ GoalMinute      = Struct.new( :m, :offset, :secs,
       buf << " (#{self.secs} secs)"   if self.secs
       buf
     end
- 
-    def pretty_print( printer ) 
-       printer.text( to_s ) 
-    end  
+
+    def pretty_print( printer )
+       printer.text( to_s )
+    end
 
     ### quick hack:
     ### split struct into  Minute+GoalType structs
     def to_minute
-        Minute.new( m:      self.m, 
+        Minute.new( m:      self.m,
                     offset: self.offset,
                     secs:   self.secs )
     end
 
     def to_goal_type
-        if self.og || self.pen || self.header || self.freekick   
-          GoalType.new( og:       self.og, 
-                        pen:      self.pen, 
+        if self.og || self.pen || self.header || self.freekick
+          GoalType.new( og:       self.og,
+                        pen:      self.pen,
                         header:   self.header,
                         freekick: self.freekick )
         else
@@ -511,14 +478,14 @@ GoalMinute      = Struct.new( :m, :offset, :secs,
 
 ##    def clone
 ##        puts "[debug] clone #{self.pretty_inspect}"
-##        GoalMinute.new( m: m.clone, 
-##                        offset: offset.clone, 
+##        GoalMinute.new( m: m.clone,
+##                        offset: offset.clone,
 ##                        secs: secs.clone,
-##                        og: og.clone, 
-##                        pen: pen.clone, 
-##                        header: header.clone, 
+##                        og: og.clone,
+##                        pen: pen.clone,
+##                        header: header.clone,
 ##                        freekick: freekick.clone )
-##                 
+##
 ##    end
 end
 
@@ -532,10 +499,10 @@ GoalType  = Struct.new( :og, :pen, :header, :freekick )  do
       buf << "(h)"    if self.header
       buf
     end
- 
-    def pretty_print( printer ) 
-       printer.text( to_s ) 
-    end  
+
+    def pretty_print( printer )
+       printer.text( to_s )
+    end
 end
 
 
@@ -544,14 +511,14 @@ Minute      = Struct.new( :m, :offset, :secs )  do
       buf = String.new
       buf << "#{self.m}"
       buf << "'"
-      buf << "+#{self.offset}"      if self.offset 
+      buf << "+#{self.offset}"      if self.offset
       buf << "/#{self.secs} secs"   if self.secs
       buf
     end
- 
-    def pretty_print( printer ) 
-       printer.text( to_s ) 
-    end  
+
+    def pretty_print( printer )
+       printer.text( to_s )
+    end
 end
 
 end  # class RaccMatchParser
