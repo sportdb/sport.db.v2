@@ -3,19 +3,13 @@ class Lexer
 
 
 
-ROUND_DEF_BASICS_RE = %r{
-      (?<spaces> [ ]{2,})
-    | (?<space>  [ ])
-
-    | (?<sym> [:|,] )    ### note - add comma (,) as optional separator
-}ix
-
-ROUND_DEF_RE = Regexp.union(  ROUND_DEF_BASICS_RE,
+### note - add comma (,) as optional separator
+ROUND_DEF_RE = Regexp.union(  SPACES_RE,
                               DURATION_RE,  # note - duration MUST match before date
                               DATE_RE,  ## note - date must go before time (e.g. 12.12. vs 12.12)
-                              ANY_RE,
+                              / (?<sym> [:|,] ) /x,
+                              ANY_RE
                            )
-
 
 
 def _on_round_def( m, ctx: )      ## note - m is MatchData object
@@ -28,14 +22,7 @@ def _on_round_def( m, ctx: )      ## note - m is MatchData object
           elsif m[:duration]
             [:DURATION, [m[:duration], _build_duration( m )]]
           elsif m[:sym]
-              case  m[:sym]
-              when '|' then  [:'|']
-              when ':' then  [:':']
-              when ',' then  [:',']
-              else
-                ctx.warn_ignore_sym(  m[:sym], mode: 'ROUND_DEF' )
-                nil  ## ignore others (e.g. brackets [])
-              end
+              [m[:sym].to_sym]   ## e.g. [:'|'],[:':'],[:',']
           else
               if m[:any]
                 ctx.warn_skip_any( m[:any], mode: 'ROUND_DEF' )

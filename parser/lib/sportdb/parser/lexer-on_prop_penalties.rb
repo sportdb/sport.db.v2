@@ -5,10 +5,11 @@ class Lexer
 
 
 PROP_PENALTIES_RE = Regexp.union(
+   SPACES_RE,
    SCORE_RE,               # e.g. 1-1 etc.
    ENCLOSED_NAME_RE,       # e.g. (save), (post), etc.
    PROP_NAME_RE,
-   PROP_BASICS_RE,
+    /  (?<sym>  [;,]) /x    ## add [] too - why? why not?
    ## todo/fix - add ANY_RE here too!!!
 )
 
@@ -23,15 +24,7 @@ def _on_prop_penalties( m, ctx: )      ## note - m is MatchData object
          elsif m[:score]
               [:SCORE, [m[:score], _build_score( m )]]
          elsif m[:sym]
-            case m[:sym]
-            when ',' then [:',']
-            when ';' then [:';']
-            when '[' then [:'[']
-            when ']' then [:']']
-            else
-              ctx.warn_ignore_sym( m[:sym], mode: 'PROP_PENALTIES' )
-              nil  ## ignore others (e.g. brackets [])
-            end
+              [m[:sym].to_sym]   ## e.g. [:','] or [:';']
          else
             ctx.warn_unknown_match( m, mode: 'PROP_PENALTIES ')
             nil

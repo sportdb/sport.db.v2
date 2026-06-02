@@ -66,23 +66,14 @@ def _on_top( m, ctx: )      ## note - m is MatchData object
             @re = GEO_RE
             @geo_count = 0
             [:'@']
-          when ',' then [:',']
-          when ';' then [:';']
-          when '/' then [:'/']
-          when '|' then [:'|']
-          when '[' then [:'[']  ## fix - no longer in use on top-level??
-          when ']' then [:']']  ## fix - no longer in use on top-level??
-          when '-' then [:'-']
           when '('    ## enter goal scorer mode on "free-floating" open paranthesis!!!
              _trace( 'ENTER GOAL_RE MODE' )
              @re = GOAL_RE
               ## note - eat-up ( for now; do NOT pass along as token
               ##       pass along "virutal" INLINE GOALS - why? why not?
               [:INLINE_GOALS, "<|INLINE_GOALS|>"]
-          when ')' then [:')']
           else
-            ctx.warn_ignore_sym( m[:sym] )
-            nil
+             [m[:sym].to_sym]
           end
         else
            if m[:any]

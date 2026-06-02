@@ -5,31 +5,6 @@ class Lexer
 
 
 
-##
-## note VS
-##  remove VS for now
-##  e.g.     Olympia Wijgmaal v VS Kortenaken
-
-
-BASICS_RE = %r{
-    (?<vs>
-       (?<=[ ])	# positive lookbehind for space
-       (?-i:
-           vs\.?|v
-       )        # note - only match case sensitive (downcased letters)!!!
-                # note -  bigger match first e.g. vs than v etc.
-       (?=[ ])   # positive lookahead for space
-    )
-       |
-    (?<spaces> [ ]{2,}) |
-    (?<space>  [ ])
-        |
-    (?<sym> [,;/@|()\[\]-] )   ### note: add parantheses too e.g () - why? why not?
-}ix
-
-
-
-
 ###
 ## add att(endance) e.g.  att: 18000
 ##
@@ -62,6 +37,27 @@ TEAM_NEUTRAL_RE  = %r{  (?<team_neutral> \(n\) )}ix
 
 
 
+##
+## note VS
+##  remove VS for now
+##  e.g.     Olympia Wijgmaal v VS Kortenaken
+
+
+
+## note - only match case sensitive (downcased letters)!!!
+## note -  bigger match first e.g. vs than v etc.
+VS_RE = %r{
+    (?<vs>
+       (?<=[ ])	# positive lookBEHIND for space
+       (?-i:
+           vs\.?|v
+       )
+       (?=[ ])   # positive lookAHEAD for space
+    )
+}ix
+
+
+
 
 ##############
 ## "top-level" regex used for:
@@ -69,8 +65,8 @@ TEAM_NEUTRAL_RE  = %r{  (?<team_neutral> \(n\) )}ix
 ##    - match_header & match_line_more
 ##    - match_line
 
-
 RE = Regexp.union(
+                    SPACES_RE,
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
 
                     INLINE_WO_RE,    ## (inline) match status - w/o (walkout)
@@ -105,9 +101,11 @@ RE = Regexp.union(
                     SCORE_ABD_RE,   #  (inline) score abandoned e.g. 2-1 abd.
                     SCORE_RE,   ## note basic score e.g. 1-1 must go after SCORE_FULL_RE!!!
 
+                    VS_RE,
 
-                    BASICS_RE,
                    TEXT_RE,
+
+              %r{ (?<sym> [,@()-] ) }x,   ## todo - check if "standalone" comma (,) in use?
                    ANY_RE,
                       )
 

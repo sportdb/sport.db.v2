@@ -93,22 +93,6 @@ START_GOAL_LINE_ALT_RE = %r{
 
 
 
-##
-##  todo/fix - split up BASICS!!!
-##      break out SPACES_RE  for general reuse!!!
-##       makes it easier to  use "custom" symbols (<sym>)
-
-
-GOAL_BASICS_RE = %r{
-    (?<spaces> [ ]{2,}) |
-    (?<space>  [ ])
-        |
-    (?<sym>
-        [;,)]   ##  add (-) dash too - why? why not?
-    )
-}ix
-
-
 ###
 ##  e.g.  (-; Metzger)
 GOAL_NONE_RE = %r{ (?<goals_none>

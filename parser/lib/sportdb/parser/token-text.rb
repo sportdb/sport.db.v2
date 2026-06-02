@@ -7,17 +7,6 @@ class Lexer
 ##    do NOT use (anymore) as generic TEXT_RE
 
 
-
-## todo - use ANY_RE  to token_commons or such - for shared by many?
-
-## general catch-all  (RECOMMENDED (ALWAYS) use as last entry in union)
-##   to avoid advance of pos match!!!
-ANY_RE = %r{
-               (?<any> .)
-          }ix
-
-
-
 ## note - TEXT_RE used for TEAM_NAMES
 ##       plus as "legacy" shortcut for (simple) group or round names e.g.
 ##                       Group A, Group 1, ..

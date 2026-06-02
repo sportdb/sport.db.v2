@@ -22,6 +22,28 @@ require_relative 'parser/blocktxt'
 
 ## core machinery
 
+##
+## add shared/most basic regexes here
+## todo - use ANY_RE  to token_commons or such - for shared by many?
+module SportDb
+class Lexer
+
+## general catch-all  (RECOMMENDED (ALWAYS) use as last entry in union)
+##   to avoid advance of pos match!!!
+ANY_RE = %r{
+               (?<any> .)
+          }ix
+
+SPACES_RE = %r{
+                  (?<spaces> [ ]{2,})
+                | (?<space>  [ ])
+             }ix
+
+
+end # class Lexer
+end # module SportDb
+
+
 require_relative 'parser/token-score'
 require_relative 'parser/token-score_full'
 require_relative 'parser/token-score_fuller'

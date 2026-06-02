@@ -2,14 +2,17 @@ module SportDb
 class Lexer
 
 
+
+
 GOAL_RE = Regexp.union(
-    GOAL_BASICS_RE,
+    SPACES_RE,
     GOAL_NONE_RE,
     GOAL_MINUTE_RE,
     GOAL_MINUTE_NA_RE,
     GOAL_COUNT_RE,
     PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
-    GOAL_SEP_ALT_RE,
+    GOAL_SEP_ALT_RE,   ##  note - add dash (-) with (required) spaces
+    /  (?<sym> [;,)])  /x
     ## todo/fix - add ANY_RE !!!!
 )
 
@@ -34,10 +37,6 @@ def _on_goal( m, ctx: )
               [:GOAL_COUNT, [m[:goal_count], _build_goal_count( m )]]
          elsif m[:sym]
             case m[:sym]
-            when ',' then [:',']
-            when ';' then [:';']
-            # when '[' then [:'[']
-            # when ']' then [:']']
             when ')'  ## leave goal mode!!
                 _trace( "LEAVE GOAL_RE MODE" )
                 @re = RE
@@ -45,8 +44,7 @@ def _on_goal( m, ctx: )
                 ##                                or GOAL_PAREN_CLOSE/END ???
                 [:GOALS_END, '<|GOALS_END|>']
             else
-              ctx.warn_ignore_sym( m[:sym], mode: 'GOAL' )
-              nil  ## ignore others (e.g. brackets [])
+                [m[:sym].to_sym]
             end
          else
             ctx.warn_unknown_match( m, mode: 'GOAL' )
@@ -58,11 +56,12 @@ end
 
 
 GOAL_ALT_RE = Regexp.union(
-    GOAL_BASICS_RE,
+    SPACES_RE,
     SCORE_RE,        ## e.g.  1-0, 0-1, etc.
     GOAL_MINUTE_RE,
     GOAL_TYPE_RE,
     PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
+    /  (?<sym> [,)])  /x    ## note - no semicolon (;)
     ## todo/fix - add ANY_RE !!!!
 )
 
@@ -80,7 +79,6 @@ def _on_goal_alt( m, ctx: )
             [:SCORE, [m[:score], _build_score( m )]]
          elsif m[:sym]
             case m[:sym]
-            when ',' then [:',']
             when ')'  ## leave goal mode!!
                 _trace( "LEAVE GOAL_ALT_RE MODE" )
                 @re = RE
@@ -88,8 +86,7 @@ def _on_goal_alt( m, ctx: )
                 ##                                or GOAL_PAREN_CLOSE/END ???
                 [:GOALS_END, '<|GOALS_END|>']
             else
-              ctx.warn_ignore_sym( m[:sym], mode: 'GOAL_ALT' )
-              nil  ## ignore others (e.g. brackets [])
+                [m[:sym].to_sym]
             end
          else
             ctx.warn_unknown_match( m, mode: 'GOAL_ALT' )
@@ -100,11 +97,12 @@ end
 
 
 GOAL_COMPAT_RE = Regexp.union(
-    GOAL_BASICS_RE,
+    SPACES_RE,
     SCORE_RE,        ## e.g.  1-0, 0-1, etc.
     MINUTE_RE,          ## note - matches minute e.g.  92, 7, 7' 7+3, etc.
     GOAL_TYPE_RE,
     PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
+    /  (?<sym> [,)])  /x    ## note - no semicolon (;)
     ## todo/fix - add ANY_RE !!!!
 )
 
@@ -123,7 +121,6 @@ def _on_goal_compat( m, ctx: )      ## note - m is MatchData object
             [:SCORE, [m[:score], _build_score( m )]]
          elsif m[:sym]
             case m[:sym]
-            when ',' then [:',']
             when ')'  ## leave goal mode!!
                 _trace( "LEAVE GOAL_COMPAT_RE MODE" )
                 @re = RE
@@ -131,8 +128,7 @@ def _on_goal_compat( m, ctx: )      ## note - m is MatchData object
                 ##                                or GOAL_PAREN_CLOSE/END ???
                 [:GOALS_END, '<|GOALS_END|>']
             else
-              ctx.warn_ignore_sym( m[:sym], mode: 'GOAL_COMPAT' )
-              nil
+                [m[:sym].to_sym]
             end
          else
             ctx.warn_unknown_match( m, mode: 'GOAL_COMPAT' )

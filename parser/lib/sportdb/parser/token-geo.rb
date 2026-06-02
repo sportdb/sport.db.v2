@@ -21,7 +21,7 @@ GEO_TEXT_RE = %r{
                 # opt 1 - start with alpha
                  \p{L}+    ## all unicode letters (e.g. [a-z])
                    |
-                # opt 2 - start with num!! - 
+                # opt 2 - start with num!! -
                      \d+  # check for num lookahead (MUST be space or dot)
                       ## MAY be followed by (optional space) !
                       ## MUST be follow by a to z!!!!
@@ -37,11 +37,11 @@ GEO_TEXT_RE = %r{
 
                ##
                ## todo/check - find a different "more intuitive" regex/rule if possible?
-               ##    for single spaces only (and _/ MUST not be surround by spaces) 
+               ##    for single spaces only (and _/ MUST not be surround by spaces)
 
-              (?: 
+              (?:
                   (?:
-                    [ ]?   # only single (inline) space allowed - double spaces are breaks!!!  
+                    [ ]?   # only single (inline) space allowed - double spaces are breaks!!!
                     (?:
                        \p{L} | \d  | [.&'°]
                         |
@@ -64,7 +64,7 @@ GEO_TEXT_RE = %r{
               ##        Ost-Berlin (Walter-Ulbricht)
               ##        Athinai (OAKA - Maroussi)
               ##
-              ##   or   Valencia (Spain) or Solna   
+              ##   or   Valencia (Spain) or Solna
               (?:
                     [ ]
                     \(
@@ -93,20 +93,14 @@ GEO_TEXT_RE = %r{
 
 
 
-GEO_BASICS_RE = %r{
-    (?<spaces> [ ]{2,}) |
-    (?<space>  [ ])
-        |
-    (?<sym> [,›>\[] )
-}ix
 
 
 ##  note - add "hacky" check for comma that is followed by a prop(erty)
 ##
 ##  make sure to NOT match
 ##      props  e.g.  att: 18000
-##   July 10 @ Paris, Parc des Princes, att: 18000    
-##   July 10 @ Paris, Parc des Princes,   att: 18000    
+##   July 10 @ Paris, Parc des Princes, att: 18000
+##   July 10 @ Paris, Parc des Princes,   att: 18000
 ##
 
 
@@ -115,7 +109,7 @@ GEO_END_RE = %r{
         ,
     )
     ## POSITIVE lookahead for props
-    (?=    
+    (?=
         [ ]*  ## optional spaces
          (?: att|ref)    ## todo/fix - use generic [a-z]+ - why? why not?
          :
@@ -123,10 +117,13 @@ GEO_END_RE = %r{
 }ix
 
 
+
+
 GEO_RE = Regexp.union(
+                    SPACES_RE,
                     GEO_END_RE,
-                    GEO_BASICS_RE, 
                     GEO_TEXT_RE,
+                    /  (?<sym> [,›>\[] ) /x,
                     ANY_RE,
                       )
 

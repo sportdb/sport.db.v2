@@ -26,10 +26,6 @@ class Context
 
 
 
-     def warn_ignore_sym( sym, mode: 'TOP' )
-        _add_warn( "ignore SYM >#{sym}< (#{mode})" )
-     end
-
      def warn_skip_any( any, mode: 'TOP')
         _add_warn( "skip ANY match >#{any}< (#{mode})" )
      end
@@ -314,10 +310,7 @@ def _tokenize_line( line, lineno )
                  pos = old_pos
                  next   ## backtrack (resume new loop step)
            elsif m[:sym]
-              sym = m[:sym]
-              ## return symbols "inline" as is - why? why not?
-              ## (?<sym>[;,@|\[\]-])
-              case sym
+              case m[:sym]
                 ## note - reset geo_count to 0 (avoids break on two spaces)
                 ##                     if separator seen!!
               when ',' then @geo_count = 0; [:',']
@@ -329,10 +322,9 @@ def _tokenize_line( line, lineno )
                  @re = RE
                  pos = old_pos
                  next   ## backtrack (resume new loop step)
-            else
-              ctx.warn_ignore_sym( sym, mode: 'GEO' )
-              nil  ## ignore others (e.g. brackets [])
-            end
+              else
+                 [m[:sym].to_sym]
+              end
           else
              if m[:any]
                 ctx.warn_skip_any( m[:any], mode: 'GEO' )

@@ -3,8 +3,8 @@ class Lexer
 
 
 
-
 PROP_LINEUP_RE = Regexp.union(
+   SPACES_RE,
    MINUTE_RE,   ## e.g.  44 or 44' or 45+1 or 45+1' etc.
 
    INLINE_CAPTAIN,  ## e.g. [c]
@@ -14,9 +14,10 @@ PROP_LINEUP_RE = Regexp.union(
 
    PROP_KEY_INLINE_RE,
    PROP_NAME_RE,
-   PROP_BASICS_RE,
+   /  (?<sym>  [;,()\[\]-]) /x
    ## todo/fix - add ANY_RE here too!!!
 )
+
 
 def _on_prop_lineup( m, ctx: )      ## note - m is MatchData object
 
@@ -52,27 +53,9 @@ def _on_prop_lineup( m, ctx: )      ## note - m is MatchData object
          elsif m[:prop_name]
               [:PROP_NAME, m[:name]]
          elsif m[:minute]
-              minute = {}
-              minute[:m]      = m[:value].to_i(10)
-              minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-             [:MINUTE, [m[:minute], minute]]
+             [:MINUTE, [m[:minute], _build_minute( m )]]
          elsif m[:sym]
-            sym = m[:sym]
-            ## return symbols "inline" as is - why? why not?
-            ## (?<sym>[;,@|\[\]-])
-
-            case sym
-            when ',' then [:',']
-            when ';' then [:';']
-            when '[' then [:'[']
-            when ']' then [:']']
-            when '(' then [:'(']
-            when ')' then [:')']
-            when '-' then [:'-']
-            else
-              ctx.warn_ignore_sym( sym, mode: 'PROP_LINEUP' )
-              nil  ## ignore others (e.g. brackets [])
-            end
+              [m[:sym].to_sym]   ## e.g. [:';'],[:','],etc.
          else
              ctx.warn_unknown_match( m, mode: 'PROP_LINEUP' )
              nil

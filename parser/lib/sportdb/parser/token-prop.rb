@@ -262,20 +262,6 @@ ENCLOSED_NAME_RE = %r{
 
 
 
-PROP_BASICS_RE = %r{
-    (?<spaces> [ ]{2,}) |
-    (?<space>  [ ])
-        |
-    (?<sym>
-        [;,\(\)\[\]-]
-    )
-}ix
-
-
-
-
-
-
 
 
 
