@@ -3,29 +3,10 @@ class Lexer
 
 
 ######################################################
-## goal mode (switched to by PLAYER_WITH_MINUTE_RE)
-##
+## goal mode
 ##  note - must be enclosed in ()!!!
-##          todo - add () in basics - why? why not?
-
-
-
 ##
-##  todo/fix - split up BASICS!!!
-##      break out SPACES_RE  for general reuse!!!
-##       makes it easier to  use "custom" symbols (<sym>)
-
-
-GOAL_BASICS_RE = %r{
-    (?<spaces> [ ]{2,}) |
-    (?<space>  [ ])
-        |
-    (?<sym>
-        [;,)]   ##  add (-) dash too - why? why not?
-    )
-}ix
-
-
+##          todo - add () in basics - why? why not?
 
 
 
@@ -53,18 +34,6 @@ START_GOAL_LINE_RE = %r{
 
  }xi
 
-=begin
-                       # check NEGATIVE lookahead
-                       (?!
-                             ##  exclude ord
-                             (?: \d+ \))
-                                 |
-                            ## exclude score - goal_line_alt!!!
-                             (?: [ ]* \b
-                                        \d-\d   ## score e.g. 1-0
-                                      \b  )
-                       )
-=end
 
 
 #############
@@ -117,6 +86,27 @@ START_GOAL_LINE_ALT_RE = %r{
                          )
                  }xi
 
+
+
+
+
+
+
+
+##
+##  todo/fix - split up BASICS!!!
+##      break out SPACES_RE  for general reuse!!!
+##       makes it easier to  use "custom" symbols (<sym>)
+
+
+GOAL_BASICS_RE = %r{
+    (?<spaces> [ ]{2,}) |
+    (?<space>  [ ])
+        |
+    (?<sym>
+        [;,)]   ##  add (-) dash too - why? why not?
+    )
+}ix
 
 
 ###
@@ -192,29 +182,12 @@ GOAL_COUNT_RE = %r{
 
 
 
-
-
-
-=begin
-MINUTE_RE = %r{
-     (?<minute>
-       (?<=[ (])	 # positive lookbehind for space or opening ( e.g. (61') required
-                     #    todo - add more lookbehinds e.g.  ,) etc. - why? why not?
-             (?<value>\d{1,3})      ## constrain numbers to 0 to 999!!!
-                   (?: \+
-                     (?<value2>\d{1,3})
-                   )?
-        '     ## must have minute marker!!!!
-     )
-}ix
-=end
-
-
 ##
 ## note - inline \b check in MINUTE_RE excludes
-##      85pen  or 90+4pen or 38p  (possible and NOT excluded in GOAL_MINUTE_RE  !!!)
+##      85pen  or 90+4pen or 38p
+##        (possible and NOT excluded in GOAL_MINUTE_RE  !!!)
 ##
-##  minute with optional stoppage
+##  minute with optional stoppage (offset)
 
 MINUTE_RE = %r{
      (?<minute>
@@ -227,36 +200,14 @@ MINUTE_RE = %r{
                        \b
                       '?    ## optional minute marker
                  )?
-
       )
 }ix
 
 
 
-
-
-
-
-## minute variant for  N/A not/available
-##     todo/check - find a better syntax - why? why not?
-##
-##   note  "??".to_i(10) returns 0 or
-##         "__".to_i(10) returns 0
-##   quick hack - assume 0 for n/a for now
-
-=begin
-MINUTE_NA_RE = %r{
-   (?<minute>
-      (?<=[ (])	 # positive lookbehind for space or opening
-        (?<value> \?{2} | _{2} )
-        '   ## must have minute marker!!!!
-    )
-}ix
-=end
-
-
 ##
 ##  keep separate? or add simply inside GOAL_MINUTE_RE - why? why not?
+##   fix-fix-fix - move into GOAL_MINUTE_RE !!!
 
 GOAL_MINUTE_NA_RE = %r{
      (?<goal_minute_na>
@@ -351,21 +302,8 @@ GOAL_MINUTE_RE = %r{
 
 
 
-
-GOAL_RE = Regexp.union(
-    GOAL_BASICS_RE,
-    GOAL_NONE_RE,
-    GOAL_MINUTE_RE,
-    GOAL_MINUTE_NA_RE,
-    GOAL_COUNT_RE,
-   ## MINUTE_NA_RE,   ## note - add/allow not/available (n/a,na) minutes hack for now
-   ## GOAL_OG_RE, GOAL_PEN_RE,
-   ## SCORE_RE,  ## add back in v2 (level 3) or such!!
-    PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
-    GOAL_SEP_ALT_RE,
-    ## todo/fix - add ANY_RE !!!!
-)
-
+###
+## more regex  for goal alt
 
 
 GOAL_TYPE_RE = %r{
@@ -386,142 +324,6 @@ GOAL_TYPE_RE = %r{
 )}xi
 
 
-
-GOAL_ALT_RE = Regexp.union(
-    GOAL_BASICS_RE,
-    SCORE_RE,        ## e.g.  1-0, 0-1, etc.
-    GOAL_MINUTE_RE,
-    GOAL_TYPE_RE,
-    PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
-    ## todo/fix - add ANY_RE !!!!
-)
-
-GOAL_COMPAT_RE = Regexp.union(
-    GOAL_BASICS_RE,
-    SCORE_RE,        ## e.g.  1-0, 0-1, etc.
-    MINUTE_RE,          ## note - matches minute e.g.  92, 7, 7' 7+3, 46+, etc.
-    GOAL_TYPE_RE,
-    PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
-    ## todo/fix - add ANY_RE !!!!
-)
-
-=begin
-## note - leave out n/a minute in goals - make minutes optional!!!
-PROP_GOAL_RE =  Regexp.union(
-    GOAL_BASICS_RE,
-    MINUTE_RE,
-   ## MINUTE_NA_RE,   ## note - add/allow not/available (n/a,na) minutes hack for now
-    GOAL_OG_RE, GOAL_PEN_RE,
-    SCORE_RE,
-    PROP_NAME_RE,    ## note - (re)use prop name for now for (player) name
-)
-=end
-
-
-
-
-def self._parse_goal_minute( str )
-    ## note - strip - leading/trailing spaces
-    m = GOAL_MINUTE_RE.match( str.strip )
-    if m && m.pre_match == '' && m.post_match == ''
-      _build_goal_minute( m )
-    elsif  m
-        ## note - match BUT not anchored to start and end-of-string!!!
-        ##  report, error somehow??
-      nil
-    else
-      nil  ## no match - return nil
-    end
-end
-
-
-
-
-def self._build_goal_minute( m )
-    minute = {}
-
-    minute[:m]     =  m[:value].to_i(10)   ## always required
-
-    ## stoppage/injury time (offset)
-    minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-
-    minute[:og]  = true       if m[:og]
-    minute[:pen] = true       if m[:pen]
-    minute[:freekick] = true  if m[:fk]
-    minute[:header] = true    if m[:hdr]
-
-    minute[:secs] = m[:secs].to_i(10)   if m[:secs]
-
-    minute
-end
-def _build_goal_minute( m ) self.class._build_goal_minute( m ); end
-
-
-
-def self._build_goal_minute_na( m )
-    minute = {}
-
-    minute[:m]     =  '?'   ##  or use nil or 999 or -1 or ???
-
-    minute[:og]  = true       if m[:og]
-    minute[:pen] = true       if m[:pen]
-    minute[:freekick] = true  if m[:fk]
-    minute[:header] = true    if m[:hdr]
-
-    minute
-end
-def _build_goal_minute_na( m ) self.class._build_goal_minute_na( m ); end
-
-
-
-def self._build_minute( m )
-    minute = {}
-    minute[:m]      = m[:value].to_i(10)   ## always required
-
-    ## stoppage/injury time (offset)
-    minute[:offset] = m[:value2].to_i(10)   if m[:value2]
-
-    minute
-end
-def _build_minute( m ) self.class._build_minute( m ); end
-
-
-
-def self._parse_goal_count( str )
-    ## note - strip - leading/trailing spaces
-    m = GOAL_COUNT_RE.match( str.strip )
-    if m && m.pre_match == '' && m.post_match == ''
-      _build_goal_count( m )
-    elsif  m
-        ## note - match BUT not anchored to start and end-of-string!!!
-        ##  report, error somehow??
-      nil
-    else
-      nil  ## no match - return nil
-    end
-end
-
-def self._build_goal_count( m )
-    count = {}
-    count[:count] = m[:value].to_i(10)        if m[:value]
-    count[:og]    = m[:og_value] ? m[:og_value].to_i(10) : 1      if m[:og]   ## check flag
-    count[:pen]   = m[:pen_value] ? m[:pen_value].to_i(10) : 1    if m[:pen]  ## check flag
-    count
-end
-def _build_goal_count( m ) self.class._build_goal_count( m ); end
-
-
-
-
-def self._build_goal_type( m )
-    goal = {}
-    goal[:og]       = true  if m[:og]
-    goal[:pen]      = true  if m[:pen]
-    goal[:freekick] = true  if m[:fk]
-    goal[:header]   = true  if m[:hdr]
-    goal
-end
-def _build_goal_type( m ) self.class._build_goal_type( m ); end
 
 
 end  # class Lexer

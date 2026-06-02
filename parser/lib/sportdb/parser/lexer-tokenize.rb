@@ -342,7 +342,7 @@ def _tokenize_line( line, lineno )
              nil
           end
       elsif @re == PROP_CARDS_RE       then  _on_prop_cards( m, ctx: ctx )
-      elsif @re == PROP_LINEUP_RE             then  _on_prop_lineup( m, ctx: ctx )
+      elsif @re == PROP_LINEUP_RE      then  _on_prop_lineup( m, ctx: ctx )
       elsif @re == PROP_ATTENDANCE_RE  then  _on_prop_attendance( m, ctx: ctx )
       elsif @re == PROP_REFEREE_RE     then  _on_prop_referee( m, ctx: ctx )
       elsif @re == PROP_PENALTIES_RE   then  _on_prop_penalties( m, ctx: ctx )

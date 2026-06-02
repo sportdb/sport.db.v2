@@ -28,13 +28,12 @@ def _on_round_def( m, ctx: )      ## note - m is MatchData object
           elsif m[:duration]
             [:DURATION, [m[:duration], _build_duration( m )]]
           elsif m[:sym]
-              sym = m[:sym]
-              case sym
+              case  m[:sym]
               when '|' then  [:'|']
               when ':' then  [:':']
               when ',' then  [:',']
               else
-                ctx.warn_ignore_sym( sym, mode: 'ROUND_DEF' )
+                ctx.warn_ignore_sym(  m[:sym], mode: 'ROUND_DEF' )
                 nil  ## ignore others (e.g. brackets [])
               end
           else

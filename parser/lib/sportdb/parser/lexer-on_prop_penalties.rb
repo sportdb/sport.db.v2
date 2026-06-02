@@ -21,22 +21,15 @@ def _on_prop_penalties( m, ctx: )      ## note - m is MatchData object
               ## use HOLD,SAVE,POST or such keys - why? why not?
              [:ENCLOSED_NAME, m[:name]]
          elsif m[:score]
-              score = {}
-              ## must always have ft for now e.g. 1-1 or such
-              ###  change to (generic) score from ft -
-              ##     might be score a.e.t. or such - why? why not?
-              score[:score] = [m[:score1].to_i(10),
-                               m[:score2].to_i(10)]
-              [:SCORE, [m[:score], score]]
+              [:SCORE, [m[:score], _build_score( m )]]
          elsif m[:sym]
-            sym = m[:sym]
-            case sym
+            case m[:sym]
             when ',' then [:',']
             when ';' then [:';']
             when '[' then [:'[']
             when ']' then [:']']
             else
-              ctx.warn_ignore_sym( sym, mode: 'PROP_PENALTIES' )
+              ctx.warn_ignore_sym( m[:sym], mode: 'PROP_PENALTIES' )
               nil  ## ignore others (e.g. brackets [])
             end
          else
