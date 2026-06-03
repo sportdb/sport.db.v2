@@ -17,14 +17,18 @@ def _on_prop_penalties( m, ctx: )      ## note - m is MatchData object
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
          elsif m[:prop_name]    ## note - change prop_name to player
-             [:PROP_NAME, m[:name]]    ### use PLAYER for token - why? why not?
+              Token.new(:PROP_NAME, m[:name],
+                               lineno: ctx.lineno, offset: m.offset(:prop_name))
          elsif m[:enclosed_name]
               ## use HOLD,SAVE,POST or such keys - why? why not?
-             [:ENCLOSED_NAME, m[:name]]
+             Token.new(:ENCLOSED_NAME, m[:name],
+                             lineno: ctx.lineno, offset: m.offset(:name))
          elsif m[:score]
-              [:SCORE, [m[:score], _build_score( m )]]
+             Token.new( :SCORE, m[:score],
+                              lineno: ctx.lineno, offset: m.offset(:score),
+                              value: _build_score( m ))
          elsif m[:sym]
-              [m[:sym].to_sym]   ## e.g. [:','] or [:';']
+              Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
          else
             ctx.warn_unknown_match( m, mode: 'PROP_PENALTIES ')
             nil

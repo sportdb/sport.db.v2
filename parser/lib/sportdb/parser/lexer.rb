@@ -102,7 +102,7 @@ def tokenize_with_errors
         if line.empty?
            ## note - blank always resets parser mode to std/top-level!!!
            @re = RE
-           tokens_by_line << [[:BLANK, '<|BLANK|>']]
+           tokens_by_line << [Token.virtual(:BLANK, lineno: lineno)]
         elsif (m = HEADING_RE.match(line))
            ## note - heading always resets parser mode to std/top-level!!!
            @re = RE
@@ -110,11 +110,11 @@ def tokenize_with_errors
            ## note - derive heading level from no of (leading) markers
            ##             e.g. = is 1, == is 2, == is 3, etc.
            heading_level = m[:heading_marker].size
-           tokens_by_line << [[:"H#{heading_level}", m[:heading]]]
+           tokens_by_line << [Token.new(:"H#{heading_level}", m[:heading], lineno: lineno)]
         elsif (m = NOTA_BENE_RE.match(line))
            ## note - nota bene always resets parser mode to std/top-level!!!
            @re = RE
-           tokens_by_line << [[:NOTA_BENE, m[:nota_bene]]]
+           tokens_by_line << [Token.new(:NOTA_BENE, m[:nota_bene], lineno: lineno)]
         else
 
           more_tokens, more_errors = _tokenize_line( line, lineno )
@@ -125,10 +125,19 @@ def tokenize_with_errors
     end # each line
 
 
-
+    puts
+    puts "tokens_by_line:"
+    pp tokens_by_line
 
 
     tokens_by_line = tokens_by_line.map do |tokens|
+
+         ## change back for now to "legacy" format
+         tokens = tokens.map do |token|
+                          token.is_a?( Token ) ? token.to_legacy : token
+                     end
+
+
         #################
         ##    transform tokens (using simple patterns)
         ##      to help along the (racc look ahead 1 - LA1) parser
@@ -136,6 +145,7 @@ def tokenize_with_errors
 
         buf = Tokens.new( tokens )
         ## pp buf
+
 
     loop do
           break if buf.eos?
@@ -152,7 +162,7 @@ def tokenize_with_errors
                       ]
                nodes << [:DATETIME, val]
           ### support  date time with comma too - why? why not?
-          elsif buf.match?( :DATE, :',', :TIME )
+          elsif buf.match?( :DATE, ',', :TIME )
                date  = buf.next[1]
                _    = buf.next  ## ignore comma
                time = buf.next[1]
@@ -162,7 +172,7 @@ def tokenize_with_errors
                         { date: date[1] }.merge( time[1] )
                       ]
                nodes << [:DATETIME, val]
-          elsif buf.match?( :GOAL_MINUTE, :',', :GOAL_MINUTE )
+          elsif buf.match?( :GOAL_MINUTE, ',', :GOAL_MINUTE )
              ## note - only advance by two tokens!
              ##     allows more :GOAL_MINUTE sequences!! e.g. 12,13,14 etc!!!
              ##
@@ -172,7 +182,7 @@ def tokenize_with_errors
              _ = buf.next  ## eat-up goal_minute_sep a.k.a. comma (,)
                            ##   and replace with dedicated sep(arator)
              nodes << [:GOAL_MINUTE_SEP,"<|GOAL_MINUTE_SEP|>"]
-          elsif buf.match?( :',', :INLINE_ATTENDANCE )
+          elsif buf.match?( ',', :INLINE_ATTENDANCE )
              ## note  - allow optional comma before inline attendance
              ## help parser with comma shift/reduce conflict
              ##   change ',' to INLINE_ATTENDANCE_SEP !!!
@@ -205,6 +215,7 @@ def tokenize_with_errors
     end
 
     [tokens,errors]
+
 end   # method tokenize_with_errors
 
 

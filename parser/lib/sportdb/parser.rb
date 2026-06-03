@@ -65,6 +65,7 @@ require_relative 'parser/lexer_buffer'   ## incl. Tokens (aka TokenBuffer)
 require_relative 'parser/lexer-prep_doc'
 require_relative 'parser/lexer-prep_line'
 
+require_relative 'parser/lexer_token'
 require_relative 'parser/lexer-tokenize'
 require_relative 'parser/lexer-on_round_def'
 require_relative 'parser/lexer-on_group_def'

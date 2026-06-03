@@ -28,34 +28,46 @@ def _on_prop_lineup( m, ctx: )      ## note - m is MatchData object
               ##  supported for now coach/trainer (add manager?)
               if ['coach',
                   'trainer'].include?( key.downcase )
-                [:COACH, m[:key]]   ## use COACH_KEY or such - why? why not?
+                ## use PROP_COACH or COACH_KEY or such - why? why not?
+                Token.new(:COACH, m[:key],
+                             lineno: ctx.lineno, offset: m.offset(:key))
               else
                 ## report error - for unknown (inline) prop key in lineup
                 nil
               end
          elsif m[:inline_captain]
-              [:INLINE_CAPTAIN, m[:inline_captain]]
+              Token.new(:INLINE_CAPTAIN, m[:inline_captain],
+                            lineno: ctx.lineno, offset: m.offset(:inline_captain))
          elsif m[:inline_yellow]
               card = {}
               card[:m]      = m[:minute].to_i(10)  if m[:minute]
               card[:offset] = m[:offset].to_i(10)  if m[:offset]
-              [:INLINE_YELLOW, [m[:inline_yellow], card]]
+              Token.new(:INLINE_YELLOW, m[:inline_yellow],
+                               lineno: ctx.lineno, offset: m.offset(:inline_yellow),
+                                value: card)
          elsif m[:inline_red]
               card = {}
               card[:m]      = m[:minute].to_i(10)  if m[:minute]
               card[:offset] = m[:offset].to_i(10)  if m[:offset]
-              [:INLINE_RED, [m[:inline_red], card]]
+              Token.new(:INLINE_RED, m[:inline_red],
+                              lineno: ctx.lineno, offset: m.offset(:inline_red),
+                              value: card)
          elsif m[:inline_yellow_red]
               card = {}
               card[:m]      = m[:minute].to_i(10)  if m[:minute]
               card[:offset] = m[:offset].to_i(10)  if m[:offset]
-              [:INLINE_YELLOW_RED, [m[:inline_yellow_red], card]]
+              Token.new(:INLINE_YELLOW_RED, m[:inline_yellow_red],
+                               lineno: ctx.lineno, offset: m.offset(:inline_yellow_red),
+                               value: card)
          elsif m[:prop_name]
-              [:PROP_NAME, m[:name]]
+              Token.new(:PROP_NAME, m[:name],
+                               lineno: ctx.lineno, offset: m.offset(:prop_name))
          elsif m[:minute]
-             [:MINUTE, [m[:minute], _build_minute( m )]]
+              Token.new(:MINUTE, m[:minute],
+                           lineno: ctx.lineno, offset: m.offset(:minute),
+                           value: _build_minute( m ))
          elsif m[:sym]
-              [m[:sym].to_sym]   ## e.g. [:';'],[:','],etc.
+              Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
          else
              ctx.warn_unknown_match( m, mode: 'PROP_LINEUP' )
              nil

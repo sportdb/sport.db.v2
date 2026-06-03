@@ -18,11 +18,15 @@ def _on_round_def( m, ctx: )      ## note - m is MatchData object
            if m[:spaces] || m[:space]
                nil    ## skip spaces
            elsif m[:date]
-             [:DATE, [m[:date], _build_date( m )]]
+              Token.new(:DATE, m[:date],
+                           lineno: ctx.lineno, offset: m.offset(:date),
+                           value: _build_date(m))
            elsif m[:duration]
-             [:DURATION, [m[:duration], _build_duration( m )]]
+              Token.new(:DURATION, m[:duration],
+                            lineno: ctx.lineno, offset: m.offset(:duration),
+                            value: _build_duration( m ))
            elsif m[:sym]
-              [m[:sym].to_sym]   ## e.g. [:'|'],[:':'],[:',']
+              Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
            else
               if m[:any]
                 ctx.warn_skip_any( m[:any], mode: 'ROUND_DEF' )

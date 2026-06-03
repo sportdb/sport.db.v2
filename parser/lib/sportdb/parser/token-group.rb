@@ -17,7 +17,7 @@ START_WITH_GROUP_DEF_LINE_RE =  %r{
                           [ ]
                           [a-z0-9]+   ## todo/check - allow dot (.) too e.g. 1.A etc.- why? why not?
                      )
-                     ###   possitive lookahead MUST be : OR |
+                     ###   positive lookahead MUST be : OR |
                      (?= [ ]*
                          [:|]
                          [ ])  ## note: requires space for now after [:|] - keep - why? why not?

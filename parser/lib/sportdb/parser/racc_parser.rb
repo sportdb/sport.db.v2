@@ -79,7 +79,7 @@ class RaccMatchParser
     puts "!! on parse error:"
     puts "args=#{args.pretty_inspect}"
 
-    @errors << "parse error on token: #{error_token} (#{error_token_id}) with value: #{error_value}, stack: #{value_stack.pretty_inspect}"
+    @errors << "parse error on token: #{error_token} >#{error_value.pretty_inspect}<, stack: #{value_stack.pretty_inspect}"
   end
 
 

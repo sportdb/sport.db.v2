@@ -2,7 +2,6 @@ module SportDb
 class Lexer
 
 
-
 ###
 ## use nested class for context - why? why not?
 ##   note: first arg passed in MUST be ref to lexer (instance)
@@ -10,6 +9,7 @@ class Context
    ## passed along to on_round_def etc. handlers in tokenize_line
    ##   note - for now only offsets (in line begin/end) gets updated !!!
      attr_writer :offsets
+     attr_reader :lineno
 
      def initialize( lexer,
                      line:,
@@ -20,6 +20,7 @@ class Context
         @lineno  = lineno
         @errors  = errors
 
+        ##  fix-fix-fix - change offsets  to offset!!!!!
         @offsets = [0,0]   ## or use [] aka [nil,nil] for not defined??? why? why not?
         ## @offsets = offsets    ## MatchData offsets e.g. [m.begin(0),m.end(0)]
      end
@@ -96,13 +97,19 @@ def _tokenize_line( line, lineno )
     ## note -  ord (for ordinal number!!!) e.g match number (1), (42), etc.
     if (m = START_WITH_ORD.match(line))
        ## note -  strip enclosing () and convert to integer
-       tokens << [:ORD, [m[:ord], { value: m[:value].to_i(10) } ]]
+       ##     change value to simply int - why? why not?
+       tokens << Token.new(:ORD, m[:ord],
+                                lineno: lineno, offset: m.offset(:ord),
+                                value: { value: m[:value].to_i(10) } )
 
        offsets = [m.begin(0), m.end(0)]
        pos = offsets[1]    ## update pos
     elsif (m = START_WITH_YEAR.match(line))
        ## note -  strip enclosing () and convert to integer
-       tokens << [:YEAR, m[:year].to_i(10)]
+       ##   note - was simply [:YEAR, m[:year].to_i(10)] - fix upstream in parser!!
+       tokens << Token.new(:YEAR, m[:year],
+                                 lineno: lineno, offset: m.offset(:year),
+                                 value:  m[:year].to_i(10) )
 
        offsets = [m.begin(0), m.end(0)]
        pos = offsets[1]    ## update pos
@@ -111,7 +118,9 @@ def _tokenize_line( line, lineno )
       _trace( "ENTER GROUP_DEF_RE MODE" )
       @re = GROUP_DEF_RE
 
-      tokens << [:GROUP_DEF, m[:group_def]]
+      tokens << Token.new( :GROUP_DEF, m[:group_def],
+                               lineno: lineno, offset: m.offset(:group_def) )
+
 
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
@@ -131,21 +140,26 @@ def _tokenize_line( line, lineno )
         ##     sent-off - incl. red card, yellow/red card and the era before red cards!!
         if ['sent off'].include?( key.downcase)
           @re = PROP_CARDS_RE    ## use CARDS_RE ???
-          tokens << [:PROP_SENTOFF, m[:key]]
+          tokens << Token.new(:PROP_SENTOFF, m[:key],
+                                   lineno: lineno, offset: m.offset(:key))
         elsif ['red cards'].include?( key.downcase )
           @re = PROP_CARDS_RE    ## use CARDS_RE ???
-          tokens << [:PROP_REDCARDS, m[:key]]
+          tokens << Token.new(:PROP_REDCARDS, m[:key],
+                                   lineno: lineno, offset: m.offset(:key))
         elsif ['yellow cards'].include?( key.downcase )
           @re = PROP_CARDS_RE
-          tokens << [:PROP_YELLOWCARDS, m[:key]]
+          tokens << Token.new(:PROP_YELLOWCARDS, m[:key],
+                                   lineno: lineno, offset: m.offset(:key))
         elsif ['ref', 'referee',
                'refs', 'referees'   ## note - allow/support assistant refs
               ].include?( key.downcase )
           @re = PROP_REFEREE_RE
-          tokens << [:PROP_REFEREE, m[:key]]
+          tokens << Token.new(:PROP_REFEREE, m[:key],
+                                   lineno: lineno, offset: m.offset(:key))
         elsif ['att', 'attn', 'attendance'].include?( key.downcase )
           @re = PROP_ATTENDANCE_RE
-          tokens << [:PROP_ATTENDANCE, m[:key]]
+          tokens << Token.new(:PROP_ATTENDANCE, m[:key],
+                                   lineno: lineno, offset: m.offset(:key))
 
      #   elsif ['goals'].include?( key.downcase )
      #     @re = PROP_GOAL_RE
@@ -156,10 +170,13 @@ def _tokenize_line( line, lineno )
                'penalty shoot-out',
                'penalty kicks'].include?( key.downcase )
           @re = PROP_PENALTIES_RE
-          tokens << [:PROP_PENALTIES, m[:key]]
+          tokens << Token.new(:PROP_PENALTIES, m[:key],
+                                  lineno: lineno, offset: m.offset(:key))
         else   ## assume (team) line-up
           @re = PROP_LINEUP_RE
-          tokens << [:PROP, m[:key]]
+          ## fix-fix-fix - rename to PROP_LINEUP !!
+          tokens << Token.new(:PROP, m[:key],
+                                 lineno: lineno, offset: m.offset(:key))
         end
 
         offsets = [m.begin(0), m.end(0)]
@@ -172,7 +189,9 @@ def _tokenize_line( line, lineno )
       @re = ROUND_DEF_RE
 
       ## note - return ROUND_DEF NOT  ROUND_OUTLINE token
-      tokens << [:ROUND_DEF, m[:round_outline]]
+      ##   fix - add leading ▪ too!!
+      tokens << Token.new( :ROUND_DEF, m[:round_outline],
+                            lineno: lineno, offset: m.offset(:round_outline))
 
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
@@ -184,9 +203,10 @@ def _tokenize_line( line, lineno )
       round_level = m[:round_marker].size
       round_level -= 1  if m[:round_marker].start_with?( '::' )
 
-      tokens << [:ROUND_OUTLINE, [m[:round_outline],
-                      { outline: m[:round_outline] ,
-                        level: round_level}]]
+      tokens << Token.new( :ROUND_OUTLINE, m[:round_outline],
+                           lineno: lineno, offset: m.offset(:round_outline),
+                           value: { outline: m[:round_outline],
+                                    level: round_level})
 
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
       offsets = [m.begin(0), m.end(0)]
@@ -202,7 +222,7 @@ def _tokenize_line( line, lineno )
         @re = GOAL_COMPAT_RE
         _trace( "ENTER GOAL_COMPAT_RE MODE" )
 
-        tokens << [:GOALS_COMPAT, "<|GOALS_COMPAT|>"]
+        tokens << Token.virtual( :GOALS_COMPAT, lineno: lineno )
       elsif START_GOAL_LINE_ALT_RE.match( line )
         ##  goals with scores e.g.
         ##    (1-0 Franck Ribéry, 2-0 Ivica Olić, 2-1 Wayne Rooney)
@@ -213,18 +233,24 @@ def _tokenize_line( line, lineno )
         @re = GOAL_ALT_RE
         _trace( "ENTER GOAL_ALT_RE MODE" )
 
-        tokens << [:GOALS_ALT, "<|GOALS_ALT|>"]
+        tokens << Token.virtual( :GOALS_ALT, lineno: lineno )
       else
         ## "standard" / default style
         @re = GOAL_RE
         _trace( "ENTER GOAL_RE MODE" )
 
-        tokens << [:GOALS, "<|GOALS|>"]
+        tokens << Token.virtual( :GOALS, lineno: lineno )
       end
 
       ## note - eat-up ( for now
       ##   pass along "virtual" GOALS or GOALS_ALT token
       ##      (see INLINE_GOALS for the starting goal line inline)
+      ##
+      ## fix-fix-fix
+      ##  keep offsets at [0,0] - why? why not?
+      ##    do NOT eat-up
+      ##   or better
+      ##    add tokens << Token.literal( '(', lineno: lineno, offset: ...) !!!
       offsets = [m.begin(0), m.end(0)]
       pos = offsets[1]    ## update pos
     end
@@ -291,6 +317,9 @@ def _tokenize_line( line, lineno )
                  ##           if not text seen yet!!!
                  if @geo_count > 0
                     ## get out-off geo mode and backtrack (w/ next)
+                    ##
+                    ## todo/fix
+                    ##   add virtual geo_end token!!!
                     _trace( "LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE" )
                     @re = RE
                     pos = old_pos
@@ -302,9 +331,13 @@ def _tokenize_line( line, lineno )
                nil    ## skip (single) space
            elsif m[:text]
                @geo_count += 1
-               [:GEO, m[:text]]   ## keep pos - why? why not?
+                ## keep pos - why? why not?
+               Token.new(:GEO, m[:text],
+                                lineno: lineno, offset: m.offset(:text))
            elsif m[:geo_end]   ## "hacky" special comma; always ends geo mode!!!
                  ## get out-off geo mode and backtrack (w/ next)
+                    ## todo/fix
+                    ##   add (semi-) virtual geo_end token!!!
                  _trace( "LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE" )
                  @re = RE
                  pos = old_pos
@@ -313,17 +346,25 @@ def _tokenize_line( line, lineno )
               case m[:sym]
                 ## note - reset geo_count to 0 (avoids break on two spaces)
                 ##                     if separator seen!!
-              when ',' then @geo_count = 0; [:',']
-              when '›' then @geo_count = 0; [:',']  ## note - treat geo sep › (unicode) like comma for now!!!
-              when '>' then @geo_count = 0; [:',']  ## note - treat geo sep > (ascii) like comma for now!!!
+              when ',' then @geo_count = 0
+                            Token.literal( m[:sym], lineno: lineno, offset: m.offset(:sym))
+              when '›' then @geo_count = 0;
+                            Token.literal( ',', lineno: lineno, offset: m.offset(:sym))
+                                ## note - treat geo sep › (unicode) like comma for now!!!
+              when '>' then @geo_count = 0;
+                            Token.literal( ',', lineno: lineno, offset: m.offset(:sym))
+                               ## note - treat geo sep > (ascii) like comma for now!!!
               when '[' then
+                    ##
+                    ## todo/fix
+                    ##   add virtual geo_end token!!!
                  ## get out-off geo mode and backtrack (w/ next)
                  _trace( "LEAVE GEO_RE MODE, BACK TO TOP_LEVEL/RE" )
                  @re = RE
                  pos = old_pos
                  next   ## backtrack (resume new loop step)
               else
-                 [m[:sym].to_sym]
+                 Token.literal( m[:sym], lineno: lineno, offset: m.offset(:sym))
               end
            else
              if m[:any]
@@ -389,7 +430,7 @@ def _tokenize_line( line, lineno )
       @re == PROP_PENALTIES_RE  ||
       @re == PROP_ATTENDANCE_RE ||
       @re == PROP_REFEREE_RE
-     if [:',', :'-', :';'].include?( tokens[-1][0] )
+     if [',', '-', ';'].include?( tokens[-1].type)
         ## continue/stay in PROP_RE mode
         ##  todo/check - auto-add PROP_CONT token or such
         ##                to help parser with possible NEWLINE
@@ -399,7 +440,7 @@ def _tokenize_line( line, lineno )
         _trace( "LEAVE PROP_RE MODE, BACK TO TOP_LEVEL/RE" )
         @re = RE
         ## note - auto-add PROP_END (<PROP_END>)
-        tokens << [:PROP_END, "<|PROP_END|>"]
+        tokens << Token.virtual(:PROP_END, lineno: lineno)
      end
    end
 

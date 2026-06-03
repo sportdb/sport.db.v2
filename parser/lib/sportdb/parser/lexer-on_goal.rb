@@ -21,20 +21,32 @@ def _on_goal( m, ctx: )
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
          elsif m[:goals_none]    ## note - eats-up semicolon!! e.g. -; or - ;
-             [:GOALS_NONE, "<|GOALS_NONE|>"]
+             # was:[:GOALS_NONE,"<|GOALS_NONE|>"]
+             ##   use literal text!!
+             Token.new( :GOALS_NONE, m[:goals_none],
+                            lineno: ctx.lineno, offset: m.offset(:goals_none))
          elsif m[:goal_sep_alt]
-             [:GOAL_SEP_ALT, "<|GOAL_SEP_ALT|>" ]   ## e.g. dash (-) WITH leading & trailing space required
+             # was: [:GOAL_SEP_ALT, "<|GOAL_SEP_ALT|>" ]   ## e.g. dash (-) WITH leading & trailing space required
+             Token.new( :GOAL_SEP_ALT, m[:goal_sep_alt],
+                              lineno: ctx.lineno, offset: m.offset(:goal_sep_alt))
          elsif m[:prop_name]    ## note - change prop_name to player
-             [:PLAYER, m[:name]]
+             Token.new( :PLAYER, m[:name],
+                              lineno: ctx.lineno, offset: m.offset(:name))
          elsif m[:goal_minute]
-             [:GOAL_MINUTE, [m[:goal_minute], _build_goal_minute( m )]]
+             Token.new( :GOAL_MINUTE, m[:goal_minute],
+                              lineno: ctx.lineno, offset: m.offset(:goal_minute),
+                              value: _build_goal_minute( m ))
          elsif m[:goal_minute_na]
               ## note -  (re)use GOAL_MINUTE token; no extra GOAL_MINUTE_NA or such - why? why not?
               ##          make sure to handle 'm' => nil upstream!!!
               ##                     change to  999 or -1 or such - why? why not?
-             [:GOAL_MINUTE, [m[:goal_minute_na], _build_goal_minute_na( m )]]
+             Token.new( :GOAL_MINUTE, m[:goal_minute_na],
+                               lineno: ctx.lineno, offset: m.offset(:goal_minute_na),
+                                value: _build_goal_minute_na( m ))
          elsif m[:goal_count]
-              [:GOAL_COUNT, [m[:goal_count], _build_goal_count( m )]]
+              Token.new( :GOAL_COUNT, m[:goal_count],
+                                lineno: ctx.lineno, offset: m.offset(:goal_count),
+                                value: _build_goal_count( m ))
          elsif m[:sym]
             case m[:sym]
             when ')'  ## leave goal mode!!
@@ -42,9 +54,11 @@ def _on_goal( m, ctx: )
                 @re = RE
                 ##  note - use/return GOAL_END token   - change to GOAL_END_PAREN(THESIS)
                 ##                                or GOAL_PAREN_CLOSE/END ???
-                [:GOALS_END, '<|GOALS_END|>']
+                ##   fix - use ) too - why? why not?
+                ## was: [:GOALS_END, '<|GOALS_END|>']
+                Token.virtual( :GOALS_END, lineno: ctx.lineno  )
             else
-                [m[:sym].to_sym]
+                Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
             end
          else
             ctx.warn_unknown_match( m, mode: 'GOAL' )
@@ -70,13 +84,20 @@ def _on_goal_alt( m, ctx: )
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
          elsif m[:prop_name]    ## note - change prop_name to player
-             [:PLAYER, m[:name]]
+             Token.new(:PLAYER, m[:name],
+                           lineno: ctx.lineno, offset: m.offset(:name))
          elsif m[:goal_minute]
-             [:GOAL_MINUTE, [m[:goal_minute], _build_goal_minute( m )]]
+             Token.new( :GOAL_MINUTE, m[:goal_minute],
+                              lineno: ctx.lineno, offset: m.offset(:goal_minute),
+                              value: _build_goal_minute( m ))
          elsif m[:goal_type]
-             [:GOAL_TYPE, [m[:goal_type], _build_goal_type( m )]]
+             Token.new( :GOAL_TYPE,m[:goal_type],
+                              lineno: ctx.lineno, offset: m.offset(:goal_type),
+                              value: _build_goal_type( m ))
          elsif m[:score]
-            [:SCORE, [m[:score], _build_score( m )]]
+             Token.new( :SCORE, m[:score],
+                              lineno: ctx.lineno, offset: m.offset(:score),
+                              value: _build_score( m ))
          elsif m[:sym]
             case m[:sym]
             when ')'  ## leave goal mode!!
@@ -84,9 +105,10 @@ def _on_goal_alt( m, ctx: )
                 @re = RE
                 ##  note - use/return GOAL_END token   - change to GOAL_END_PAREN(THESIS)
                 ##                                or GOAL_PAREN_CLOSE/END ???
-                [:GOALS_END, '<|GOALS_END|>']
+                ## [:GOALS_END, '<|GOALS_END|>']
+                Token.virtual( :GOALS_END, lineno: ctx.lineno  )
             else
-                [m[:sym].to_sym]
+                Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
             end
          else
             ctx.warn_unknown_match( m, mode: 'GOAL_ALT' )
@@ -112,13 +134,21 @@ def _on_goal_compat( m, ctx: )      ## note - m is MatchData object
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
          elsif m[:prop_name]    ## note - change prop_name to player
-             [:PLAYER, m[:name]]
+             Token.new(:PLAYER, m[:name],
+                           lineno: ctx.lineno, offset: m.offset(:name))
          elsif m[:minute]
-             [:MINUTE, [m[:minute], _build_minute( m )]]
+             Token.new(:MINUTE, m[:minute],
+                           lineno: ctx.lineno, offset: m.offset(:minute),
+                           value: _build_minute( m ))
          elsif m[:goal_type]
-             [:GOAL_TYPE, [m[:goal_type], _build_goal_type( m )]]
+             Token.new( :GOAL_TYPE,m[:goal_type],
+                              lineno: ctx.lineno, offset: m.offset(:goal_type),
+                              value: _build_goal_type( m ))
+
          elsif m[:score]
-            [:SCORE, [m[:score], _build_score( m )]]
+             Token.new( :SCORE, m[:score],
+                              lineno: ctx.lineno, offset: m.offset(:score),
+                              value: _build_score( m ))
          elsif m[:sym]
             case m[:sym]
             when ')'  ## leave goal mode!!
@@ -126,9 +156,10 @@ def _on_goal_compat( m, ctx: )      ## note - m is MatchData object
                 @re = RE
                 ##  note - use/return GOAL_END token   - change to GOAL_END_PAREN(THESIS)
                 ##                                or GOAL_PAREN_CLOSE/END ???
-                [:GOALS_END, '<|GOALS_END|>']
+                ## [:GOALS_END, '<|GOALS_END|>']
+                Token.virtual( :GOALS_END, lineno: ctx.lineno  )
             else
-                [m[:sym].to_sym]
+                Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
             end
          else
             ctx.warn_unknown_match( m, mode: 'GOAL_COMPAT' )
