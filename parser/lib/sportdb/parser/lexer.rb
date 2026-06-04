@@ -73,20 +73,36 @@ def tokenize_with_errors
         ##   check for "↵" !!!
         ##   and add to lineno
 
-        ##  fix-fix-fix-fix  - change to line.rstrip  (keep leading spaces) for indent!!
-        ## line = line.rstrip   ## note - MUST remove/strip trailing newline (spaces optional)!!!
-        line = line.strip   ## note - strip leading AND trailing whitespaces
-                            ## note - trailing whitespace may incl. \n or \r\n!!!
+
+        ## note - KEEP leading spaces for indent
+        ##         use rstrip (NOT left/leading & right/trainling strip) only!!
+        ## note -   remove/strip trailing newline (and optional spaces)!!!
+        ##          trailing whitespace may incl. \n or \r\n!!!
+        line = line.rstrip
 
 
+        ###  skip comments
+        ##      todo/check - change to blank line
+        ##                     to keep lineno (closer to orginal) - why? why not?
+        next  if line.match?(/\A  [ ]* ## optional leading space(s)
+                                   \#
+                                    /x )
 
-        next  if line.start_with?('#')   ###  skip comments
-        ## note - (inline) end-of-line comments NOT supported
+        ##  strip (inline) end-of-line comments (from line)
+        ##    check/discuss: make - inline comment require trailing space
+        ##                      e.g.   #1 vs # 1   - why? why not?
+        line = line.sub( /   [ ]*      ## (eat-up) optional leading space(s)
+                              \#{1,}.*?
+                             \z
+                            /x, '' )
 
 
         ####
         #  support __END__ marker to cut-off input
-        break if line.strip == '__END__'
+        break if line.match?( /\A [ ]*   ## optional leading space(s)
+                                   __END__
+                                 \z
+                               /x )
 
 
 
@@ -125,18 +141,9 @@ def tokenize_with_errors
     end # each line
 
 
-    puts
-    puts "tokens_by_line:"
-    pp tokens_by_line
 
 
     tokens_by_line = tokens_by_line.map do |tokens|
-
-         ## change back for now to "legacy" format
-         tokens = tokens.map do |token|
-                          token.is_a?( Token ) ? token.to_legacy : token
-                     end
-
 
         #################
         ##    transform tokens (using simple patterns)
@@ -151,27 +158,36 @@ def tokenize_with_errors
           break if buf.eos?
 
           if buf.match?( :DATE, :TIME )   ## merge DATE TIME into DATETIME
-               date = buf.next[1]
-               time = buf.next[1]
+               date = buf.next
+               time = buf.next
                ## puts "DATETIME:"
                ## pp date, time
+
                ##  note:  time value is { time: {} } or
                ##                       { time: {}, time_local {} }
-               val =  [date[0] + ' ' + time[0],  ## concat string of two tokens
-                        { date: date[1] }.merge( time[1] )
-                      ]
-               nodes << [:DATETIME, val]
+               text  = date.text + ' ' + time.text,  ## concat string of two tokens
+               value = { date: date.value }.merge( time.value )
+
+               nodes << Token.new(:DATETIME, text,
+                                      lineno: date.lineno,
+                                      offset: [date.offset[0],
+                                               time.offset[1]],
+                                      value: value )
           ### support  date time with comma too - why? why not?
           elsif buf.match?( :DATE, ',', :TIME )
-               date  = buf.next[1]
+               date = buf.next
                _    = buf.next  ## ignore comma
-               time = buf.next[1]
+               time = buf.next
                ## puts "DATETIME:"
                ## pp date, time
-               val =  [date[0] + ', ' + time[0],  ## concat string of two tokens
-                        { date: date[1] }.merge( time[1] )
-                      ]
-               nodes << [:DATETIME, val]
+               text  = date.text + ', ' + time.text  ## concat string of two tokens
+               value =  { date: date.value }.merge( time.value )
+
+               nodes << Token.new(:DATETIME, text,
+                                      lineno: date.lineno,
+                                      offset: [date.offset[0],
+                                               time.offset[1]],
+                                     value: value )
           elsif buf.match?( :GOAL_MINUTE, ',', :GOAL_MINUTE )
              ## note - only advance by two tokens!
              ##     allows more :GOAL_MINUTE sequences!! e.g. 12,13,14 etc!!!
@@ -179,16 +195,24 @@ def tokenize_with_errors
              ## help parser with comma shift/reduce conflict
              ##   change ',' to GOAL_MINUTE_SEP !!!
              nodes << buf.next   ## pass through goal_minute
-             _ = buf.next  ## eat-up goal_minute_sep a.k.a. comma (,)
+             comma = buf.next  ## eat-up goal_minute_sep a.k.a. comma (,)
                            ##   and replace with dedicated sep(arator)
-             nodes << [:GOAL_MINUTE_SEP,"<|GOAL_MINUTE_SEP|>"]
+             nodes << Token.new( :GOAL_MINUTE_SEP,
+                                      comma.text,
+                                      lineno: comma.lineno,
+                                      offset: comma.offset,
+                                      value:  comma.value)
           elsif buf.match?( ',', :INLINE_ATTENDANCE )
              ## note  - allow optional comma before inline attendance
              ## help parser with comma shift/reduce conflict
              ##   change ',' to INLINE_ATTENDANCE_SEP !!!
-             nodes << [:INLINE_ATTENDANCE_SEP, "<|INLINE_ATTENDANCE_SEP|>"]
-             _ = buf.next  ## eat-up inline_attendance_sep a.k.a. comma (,)
+             comma = buf.next  ## eat-up inline_attendance_sep a.k.a. comma (,)
                            ##   and replace with dedicated sep(arator)
+             nodes << Token.new(:INLINE_ATTENDANCE_SEP,
+                                    comma.text,
+                                    lineno: comma.lineno,
+                                    offset: comma.offset,
+                                    value:  comma.value)
              nodes << buf.next   ## pass through inline_attendance
           else
              ## pass through
@@ -199,19 +223,26 @@ def tokenize_with_errors
   end  # map tokens_by_line
 
 
+    ## puts "tokens_by_line:"
+    ## pp tokens_by_line
 
 
     ## flatten tokens
     tokens = []
-    tokens_by_line.each do |tok|
+    tokens_by_line.each do |tok_line|
 
-        if debug?
-           pp tok
-        end
+        ## if debug?
+        ##   pp tok_line
+        ## end
 
-         tokens  += tok
+         tokens  += tok_line
+
          ## auto-add newlines  (unless BLANK!!)
-         tokens  << [:NEWLINE, "\n"]   unless tok[0] && tok[0][0] == :BLANK
+         unless tok_line[0] && tok_line[0].type == :BLANK
+            ## note - reuse lineno from first token in line
+            ##                  use last - why? why not?
+            tokens  << Token.newline( lineno: tok_line[0].lineno )
+         end
     end
 
     [tokens,errors]

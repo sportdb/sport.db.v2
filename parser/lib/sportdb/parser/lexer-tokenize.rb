@@ -28,10 +28,16 @@ class Context
 
 
      def warn_skip_any( any, mode: 'TOP')
-        _add_warn( "skip ANY match >#{any}< (#{mode})" )
+        ## todo/check:
+        ##   change message to:
+        ##     unexpected char >any< (mode)
+        ##  was skip ANY match
+        _add_warn( "unexpected char >#{any}< (#{mode})" )
      end
 
      def warn_unknown_match( match, mode: 'TOP' )
+        ## add internal error or such
+        ##    shouldn't really happen
         _add_warn( "unknown match (#{mode}): #{match.pretty_inspect}")
      end
 

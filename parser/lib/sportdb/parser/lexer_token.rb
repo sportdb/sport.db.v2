@@ -81,7 +81,8 @@ class Token
     printer.text( " @#{@lineno}" )
     ## note - for now print only start_offset (offset[0])
     ##           to keep dump/output shorter
-    printer.text( ":#{@offset[0]}" )         if @offset.is_a?(Array) && @offset.size == 2
+    ##   note - start counting columns at one (NOT zero), thus, add +1 !!
+    printer.text( ":#{@offset[0]+1}" )         if @offset.is_a?(Array) && @offset.size == 2
     printer.text( "]" )
   end
 
