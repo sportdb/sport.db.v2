@@ -15,15 +15,6 @@ class RaccMatchParser
     @tokens, @errors = lexer.tokenize_with_errors
     ## pp @tokens
 
-    ## quick hack - convert to racc format single char literal tokens e.g. '@' etc.
-    ##                  note - literal token MUST be string (NOT symbol)
-    @tokens = @tokens.map do |tok|
-                 if tok.size == 1
-                   [tok[0].to_s, tok[0].to_s]
-                 else
-                   tok
-                 end
-               end
   end
 
 
@@ -36,26 +27,41 @@ class RaccMatchParser
   ##
   ## debug - trace / print message
   def trace( msg )
-     puts "  [parse] " + msg    if debug?
+    puts " fix-fix-fix use _trace() in parser!!"
+    puts "  [parse] " + msg
   end
 
-
-
-
+  def _trace( *args )
+    ## if debug?
+      print "[DEBUG] Parser -- "
+      args.each { |arg| puts args }
+    ## end
+  end
 
 
   def next_token
     tok = @tokens.shift
-    trace( "next_token => #{tok.pretty_inspect}" )
+   _trace( "next_token => #{tok.pretty_inspect}" )
+
+    ##  convert to racc format single char literal tokens e.g. '@' etc.
+    ##                  note - literal token MUST be string (NOT symbol)
+    ##    note - racc expects array with to items
+    ##               -  item[0] is the token id
+    ##               -  item[1] is the token value
+
+    ## note - returns nil for end-of-file !!!
+    tok = [tok.type, tok]   if tok
+
     tok
   end
+
 
 #  on_error do |error_token_id, error_value, value_stack|
 #      puts "Parse error on token: #{error_token_id}, value: #{error_value}"
 #  end
 
   def parse_with_errors
-     trace( "start parse:" )
+     _trace( "start parse:" )
      do_parse
      [@tree, @errors]
   end
@@ -70,11 +76,11 @@ class RaccMatchParser
   def errors?()   @errors.size > 0; end
 
 
-
   def on_error(error_token_id, error_value, value_stack)
     ## auto-add error_token (as string)
     error_token = Racc_token_to_s_table[error_token_id]
     args = [error_token, error_token_id, error_value, value_stack]
+
     puts
     puts "!! on parse error:"
     puts "args=#{args.pretty_inspect}"

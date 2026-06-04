@@ -2,6 +2,36 @@ module SportDb
 class Lexer
 
 
+##
+##  or use
+##    as_str  (as_text ??)  -- value (as String)
+##    as_int                -- value (as Integer)
+##    as_hash               -- value (as Hash)
+##    as_ary                -- value (as Array)
+
+
+##
+##
+##  fix-fix-fix
+##
+##   use props      (to avoid to_h  on nil or such)
+##         for hash (key/value pairs)
+##     or attribs? items?  or   (check Struct naming?)
+##
+##
+##   do NOT add/use to_h
+##   add a  to_h   method !!!
+##      raise error if value is NOT a hash
+##       use in parser.y   instead of  simply .value !!!
+##
+##
+##  yes, change text to lexeme!!!
+##        and use text for value (option)!!!!
+##
+##   add  to_s  (.text - if text renamed to lexeme) ??
+##        to_i  (.num)     ??
+
+
 
 class Token
 
