@@ -2,36 +2,6 @@ module SportDb
 class Lexer
 
 
-##
-##  or use
-##    as_str  (as_text ??)  -- value (as String)
-##    as_int                -- value (as Integer)
-##    as_hash               -- value (as Hash)
-##    as_ary                -- value (as Array)
-
-
-##
-##
-##  fix-fix-fix
-##
-##   use props      (to avoid to_h  on nil or such)
-##         for hash (key/value pairs)
-##     or attribs? items?  or   (check Struct naming?)
-##
-##
-##   do NOT add/use to_h
-##   add a  to_h   method !!!
-##      raise error if value is NOT a hash
-##       use in parser.y   instead of  simply .value !!!
-##
-##
-##  yes, change text to lexeme!!!
-##        and use text for value (option)!!!!
-##
-##   add  to_s  (.text - if text renamed to lexeme) ??
-##        to_i  (.num)     ??
-
-
 
 class Token
 
@@ -82,6 +52,34 @@ class Token
        ##             no need to duplicate text as value
        @value.nil?  ? @text : @value
   end
+
+
+##  note: do NOT use as_text/text to avoid confusion with (raw) text (lexeme)
+##
+##  use
+##    as_str                -- value (as String)
+##    as_int                -- value (as Integer)
+##    as_hash               -- value (as Hash)
+##    as_ary                -- value (as Array)
+
+  def as_str
+      raise TypeError, "token value #{@value.inspect} is #{@value.class.name} NOT string; sorry"   if @value && !@value.is_a?(String)
+       ## note - if value is not set (nil) return text (lexeme)
+       ##             no need to duplicate text as value
+      @value.nil?  ? @text : @value
+  end
+
+  def as_int
+     raise TypeError, "token value #{@value.inspect} is #{@value.class.name} NOT integer; sorry"    if !@value.is_a?(Integer)
+     @value
+  end
+
+  def as_hash
+     raise TypeError, "token value #{@value.inspect} is #{@value.class.name} NOT hash; sorry"    if !@value.is_a?(Hash)
+     @value
+  end
+
+
 
   def to_legacy
     ## return old "legacy" array format

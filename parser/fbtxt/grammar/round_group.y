@@ -8,16 +8,14 @@
         group_def
               :   GROUP_DEF group_def_sep   team_values   NEWLINE
                   {
-                      @tree << GroupDef.new( name:  val[0].value,
+                      @tree << GroupDef.new( name:  val[0].as_str,
                                              teams: val[2] )
                   }
 
         team_values
-              :   TEAM                       { result = val
-                                               ## e.g. val is ["Austria"]
-                                             }
-              |   team_values TEAM           { result.push( val[1].value )  }
-              |   team_values ',' TEAM       { result.push( val[2].value )  }
+              :   TEAM                       { result = [val[0].as_str]  }
+              |   team_values TEAM           { result.push( val[1].as_str )  }
+              |   team_values ',' TEAM       { result.push( val[2].as_str )  }
 
 
 
@@ -27,8 +25,7 @@
         ##                          NOT tokens separated by comma(,) or dash(-)
         round_outline :    ROUND_OUTLINE NEWLINE
                               {
-                                  kwargs = val[0].value
-                                  @tree << RoundOutline.new( **kwargs )
+                                  @tree << RoundOutline.new( **val[0].as_hash )
                               }
 
         #####
@@ -43,14 +40,18 @@
         round_def
              :  ROUND_DEF round_def_sep   round_date_opts   NEWLINE
                   {
-                      kwargs = { name: val[0].value }.merge( val[2] )
+                      kwargs = { name: val[0].as_str }.merge( val[2] )
                       @tree << RoundDef.new( **kwargs )
 
                       ## auto-add RoundOutline here - why? why not?
                       ##    or handle "implicit" round_outline
                       ##     in tree walker?
-                      @tree << RoundOutline.new( outline: val[0].value, level: 1 )
+                      @tree << RoundOutline.new( outline: val[0].as_str, level: 1 )
                   }
 
-       round_date_opts  :   DATE        { result = { date: val[0].value } }
-                         |  DURATION     { result = { duration: val[0].value } }
+###
+## todo/check - DATE   as_hash already includes { date:  } ??
+##                             do NOT duplicate again?
+
+       round_date_opts  :   DATE         { result = { date: val[0].as_hash } }
+                         |  DURATION     { result = { duration: val[0].as_hash } }

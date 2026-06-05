@@ -103,16 +103,13 @@ def _tokenize_line( line, lineno )
     ## note -  ord (for ordinal number!!!) e.g match number (1), (42), etc.
     if (m = START_WITH_ORD.match(line))
        ## note -  strip enclosing () and convert to integer
-       ##     change value to simply int - why? why not?
        tokens << Token.new(:ORD, m[:ord],
                                 lineno: lineno, offset: m.offset(:ord),
-                                value: { value: m[:value].to_i(10) } )
+                                value: m[:value].to_i(10)  )
 
        offsets = [m.begin(0), m.end(0)]
        pos = offsets[1]    ## update pos
     elsif (m = START_WITH_YEAR.match(line))
-       ## note -  strip enclosing () and convert to integer
-       ##   note - was simply [:YEAR, m[:year].to_i(10)] - fix upstream in parser!!
        tokens << Token.new(:YEAR, m[:year],
                                  lineno: lineno, offset: m.offset(:year),
                                  value:  m[:year].to_i(10) )

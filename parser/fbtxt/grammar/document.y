@@ -1,5 +1,6 @@
 
-       document   : {}     # note - allow empty documents - why? why not?
+
+       document   : { result = [] }  # note - allows empty documents
                   | elements
 
        elements  : element
@@ -44,7 +45,8 @@
                @tree << BlankLine.new
              }
 
-          | error      ## todo/check - move error sync up to elements - why? why not?
+          ## todo/check - move error sync up to elements - why? why not?
+          | error
               { puts "!! skipping invalid content (trying to recover from parse error):"
                 pp val[0]
                 ##  note - do NOT report recover errors for now
@@ -56,16 +58,16 @@
 
 
        heading
-           : H1 NEWLINE   {  @tree << Heading1.new( text: val[0].value)  }
-           | H2 NEWLINE   {  @tree << Heading2.new( text: val[0].value)  }
-           | H3 NEWLINE   {  @tree << Heading3.new( text: val[0].value)  }
+           : H1 NEWLINE   {  @tree << Heading1.new( text: val[0].as_str)  }
+           | H2 NEWLINE   {  @tree << Heading2.new( text: val[0].as_str)  }
+           | H3 NEWLINE   {  @tree << Heading3.new( text: val[0].as_str)  }
 
 
         note_line
-            : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0].value) }
+            : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0].as_str) }
 
         nota_bene
-            : NOTA_BENE NEWLINE    { @tree << NotaBene.new( text: val[0].value) }
+            : NOTA_BENE NEWLINE    { @tree << NotaBene.new( text: val[0].as_str) }
 
 
 
@@ -73,7 +75,7 @@
 ####
 ## shared helpers
 
-          opt_blank_lines :     ## optional; empty
+          opt_blank_lines : { }  ## optional - empty
                           | blank_lines
 
           blank_lines  : BLANK
@@ -82,5 +84,5 @@
 
 
      ##  note - not used for now
-     ##    opt_newline :  ## empty; optional
+     ##    opt_newline : { } ## empty; optional
      ##                | NEWLINE

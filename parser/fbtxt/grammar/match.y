@@ -1,4 +1,16 @@
 
+        ##########
+        ## optional ord(inal) match number e.g (1), (42), etc.
+
+        ord  : ORD    {  result = { num: val[0].as_int } }
+
+        opt_ord
+           :         {  result = {}  }     ## empty -- optional
+           | ord
+
+
+
+
 
          ###
          #  note - match_line_with_header
@@ -27,30 +39,30 @@
 
 
 
-        ### note - no geo_opts in (more_)match_line (w/ header)
+
+        ### note - no geo in (more_)match_line (w/ header)
         ##               always incl. in header
+
         more_match_header_opts
              : STATUS NEWLINE
                  {
-                      result = {}.merge( val[0].value )
+                      result = val[0].as_hash
                  }
-             | NOTE NEWLINE        { result = { note: val[0].value } }
+             | NOTE NEWLINE        { result = { note: val[0].as_str } }
              | NEWLINE             { result = {} }
 
 
-       ###
-       ## fix - rename geo_opts to geo_tree - why? why not?
 
        ### note - match_header REQUIRES
-       ##          (i) geo_opts/tree or
+       ##          (i) geo (tree) or
        ##          (ii) or inline_attendance
        ##
        match_header
-            :     date_clause geo_opts opt_inline_attendance  NEWLINE
+            :     date_datetime geo opt_inline_attendance  NEWLINE
                    {
                       result = {}.merge( val[0], val[1], val[2] )
                    }
-            |      date_clause inline_attendance  NEWLINE
+            |      date_datetime inline_attendance  NEWLINE
                    {
                       result = {}.merge( val[0], val[1] )
                    }
@@ -63,24 +75,24 @@
          inline_attendance
                 : INLINE_ATTENDANCE
                     {
-                       result = { att: val[0].value[:value] }
+                       result = { att: val[0].as_hash[:value] }
                     }
               ## |  ','  INLINE_ATTENDANCE
                  |  INLINE_ATTENDANCE_SEP  INLINE_ATTENDANCE
                     {
-                       result = { att: val[1].value[:value] }
+                       result = { att: val[1].as_hash[:value] }
                     }
 
          opt_inline_attendance
-              :    {  result = {}  }    ## empty; make rule optinal, returns {}
+              :    {  result = {}  }    ## empty; make rule optinal
               |    inline_attendance
 
 
 
 
         opt_inline_note
-            :            {  result = {} }  ## optional; empty
-            | NOTE       {  result = { note: val[0].value } }
+            :            {  result = {} }  ## empty -- optional
+            | NOTE       {  result = { note: val[0].as_str } }
 
 
 
@@ -135,55 +147,40 @@
 
 
 
-        ## optional ord(inal) match number e.g (1), (42), etc.
-        opt_ord
-           :        {  result = {}  }     ## empty; optional
-           | ord
-
-        ord
-           : ORD    {  result = { num: val[0].value[:value] } }
-
-
         match_opts
              : ord  opt_date opt_geo {
                                      result = {}.merge( val[0], val[1], val[2] )
                                 }
-             | date_clause  opt_geo   {
+             | date_datetime  opt_geo   {
                                      result = {}.merge( val[0], val[1] )
                                 }
              | time   opt_geo   {
                                      result = {}.merge( val[0], val[1] )
                                 }
-             | geo_opts
+             | geo
 
 
         ## note - you cannot use both STATUS and NOTE - why? why not?
         ##
         ##  todo/check - allow attendance w/o geo_tree - why? why not?
+        ###
+        ###   :   { result = {} }   ## empty -- optional
 
-         ###
-         ## todo/check/fix - use more_match_geo_opts rule/clause - why? why not?
-         ## geo_opts_with_opt_newline
-         ##    :  NEWLINE geo_opts  {  result = val[1] }
-         ##    |  geo_opts          {  result = val[0] }
-
-
-        ### :   { result = {} }   ## empty; optional
 
         more_match_opts
-             : STATUS       ## note - for now status must be BEFORE geo_opts!!
+             : STATUS       ## note - for now status must be BEFORE geo!!
                  {
-                      result = {}.merge( val[0].value )
+                      result = val[0].as_hash
                  }
-             | STATUS geo_opts opt_inline_attendance
+             | STATUS geo opt_inline_attendance
                  {
-                     result = {}.merge( val[0].value, val[1], val[2] )
+                     result = {}.merge( val[0].as_hash, val[1], val[2] )
                  }
-             | geo_opts opt_inline_attendance opt_inline_note
+             | geo opt_inline_attendance opt_inline_note
                  {
                    result = {}.merge( val[0], val[1], val[2] )
                  }
-             | NOTE   { result = { note: val[0].value } }
+             | NOTE   { result = { note: val[0].as_str } }
 
 
 
@@ -208,7 +205,7 @@
          match_bye
               :   TEAM INLINE_BYE       ## e.g.  Queen's Park   bye
                     {
-                      result = { team: val[0].value }
+                      result = { team: val[0].as_str }
                     }
 
         ###
@@ -217,6 +214,6 @@
          match_walkover
               :   TEAM INLINE_WO TEAM    ## e.g.  Oxford University  w/o  Queen's Park
                    {
-                      result = { team1: val[0].value,
-                                 team2: val[2].value }
+                      result = { team1: val[0].as_str,
+                                 team2: val[2].as_str }
                    }

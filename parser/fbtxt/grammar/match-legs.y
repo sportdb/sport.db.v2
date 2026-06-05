@@ -10,6 +10,6 @@
         match_line_legs
               : match_fixture  SCORE_LEGS  NEWLINE
                 {
-                      kwargs = { score: val[1].value }.merge( val[0] )
+                      kwargs = { score: val[1].as_hash }.merge( val[0] )
                       @tree << MatchLineLegs.new( **kwargs )
                 }

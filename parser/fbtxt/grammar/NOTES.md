@@ -7,6 +7,11 @@
 for empty list/rule      -   result = []
  return [] for empty list  -  kind of same as result = val if val = []??
 
+e.g.
+   document :  {}
+      is same
+   document :  { result = [] }
+
 
 
 for non-empty list/rule    - result = val  (where val is [val[0],val[1],...])
