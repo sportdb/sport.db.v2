@@ -1,0 +1,52 @@
+
+<%
+####################
+## to build parse.y   use (in /fbtxt)
+##    $ erb parser.y.erb > parser.y
+##
+## to compile use
+##    $ racc -o parser.rb parser.y
+##      racc -o ../lib/sportdb/parser/parser.rb parser.y
+
+##
+## note: on generate
+##        always comment out
+##      require 'racc/parser.rb'
+##            in   parser.rb !!!!  (use local/embedded runtime!!)
+
+
+#
+# todo/try/check:
+#    use/add empty production to
+#     match_pre and match_post options to simplify production if possible?
+
+%>
+
+
+class RaccMatchParser
+rule
+
+<%= File.read('grammar/document.y') %>
+<%= File.read('grammar/round_group.y') %>
+<%= File.read('grammar/date_time.y') %>
+<%= File.read('grammar/geo.y') %>
+
+
+<%= File.read('grammar/match-fixture.y') %>
+<%= File.read('grammar/match-result.y') %>
+<%= File.read('grammar/match-home_away.y') %>     ## support for (a), (h), (n)
+
+
+<%= File.read('grammar/match.y') %>
+
+## experimental match (w/ two legs)
+<%= File.read('grammar/match-legs.y') %>
+
+
+<%= File.read('grammar/goals.y') %>
+
+## "level" ii  props
+<%= File.read('grammar/props.y') %>
+
+
+end

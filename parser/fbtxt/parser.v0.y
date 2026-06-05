@@ -1,16 +1,38 @@
+##
+## to compile use
+##    $ racc -o parser.rb parser.y
+##      racc -o ../lib/sportdb/parser/parser.rb parser.y
 
+##
+## note: on generate
+##        always comment out
+##      require 'racc/parser.rb'
+##            in   parser.rb !!!!  (use local/embedded runtime!!)
+
+
+##
+# If you want to include the Racc runtime module with your parser.
+# This can be done by using '-E' option:
+#
+#   $ racc -E -omyparser.rb myparser.y
+
+
+#
+#
+# todo/try/check:
+#    use/add empty production to
+#     match_pre and match_post options to simplify production if possible?
 
 
 
 class RaccMatchParser
-rule
 
+     rule
+       document : {}  # note - allow empty documents - why? why not?
+                | elements
 
-       document   : {}     # note - allow empty documents - why? why not?
-                  | elements
-
-       elements  : element
-                 | elements element
+       elements : element
+                | elements element
 
 
        element
@@ -21,44 +43,46 @@ rule
           | date_header
           | match_line_with_header
           | match_line
+          | match_line_alt
           ## add support for "compact" match legs (1st leg, 2nd leg, aggregate)
           | date_header_legs
           | match_line_legs
+
+
 
           ## todo/fix - change (inline) NOTE to INLINE_NOTE
           ##              and only use NOTE for "standalone" NOTE (lines)
           | note_line
           | nota_bene
 
-          ## check - change goal_lines to MUST follow match_line - why? why not?
+          ## check - goal_lines MUST follow match_line - why? why not?
           | goal_lines
           | goal_lines_alt     ## allow differnt style/variant e.g. 1-0 Player
                                ##  starting with score
           | goal_lines_compat
 
 
+          | BLANK        ##  was empty_line
+             {
+               _trace( "REDUCE BLANK" )
+               @tree << BlankLine.new
+             }
           | lineup_lines
           | yellowcard_lines   ## use _line only - why? why not?
           | redcard_lines
           | penalties_lines   ## rename to penalties_line or ___ - why? why not?
           | referee_line
           | attendance_line
-
-          | BLANK        ##  was empty_line
-             {
-               _trace( "REDUCE BLANK" )
-               @tree << BlankLine.new
-             }
-
           | error      ## todo/check - move error sync up to elements - why? why not?
               { puts "!! skipping invalid content (trying to recover from parse error):"
                 pp val[0]
                 ##  note - do NOT report recover errors for now
                 ##  @errors << "parser error (recover) - skipping #{val[0].pretty_inspect}"
               }
+         ### use   error NEWLINE - why? why not?
+         ##           will (re)sync on NEWLINE?
 
-          ### use   error NEWLINE - why? why not?
-          ##           will (re)sync on NEWLINE?
+
 
 
        heading
@@ -74,29 +98,12 @@ rule
             : NOTA_BENE NEWLINE    { @tree << NotaBene.new( text: val[0].value) }
 
 
-
-
-####
-## shared helpers
-
-          opt_blank_lines :     ## optional; empty
-                          | blank_lines
-
-          blank_lines  : BLANK
-                       | blank_lines BLANK
-
-
-
-     ##  note - not used for now
-     ##    opt_newline :  ## empty; optional
-     ##                | NEWLINE
-
-
         ######
         # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland
         ##  or  Group A  :    Germany, Scotland, Hungary, Switzerland
 
-        group_def_sep :  '|' | ':'
+        group_def_sep  : '|'
+                       | ':'
 
         group_def
               :   GROUP_DEF group_def_sep   team_values   NEWLINE
@@ -113,8 +120,6 @@ rule
               |   team_values ',' TEAM       { result.push( val[2].value )  }
 
 
-
-
         ####
         ##   round ouline -  note: is an all-in-one line/text
         ##                          NOT tokens separated by comma(,) or dash(-)
@@ -127,7 +132,8 @@ rule
         #####
         # e.g.  Matchday 1  |  Fri Jun 14 - Tue Jun 18
         #       Matchday 1  :  Fri Jun 14 - Tue Jun 18
-        round_def_sep :  ':' | '|'
+        round_def_sep :  ':'
+                      |  '|'
 
         ##
         ##  note - round_def is also a round_outline
@@ -148,38 +154,29 @@ rule
        round_date_opts  :   DATE        { result = { date: val[0].value } }
                          |  DURATION     { result = { duration: val[0].value } }
 
+
+
 ##############
 #  date & time rules / productions
-
-
-    ##
-    ## note - date incl. may be "standalone" year only
-    ##               e.g.  1986   etc.
     date
       :   DATE    { result = { date: val[0].value } }
       |   YEAR    { result = { year: val[0].value } }
 
-    ##  check if we need to return a copy of the hash that later gets modified
-    ##                 or if we can pass along the "original" token hash value
     datetime
-      :   DATETIME              { result = val[0].value  }
+      :   DATETIME              { result = {}.merge( val[0].value ) }
 
     time
-      :   TIME                  { result = val[0].value  }
+      :   TIME                  { result = {}.merge( val[0].value ) }
 
-
-     ## note - does NOT incl. time only  (BUT incl. datetime!)
+     ## note - does NOT incl. time only
      ##   todo/check - rename to date_or_datetime - why? why not?
-       ##   yes - rename to date_datetime / date_or_datetime  !!!
     date_clause
       :  date
       |  datetime
 
 
-
-    ## rename to opt_date_datetime_time or such - why? why not?
-    opt_date
-      :         {  result = {} }      ## optional; empty
+    opt_date   ## rename to opt_date_datetime_time or such - why? why not?
+      :         {  result = {} }  ## optional; empty
       ## | date
       ## | datetime
       | date_clause    #  note: is same as date | datetime
@@ -187,10 +184,8 @@ rule
 
 
 
-
         ## note - only one option (DATE) allowed for "standalone" header now
         ##            use match header (with geo tree)
-
         date_header
               :     date  NEWLINE
                   {
@@ -204,224 +199,11 @@ rule
                      @tree <<  DateHeaderLegs.new( **kwargs )
                   }
 
+           opt_blank_lines :     ## optional; empty
+                           | blank_lines
 
-    opt_geo  :   { result = {} }   ## empty; optional
-             |  geo_opts
-
-
-        ##
-        ##  maybe rename geo_opts  to simply geo - why? why not?
-        ##       or keep because geo_opts - returns always hash for merge of options
-        ##                  e.g. { geo: [] }
-
-
-        ## e.g.  @ Parc des Princes, Paris
-        ##       @ München
-        geo_opts : '@' geo_values           { result = { geo: val[1] } }
-
-
-        geo_values
-               :  GEO                         {  result = [val[0].value] }
-               |  geo_values ',' GEO          {  result.push( val[2].value )  }
-
-
-
-###
-##  note - match_fixture   is always match WITHOUT SCORE
-##                         e.g. two TEAMS
-##                                with optional inline match status
-##                                  - not/played, cancelled, postponed
-##
-##  for match WITH SCORE see match_result rule
-
-    ## note - does NOT include SCORE; use SCORE terminal "in-place" if needed
-
-
-
-         match_sep :  '-' | VS
-
-
-         match_fixture :  TEAM  match_sep  TEAM
-                           {
-                               _trace( "RECUDE match_fixture" )
-                               result = { team1: val[0].value,
-                                          team2: val[2].value }
-                           }
-
-
-
-### todo/fix - change to match_fixture_canceled
-##                     or keep - why? why not?!!!!
-match_fixture_not_played : TEAM INLINE_NP TEAM
-                            {
-                               ## note - auto-add (match) status canceled - why? why not?
-                               ##   A n/p B   short (inline) form of =>
-                               ##   A v B [canceled]
-
-                               result = { team1: val[0].value,
-                                          team2: val[2].value,
-                                          status_inline: 'canceled' }
-                             }
-                          | TEAM INLINE_CANC TEAM
-                             {
-                               result = { team1: val[0].value,
-                                          team2: val[2].value,
-                                          status_inline: 'canceled' }
-                            }
-
- match_fixture_postponed  :  TEAM INLINE_PPD TEAM
-                             {
-                               result = { team1: val[0].value,
-                                          team2: val[2].value,
-                                          status_inline: 'postponed' }
-                            }
-
-
-
-    SCORE_FULL_OR_FULLER
-                : SCORE_FULL      ## full format    1-1 (0-1)
-                                  ##             or 2-1 a.e.t. etc.
-                | SCORE_FULLER    ## note - SCORE_FULLER NOT supported inline!!
-                                  ##       only after  Team1 v Team2 !!
-                                  ##  for inline use MUST BE (split into two e.g.)
-                                  ##      TEAM SCORE TEAM SCORE_FULLER_MORE !!
-
-
-        match_result :  TEAM  SCORE  TEAM
-                         {
-                           _trace( "REDUCE => match_result : TEAM SCORE TEAM" )
-
-                          ## note - use/keep generic score (as array!! NOT hash!!!)
-                           result = { team1: val[0].value, team2: val[2].value,
-                                      score: val[1].value[:score]  ## note - as array e.g. [1,1] !!
-                                    }
-                        }
-                     | TEAM SCORE_AWD TEAM
-                          {
-                           result = { team1: val[0].value, team2: val[2].value,
-                                      score: val[1].value,
-                                      status_inline: 'awarded'
-                                    }
-                          }
-                     | TEAM SCORE_ABD TEAM
-                          {
-                           result = { team1: val[0].value, team2: val[2].value,
-                                      score: val[1].value,
-                                      status_inline: 'abandoned'
-                                    }
-                          }
-                     | TEAM SCORE TEAM SCORE_FULLER_MORE
-                          {
-                            _trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
-                            score = nil
-                            score =  if val[3].value[:score] &&
-                                        val[3].value[:score]=='et'   ## check aet flag present?
-                                         val[3].value.delete( :score )  ## note - remove/delete  flag
-                                           { et: val[1].value[:score] }
-                                     elsif val[3].value[:score] &&
-                                           val[3].value[:score]=='ht' ## check ht flag present?
-                                         val[3].value.delete( :score ) ## note - remove/delete flag
-                                           { ht: val[1].value[:score] }
-                                     elsif val[3].value[:score] &&
-                                           val[3].value[:score]=='ft'  ## check ft flag present?
-                                         val[3].value.delete( :score )  ## note - remove/delete flag
-                                           { ft: val[1].value[:score] }
-                                     else   ## assume full-time (ft)
-                                            { ft: val[1].value[:score] }
-                                     end
-
-                           result = {  team1: val[0].value,
-                                      team2: val[2].value,
-                                      score: score.merge( val[3].value )
-                                    }
-                          }
-                     | TEAM SCORE_FULL TEAM
-                         {
-                           result = { team1: val[0].value,
-                                      team2: val[2].value,
-                                      score: val[1].value
-                                    }
-                         }
-
-
-                     ############
-                     #  match fixture-style WITH SCORE!!!
-                     #    e.g.  Austria v Rapid 3-2  or
-                     #          Austria - Rapid 3-2
-
-                     |  match_fixture  SCORE   ## note - keep "plain/generic" score separate rule
-                        {
-                          _trace( "REDUCE  => match_result : match_fixture SCORE" )
-                          ## note - use/keep generic score (as array!! NOT hash!!!)
-                          result = { score: val[1].value[:score]  ## note - as array e.g. [1,1] !!
-                                   }.merge( val[0] )
-                        }
-                     |  match_fixture  SCORE_FULL_OR_FULLER
-                        {
-                          _trace( "REDUCE  => match_result : match_fixture SCORE_FULL_OR_FULLER" )
-                          result = { score: val[1].value }.merge( val[0] )
-                        }
-
-                    ####################
-                    ### with inline match status e.g.
-                    ##     awarded (awd.),
-                    ##     abandoned (abd.)
-                    ##     void       -- aka annulled
-                    ##     suspendend (susp.)
-                    | TEAM INLINE_AWD TEAM
-                          {
-                           result = { team1: val[0].value, team2: val[2].value,
-                                      status_inline: 'awarded'
-                                    }
-                          }
-                     | TEAM INLINE_ABD TEAM
-                          {
-                           result = { team1: val[0].value, team2: val[2].value,
-                                      status_inline: 'abandoned'
-                                    }
-                          }
-                     | TEAM INLINE_VOID TEAM
-                          {
-                           result = { team1: val[0].value, team2: val[2].value,
-                                      status_inline: 'annulled'
-                                    }
-                          }
-                     | TEAM INLINE_SUSP TEAM
-                          {
-                           result = { team1: val[0].value, team2: val[2].value,
-                                      status_inline: 'suspended'
-                                    }
-                          }
-
-###
-##  note - change/rename  _base  to _home_away or such - why? why not?
-
-         ##########################
-         ####  shortcuts (H), (A), (N) with base team
-         ##         (H) = Home, (A) = Away, (N) = Neutral
-         ##     note: use underscore (_) for base team placeholder for now
-
-         match_fixture_base
-                   :  TEAM_HOME    TEAM  { result = { team1: '_', team2: val[1].value } }
-                   |  TEAM_AWAY    TEAM  { result = { team1: val[1].value, team2: '_' } }
-                   |  TEAM_NEUTRAL TEAM  { result = { team1: '_', team2: val[1].value,
-                                                       neutral: true } }
-
-
-         match_result_base
-                    :  match_fixture_base SCORE
-                        {
-                          _trace( "REDUCE  => match_result_base : match_fixture_base SCORE" )
-                          ## note - use/keep generic score (as array!! NOT hash!!!)
-                          result = { score: val[1].value[:score]  ## note - as array e.g. [1,1] !!
-                                   }.merge( val[0] )
-                        }
-                    |  match_fixture_base  SCORE_FULL_OR_FULLER
-                        {
-                          _trace( "REDUCE  => match_result_base : match_fixture_base SCORE_FULL_OR_FULLER" )
-                          result = { score: val[1].value }.merge( val[0] )
-                        }
-     ## support for (a), (h), (n)
+          blank_lines  : BLANK
+                       | blank_lines BLANK
 
 
 
@@ -504,6 +286,17 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
 
+     ### experimental "compact" leg-style match format
+     ##     no date/time in match line REQUIRES date_legs_header for now
+     ##             (otherwise) date unknown!!
+        match_line_legs
+              : match_fixture  SCORE_LEGS  NEWLINE
+                {
+                      kwargs = { score: val[1].value }.merge( val[0] )
+                      @tree << MatchLineLegs.new( **kwargs )
+                }
+
+
         opt_inline_note
             :            {  result = {} }  ## optional; empty
             | NOTE       {  result = { note: val[0].value } }
@@ -560,6 +353,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
 
+       opt_newline :  ## empty; optional
+                    | NEWLINE
 
         ## optional ord(inal) match number e.g (1), (42), etc.
         opt_ord
@@ -613,21 +408,45 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
 
+        opt_geo
+             :   { result = {} }   ## empty; optional
+             |  geo_opts
+
+
+        ## e.g.  @ Parc des Princes, Paris
+        ##       @ München
+        geo_opts : '@' geo_values           { result = { geo: val[1] } }
+
+
+        geo_values
+               :  GEO                         {  result = [val[0].value] }
+               |  geo_values ',' GEO          {  result.push( val[2].value )  }
+
+
 
 
          match  :   match_result
                 |   match_fixture
-
                 ### note - match_fixtures with (match) status - do not use with scores
                 ##                       e.g. Rapid v Austria 3-1
                 |   match_fixture_not_played    ## note - uses n/p or canc/canc. as match separator
                 |   match_fixture_postponed     ## note - uses ppd/ppd. or postp/postp. as match separator
-
                 ### note - separarte match fixtures & results
-                ##             with "built-in" team using (A), (H), (N) shortcut
+                ##               with "built-in" team using (A), (H), (N) shortcut
                 |   match_fixture_base
                 |   match_result_base
 
+
+         ##########################
+         ####  shortcuts (H), (A), (N) with base team
+         ##         (H) = Home, (A) = Away, (N) = Neutral
+         ##     note: use underscore (_) for base team placeholder for now
+
+         match_fixture_base
+                   :  TEAM_HOME    TEAM  { result = { team1: '_', team2: val[1].value } }
+                   |  TEAM_AWAY    TEAM  { result = { team1: val[1].value, team2: '_' } }
+                   |  TEAM_NEUTRAL TEAM  { result = { team1: '_', team2: val[1].value,
+                                                       neutral: true } }
 
 
 
@@ -648,24 +467,164 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                    }
 
 
-## experimental match (w/ two legs)
+         match_sep :  '-' | VS
+
+            ## note - does NOT include SCORE; use SCORE terminal "in-place" if needed
+
+         match_fixture :  TEAM match_sep TEAM
+                           {
+                               _trace( "RECUDE match_fixture" )
+                               result = { team1: val[0].value,
+                                          team2: val[2].value }
+                           }
 
 
-     ### experimental "compact" leg-style match format
-     ##     no date/time in match line REQUIRES date_legs_header for now
-     ##             (otherwise) date unknown!!
+### todo/fix - change to match_fixture_canceled  or keep - why? why not?!!!!
+match_fixture_not_played : TEAM INLINE_NP TEAM
+                            {
+                               ## note - auto-add (match) status canceled - why? why not?
+                               ##   A n/p B   short (inline) form of =>
+                               ##   A v B [canceled]
+
+                               result = { team1: val[0].value,
+                                          team2: val[2].value,
+                                          status_inline: 'canceled' }
+                             }
+                          | TEAM INLINE_CANC TEAM
+                             {
+                               result = { team1: val[0].value,
+                                          team2: val[2].value,
+                                          status_inline: 'canceled' }
+                            }
+
+ match_fixture_postponed  :  TEAM INLINE_PPD TEAM
+                             {
+                               result = { team1: val[0].value,
+                                          team2: val[2].value,
+                                          status_inline: 'postponed' }
+                            }
+
+
+         score_full_or_fuller
+                : SCORE_FULL      ## full format    1-1 (0-1)
+                                  ##             or 2-1 a.e.t. etc.
+                | SCORE_FULLER    ## note - SCORE_FULLER NOT supported inline!!
+                                  ##       only after  Team1 v Team2 !!
 
 
 
+        match_result :  TEAM  SCORE  TEAM
+                         {
+                           _trace( "REDUCE => match_result : TEAM SCORE TEAM" )
 
-        match_line_legs
-              : match_fixture  SCORE_LEGS  NEWLINE
-                {
-                      kwargs = { score: val[1].value }.merge( val[0] )
-                      @tree << MatchLineLegs.new( **kwargs )
-                }
+                          ## note - use/keep generic score (as array!! NOT hash!!!)
+                           result = { team1: val[0].value, team2: val[2].value,
+                                      score: val[1].value[:score]  ## note - as array e.g. [1,1] !!
+                                    }
+                           ## pp result
+                        }
+                     | TEAM SCORE_AWD TEAM
+                          {
+                           result = { team1: val[0].value, team2: val[2].value,
+                                      score: val[1].value,
+                                      status_inline: 'awarded'
+                                    }
+                          }
+                    | TEAM INLINE_AWD TEAM
+                          {
+                           result = { team1: val[0].value, team2: val[2].value,
+                                      status_inline: 'awarded'
+                                    }
+                          }
+                     | TEAM SCORE_ABD TEAM
+                          {
+                           result = { team1: val[0].value, team2: val[2].value,
+                                      score: val[1].value,
+                                      status_inline: 'abandoned'
+                                    }
+                          }
+                     | TEAM INLINE_ABD TEAM
+                          {
+                           result = { team1: val[0].value, team2: val[2].value,
+                                      status_inline: 'abandoned'
+                                    }
+                          }
+                     | TEAM INLINE_VOID TEAM
+                          {
+                           result = { team1: val[0].value, team2: val[2].value,
+                                      status_inline: 'annulled'
+                                    }
+                          }
+                     | TEAM INLINE_SUSP TEAM
+                          {
+                           result = { team1: val[0].value, team2: val[2].value,
+                                      status_inline: 'suspended'
+                                    }
+                          }
+
+                     | TEAM SCORE TEAM SCORE_FULLER_MORE
+                          {
+                            _trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
+                            score = nil
+                            score =  if val[3].value[:score] &&
+                                        val[3].value[:score]=='et'   ## check aet flag present?
+                                         val[3].value.delete( :score )  ## note - remove/delete  flag
+                                           { et: val[1].value[:score] }
+                                     elsif val[3].value[:score] &&
+                                           val[3].value[:score]=='ht' ## check ht flag present?
+                                         val[3].value.delete( :score ) ## note - remove/delete flag
+                                           { ht: val[1].value[:score] }
+                                     elsif val[3].value[:score] &&
+                                           val[3].value[:score]=='ft'  ## check ft flag present?
+                                         val[3].value.delete( :score )  ## note - remove/delete flag
+                                           { ft: val[1].value[:score] }
+                                     else   ## assume full-time (ft)
+                                            { ft: val[1].value[:score] }
+                                     end
+
+                           result = {  team1: val[0].value,
+                                      team2: val[2].value,
+                                      score: score.merge( val[3].value )
+                                    }
+                          }
+                     | TEAM SCORE_FULL TEAM
+                         {
+                           result = { team1: val[0].value,
+                                      team2: val[2].value,
+                                      score: val[1].value
+                                    }
+                         }
+                     |  match_fixture  SCORE   ## note - keep "plain/generic" score separate rule
+                        {
+                          _trace( "REDUCE  => match_result : match_fixture SCORE" )
+                          ## note - use/keep generic score (as array!! NOT hash!!!)
+                          result = { score: val[1].value[:score]  ## note - as array e.g. [1,1] !!
+                                   }.merge( val[0] )
+                          ## pp result
+                        }
+                     |  match_fixture  score_full_or_fuller
+                        {
+                          _trace( "REDUCE  => match_result : match_fixture score" )
+                          result = { score: val[1].value }.merge( val[0] )
+                          ## pp result
+                        }
 
 
+         match_result_base
+                    :  match_fixture_base SCORE
+                        {
+                          _trace( "REDUCE  => match_result_base : match_fixture_base SCORE" )
+                          ## note - use/keep generic score (as array!! NOT hash!!!)
+                          result = { score: val[1].value[:score]  ## note - as array e.g. [1,1] !!
+                                   }.merge( val[0] )
+                          ## pp result
+                        }
+                    |  match_fixture_base  score_full_or_fuller
+                        {
+                          _trace( "REDUCE  => match_result_base : match_fixture_base score" )
+                          result = { score: val[1].value }.merge( val[0] )
+                          ## pp result
+                        }
 
 
 
@@ -897,7 +856,6 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                        }
 
 
-## "level" ii  props
 
 ##########################################################################
 ##     level 2 support for properties - line-up, penalties, etc.
