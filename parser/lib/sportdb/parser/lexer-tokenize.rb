@@ -7,8 +7,8 @@ class Lexer
 ##   note: first arg passed in MUST be ref to lexer (instance)
 class Context
    ## passed along to on_round_def etc. handlers in tokenize_line
-   ##   note - for now only offsets (in line begin/end) gets updated !!!
-     attr_writer :offsets
+   ##   note - for now only offset (in line begin/end) gets updated !!!
+     attr_writer :offset
      attr_reader :lineno
 
      def initialize( lexer,
@@ -20,25 +20,24 @@ class Context
         @lineno  = lineno
         @errors  = errors
 
-        ##  fix-fix-fix - change offsets  to offset!!!!!
-        @offsets = [0,0]   ## or use [] aka [nil,nil] for not defined??? why? why not?
-        ## @offsets = offsets    ## MatchData offsets e.g. [m.begin(0),m.end(0)]
+        @offset = [0,0]   ## or use [] aka [nil,nil] for not defined??? why? why not?
+        ## @offset = offset    ## MatchData offset e.g. [m.begin(0),m.end(0)]
      end
 
 
 
-     def warn_skip_any( any, mode: 'TOP')
+     def warn_on_else( match, mode: 'TOP' )
+         if match[:any]
         ## todo/check:
         ##   change message to:
         ##     unexpected char >any< (mode)
         ##  was skip ANY match
-        _add_warn( "unexpected char >#{any}< (#{mode})" )
-     end
-
-     def warn_unknown_match( match, mode: 'TOP' )
+           _add_warn( "unexpected char >#{any}< (#{mode})" )
+         else
         ## add internal error or such
         ##    shouldn't really happen
-        _add_warn( "unknown match (#{mode}): #{match.pretty_inspect}")
+           _add_warn( "interal error - unknown match (#{mode}): #{match.inspect}")
+         end
      end
 
 
@@ -47,7 +46,7 @@ class Context
         ##          maybe add @warns later - why? why not?
         msg =  "parse error (tokenize) -" +
                           msg +
-                " in line #{@lineno}@#{@offsets[0]},#{@offsets[1]} >#{@line}<  "
+                " in line #{@lineno}@#{@offset[0]},#{@offset[1]} >#{@line}<  "
 
         @errors << msg
         @lexer.log( "!! WARN - #{msg}" )
@@ -60,7 +59,7 @@ class Context
      def _add_error( msg )
          msg = "parse error (tokenize) -" +
                           msg +
-                " in line #{@lineno}@#{@offsets[0]},#{@offsets[1]} >#{@line}<  "
+                " in line #{@lineno}@#{@offset[0]},#{@offse[1]} >#{@line}<  "
 
         @errors << msg
      end
@@ -77,10 +76,10 @@ def _tokenize_line( line, lineno )
   errors = []   ## keep a list of errors - why? why not?
 
 
-  pos = 0
-  ## track last offsets - to report error on no match
+  pos = 0        ## note - usually same as offset[1] aka offset[end] after match
+  ## track last offset (begin/end) - to report error on no match
   ##   or no match in end of string
-  offsets = [0,0]
+  offset = [0,0]
   m = nil
 
   ## track number of geo text seen
@@ -107,15 +106,15 @@ def _tokenize_line( line, lineno )
                                 lineno: lineno, offset: m.offset(:ord),
                                 value: m[:value].to_i(10)  )
 
-       offsets = [m.begin(0), m.end(0)]
-       pos = offsets[1]    ## update pos
+       offset = m.offset(0)
+       pos    = offset[1]      ## update pos
     elsif (m = START_WITH_YEAR.match(line))
        tokens << Token.new(:YEAR, m[:year],
                                  lineno: lineno, offset: m.offset(:year),
                                  value:  m[:year].to_i(10) )
 
-       offsets = [m.begin(0), m.end(0)]
-       pos = offsets[1]    ## update pos
+       offset = m.offset(0)
+       pos    = offset[1]    ## update pos
 
     elsif (m = START_WITH_GROUP_DEF_LINE_RE.match( line ))
       _trace( "ENTER GROUP_DEF_RE MODE" )
@@ -125,8 +124,8 @@ def _tokenize_line( line, lineno )
                                lineno: lineno, offset: m.offset(:group_def) )
 
 
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
+      offset = m.offset(0)
+      pos = offset[1]    ## update pos
 
     elsif (m = START_WITH_PROP_KEY_RE.match( line ))
       ##  start with prop key (match will switch into prop mode!!!)
@@ -182,8 +181,8 @@ def _tokenize_line( line, lineno )
                                  lineno: lineno, offset: m.offset(:key))
         end
 
-        offsets = [m.begin(0), m.end(0)]
-        pos = offsets[1]    ## update pos
+        offset = m.offset(0)
+        pos    = offset[1]     ## update pos
     ###
     ### todo/fix
     ###   rename to START_WITH_ROUND_DEF_OUTLINE_RE !!!!
@@ -196,8 +195,8 @@ def _tokenize_line( line, lineno )
       tokens << Token.new( :ROUND_DEF, m[:round_outline],
                             lineno: lineno, offset: m.offset(:round_outline))
 
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
+      offset = m.offset(0)
+      pos    = offset[1]    ## update pos
     elsif (m = ROUND_OUTLINE_RE.match( line ))
       _trace( "ROUND_OUTLINE" )
       ## note - derive round level from no of (leading) markers
@@ -212,8 +211,8 @@ def _tokenize_line( line, lineno )
                                     level: round_level})
 
       ## note - eats-up line for now (change later to only eat-up marker e.g. »|>>)
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
+      offset = m.offset(0)
+      pos    = offset[1]       ## update pos
     elsif (m = START_GOAL_LINE_RE.match( line ))   ## line starting with ( - assume
       ##  switch context to GOAL_RE (goalline(s))
       ####
@@ -250,12 +249,12 @@ def _tokenize_line( line, lineno )
       ##      (see INLINE_GOALS for the starting goal line inline)
       ##
       ## fix-fix-fix
-      ##  keep offsets at [0,0] - why? why not?
+      ##  keep offset at [0,0] - why? why not?
       ##    do NOT eat-up
       ##   or better
       ##    add tokens << Token.literal( '(', lineno: lineno, offset: ...) !!!
-      offsets = [m.begin(0), m.end(0)]
-      pos = offsets[1]    ## update pos
+      offset = m.offset(0)
+      pos    = offset[1]      ## update pos
     end
   end
 
@@ -277,15 +276,15 @@ def _tokenize_line( line, lineno )
     #  pp m
     #  puts "pos: #{pos}"
     # end
-    offsets = [m.begin(0), m.end(0)]
-    ctx.offsets = offsets
+    offset = m.offset(0)
+    ctx.offset = offset
 
 
 
-    if offsets[0] != pos
+    if offset[0] != pos
       ## match NOT starting at start/begin position!!!
       ##  report parse error!!!
-      msg =  "parse error (tokenize) - skipping >#{line[pos..(offsets[0]-1)]}< in line #{lineno}@#{offsets[0]},#{offsets[1]} >#{line}<"
+      msg =  "parse error (tokenize) - skipping >#{line[pos..(offset[0]-1)]}< in line #{lineno}@#{offset[0]},#{offset[1]} >#{line}<"
       errors << msg
 
       log( msg )
@@ -299,9 +298,9 @@ def _tokenize_line( line, lineno )
     ##    report skipped text run too!!!
 
     old_pos = pos
-    pos     = offsets[1]
+    pos     = offset[1]
 
-#    pp offsets   if debug?
+#    pp offset  if debug?
 
     ##
     ## note: racc requires pairs e.g. [:TOKEN, VAL]
@@ -370,11 +369,7 @@ def _tokenize_line( line, lineno )
                  Token.literal( m[:sym], lineno: lineno, offset: m.offset(:sym))
               end
            else
-             if m[:any]
-                ctx.warn_skip_any( m[:any], mode: 'GEO' )
-             else
-                ctx.warn_unknown_match( m, mode: 'GEO' )
-             end
+             ctx.warn_on_else( m, mode: 'GEO' )
              nil
            end
       elsif @re == PROP_CARDS_RE       then  _on_prop_cards( m, ctx: ctx )
@@ -402,8 +397,8 @@ def _tokenize_line( line, lineno )
   end
 
   ## check if no match in end of string
-  if offsets[1] != line.size
-    msg =  "parse error (tokenize) - skipping >#{line[offsets[1]..-1]}< in line #{lineno}@#{offsets[1]},#{line.size} >#{line}<"
+  if offset[1] != line.size
+    msg =  "parse error (tokenize) - skipping >#{line[offset[1]..-1]}< in line #{lineno}@#{offset[1]},#{line.size} >#{line}<"
     errors << msg
 
     log( msg )

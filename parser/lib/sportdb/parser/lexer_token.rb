@@ -41,7 +41,7 @@ class Token
      @text    = text       # note - lexeme (string from source)
      @lineno  = lineno     # note - lineno (integer number - not line as string) !!!
 
-     raise ArgumentError, "type Array required for offset"  unless offset.is_a?( Array )
+     raise TypeError, "type Array required for offset; got #{offset.inspect}"  unless offset.is_a?( Array )
      @offset  = offset  # note - for now char offset [start,end] in line (NOT absolute!!)
                          #     maybe latter add MatchData#byteoffset instead - why? why not?
      @value   = value   # might be (union of) string/array/hash

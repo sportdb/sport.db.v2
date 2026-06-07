@@ -28,7 +28,7 @@ def _on_prop_cards( m, ctx: )      ## note - m is MatchData object
          elsif m[:sym]
               Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
          else
-             ctx.warn_unknown_match( m, mode: 'PROP_CARDS' )
+             ctx.warn_on_else( m, mode: 'PROP_CARDS' )
              nil
          end
 end
@@ -55,7 +55,7 @@ def _on_prop_attendance( m, ctx: )      ## note - m is MatchData object
                              lineno: ctx.lineno, offset: m.offset(:num),
                              value: { value: m[:value].to_i(10) })
          else
-            ctx.warn_unknown_match( m, mode: 'PROP_ATTENDANCE' )
+            ctx.warn_on_else( m, mode: 'PROP_ATTENDANCE' )
             nil
          end
 end
@@ -101,7 +101,7 @@ def _on_prop_referee( m, ctx: )      ## note - m is MatchData object
          elsif m[:sym]
               Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
          else
-            ctx.warn_unknown_match( m, mode: 'PROP_REFEREE' )
+            ctx.warn_on_else( m, mode: 'PROP_REFEREE' )
             nil
          end
 end

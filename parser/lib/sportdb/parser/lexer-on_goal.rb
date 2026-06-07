@@ -61,7 +61,7 @@ def _on_goal( m, ctx: )
                 Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
             end
          else
-            ctx.warn_unknown_match( m, mode: 'GOAL' )
+            ctx.warn_on_else( m, mode: 'GOAL' )
             nil
          end
 end
@@ -111,7 +111,7 @@ def _on_goal_alt( m, ctx: )
                 Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
             end
          else
-            ctx.warn_unknown_match( m, mode: 'GOAL_ALT' )
+            ctx.warn_on_else( m, mode: 'GOAL_ALT' )
             nil
          end
 end
@@ -162,7 +162,7 @@ def _on_goal_compat( m, ctx: )      ## note - m is MatchData object
                 Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
             end
          else
-            ctx.warn_unknown_match( m, mode: 'GOAL_COMPAT' )
+            ctx.warn_on_else( m, mode: 'GOAL_COMPAT' )
             nil
          end
 end

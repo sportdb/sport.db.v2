@@ -69,7 +69,7 @@ def _on_prop_lineup( m, ctx: )      ## note - m is MatchData object
          elsif m[:sym]
               Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
          else
-             ctx.warn_unknown_match( m, mode: 'PROP_LINEUP' )
+             ctx.warn_on_else( m, mode: 'PROP_LINEUP' )
              nil
          end
 end

@@ -115,11 +115,7 @@ def _on_top( m, ctx: )      ## note - m is MatchData object
             Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
           end
         else
-           if m[:any]
-             ctx.warn_skip_any( m[:any] )
-           else
-             ctx.warn_unknown_match( m )
-           end
+           ctx.warn_on_else( m )
            nil
         end
 end
