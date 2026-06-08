@@ -14,42 +14,42 @@
                            _trace( "REDUCE => match_result : TEAM SCORE TEAM" )
 
                           ## note - use/keep generic score (as array!! NOT hash!!!)
+                          ##      - as array e.g. [1,1] !!
                            result = { team1: val[0].as_str, team2: val[2].as_str,
-                                      score: val[1].as_hash[:score]  ## note - as array e.g. [1,1] !!
+                                      score: val[1].as_ary
                                     }
                         }
                      | TEAM SCORE_AWD TEAM
                           {
                            result = { team1: val[0].as_str, team2: val[2].as_str,
-                                      score: val[1].as_hash[:score],
+                                      score: val[1].as_ary,
                                       status_inline: 'awarded'
                                     }
                           }
                      | TEAM SCORE_ABD TEAM
                           {
                            result = { team1: val[0].as_str, team2: val[2].as_str,
-                                      score: val[1].as_hash[:score],
+                                      score: val[1].as_ary,
                                       status_inline: 'abandoned'
                                     }
                           }
                      | TEAM SCORE TEAM SCORE_FULLER_MORE
                           {
                             _trace( "REDUCE => match_result : TEAM SCORE TEAM SCORE_FULLER_MORE" )
-                            score = nil
                             score =  if val[3].as_hash[:score] &&
                                         val[3].as_hash[:score]=='et'   ## check aet flag present?
                                          val[3].as_hash.delete( :score )  ## note - remove/delete  flag
-                                           { et: val[1].as_hash[:score] }
+                                           { et: val[1].as_ary }
                                      elsif val[3].as_hash[:score] &&
                                            val[3].as_hash[:score]=='ht' ## check ht flag present?
                                          val[3].as_hash.delete( :score ) ## note - remove/delete flag
-                                           { ht: val[1].as_hash[:score] }
+                                           { ht: val[1].as_ary }
                                      elsif val[3].as_hash[:score] &&
                                            val[3].as_hash[:score]=='ft'  ## check ft flag present?
                                          val[3].as_hash.delete( :score )  ## note - remove/delete flag
-                                           { ft: val[1].as_hash[:score] }
+                                           { ft: val[1].as_ary }
                                      else   ## assume full-time (ft)
-                                            { ft: val[1].as_hash[:score] }
+                                            { ft: val[1].as_ary }
                                      end
 
                            result = {  team1: val[0].as_str,
@@ -75,8 +75,8 @@
                         {
                           _trace( "REDUCE  => match_result : match_fixture SCORE" )
                           ## note - use/keep generic score (as array!! NOT hash!!!)
-                          result = { score: val[1].as_hash[:score]  ## note - as array e.g. [1,1] !!
-                                   }.merge( val[0] )
+                          ##      - as array e.g. [1,1] !!
+                          result = { score: val[1].as_ary }.merge( val[0] )
                         }
                      |  match_fixture  SCORE_FULL_OR_FULLER
                         {

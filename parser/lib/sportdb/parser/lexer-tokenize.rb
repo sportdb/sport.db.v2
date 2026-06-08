@@ -28,15 +28,10 @@ class Context
 
      def warn_on_else( match, mode: 'TOP' )
          if match[:any]
-        ## todo/check:
-        ##   change message to:
-        ##     unexpected char >any< (mode)
-        ##  was skip ANY match
-           _add_warn( "unexpected char >#{any}< (#{mode})" )
+           _add_warn( "unexpected char >#{match[:any]}< (#{mode})" )
          else
-        ## add internal error or such
-        ##    shouldn't really happen
-           _add_warn( "interal error - unknown match (#{mode}): #{match.inspect}")
+         ##  internal error - shouldn't really happen
+           _add_warn( "internal error - unknown match (#{mode}): #{match.inspect}")
          end
      end
 
@@ -44,9 +39,12 @@ class Context
      def _add_warn( msg )
         ## note - warns gets logged as error for now too
         ##          maybe add @warns later - why? why not?
-        msg =  "parse error (tokenize) -" +
+        ##
+        ##  note - add +1 to offset (start at one - not zero-based)
+        ##           will match with (external) text editors
+        msg =  "parse error (tokenize) - " +
                           msg +
-                " in line #{@lineno}@#{@offset[0]},#{@offset[1]} >#{@line}<  "
+                " in line @#{@lineno}:#{@offset[0]+1},#{@offset[1]+1} >#{@line}<  "
 
         @errors << msg
         @lexer.log( "!! WARN - #{msg}" )

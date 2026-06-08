@@ -3,41 +3,39 @@ class Lexer
 
 
 def self._build_score( m )
-            score = {}
              ##  note - score is "generic"
             ##      might be full-time (ft) or
             ##         after extra-time (aet) or such
             ##         or even undecided/unknown
             ##    thus, use score1/score2 and NOT ft1/ft2
-            ##      thus, use array e.g. [1,2]
+            ##      thus, use (simply an) array e.g. [1,2]
             ##           and NOT hash (table) e.g. { ft: [1,2] } !!!
 
-            score[:score] = [m[:score1].to_i(10),
-                             m[:score2].to_i(10)]
+            score  = [m[:score1].to_i(10),
+                      m[:score2].to_i(10)]
 
            score
 end
 
 def self._build_score_awd( m )    # score awarded (awd/awd.)
-            score = {}
             ### note - use "generic" score for now
             ##         to match  A 3-0 B [awarded] etc.
-            score[:score] = [m[:score1].to_i(10),
-                             m[:score2].to_i(10)]
+            score = [m[:score1].to_i(10),
+                      m[:score2].to_i(10)]
             ## add score[:awarded] = true ???
             ##  note - for now uses its own token e.g SCORE_AWD
             score
 end
 
 def self._build_score_abd( m )      # score abandonded (abd/abd.)
-            score = {}
             ### note - use "generic" score for now
-            score[:score] = [m[:score1].to_i(10),
-                             m[:score2].to_i(10)]
+            score   = [m[:score1].to_i(10),
+                       m[:score2].to_i(10)]
             ## add score[:abd] = true ???
             ##  note - for now uses its own token e.g SCORE_ABD
             score
 end
+
 
 def self._build_score_full( m )
               score = {}

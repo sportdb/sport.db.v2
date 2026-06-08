@@ -125,23 +125,23 @@
 
 
 
-        goal_alt    :  SCORE PLAYER     ## note - minute is optinal in alt goalline style!!!
+        goal_alt    :  SCORE PLAYER     ## note - minute is optional in alt goalline style!!!
                         {
-                           result = GoalAlt.new( score:   val[0].as_hash[:score],
+                           result = GoalAlt.new( score:   val[0].as_ary,
                                                  player:  val[1].as_str )
                         }
                     |  SCORE PLAYER GOAL_MINUTE
                         {
                            goal_minute = GoalMinute.new( **val[2].as_hash )
 
-                           result = GoalAlt.new( score:     val[0].as_hash[:score],
+                           result = GoalAlt.new( score:     val[0].as_ary,
                                                  player:    val[1].as_str,
                                                  minute:    goal_minute.to_minute,
                                                  goal_type: goal_minute.to_goal_type )
                         }
                    |  SCORE PLAYER GOAL_TYPE
                        {
-                           result = GoalAlt.new( score:     val[0].as_hash[:score],
+                           result = GoalAlt.new( score:     val[0].as_ary,
                                                  player:    val[1].as_str,
                                                  goal_type: GoalType.new( **val[2].as_hash ))
                        }
@@ -152,7 +152,7 @@
                    |  PLAYER SCORE
                          {
                            result = GoalAlt.new( player:  val[0].as_str,
-                                                 score:   val[1].as_hash[:score] )
+                                                 score:   val[1].as_ary )
                          }
                    |  PLAYER GOAL_MINUTE SCORE
                         {
@@ -161,13 +161,13 @@
                            result = GoalAlt.new( player:    val[0].as_str,
                                                  minute:    goal_minute.to_minute,
                                                  goal_type: goal_minute.to_goal_type,
-                                                 score:     val[2].as_hash[:score] )
+                                                 score:     val[2].as_ary )
                         }
                    |  PLAYER GOAL_TYPE SCORE
                        {
                            result = GoalAlt.new( player:    val[0].as_str,
                                                  goal_type: GoalType.new( **val[1].as_hash ),
-                                                 score:     val[2].as_hash[:score] )
+                                                 score:     val[2].as_ary )
                        }
 
 ################
@@ -206,25 +206,25 @@
                         {
                            result = GoalCompat.new( minute:  Minute.new(**val[0].as_hash),
                                                     player:  val[1].as_str,
-                                                    score:  val[2].as_hash[:score] )
+                                                    score:  val[2].as_ary )
                         }
                       | MINUTE PLAYER GOAL_TYPE SCORE
                         {
                            result = GoalCompat.new( minute: Minute.new(**val[0].as_hash),
                                                     player: val[1].as_str,
                                                     goal_type: GoalType.new( **val[2].as_hash ),
-                                                    score:  val[3].as_hash[:score] )
+                                                    score:  val[3].as_ary )
                        }
                        | MINUTE SCORE PLAYER
                         {
                            result = GoalCompat.new( minute:  Minute.new(**val[0].as_hash),
-                                                    score:  val[1].as_hash[:score],
+                                                    score:  val[1].as_ary,
                                                     player:  val[2].as_str )
                         }
                       | MINUTE SCORE PLAYER GOAL_TYPE
                         {
                            result = GoalCompat.new( minute: Minute.new(**val[0].as_hash),
-                                                    score:  val[1].as_hash[:score],
+                                                    score:  val[1].as_ary,
                                                     player: val[2].as_str,
                                                     goal_type: GoalType.new( **val[3].as_hash ))
                        }

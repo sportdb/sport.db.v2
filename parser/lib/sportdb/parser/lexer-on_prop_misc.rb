@@ -53,7 +53,7 @@ def _on_prop_attendance( m, ctx: )      ## note - m is MatchData object
          elsif m[:num]
              Token.new(:PROP_NUM, m[:num],
                              lineno: ctx.lineno, offset: m.offset(:num),
-                             value: { value: m[:value].to_i(10) })
+                             value: m[:value].to_i(10))
          else
             ctx.warn_on_else( m, mode: 'PROP_ATTENDANCE' )
             nil
@@ -93,7 +93,7 @@ def _on_prop_referee( m, ctx: )      ## note - m is MatchData object
          elsif m[:num]
              Token.new(:PROP_NUM, m[:num],
                              lineno: ctx.lineno, offset: m.offset(:num),
-                             value: { value: m[:value].to_i(10) })
+                             value: m[:value].to_i(10))
          elsif m[:enclosed_name]
               ## use HOLD,SAVE,POST or such keys - why? why not?
              Token.new(:ENCLOSED_NAME, m[:name],

@@ -109,9 +109,12 @@ GEO_END_RE = %r{
         ,
     )
     ## POSITIVE lookahead for props
+    ##   todo/fix - use generic [a-z]+ - why? why not?
     (?=
         [ ]*  ## optional spaces
-         (?: att|ref)    ## todo/fix - use generic [a-z]+ - why? why not?
+         (?:     attendance|att
+              |  referee?s|refs?
+          )
          :
     )
 }ix

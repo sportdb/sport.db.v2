@@ -13,7 +13,8 @@ class Lexer
 ATTENDANCE_RE = %r{
     (?<attendance>
      \b
-        att: [ ]*
+        (?: attendance|att )
+            : [ ]*
          (?<value>
               [1-9]
               (?: _? \d+ )*

@@ -445,10 +445,10 @@ GoalMinute      = Struct.new( :m, :offset, :secs,
       buf << "#{self.m}"
       buf << "'"
       buf << "+#{self.offset}"  if self.offset
-      buf << " (og)"   if self.og
-      buf << " (pen)"  if self.pen
-      buf << " (f)"  if self.freekick
-      buf << " (h)"  if self.header
+      buf << "(og)"   if self.og
+      buf << "(p)"  if self.pen
+      buf << "(f)"  if self.freekick
+      buf << "(h)"  if self.header
       buf << " (#{self.secs} secs)"   if self.secs
       buf
     end

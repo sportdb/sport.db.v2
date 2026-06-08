@@ -79,6 +79,10 @@ class Token
      @value
   end
 
+  def as_ary
+     raise TypeError, "token value #{@value.inspect} is #{@value.class.name} NOT array; sorry"    if !@value.is_a?(Array)
+     @value
+  end
 
 
   def to_legacy

@@ -1,0 +1,54 @@
+###
+#  try some world cup finals
+
+
+= World Cup Finals
+
+
+## todo/check
+##  - [ ] add support for coaches (!) - more than one coach (like refs)!!
+##        check final in 1930  (argentinia with two coaches!!)
+
+
+
+▪ Final
+June 29, 1986 @ Mexico City, Attendance: 114_600
+   Argentina 3-2 West Germany
+     (Brown 23, Valdano 55, Burruchaga 83;
+      Rummenigge 74, Voller 80)
+
+Team: Pumpido - Cuciuffo, Brown, Ruggeri - Giusti, Enrique,
+      Batista, Burruchaga (Trobbiani 90), Olartiocoecha -
+      Valdano, Maradona;
+         Coach: Carlos Bilardo
+Team: Schumacher - Berthold, K. Forster, Jakobs, Briegel, Brehme -
+      Eder, Matthaus, Magath (Hoeness 61) -
+      Rummenigge, Allofs (Voller 46);
+         Coach: Franz Beckenbauer
+
+
+▪ Final
+December 18, 2022 @ Lusail, Attendance: 88_966
+    Argentina 3-3 France (aet, 4-2 pen)
+        (Messi 23pen, 108, Di Maria 36;
+         Mbappe 80pen, 81, 118pen)
+
+
+
+
+__END__
+
+
+<LineupLine Team lineup=[
+ [Pumpido],
+ [Cuciuffo, Brown, Ruggeri],
+ [Giusti, Enrique, Batista, Burruchaga sub=({:m=>90}' Trobbiani), Olartiocoecha],
+ [Valdano, Maradona]]
+ coach=Carlos Bilardo>
+
+<LineupLine Team lineup=[
+ [Schumacher],
+ [Berthold, K. Forster, Jakobs, Briegel, Brehme],
+ [Eder, Matthaus, Magath sub=({:m=>61}' Hoeness)],
+ [Rummenigge, Allofs sub=({:m=>46}' Voller)]]
+ coach=Franz Beckenbauer>
