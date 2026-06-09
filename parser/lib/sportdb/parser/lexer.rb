@@ -4,43 +4,6 @@ class Lexer
 
 
 
-def log( msg )
-   ## append msg to ./logs.txt
-   ##     use ./errors.txt - why? why not?
-   ##
-   ##  change to ./logs_lexer.txt or such - why? why not?
-   ##    auto-add/prepend  [Lexer] and timestamp!!!  to msg - why? why not?
-   File.open( './logs.txt', 'a:utf-8' ) do |f|
-     f.write( msg )
-     f.write( "\n" )
-   end
-end
-
-
-def _trace( *args )
-  if debug?
-    print "[DEBUG] Lexer -- "
-    args.each { |arg| puts args }
-  end
-end
-
-def _warn( *args )
-  print "!! [WARN] Lexer -- "
-  args.each { |arg| puts args }
-end
-
-def _info( *args )
-  print "[INFO] Lexer -- "
-  args.each { |arg| puts args }
-end
-
-
-def debug?()  @debug == true; end
-
-
-
-
-
 def initialize( txt, debug: false )
    raise ArgumentError, "text as string expected for lexer; got #{txt.class.name}"  unless txt.is_a?(String)
 
@@ -91,13 +54,12 @@ def tokenize_with_errors
         ##  strip (inline) end-of-line comments (from line)
         ##    check/discuss: make - inline comment require trailing space
         ##                      e.g.   #1 vs # 1   - why? why not?
-        line = line.sub( /   [ ]*      ## (eat-up) optional leading space(s)
+        line = line.sub( /   [ ]*      ## (eat-up) optional leading space(s) too - why? why not?
                               \#{1,}.*?
                              \z
                             /x, '' )
 
 
-        ####
         #  support __END__ marker to cut-off input
         break if line.match?( /\A [ ]*   ## optional leading space(s)
                                    __END__
@@ -111,6 +73,7 @@ def tokenize_with_errors
 
 
         _trace( "line #{lineno}: >#{line}<" )
+
 
 
         ######

@@ -61,11 +61,12 @@ require_relative 'parser/token'
 
 
 require_relative 'parser/lexer_buffer'   ## incl. Tokens (aka TokenBuffer)
+require_relative 'parser/lexer_token'
 
 require_relative 'parser/lexer-prep_doc'
 require_relative 'parser/lexer-prep_line'
 
-require_relative 'parser/lexer_token'
+require_relative 'parser/lexer-logger'   ## e.g. _trace, _warn, _info, etc.
 require_relative 'parser/lexer-tokenize'
 require_relative 'parser/lexer-on_round_def'
 require_relative 'parser/lexer-on_group_def'
@@ -89,6 +90,19 @@ require_relative 'parser/racc_tree'
 
 ###
 #  make parser api (easily) available - why? why not?
+#
+#  use Fbtxt.parse( txt ) &&
+#      Fbtxt.lex( txt)            -- or Fbtxt.tokenize?
+#
+#   Fbtxt.lex( txt,
+#                 flatten: true|false,        ## keep nested [] for lines (no NEWLINE tokens)
+#                 transform: true|false )     ## builtin transforms eg. merge DATE & TIME => DATETIME, etc.
+#
+#   how to deal with errors?
+##    always return   [tokens, errors] or such?
+##           or return a Result struct - why? why not?
+
+
 
 =begin
 module SportDb

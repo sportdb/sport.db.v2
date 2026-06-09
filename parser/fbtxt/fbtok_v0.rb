@@ -15,13 +15,6 @@ PATH = [
 ]
 
 
-WORLD_MORE = parse_names( <<TXT )
-  world.more/2023-24/de.1.txt
-  world.more/2023-24/at.1.txt
-TXT
-
-
-
 
 
 def fbtok( args, path: PATH )
@@ -62,10 +55,6 @@ end
 if __FILE__ == $0
 
   args = ARGV
-
-  if args.size == 1 && (args[0] == 'world.more' || args[0] == 'worldmore' || args[0] == 'more')
-    args = WORLD_MORE
-  end
 
   fbtok( args )
   puts "bye"
