@@ -790,7 +790,7 @@ module_eval(<<'.,.,', 'parser.y', 9)
 
 module_eval(<<'.,.,', 'parser.y', 50)
   def _reduce_25(val, _values, result)
-                   _trace( "REDUCE BLANK" )
+                   ## _trace( "REDUCE BLANK" )
                @tree << BlankLine.new
 
     result

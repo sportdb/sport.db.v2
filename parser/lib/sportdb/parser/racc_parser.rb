@@ -15,33 +15,25 @@ class RaccMatchParser
     @tokens, @errors = lexer.tokenize_with_errors
     ## pp @tokens
 
+    @debug = debug
   end
 
 
-  def debug( value ) @debug = value; end   ### fix: use setter-style e.g. debug=(value) !!!
+  ## def debug( value ) @debug = value; end   ### fix: use setter-style e.g. debug=(value) !!!
   def debug?()  @debug == true; end
 
-  ###
-  ###  fix-fix-fix   rename   to _trace
-  ##                   check lexer - add [debug] Parser -  or such!!!
-  ##
-  ## debug - trace / print message
-  def trace( msg )
-    puts " fix-fix-fix use _trace() in parser!!"
-    puts "  [parse] " + msg
-  end
 
   def _trace( *args )
-    ## if debug?
+    if debug?
       print "[DEBUG] Parser -- "
       args.each { |arg| puts args }
-    ## end
+    end
   end
 
 
   def next_token
     tok = @tokens.shift
-   _trace( "next_token => #{tok.pretty_inspect}" )
+   ## _trace( "next_token => #{tok.pretty_inspect}" )
 
     ##  convert to racc format single char literal tokens e.g. '@' etc.
     ##                  note - literal token MUST be string (NOT symbol)

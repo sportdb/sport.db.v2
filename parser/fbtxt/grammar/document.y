@@ -41,7 +41,7 @@
 
           | BLANK        ##  was empty_line
              {
-               _trace( "REDUCE BLANK" )
+               ## _trace( "REDUCE BLANK" )
                @tree << BlankLine.new
              }
 
