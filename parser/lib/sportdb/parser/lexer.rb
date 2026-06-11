@@ -75,7 +75,6 @@ def tokenize_with_errors
         _trace( "line #{lineno}: >#{line}<" )
 
 
-
         ######
         ### special case for empty line (aka BLANK)
         if line.empty?
@@ -101,6 +100,10 @@ def tokenize_with_errors
           tokens_by_line  << more_tokens
           errors          += more_errors
         end
+
+       ## output last line from tokens by line in debug mode
+        _trace( tokens_by_line[-1].pretty_inspect )
+
     end # each line
 
 
