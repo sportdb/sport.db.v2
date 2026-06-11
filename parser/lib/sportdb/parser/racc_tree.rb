@@ -289,6 +289,7 @@ MatchLine   = Struct.new( :header,  :tty,   ## tty = TELETYPE MODE for teams and
                           :team1, :team2,
                           :score,
                           :status,  :status_inline, :status_note,
+                          :round_inline,
                           :geo,
                           :neutral,  ## true/false - NOT -home/away - neutral ground
                           :note,

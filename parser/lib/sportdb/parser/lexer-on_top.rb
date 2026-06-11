@@ -46,6 +46,11 @@ def _on_top( m, ctx: )      ## note - m is MatchData object
                                                   lineno: ctx.lineno, offset: m.offset(:inline_awd))
         elsif m[:inline_canc] then Token.new(:INLINE_CANC, m[:inline_canc],
                                                   lineno: ctx.lineno, offset: m.offset(:inline_canc))
+
+        elsif m[:inline_round] then Token.new(:INLINE_ROUND, m[:inline_round],
+                                                  lineno: ctx.lineno, offset: m.offset(:inline_round),
+                                                     value: m[:inline_round_text])
+
         elsif m[:status]      then Token.new(:STATUS, m[:status],
                                                   lineno: ctx.lineno, offset: m.offset(:status),
                                                   value: _build_status( m ))

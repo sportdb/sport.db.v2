@@ -97,6 +97,9 @@
 
 
 
+
+
+
         match_line
               :   match_opts  match  more_match_opts NEWLINE
                     {
@@ -135,6 +138,7 @@
                ### note - for now inline goals only for "compact" match results
                ###           make more flexible (allow leading date/time etc. too)
                ###   plus allow  match status/note - why? why not?
+
                |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  NEWLINE
                   {
                       kwargs = {}.merge( val[0] )
@@ -145,16 +149,29 @@
                   }
 
 
+##         opt_inline_round :   /* empty */   { result = {} }
+##                          | INLINE_ROUND    { result = { inline_round: val[0].as_str } }
 
+
+        opt_inline_round_n_geo : /* empty */          { result = {} }
+                             | INLINE_ROUND  opt_geo  {
+                                   _trace( "REDUCE => INLINE_ROUND  opt_geo" )
+                                    result = { round_inline: val[0].as_str }.merge( val[1] )
+                                }
+
+
+         ##
+         ##   todo/check - make opt_inline_round (e.g. ▪18/▪QF etc)  more "flexible"
+         ##                 even allow standalone - why? why not?
 
         match_opts
-             : ord  opt_date opt_geo {
+             : ord  opt_date  opt_inline_round_n_geo {
                                      result = {}.merge( val[0], val[1], val[2] )
                                 }
-             | date_datetime  opt_geo   {
+             | date_datetime  opt_inline_round_n_geo   {
                                      result = {}.merge( val[0], val[1] )
                                 }
-             | time   opt_geo   {
+             | time  opt_inline_round_n_geo   {
                                      result = {}.merge( val[0], val[1] )
                                 }
              | geo

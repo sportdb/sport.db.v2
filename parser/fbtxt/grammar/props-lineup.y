@@ -17,6 +17,10 @@
                            {  result = { coach: val[2].as_str } }
                    | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
                            {  result = { coach: val[3].as_str } }
+                  | '-' COACH  PROP_NAME
+                           {  result = { coach: val[2].as_str } }
+                   | '-' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
+                           {  result = { coach: val[3].as_str } }
 
 
 

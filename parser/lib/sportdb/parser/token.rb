@@ -58,6 +58,20 @@ VS_RE = %r{
 }ix
 
 
+##
+## ▪SF  or ▪1,▪17, etc.
+##   note - only numbers and upcase allowed
+##                limited to two-letters for now - make more generic - why? why not?
+##                may add SF1, SF2, or such later !!!
+INLINE_ROUND_RE = %r{
+       (?<inline_round>
+           ▪  (?<inline_round_text>
+                    [0-9]+
+                  | [A-Z]{1,2}+ [0-9]*
+              )
+          (?= [ ]|$)   # positive lookAHEAD for space (or end-of-line)
+        )
+}x
 
 
 ##############
@@ -68,6 +82,9 @@ VS_RE = %r{
 
 RE = Regexp.union(
                     SPACES_RE,
+
+                    INLINE_ROUND_RE,
+
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
 
                     INLINE_WO_RE,    ## (inline) match status - w/o (walkout)
