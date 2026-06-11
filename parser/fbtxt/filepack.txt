@@ -42,6 +42,18 @@ PACK default
 
 
 
+###
+##  try short cut with glob
+PACK fr
+  /sports/openfootball/europe/france/*
+
+PACK it
+  /sports/openfootball/italy/*
+
+PACK de
+  /sports/openfootball/deutschland/*
+
+
 
 PACK more
 ## more samples  (in fbtxt-samples)
