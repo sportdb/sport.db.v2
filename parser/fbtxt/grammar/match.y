@@ -153,11 +153,21 @@
 ##                          | INLINE_ROUND    { result = { inline_round: val[0].as_str } }
 
 
+
         opt_inline_round_n_geo : /* empty */          { result = {} }
-                             | INLINE_ROUND  opt_geo  {
+                               |  inline_round_n_geo
+
+
+        #  is   INLINE_ROUND        -or-
+        #       INLINE_ROUND  GEO   -or-
+        #       GEO
+
+        inline_round_n_geo :  INLINE_ROUND  opt_geo  {
                                    _trace( "REDUCE => INLINE_ROUND  opt_geo" )
                                     result = { round_inline: val[0].as_str }.merge( val[1] )
                                 }
+                             | geo
+
 
 
          ##
@@ -174,7 +184,7 @@
              | time  opt_inline_round_n_geo   {
                                      result = {}.merge( val[0], val[1] )
                                 }
-             | geo
+             | inline_round_n_geo
 
 
         ## note - you cannot use both STATUS and NOTE - why? why not?
