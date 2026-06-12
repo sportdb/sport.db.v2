@@ -1,6 +1,6 @@
 ##
 ##  to run use:
-##   $ ruby worldcup2026.rb        (in /genjson)
+##   $ ruby mkworldcup2026.rb        (in /genjson)
 
 require_relative 'helper'
 
@@ -14,8 +14,8 @@ config_2026 = [
 
 
 indir = OPENFOOTBALL_PATH
-## outdir =   "#{OPENFOOTBALL_PATH}/worldcup.json"
-outdir = './tmp-worldcup'
+outdir =   "#{OPENFOOTBALL_PATH}/worldcup.json"
+## outdir = './tmp-worldcup'
 
 config = config_2026
 
