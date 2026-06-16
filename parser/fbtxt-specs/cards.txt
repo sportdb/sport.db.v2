@@ -52,3 +52,7 @@ Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer 46 [R 115
 
 Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer 46 [R 115]),
          Kirchler (Mair 46), Barisic (Jezek 46), Panis, Brzeczek - Glieder, Gilewicz
+
+
+Tirol:  Marasek [Y 11]  (Schiener [Y][R]  (Scharrer [R 115]))
+Tirol:  Marasek [Y 11']  (Schiener [Y 32'][Y/R 43']  (Scharrer [R 115']))

@@ -103,9 +103,9 @@ end
 
 LineupLine = Struct.new( :team, :lineup, :coach ) do
   def pretty_print( pp )
-    pp.group( 0, '<LineupLine ', '>') do    ##  group( indent, open, close)
+    pp.group( 4, '<LineupLine ', '>') do    ##  group( indent, open, close)
       pp.text( team )
-      pp.text( " lineup=" )
+      pp.text( ' ' )
       pp.pp( lineup )
 
       if coach
@@ -124,7 +124,7 @@ Lineup     = Struct.new( :name, :captain, :cards, :sub ) do
       pp.text( ' [c]' )   if captain
 
       if cards
-        pp.text( ' cards=' )
+        pp.text( ' ' )
         pp.pp( cards )
       end
 
@@ -158,7 +158,7 @@ end
 
 Sub        = Struct.new( :minute, :sub )  do
   def pretty_print( pp )
-    pp.group( 0, 'sub=(', ')') do        ##  group( indent, open, close)
+    pp.group( 0, '(', ')') do        ##  group( indent, open, close)
        pp.text( "#{minute.to_s} " )   if minute
        pp.pp( sub )
     end
@@ -170,13 +170,15 @@ end
 
 
 GroupDef   = Struct.new( :name, :teams ) do
-  def pretty_print( printer )
-    printer.text( "<GroupDef " )
-    printer.text( self.name )
-    printer.text( " teams=" + self.teams.pretty_inspect )
-    printer.text( ">" )
+  def pretty_print( pp )
+    pp.group( 4, '<GroupDef ', '>') do        ##  group( indent, open, close)
+      pp.text( name )
+      pp.text( " teams=" )
+      pp.pp( teams )
+    end
   end
 end
+
 
 
 RoundDef   = Struct.new( :name, :date, :duration )  do
@@ -188,6 +190,8 @@ RoundDef   = Struct.new( :name, :date, :duration )  do
     printer.text( ">" )
   end
 end
+
+
 
 DateHeader = Struct.new( :date, :year ) do
   def pretty_print( printer )
@@ -243,19 +247,19 @@ end
 ## todo/check - use a generic Heading instead of Heading1/2/3 - why? why not?
 Heading1 = Struct.new( :text ) do
   def pretty_print( printer )
-    printer.text( "<Heading1 #{self.text}>" )
+    printer.text( "<Heading1 #{text}>" )
   end
 end
 
 Heading2 = Struct.new( :text ) do
   def pretty_print( printer )
-    printer.text( "<Heading2 #{self.text}>" )
+    printer.text( "<Heading2 #{text}>" )
   end
 end
 
 Heading3 = Struct.new( :text ) do
   def pretty_print( printer )
-    printer.text( "<Heading3 #{self.text}>" )
+    printer.text( "<Heading3 #{text}>" )
   end
 end
 
@@ -317,31 +321,36 @@ MatchLine   = Struct.new( :header,  :tty,   ## tty = TELETYPE MODE for teams and
                           :note,
                           :att )  do   ## change to geos - why? why not?
 
-  def pretty_print( printer )
-    printer.text( "<MatchLine " )
-    printer.text( "#{self.team1} v #{self.team2}")
-    printer.breakable
+  def pretty_print( pp )
+    pp.group( 4, '<MatchLine ', '>') do        ##  group( indent, open, close)
+      pp.text( "#{team1} v #{team2}")
 
-    members.zip(values) do |name, value|
-      next if [:team1, :team2].include?( name )
-      next if value.nil?
+      members.zip(values) do |name, value|
+        next if [:team1, :team2].include?( name )
+        next if value.nil?
 
-      printer.text( "#{name}=#{value.pretty_inspect}" )
+        pp.breakable
+        pp.text( "#{name}=" )
+        pp.pp( value )
+      end
     end
-
-    printer.text( ">" )
   end
 
-end
+end  #  struct MatchLine
+
 
 
 GoalLine    = Struct.new( :goals1, :goals2 ) do
-  def pretty_print( printer )
-    printer.text( "<GoalLine " )
-    printer.text( "goals1=" + self.goals1.pretty_inspect + "," )
-    printer.breakable
-    printer.text( "goals2=" + self.goals2.pretty_inspect + ">" )
+  def pretty_print( pp )
+    pp.group( 4, '<GoalLine ', '>') do        ##  group( indent, open, close)
+      pp.text( "goals1=" )
+      pp.pp( goals1 )
+      pp.breakable
+      pp.text( "goals2=" )
+      pp.pp( goals2 )
+    end
   end
+
 
 ##  def clone
 ##         _clone = GoalLine.new( goals1: goals1.clone,
@@ -362,7 +371,7 @@ Goal        = Struct.new( :player, :minutes, :count ) do
     buf = String.new
     buf << "#{self.player}"
     if count
-       buf << (" " + count.pretty_inspect + ",")
+       buf << (" " + count.inspect + ",")
     else
       if minutes.nil? || minutes.empty?
         ## add nothing if no minutes available/present

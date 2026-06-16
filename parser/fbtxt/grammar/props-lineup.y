@@ -35,7 +35,7 @@
 
        lineup :   lineup_name
                     {
-                       ## note - value must be DOUBLE nested in array
+                       ## note - value must be DOUBLE [[]] nested in array
                        ##    allows formations (e.g. 4-3-3 or such)
                        ##   via dash (-) separator, see below!
                        result = [[val[0]]]
@@ -161,13 +161,16 @@
 
      ##
      ## todo/check - should ALWAYS return array of cards!!!
+     ###      result = [val[0]]
+     ###  or  result = [val[0],val[1]]   should be default action
+     ###   but really defaults to result = val[0] - why?
 
       cards
-        : inline_yellow
-        | inline_yellow inline_yellow_red
-        | inline_yellow inline_red
-        | inline_red
-        | inline_yellow_red
+        : inline_yellow                     {  result =  [val[0]]  }
+        | inline_yellow inline_yellow_red   {  result =  [val[0],val[1]]  }
+        | inline_yellow inline_red          {  result =  [val[0],val[1]]  }
+        | inline_red                        {  result =  [val[0]]  }
+        | inline_yellow_red                 {  result =  [val[0]]  }
 
 
       inline_yellow

@@ -448,11 +448,11 @@ racc_reduce_table = [
   2, 175, :_reduce_222,
   0, 170, :_reduce_223,
   1, 170, :_reduce_224,
-  1, 173, :_reduce_none,
-  2, 173, :_reduce_none,
-  2, 173, :_reduce_none,
-  1, 173, :_reduce_none,
-  1, 173, :_reduce_none,
+  1, 173, :_reduce_225,
+  2, 173, :_reduce_226,
+  2, 173, :_reduce_227,
+  1, 173, :_reduce_228,
+  1, 173, :_reduce_229,
   1, 176, :_reduce_230,
   1, 177, :_reduce_231,
   1, 178, :_reduce_232 ]
@@ -2091,7 +2091,7 @@ module_eval(<<'.,.,', 'parser.y', 1073)
 
 module_eval(<<'.,.,', 'parser.y', 1078)
   def _reduce_209(val, _values, result)
-                           ## note - value must be DOUBLE nested in array
+                           ## note - value must be DOUBLE [[]] nested in array
                        ##    allows formations (e.g. 4-3-3 or such)
                        ##   via dash (-) separator, see below!
                        result = [[val[0]]]
@@ -2236,17 +2236,42 @@ module_eval(<<'.,.,', 'parser.y', 1199)
   end
 .,.,
 
-# reduce 225 omitted
+module_eval(<<'.,.,', 'parser.y', 1209)
+  def _reduce_225(val, _values, result)
+      result =  [val[0]]
+    result
+  end
+.,.,
 
-# reduce 226 omitted
+module_eval(<<'.,.,', 'parser.y', 1210)
+  def _reduce_226(val, _values, result)
+      result =  [val[0],val[1]]
+    result
+  end
+.,.,
 
-# reduce 227 omitted
-
-# reduce 228 omitted
-
-# reduce 229 omitted
+module_eval(<<'.,.,', 'parser.y', 1211)
+  def _reduce_227(val, _values, result)
+      result =  [val[0],val[1]]
+    result
+  end
+.,.,
 
 module_eval(<<'.,.,', 'parser.y', 1212)
+  def _reduce_228(val, _values, result)
+      result =  [val[0]]
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 1213)
+  def _reduce_229(val, _values, result)
+      result =  [val[0]]
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'parser.y', 1219)
   def _reduce_230(val, _values, result)
                     minute = val[0].as_hash.empty? ? nil : Minute.new( **val[0].as_hash )
                 result = Card.new( name: 'Y',  minute: minute )
@@ -2255,7 +2280,7 @@ module_eval(<<'.,.,', 'parser.y', 1212)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 1218)
+module_eval(<<'.,.,', 'parser.y', 1225)
   def _reduce_231(val, _values, result)
                     minute = val[0].as_hash.empty? ? nil : Minute.new( **val[0].as_hash )
                 result = Card.new( name: 'Y/R',  minute: minute )
@@ -2264,7 +2289,7 @@ module_eval(<<'.,.,', 'parser.y', 1218)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 1224)
+module_eval(<<'.,.,', 'parser.y', 1231)
   def _reduce_232(val, _values, result)
                     minute = val[0].as_hash.empty? ? nil : Minute.new( **val[0].as_hash )
                 result = Card.new( name: 'R',  minute: minute )
