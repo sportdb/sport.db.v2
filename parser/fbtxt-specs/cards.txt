@@ -1,0 +1,54 @@
+##
+#  check (inline) yellow, red, yellow/red cards
+
+Tirol: Marasek [c]
+
+Tirol: Marasek [Y 118]
+
+Tirol: Marasek [R 118]
+
+Tirol:   Marasek [R 118] - Schiener (Scharrer 46)
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (46' Scharrer [R 115])
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] (Schiener (46' Scharrer [R 115]))
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] (12' Schiener (46' Scharrer [R 115]))
+
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 118] (12' Schiener (46' Scharrer))
+
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 11] (Schiener [Y] (Scharrer [R 115]))
+Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 11] (Schiener [Y] (46' Scharrer [R 115]))
+Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 11] (Schiener [Y] (Scharrer 46' [R 115]))
+Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 11] (Schiener [Y] (Scharrer [R 115] 46'))
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 21] (23' Schiener [Y] (Scharrer [R]))
+Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 21] (Schiener 23' [Y] (46' Scharrer [R]))
+Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 21] (Schiener [Y] 23' (Scharrer 46' [R]))
+
+
+
+Tirol:  Marasek [Y 11]  (Schiener [Y]  (Scharrer [R 115]))
+Tirol:  Marasek [Y 11]  (Schiener [Y]  (46' Scharrer [R 115]))
+Tirol:  Marasek [Y 11]  (Schiener [Y]  (Scharrer 46' [R 115]))
+Tirol:  Marasek   (Schiener  (Scharrer))
+Tirol:  Marasek  (Schiener   (46' Scharrer [R 115]))
+Tirol:  Marasek  (Schiener  (Scharrer 46' [R 115]))
+Tirol:  Marasek   (Schiener  (Scharrer))
+
+
+
+Tirol:  Schiener (46 Scharrer)
+
+Tirol:  Schiener (46 Scharrer [R 115])
+
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer [R 115] 46)
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer 46 [R 115])
+
+
+Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer 46 [R 115]),
+         Kirchler (Mair 46), Barisic (Jezek 46), Panis, Brzeczek - Glieder, Gilewicz

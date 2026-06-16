@@ -101,8 +101,8 @@ def tokenize_with_errors
           errors          += more_errors
         end
 
-       ## output last line from tokens by line in debug mode
-        _trace( tokens_by_line[-1].pretty_inspect )
+        ## output last line from tokens by line in debug mode
+        _trace( "  #{tokens_by_line[-1].size} token(s): " + tokens_by_line[-1].pretty_inspect )
 
     end # each line
 

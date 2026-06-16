@@ -55,6 +55,9 @@ class RaccMatchParser
   def parse_with_errors
      _trace( "start parse:" )
      do_parse
+
+     _trace( "#{@tree.size} parse tree node(s): " +  @tree.pretty_inspect)
+
      [@tree, @errors]
   end
 
@@ -69,15 +72,13 @@ class RaccMatchParser
 
 
   def on_error(error_token_id, error_value, value_stack)
-    ## auto-add error_token (as string)
+    ## note - get  error_token (as string) e.g. MINUTE, DATE, etc.
     error_token = Racc_token_to_s_table[error_token_id]
-    args = [error_token, error_token_id, error_value, value_stack]
 
-    puts
-    puts "!! on parse error:"
-    puts "args=#{args.pretty_inspect}"
+    msg = "parse error on token: #{error_token} >#{error_value.inspect}<, stack: #{value_stack.inspect}"
+    puts "!! #{msg}"
 
-    @errors << "parse error on token: #{error_token} >#{error_value.pretty_inspect}<, stack: #{value_stack.pretty_inspect}"
+    @errors << msg
   end
 
 

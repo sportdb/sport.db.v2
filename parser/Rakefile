@@ -28,3 +28,25 @@ Hoe.spec 'sportdb-parser' do
     required_ruby_version: '>= 3.1.0'
   }
 end
+
+
+
+###
+## add our own g task to build parser.rb (via racc & erb)
+
+desc 'Generate parser.rb (via racc & erb)'
+task g: 'lib/sportdb/parser/parser.rb'
+
+
+file 'lib/sportdb/parser/parser.rb' => 'fbtxt/parser.y' do |t|
+  puts "  [racc] generate parser.rb from parser.y"
+  sh "racc -o #{t.name} #{t.source}"
+end
+
+
+file 'fbtxt/parser.y' => FileList['fbtxt/grammar/*.y'] do |t|
+  puts "  [erb] generate parser.y; merge grammar/*"
+  Dir.chdir( 'fbtxt' ) do
+    sh "erb parser.y.erb > parser.y"
+  end
+end

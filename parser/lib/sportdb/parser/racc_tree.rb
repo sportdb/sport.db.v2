@@ -97,53 +97,93 @@ end
 
 
 
+
+
+
+
 LineupLine = Struct.new( :team, :lineup, :coach ) do
-  def pretty_print( printer )
-    printer.text( "<LineupLine " )
-    printer.text( self.team )
-    printer.text( " lineup=" + self.lineup.pretty_inspect )
-    printer.text( " coach=" + self.coach )   if self.coach
-    printer.text( ">" )
+  def pretty_print( pp )
+    pp.group( 0, '<LineupLine ', '>') do    ##  group( indent, open, close)
+      pp.text( team )
+      pp.text( " lineup=" )
+      pp.pp( lineup )
+
+      if coach
+        pp.breakable
+        pp.text( "coach=" + coach )
+      end
+    end
   end
 end
 
 
 Lineup     = Struct.new( :name, :captain, :cards, :sub ) do
-  def pretty_print( printer )
-    buf = String.new
-    buf <<  self.name
-    buf << " [c]"   if captain
-    buf << " cards=" + self.cards.pretty_inspect    if cards
-    buf << " sub=" + self.sub.pretty_inspect      if sub
-    printer.text( buf )
+  def pretty_print( pp )
+    pp.group( 0, '', '') do    ##  group( indent, open, close)
+      pp.text( name )
+      pp.text( ' [c]' )   if captain
+
+      if cards
+        pp.text( ' cards=' )
+        pp.pp( cards )
+      end
+
+      if sub
+        pp.breakable   ## can become either a space or a newline
+        pp.pp( sub )
+      end
+    end
   end
 end
 
 
+
+
+
 Card       = Struct.new( :name, :minute ) do
+
+  def self.build( name:, minute: nil )
+     minute = if minute
+                  if minute.is_a?( Minute )  ## already Minute obj/pass through
+                      minute
+                  elsif minute.is_a?( Hash )
+                      if minute.empty?
+                         nil    ## note - allow empty hash (for no minute)
+                      else
+                         Minute.new( **minute )
+                      end
+                  else
+                     raise TypeError, "Hash or Minute obj expected; got #{minute.inspect} : #{minute.class.name}"
+                  end
+              end
+
+     new( name: name, minute: minute )
+  end
+
+
   def to_s
     buf = String.new
-    buf << "#{self.name}"
-    buf << " #{self.minute.to_s}"   if self.minute
+    buf << "#{name}"
+    buf << " #{minute.to_s}"   if minute
     buf
   end
 
-  def pretty_print( printer )
-    printer.text( to_s )
+  def pretty_print( pp )
+    pp.text( to_s )
   end
 end
 
 
 Sub        = Struct.new( :minute, :sub )  do
-  def pretty_print( printer )
-    buf = String.new
-    buf << "("    ## note - possibly recursive (thus, let minute go first/print first/upfront)
-    buf << "#{self.minute.to_s} "   if self.minute
-    buf << "#{self.sub.pretty_inspect}"
-    buf << ")"
-    printer.text( buf )
+  def pretty_print( pp )
+    pp.group( 0, 'sub=(', ')') do        ##  group( indent, open, close)
+       pp.text( "#{minute.to_s} " )   if minute
+       pp.pp( sub )
+    end
   end
 end
+
+
 
 
 
