@@ -142,24 +142,6 @@ end
 
 Card       = Struct.new( :name, :minute ) do
 
-  def self.build( name:, minute: nil )
-     minute = if minute
-                  if minute.is_a?( Minute )  ## already Minute obj/pass through
-                      minute
-                  elsif minute.is_a?( Hash )
-                      if minute.empty?
-                         nil    ## note - allow empty hash (for no minute)
-                      else
-                         Minute.new( **minute )
-                      end
-                  else
-                     raise TypeError, "Hash or Minute obj expected; got #{minute.inspect} : #{minute.class.name}"
-                  end
-              end
-
-     new( name: name, minute: minute )
-  end
-
 
   def to_s
     buf = String.new
