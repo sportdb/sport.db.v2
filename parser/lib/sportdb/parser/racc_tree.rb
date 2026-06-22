@@ -2,6 +2,40 @@
 ####
 #   RaccMatchParser support machinery (incl. node classes/abstract syntax tree)
 
+
+module JsonSerializable
+  def to_json(*args)
+    as_json.to_json(*args)
+  end
+end
+
+###
+##  add as_json  to Object/Array/Hash
+class Object
+  def as_json(*)
+    self
+  end
+end
+
+class Array
+  def as_json(*)
+    map { |v| v.as_json }
+  end
+end
+
+class Hash
+  def as_json(*)
+    each_with_object({}) do |(k, v), h|
+      h[k.to_s] = v.as_json
+    end
+  end
+end
+
+
+
+
+
+
 class RaccMatchParser
 
 =begin
@@ -194,13 +228,25 @@ end
 
 
 DateHeader = Struct.new( :date, :year ) do
+
+  include JsonSerializable
+  def as_json(*)
+    h = {}
+    h['date']   = date.as_json     if date
+    h['year']   = year.as_json     if year
+
+    ['<DateHeader>', h]
+  end
+
+
   def pretty_print( printer )
     printer.text( "<DateHeader " )
-    printer.text( "#{self.date.pretty_inspect}" )  if self.date
-    printer.text( "#{self.year.pretty_inspect}" )  if self.year
+    printer.text( "#{date.pretty_inspect}" )  if date
+    printer.text( "#{year.pretty_inspect}" )  if year
     printer.text( ">")
   end
 end
+
 
 DateHeaderLegs = Struct.new( :date1, :date2 ) do
   def pretty_print( printer )
@@ -214,14 +260,29 @@ end
 
 
 RoundOutline = Struct.new( :outline, :level ) do
+  include JsonSerializable
+  def as_json(*)
+    ['<RoundOutline>',
+      {
+        'outline' => outline.as_json,
+        'level'   => level.as_json,
+      }
+    ]
+  end
+
   def pretty_print( printer )
-    printer.text( "<RoundOutline #{self.outline}, level=#{self.level}>" )
+    printer.text( "<RoundOutline #{outline}, level=#{level}>" )
   end
 end
 
 
 
 class BlankLine
+  include JsonSerializable
+  def as_json(*)
+    ['<BlankLine>']
+  end
+
   def pretty_print( printer )
     printer.text( "<BlankLine>" )
   end
@@ -246,18 +307,33 @@ end
 
 ## todo/check - use a generic Heading instead of Heading1/2/3 - why? why not?
 Heading1 = Struct.new( :text ) do
+  include JsonSerializable
+  def as_json(*)
+    ['<Heading1>', { 'text' => text.as_json }]
+  end
+
   def pretty_print( printer )
     printer.text( "<Heading1 #{text}>" )
   end
 end
 
 Heading2 = Struct.new( :text ) do
+  include JsonSerializable
+  def as_json(*)
+    ['<Heading2>', { 'text' => text.as_json }]
+  end
+
   def pretty_print( printer )
     printer.text( "<Heading2 #{text}>" )
   end
 end
 
 Heading3 = Struct.new( :text ) do
+  include JsonSerializable
+  def as_json(*)
+    ['<Heading3>', { 'text' => text.as_json }]
+  end
+
   def pretty_print( printer )
     printer.text( "<Heading3 #{text}>" )
   end
@@ -321,6 +397,24 @@ MatchLine   = Struct.new( :header,  :tty,   ## tty = TELETYPE MODE for teams and
                           :note,
                           :att )  do   ## change to geos - why? why not?
 
+
+  include JsonSerializable
+  def as_json(*)
+    h =  { 'team1' => team1.as_json,
+           'team2' => team2.as_json,
+         }
+
+      members.zip(values) do |name, value|
+        next if [:team1, :team2].include?( name )
+        next if value.nil?
+
+        h[name.to_s] = value.as_json
+      end
+
+    ['<MatchLine>', h]
+  end
+
+
   def pretty_print( pp )
     pp.group( 4, '<MatchLine ', '>') do        ##  group( indent, open, close)
       pp.text( "#{team1} v #{team2}")
@@ -341,6 +435,17 @@ end  #  struct MatchLine
 
 
 GoalLine    = Struct.new( :goals1, :goals2 ) do
+
+  include JsonSerializable
+  def as_json(*)
+    ['<GoalLine>',
+      { 'goals1' => goals1.as_json,
+        'goals2' => goals2.as_json,
+      }
+    ]
+  end
+
+
   def pretty_print( pp )
     pp.group( 4, '<GoalLine ', '>') do        ##  group( indent, open, close)
       pp.text( "goals1=" )
@@ -367,6 +472,18 @@ end
 ##  change/rename Goal to GoalScorer  - why? why not?
 
 Goal        = Struct.new( :player, :minutes, :count ) do
+
+  include JsonSerializable
+  def as_json(*)
+    h = { 'player' => player.as_json }
+
+    h['count']   = count.as_json     if count
+    h['minutes'] = minutes.as_json   if minutes && !minutes.empty?
+
+    ['<Goal>', h]
+  end
+
+
   def to_s
     buf = String.new
     buf << "#{self.player}"
@@ -472,6 +589,12 @@ end
 GoalMinute      = Struct.new( :m, :offset, :secs,
                              :og, :pen, :header, :freekick,
                          )  do
+
+
+    include JsonSerializable
+    def as_json(*)  to_s; end
+
+
     def to_s
       buf = String.new
       buf << "#{self.m}"
