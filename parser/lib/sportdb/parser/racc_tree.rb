@@ -3,233 +3,65 @@
 #   RaccMatchParser support machinery (incl. node classes/abstract syntax tree)
 
 
-module JsonSerializable
-  def to_json(*args)
-    as_json.to_json(*args)
-  end
-end
-
-###
-##  add as_json  to Object/Array/Hash
-class Object
-  def as_json(*)
-    self
-  end
-end
-
-class Array
-  def as_json(*)
-    map { |v| v.as_json }
-  end
-end
-
-class Hash
-  def as_json(*)
-    each_with_object({}) do |(k, v), h|
-      h[k.to_s] = v.as_json
-    end
-  end
-end
-
-
-
-
-
-
 class RaccMatchParser
-
-=begin
-RefereeLine = Struct.new( :name, :country ) do
-  def pretty_print( printer )
-    printer.text( "<RefereeLine " )
-    printer.text( self.name )
-    printer.text( " (#{self.country})" )  if self.country
-    printer.text( ">" )
-  end
-end
-=end
-
-## support multiple referees (incl. assistant refs etc.)
-RefereeLine = Struct.new( :referees ) do
-  def pretty_print( printer )
-    printer.text( "<RefereeLine " )
-    printer.text( self.referees.pretty_inspect )
-    printer.text( ">" )
-  end
-end
-
-Referee = Struct.new( :name, :country ) do
-  def to_s
-    buf = String.new
-    buf <<  self.name
-    buf << " (#{self.country})"    if self.country
-    buf
-  end
-
-  def pretty_print( printer )
-    printer.text( to_s )
-  end
-end
-
-AttendanceLine = Struct.new( :att ) do
-  def pretty_print( printer )
-    printer.text( "<AttendanceLine #{self.att}>" )
-  end
-end
-
-
-
-PenaltiesLine = Struct.new( :penalties ) do
-  def pretty_print( printer )
-    printer.text( "<PenaltiesLine " )
-    printer.text( self.penalties.pretty_inspect )
-    printer.text( ">" )
-  end
-end
-
-
-Penalty = Struct.new( :name, :score, :note ) do
-  def to_s
-    buf = String.new
-    buf << "#{self.score[0]}-#{self.score[1]} "   if self.score
-    buf <<  self.name
-    buf << " (#{self.note})"    if self.note
-    buf
-  end
-
-
-  def pretty_print( printer )
-    printer.text( to_s )
-  end
-end
-
-
-
-
-##  find a better name for player (use bookings?) - note - red/yellow card for trainer possible
-CardsLine = Struct.new( :type, :bookings ) do
-  def pretty_print( printer )
-    printer.text( "<CardsLine " )
-    printer.text( self.type )
-    printer.text( " bookings=" + self.bookings.pretty_inspect )
-    printer.text( ">" )
-  end
-end
-
-Booking = Struct.new( :name, :minute ) do
-  def to_s
-    buf = String.new
-    buf << "#{self.name}"
-    buf << " #{self.minute.to_s}"   if self.minute
-    buf
-  end
-
-  def pretty_print( printer )
-    printer.text( to_s )
-  end
-end
-
-
-
-
-
-
-
-LineupLine = Struct.new( :team, :lineup, :coach ) do
-  def pretty_print( pp )
-    pp.group( 4, '<LineupLine ', '>') do    ##  group( indent, open, close)
-      pp.text( team )
-      pp.text( ' ' )
-      pp.pp( lineup )
-
-      if coach
-        pp.breakable
-        pp.text( "coach=" + coach )
-      end
-    end
-  end
-end
-
-
-Lineup     = Struct.new( :name, :captain, :cards, :sub ) do
-  def pretty_print( pp )
-    pp.group( 0, '', '') do    ##  group( indent, open, close)
-      pp.text( name )
-      pp.text( ' [c]' )   if captain
-
-      if cards
-        pp.text( ' ' )
-        pp.pp( cards )
-      end
-
-      if sub
-        pp.breakable   ## can become either a space or a newline
-        pp.pp( sub )
-      end
-    end
-  end
-end
-
-
-
-
-
-Card       = Struct.new( :name, :minute ) do
-
-
-  def to_s
-    buf = String.new
-    buf << "#{name}"
-    buf << " #{minute.to_s}"   if minute
-    buf
-  end
-
-  def pretty_print( pp )
-    pp.text( to_s )
-  end
-end
-
-
-Sub        = Struct.new( :minute, :sub )  do
-  def pretty_print( pp )
-    pp.group( 0, '(', ')') do        ##  group( indent, open, close)
-       pp.text( "#{minute.to_s} " )   if minute
-       pp.pp( sub )
-    end
-  end
-end
-
-
 
 
 
 GroupDef   = Struct.new( :name, :teams ) do
-  def pretty_print( pp )
-    pp.group( 4, '<GroupDef ', '>') do        ##  group( indent, open, close)
-      pp.text( name )
-      pp.text( " teams=" )
-      pp.pp( teams )
+
+  def as_json(*)
+    ["<GroupDef>", { 'name'   => name.as_json,
+                     'teams'  => teams.as_json }
+    ]
+  end
+
+  def pretty_print( q )
+    q.group( 4, '<GroupDef ', '>' ) do        ##  group( indent, open, close)
+      q.text( name )
+      q.text( " teams=" )
+      q.pp( teams )
     end
   end
-end
+end  # GroupDef
 
 
 
+##
+## note -   for now exclusive really
+##                    either date OR duration
 RoundDef   = Struct.new( :name, :date, :duration )  do
-  def pretty_print( printer )
-    printer.text( "<RoundDef " )
-    printer.text( self.name )
-    printer.text( " date=" + self.date.pretty_inspect ) if self.date
-    printer.text( " duration=" + self.duration.pretty_inspect ) if self.duration
-    printer.text( ">" )
+
+  def as_json(*)
+    h = { 'name' => name.as_json }
+
+    h['date']     = date.as_json      if date
+    h['duration'] = duration.as_json  if duration
+
+    ["<RoundDef>", h]
   end
-end
+
+  def pretty_print( q )
+    q.group( 4, '<RoundDef ', '>' ) do
+      q.text( name )
+      if date
+        q.text( " date=")
+        q.pp( date )
+      end
+      if duration
+        q.text( " duration=")
+        q.pp( duration )
+      end
+    end
+  end
+
+end  # RoundDef
 
 
-
+##
+## note -   for now exclusive really
+##                    either date OR year
 DateHeader = Struct.new( :date, :year ) do
 
-  include JsonSerializable
   def as_json(*)
     h = {}
     h['date']   = date.as_json     if date
@@ -239,441 +71,130 @@ DateHeader = Struct.new( :date, :year ) do
   end
 
 
-  def pretty_print( printer )
-    printer.text( "<DateHeader " )
-    printer.text( "#{date.pretty_inspect}" )  if date
-    printer.text( "#{year.pretty_inspect}" )  if year
-    printer.text( ">")
+  def pretty_print( q )
+    q.group( 4, '<DateHeader ', '>' ) do
+      q.pp( date )  if date
+      q.pp( year )  if year
+    end
   end
-end
+end   # DateHeader
+
 
 
 DateHeaderLegs = Struct.new( :date1, :date2 ) do
-  def pretty_print( printer )
-    printer.text( "<DateHeaderLegs " )
-    printer.text( "leg1=#{self.date1.pretty_inspect}" )
-    printer.text( " leg2=#{self.date2.pretty_inspect}" )
-    printer.text( ">")
+
+  def as_json(*)
+    ['<DateHeaderLegs>', { 'leg1' => date1.as_json,
+                           'leg2' => date2.as_json,
+                         }
+    ]
   end
-end
+
+  def pretty_print( q )
+    q.group( 4, '<DateHeaderLegs ', '>' ) do
+      q.text( "leg1=" )
+      q.pp( date1 )
+      q.text( " leg2=" )
+      q.pp( date2 )
+    end
+  end
+end   # DateHeaderLegs
 
 
 
 RoundOutline = Struct.new( :outline, :level ) do
-  include JsonSerializable
   def as_json(*)
-    ['<RoundOutline>',
-      {
-        'outline' => outline.as_json,
-        'level'   => level.as_json,
-      }
+    ['<RoundOutline>', { 'outline' => outline.as_json,
+                         'level'   => level.as_json, }
     ]
   end
 
-  def pretty_print( printer )
-    printer.text( "<RoundOutline #{outline}, level=#{level}>" )
+  def pretty_print( q )
+    q.group( 4, '<RoundOutline ', '>' ) do
+       q.text( outline )
+       q.text( " level=#{level}" )
+    end
   end
-end
+end  # RoundOutline
+
+
 
 
 
 class BlankLine
-  include JsonSerializable
   def as_json(*)
     ['<BlankLine>']
   end
 
-  def pretty_print( printer )
-    printer.text( "<BlankLine>" )
+  def pretty_print( q )
+    q.text( "<BlankLine>" )
   end
-end
+end  # BlankLine
 
 
 
 NoteLine = Struct.new( :text ) do
-  def pretty_print( printer )
-    printer.text( "<NoteLine #{self.text}>" )
+  def as_json(*)
+    ['<NoteLine>', { 'text' => text.as_json } ]
   end
-end
+  def pretty_print( q )
+    q.group( 4, '<NoteLine ', '>' ) do
+      q.text( text )
+    end
+  end
+end  # NoteLine
+
 
 NotaBene = Struct.new( :text ) do
-  def pretty_print( printer )
-    printer.text( "<NotaBene #{self.text}>" )
+  def as_json(*)
+    ['<NotaBene>', { 'text' => text.as_json } ]
   end
-end
+  def pretty_print( q )
+    q.group( 4, '<NotaBene ', '>' ) do
+      q.text( text )
+    end
+  end
+end  # NotaBene
+
 
 
 
 
 ## todo/check - use a generic Heading instead of Heading1/2/3 - why? why not?
 Heading1 = Struct.new( :text ) do
-  include JsonSerializable
   def as_json(*)
     ['<Heading1>', { 'text' => text.as_json }]
   end
 
-  def pretty_print( printer )
-    printer.text( "<Heading1 #{text}>" )
+  def pretty_print( q )
+    q.group( 4, '<Heading1 ', '>' ) do
+      q.text( text )
+    end
   end
-end
+end # Heading1
 
 Heading2 = Struct.new( :text ) do
-  include JsonSerializable
   def as_json(*)
     ['<Heading2>', { 'text' => text.as_json }]
   end
 
-  def pretty_print( printer )
-    printer.text( "<Heading2 #{text}>" )
+  def pretty_print( q )
+    q.group( 4, '<Heading2 ', '>' ) do
+      q.text( text )
+    end
   end
-end
+end  #  Heading2
 
 Heading3 = Struct.new( :text ) do
-  include JsonSerializable
   def as_json(*)
     ['<Heading3>', { 'text' => text.as_json }]
   end
 
-  def pretty_print( printer )
-    printer.text( "<Heading3 #{text}>" )
-  end
-end
-
-
-
-MatchLineBye   = Struct.new( :team, :note ) do
-  def pretty_print( printer )
-    printer.text( "<MatchLineBye " )
-    printer.text( "#{self.team} bye")
-    printer.text( " note=#{self.note.pretty_inspect}" )  if self.note
-    printer.text( ">" )
-  end
-end
-
-MatchLineWalkover   = Struct.new( :team1, :team2, :note ) do
-  def pretty_print( printer )
-    printer.text( "<MatchLineWalkover " )
-    printer.text( "#{self.team1} w/o #{self.team2}")
-    printer.text( " note=#{self.note.pretty_inspect}" )  if self.note
-    printer.text( ">" )
-  end
-end
-
-MatchLineLegs   = Struct.new( :team1, :team2,
-                              :score )  do   ## change to geos - why? why not?
-  def pretty_print( printer )
-    printer.text( "<MatchLineLegs " )
-    printer.text( "#{self.team1} v #{self.team2}")
-    printer.breakable
-
-    members.zip(values) do |name, value|
-      next if [:team1, :team2].include?( name )
-      next if value.nil?
-
-      printer.text( "#{name}=#{value.pretty_inspect}" )
-    end
-
-    printer.text( ">" )
-  end
-end
-
-
-#
-#  note: use two status attributes for now
-#         1) inline_status and 2) (note_)status
-#              for now  e.g.  A abd. B     vs   A  v B [abadoned]
-#                             A 3-0 awd B  vs   A  3-0 B [awarded]
-#   note - BOTH might be present at the same time
-
-
-MatchLine   = Struct.new( :header,  :tty,   ## tty = TELETYPE MODE for teams and score!!
-                          :num, :date, :time, :time_local, :year,
-                          :team1, :team2,
-                          :score,
-                          :status,  :status_inline, :status_note,
-                          :round_inline,
-                          :geo,
-                          :neutral,  ## true/false - NOT -home/away - neutral ground
-                          :note,
-                          :att )  do   ## change to geos - why? why not?
-
-
-  include JsonSerializable
-  def as_json(*)
-    h =  { 'team1' => team1.as_json,
-           'team2' => team2.as_json,
-         }
-
-      members.zip(values) do |name, value|
-        next if [:team1, :team2].include?( name )
-        next if value.nil?
-
-        h[name.to_s] = value.as_json
-      end
-
-    ['<MatchLine>', h]
-  end
-
-
-  def pretty_print( pp )
-    pp.group( 4, '<MatchLine ', '>') do        ##  group( indent, open, close)
-      pp.text( "#{team1} v #{team2}")
-
-      members.zip(values) do |name, value|
-        next if [:team1, :team2].include?( name )
-        next if value.nil?
-
-        pp.breakable
-        pp.text( "#{name}=" )
-        pp.pp( value )
-      end
+  def pretty_print( q )
+    q.group( 4, '<Heading3 ', '>' ) do
+      q.text( text )
     end
   end
-
-end  #  struct MatchLine
-
-
-
-GoalLine    = Struct.new( :goals1, :goals2 ) do
-
-  include JsonSerializable
-  def as_json(*)
-    ['<GoalLine>',
-      { 'goals1' => goals1.as_json,
-        'goals2' => goals2.as_json,
-      }
-    ]
-  end
-
-
-  def pretty_print( pp )
-    pp.group( 4, '<GoalLine ', '>') do        ##  group( indent, open, close)
-      pp.text( "goals1=" )
-      pp.pp( goals1 )
-      pp.breakable
-      pp.text( "goals2=" )
-      pp.pp( goals2 )
-    end
-  end
-
-
-##  def clone
-##         _clone = GoalLine.new( goals1: goals1.clone,
-##                           goals2: goals2.clone )
-##
-##         puts "[debug] clone #{self.pretty_inspect} => #{_clone.pretty_inspect}"
-##
-##         _clone
-##  end
-end
-
-
-###
-##  change/rename Goal to GoalScorer  - why? why not?
-
-Goal        = Struct.new( :player, :minutes, :count ) do
-
-  include JsonSerializable
-  def as_json(*)
-    h = { 'player' => player.as_json }
-
-    h['count']   = count.as_json     if count
-    h['minutes'] = minutes.as_json   if minutes && !minutes.empty?
-
-    ['<Goal>', h]
-  end
-
-
-  def to_s
-    buf = String.new
-    buf << "#{self.player}"
-    if count
-       buf << (" " + count.inspect + ",")
-    else
-      if minutes.nil? || minutes.empty?
-        ## add nothing if no minutes available/present
-      else
-        buf << " "
-        buf << minutes.map { |min| min.to_s }.join(' ')
-      end
-    end
-    buf
-  end
-
-  def pretty_print( printer )
-    printer.text( to_s )
-  end
-
-##  def clone
-##      puts "[debug] clone #{self.pretty_inspect}"
-##      Goal.new( player: player.clone,
-##                minutes: minutes.clone,
-##                count: count.clone )
-##  end
-end
-
-
-## check - use a different name e.g. GoalLineScore or such - why? why not?
-GoalLineAlt = Struct.new( :goals ) do
-  def pretty_print( printer )
-    printer.text( "<GoalLineAlt " )
-    printer.text( "goals=" + self.goals.pretty_inspect + ">" )
-  end
-end
-
-
-##
-##   score and player REQUIRED
-##   note - (goal) minute is optional
-##          if no minute goal type is optional e.g. "standalone" (p), (og), etc.
-
-GoalAlt   = Struct.new( :score, :player, :minute, :goal_type ) do
-  def to_s
-    buf = String.new
-    buf << "#{self.score[0]}-#{self.score[1]}"
-    buf << " #{self.player}"
-    buf << " #{self.minute}"     if self.minute
-    buf << " #{self.goal_type}"  if self.goal_type
-    buf
-  end
-
-  def pretty_print( printer )
-    printer.text( to_s )
-  end
-end
-
-
-
-GoalLineCompat = Struct.new( :goals ) do
-  def pretty_print( printer )
-    printer.text( "<GoalLineCompat " )
-    printer.text( "goals=" + self.goals.pretty_inspect + ">" )
-  end
-end
-
-##
-##   minute and player REQUIRED
-##   note - score (e.g. 1-1) is optional
-##          goal type is optional e.g. "standalone" (p), (og), etc.
-
-GoalCompat    = Struct.new( :score, :player, :minute, :goal_type ) do
-  def to_s
-    buf = String.new
-    buf << "#{self.minute}"
-    buf << " #{self.player}"
-    buf << " #{self.goal_type}"                  if self.goal_type
-    buf << " #{self.score[0]}-#{self.score[1]}"  if self.score
-    buf
-  end
-
-  def pretty_print( printer )
-    printer.text( to_s )
-  end
-end
-
-
-
-##   FIX/FIX/FIX
-##   split into Minute and
-##             GoalMinute  (Minute+GoalType)
-##
-##  fix - move :og, :pen  to Goal if possible - why? why not?
-##  or change to GoalMinute ???
-##
-##  fix!!! split into GoalMinute and Minute
-##            goal_minute incl. :og, :pen, :freekick, :header,
-##                     seconds etc.
-##
-##  GoalMinute = Minute + GoalType !!!
-
-GoalMinute      = Struct.new( :m, :offset, :secs,
-                             :og, :pen, :header, :freekick,
-                         )  do
-
-
-    include JsonSerializable
-    def as_json(*)  to_s; end
-
-
-    def to_s
-      buf = String.new
-      buf << "#{self.m}"
-      buf << "'"
-      buf << "+#{self.offset}"  if self.offset
-      buf << "(og)"   if self.og
-      buf << "(p)"  if self.pen
-      buf << "(f)"  if self.freekick
-      buf << "(h)"  if self.header
-      buf << " (#{self.secs} secs)"   if self.secs
-      buf
-    end
-
-    def pretty_print( printer )
-       printer.text( to_s )
-    end
-
-    ### quick hack:
-    ### split struct into  Minute+GoalType structs
-    def to_minute
-        Minute.new( m:      self.m,
-                    offset: self.offset,
-                    secs:   self.secs )
-    end
-
-    def to_goal_type
-        if self.og || self.pen || self.header || self.freekick
-          GoalType.new( og:       self.og,
-                        pen:      self.pen,
-                        header:   self.header,
-                        freekick: self.freekick )
-        else
-           nil   ## note - return nil; if no goal type present!!
-        end
-    end
-
-##    def clone
-##        puts "[debug] clone #{self.pretty_inspect}"
-##        GoalMinute.new( m: m.clone,
-##                        offset: offset.clone,
-##                        secs: secs.clone,
-##                        og: og.clone,
-##                        pen: pen.clone,
-##                        header: header.clone,
-##                        freekick: freekick.clone )
-##
-##    end
-end
-
-
-GoalType  = Struct.new( :og, :pen, :header, :freekick )  do
-    def to_s
-      buf = String.new
-      buf << "(og)"   if self.og
-      buf << "(pen)"  if self.pen
-      buf << "(f)"    if self.freekick
-      buf << "(h)"    if self.header
-      buf
-    end
-
-    def pretty_print( printer )
-       printer.text( to_s )
-    end
-end
-
-
-Minute      = Struct.new( :m, :offset, :secs )  do
-    def to_s
-      buf = String.new
-      buf << "#{self.m}"
-      buf << "'"
-      buf << "+#{self.offset}"      if self.offset
-      buf << "/#{self.secs} secs"   if self.secs
-      buf
-    end
-
-    def pretty_print( printer )
-       printer.text( to_s )
-    end
-end
+end  # Heading3
 
 end  # class RaccMatchParser

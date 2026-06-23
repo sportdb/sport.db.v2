@@ -53,19 +53,29 @@
                              }
 
          ## use player_booking or such
-         ##   note - ignores possible team separator (;) for now
-         ##               returns/ builds all-in-one "flat" list/array
          card_body :  player_w_minute
-                        {   result = val  }
+                        {
+                           ## note - value must be DOUBLE [[]] nested in array
+                           ##    allows separator for teams
+                           ##   via semicolon (;) separator, see below!
+                           result = [[val[0]]]
+                        }
                    |  card_body card_sep player_w_minute
-                        {  result.push( val[2] )  }
+                        {
+                          ## note - if lineup_sep is dash (-) start a new sub array!!
+                          if val[1] == ';'
+                            result << [val[2]]
+                          else
+                            result[-1] << val[2]
+                          end
+                        }
 
-         card_sep  :  ','
-                   |  ';'
-                   |  ';' NEWLINE
+         card_sep  :  ','             { result = ',' }
+                   |  ';'             { result = ';' }
+                   |  ';' NEWLINE     { result = ';' }
 
          player_w_minute : PROP_NAME
                               { result = Booking.new( name: val[0].as_str )  }
                          | PROP_NAME MINUTE
                               { result = Booking.new( name:   val[0].as_str,
-                                                      minute: val[1].as_hash )  }
+                                                      minute: Minute.new(**val[1].as_hash) )  }

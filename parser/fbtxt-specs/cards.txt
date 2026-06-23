@@ -56,3 +56,30 @@ Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer 46 [R 115
 
 Tirol:  Marasek [Y 11]  (Schiener [Y][R]  (Scharrer [R 115]))
 Tirol:  Marasek [Y 11']  (Schiener [Y 32'][Y/R 43']  (Scharrer [R 115']))
+
+
+
+
+##############
+## check card lines  (red,yellow, etc.)
+###############
+
+##
+##  todo/fix-fix-fix - allow dash (-) as separator
+##                        handle none too - why? why not?
+##   use  x -   ??
+##        _ -   ??
+##        - ;   ???
+##       None - ??
+##        ??
+
+
+Mexico                2-0 (1-0)  South Africa            @ Mexico City
+  Yellow Cards: Brian Gutiérrez 23' ;
+                Teboho Mokoena 17', Nkosinathi Sibisi 74'
+  Red Cards:    César Montes 90' ;
+                 Sphephelo Sithole 49', Themba Zwane 84'
+
+ Canada                1-1 (0-1)  Bosnia & Herzegovina    @ Toronto
+  Yellow Cards: Alistair Johnston 11', Luc de Fougerolles 53';
+                Ermedin Demirovic 45', Jovo Lukic 45', Nikola Katic 90'
