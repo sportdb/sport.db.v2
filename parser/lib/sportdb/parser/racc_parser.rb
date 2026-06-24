@@ -2,32 +2,24 @@
 ####
 #   RaccMatchParser support machinery (incl. node classes/abstract syntax tree)
 
+##
+##  todo/check
+##   maybe change rename to
+##     SportDb::Parser   (keep RaccMatchParser as an alias - why? why not?)
+
+
+
 class RaccMatchParser
+  include Debuggable     ## auto-adds debug?, _trace, _info, etc.
 
-
-
-  def initialize( txt,  debug: false )
+  def initialize( txt )
     @tree   = []
     @errors = []
 
-    lexer = SportDb::Lexer.new( txt, debug: debug )
+    lexer = SportDb::Lexer.new( txt )
     ##  note - use tokenize_with_errors and add/collect tokenize errors
     @tokens, @errors = lexer.tokenize_with_errors
     ## pp @tokens
-
-    @debug = debug
-  end
-
-
-  ## def debug( value ) @debug = value; end   ### fix: use setter-style e.g. debug=(value) !!!
-  def debug?()  @debug == true; end
-
-
-  def _trace( *args )
-    if debug?
-      print "[DEBUG] Parser -- "
-      args.each { |arg| puts args }
-    end
   end
 
 
@@ -76,7 +68,7 @@ class RaccMatchParser
     error_token = Racc_token_to_s_table[error_token_id]
 
     msg = "parse error on token: #{error_token} >#{error_value.inspect}<, stack: #{value_stack.inspect}"
-    puts "!! #{msg}"
+    _error( msg )
 
     @errors << msg
   end

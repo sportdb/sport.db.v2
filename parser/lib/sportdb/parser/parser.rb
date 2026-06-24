@@ -4,7 +4,7 @@
 # from Racc grammar file "parser.y".
 #
 
-require 'racc/parser.rb'
+## require 'racc/parser.rb'
 class RaccMatchParser < Racc::Parser
 ##### State transition tables begin ###
 
@@ -865,7 +865,7 @@ module_eval(<<'.,.,', 'parser.y', 76)
 
 module_eval(<<'.,.,', 'parser.y', 84)
   def _reduce_32(val, _values, result)
-    
+
     result
   end
 .,.,
@@ -1608,7 +1608,7 @@ module_eval(<<'.,.,', 'parser.y', 739)
 
 module_eval(<<'.,.,', 'parser.y', 750)
   def _reduce_141(val, _values, result)
-    
+
     result
   end
 .,.,
@@ -1666,7 +1666,7 @@ module_eval(<<'.,.,', 'parser.y', 778)
 
 module_eval(<<'.,.,', 'parser.y', 785)
   def _reduce_150(val, _values, result)
-    
+
     result
   end
 .,.,

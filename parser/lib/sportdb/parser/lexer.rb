@@ -1,17 +1,14 @@
 
 module SportDb
 class Lexer
+  include Debuggable     ## auto-adds debug?, _trace, _info, etc.
 
 
-
-def initialize( txt, debug: false )
-   raise ArgumentError, "text as string expected for lexer; got #{txt.class.name}"  unless txt.is_a?(String)
+def initialize( txt )
+   raise ArgumentError, "text as string expected for lexer; got #{txt.class}"  unless txt.is_a?(String)
 
    @txt   = txt
-   @debug = debug
 end
-
-
 
 
 def tokenize_with_errors
