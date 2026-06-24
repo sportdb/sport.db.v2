@@ -44,9 +44,9 @@ private
                 arg.to_str
                end.join(' | ')
 
-      fout =  level == :ERROR || level == :FATAL ? STDERR : STDOUT
+      fout =  level == :WARN || level == :ERROR || level == :FATAL ? STDERR : STDOUT
 
-      ## todo/check - add/use/check for "local" logger
+      ## todo/check/fix - add/use/check for "local" logger
       fout.puts "#{level} [#{self.class.name}] -- #{msg}"
     end
   end

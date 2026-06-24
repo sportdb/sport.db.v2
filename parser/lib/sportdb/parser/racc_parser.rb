@@ -67,7 +67,23 @@ class RaccMatchParser
     ## note - get  error_token (as string) e.g. MINUTE, DATE, etc.
     error_token = Racc_token_to_s_table[error_token_id]
 
-    msg = "parse error on token: #{error_token} >#{error_value.inspect}<, stack: #{value_stack.inspect}"
+    msg = "parse error on token: #{error_token}"
+
+    ## add error_value  - might be Lexer::Token or value
+    if error_value.is_a?( SportDb::Lexer::Token)
+      if error_value.type == :NEWLINE
+         ## skip print of "literal" newline
+      else
+         msg << " >#{error_value.text}<"
+      end
+      msg << " @#{error_value.lineno}"
+    else
+      msg << " >#{error_value.inspect}"
+    end
+
+    ## add stack - why? why not?
+    ## "stack: #{value_stack.inspect}"
+
     _error( msg )
 
     @errors << msg
