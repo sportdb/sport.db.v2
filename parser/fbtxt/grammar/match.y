@@ -1,12 +1,54 @@
 
         ##########
-        ## optional ord(inal) match number e.g (1), (42), etc.
+        ##  ord(inal) match number e.g (1), (42), etc.
 
-        ord  : ORD    {  result = { num: val[0].as_int } }
+        ord  : ORD        {  result = { num: val[0].as_int } }
 
         opt_ord
-           :         {  result = {}  }     ## empty -- optional
-           | ord
+            :  /* empty */   {  result = {}  }
+            | ord
+
+
+
+         ########
+         ##  (match) status or note
+         ##          e.g. [annulled]  or [bankrupt]
+
+         status : STATUS  {  result = val[0].as_hash  }
+
+         note   : NOTE    { result = { note: val[0].as_str } }
+
+         opt_inline_note
+              :  /* empty */  {  result = {} }
+              | note
+
+
+         inline_round : INLINE_ROUND   { result = { inline_round: val[0].as_str } }
+
+
+
+         ## todo/fix - allow (inline) attendance in match w/o header too
+         ##              for now match header required
+         ##
+         ##  note - use "hack" with INLINE_ATTENDANCE_SEP (a.k.a comma (,))
+         ##           to help with shift/reduce conflict
+         ## |  ','  INLINE_ATTENDANCE
+         inline_attendance
+                : INLINE_ATTENDANCE
+                    {
+                       result = { att: val[0].as_hash[:value] }
+                    }
+                 |  INLINE_ATTENDANCE_SEP  INLINE_ATTENDANCE
+                    {
+                       result = { att: val[1].as_hash[:value] }
+                    }
+
+         opt_inline_attendance
+              :    {  result = {}  }    ## empty; make rule optinal
+              |    inline_attendance
+
+
+
 
 
 
@@ -25,38 +67,12 @@
                       @tree << MatchLine.new( **kwargs )
                   }
 
-         match_line_header
-               :  opt_ord  match  more_match_header_opts
-                  {
-                      result = {}.merge( val[0], val[1], val[2] )
-                  }
-                |  match_line_alt_props
-
-              # |  match_alt NEWLINE
-              #     {
-              #        result = {}.merge( val[0] )
-              #     }
-
-
-
-
-        ### note - no geo in (more_)match_line (w/ header)
-        ##               always incl. in header
-
-        more_match_header_opts
-             : STATUS NEWLINE
-                 {
-                      result = val[0].as_hash
-                 }
-             | NOTE NEWLINE        { result = { note: val[0].as_str } }
-             | NEWLINE             { result = {} }
-
-
 
        ### note - match_header REQUIRES
        ##          (i) geo (tree) or
        ##          (ii) or inline_attendance
        ##
+
        match_header
             :     date_datetime geo opt_inline_attendance  NEWLINE
                    {
@@ -67,32 +83,20 @@
                       result = {}.merge( val[0], val[1] )
                    }
 
-         ## todo/fix - allow (inline) attendance in match w/o header too
-         ##              for now match header required
-         ##
-         ##  note - use "hack" with INLINE_ATTENDANCE_SEP (a.k.a comma (,))
-         ##           to help with shift/reduce conflict
-         inline_attendance
-                : INLINE_ATTENDANCE
-                    {
-                       result = { att: val[0].as_hash[:value] }
-                    }
-              ## |  ','  INLINE_ATTENDANCE
-                 |  INLINE_ATTENDANCE_SEP  INLINE_ATTENDANCE
-                    {
-                       result = { att: val[1].as_hash[:value] }
-                    }
-
-         opt_inline_attendance
-              :    {  result = {}  }    ## empty; make rule optinal
-              |    inline_attendance
+         match_line_header
+               :  opt_ord  match  more_match_header_opts  NEWLINE
+                  {
+                      result = {}.merge( val[0], val[1], val[2] )
+                  }
 
 
+        ### note - NO geo in (more_)match_line (w/ header)
+        ##               always incl. in header
 
-
-        opt_inline_note
-            :            {  result = {} }  ## empty -- optional
-            | NOTE       {  result = { note: val[0].as_str } }
+        more_match_header_opts
+             : /* empty */      {  result = {} }
+             | status
+             | note
 
 
 
@@ -101,14 +105,9 @@
 
 
         match_line
-              :   match_opts  match  more_match_opts NEWLINE
+              :   pre_match_opts  match  more_match_opts NEWLINE
                     {
                        kwargs = {}.merge( val[0], val[1], val[2] )
-                       @tree << MatchLine.new( **kwargs )
-                    }
-              |   match_opts  match  NEWLINE
-                    {
-                       kwargs = {}.merge( val[0], val[1])
                        @tree << MatchLine.new( **kwargs )
                     }
               |  match  more_match_opts NEWLINE
@@ -116,11 +115,7 @@
                        kwargs = {}.merge( val[0], val[1] )
                        @tree << MatchLine.new( **kwargs )
                     }
-              |  match  NEWLINE
-                    {
-                       kwargs = {}.merge( val[0] )
-                       @tree << MatchLine.new( **kwargs )
-                    }
+
 
               |  match_bye  opt_inline_note  NEWLINE
                       {
@@ -149,65 +144,55 @@
                   }
 
 
-##         opt_inline_round :   /* empty */   { result = {} }
-##                          | INLINE_ROUND    { result = { inline_round: val[0].as_str } }
 
 
 
-        opt_inline_round_n_geo : /* empty */          { result = {} }
-                               |  inline_round_n_geo
+
+        ##########
+        ##  opt_ord  opt_date|datetime|time  opt_inline_round  opt_geo
+
+        ## note - allow ord only
+        ##      - allow date/datetime only
+        ##      - allow time only
+        ##      - allow inline_round only
+        ##      - allow geo only
+
+        pre_match_opts
+            : ord
+            | ord pre_match1     { result = {}.merge( val[0], val[1]) }
+            | pre_match1
+
+        pre_match1
+            : date_datetime
+            | date_datetime pre_match2  { result = {}.merge( val[0], val[1]) }
+            | time
+            | time  pre_match2    { result = {}.merge( val[0], val[1]) }
+            | pre_match2
+
+        pre_match2
+            : inline_round
+            | inline_round  geo  { result = {}.merge( val[0], val[1]) }
+            | geo
 
 
-        #  is   INLINE_ROUND        -or-
-        #       INLINE_ROUND  GEO   -or-
-        #       GEO
-
-        inline_round_n_geo :  INLINE_ROUND  opt_geo  {
-                                   _trace( "REDUCE => INLINE_ROUND  opt_geo" )
-                                    result = { round_inline: val[0].as_str }.merge( val[1] )
-                                }
-                             | geo
 
 
-
-         ##
-         ##   todo/check - make opt_inline_round (e.g. ▪18/▪QF etc)  more "flexible"
-         ##                 even allow standalone - why? why not?
-
-        match_opts
-             : ord  opt_date  opt_inline_round_n_geo {
-                                     result = {}.merge( val[0], val[1], val[2] )
-                                }
-             | date_datetime  opt_inline_round_n_geo   {
-                                     result = {}.merge( val[0], val[1] )
-                                }
-             | time  opt_inline_round_n_geo   {
-                                     result = {}.merge( val[0], val[1] )
-                                }
-             | inline_round_n_geo
-
-
+        #######
         ## note - you cannot use both STATUS and NOTE - why? why not?
-        ##
-        ##  todo/check - allow attendance w/o geo_tree - why? why not?
-        ###
-        ###   :   { result = {} }   ## empty -- optional
+        ##      - for now status must be BEFORE geo!!
 
-
-        more_match_opts
-             : STATUS       ## note - for now status must be BEFORE geo!!
+      more_match_opts
+             :  /* empty */  { result = {} }
+             | status
+             | status  geo  opt_inline_attendance
                  {
-                      result = val[0].as_hash
+                     result = {}.merge( val[0], val[1], val[2] )
                  }
-             | STATUS geo opt_inline_attendance
-                 {
-                     result = {}.merge( val[0].as_hash, val[1], val[2] )
-                 }
-             | geo opt_inline_attendance opt_inline_note
+             | geo  opt_inline_attendance  opt_inline_note
                  {
                    result = {}.merge( val[0], val[1], val[2] )
                  }
-             | NOTE   { result = { note: val[0].as_str } }
+             | note
 
 
 
