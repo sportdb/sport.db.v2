@@ -38,41 +38,63 @@
                            }
 
 
+################
+##   fix-fix-fix - use goal like
+##                       cards1, cards2   with possible none
+##                         only allow one separator
 
-##
-##  fix-fix-fix  - [ ] add sentoff_lines & yellowredcard_lines !!!
-
-
-        yellowcard_lines : PROP_YELLOWCARDS card_body PROP_END NEWLINE
+        yellowcard_line : PROP_YELLOWCARDS card_body PROP_END NEWLINE
                              {
                                @tree << CardsLine.new( type: 'Y', bookings: val[1] )
                              }
-        redcard_lines    : PROP_REDCARDS card_body PROP_END NEWLINE
+        redcard_line     : PROP_REDCARDS card_body PROP_END NEWLINE
                              {
                                @tree << CardsLine.new( type: 'R', bookings: val[1] )
                              }
+        yellowredcard_line  : PROP_REDYELLOWCARDS card_body PROP_END NEWLINE
+                             {
+                               @tree << CardsLine.new( type: 'Y/R', bookings: val[1] )
+                             }
 
+        ## use for "generic"  red|yellow/red cards  or pre-card era
+        sentoff_line    : PROP_SENTOFF card_body PROP_END NEWLINE
+                             {
+                               @tree << CardsLine.new( type: 'SENTOFF', bookings: val[1] )
+                             }
+
+
+         #####
          ## use player_booking or such
-         card_body :  player_w_minute
-                        {
-                           ## note - value must be DOUBLE [[]] nested in array
-                           ##    allows separator for teams
-                           ##   via semicolon (;) separator, see below!
-                           result = [[val[0]]]
-                        }
-                   |  card_body card_sep player_w_minute
-                        {
-                          ## note - if lineup_sep is dash (-) start a new sub array!!
-                          if val[1] == ';'
-                            result << [val[2]]
-                          else
-                            result[-1] << val[2]
-                          end
-                        }
 
-         card_sep  :  ','             { result = ',' }
-                   |  ';'             { result = ';' }
-                   |  ';' NEWLINE     { result = ';' }
+         ##
+         ##  note - cards uses bookings NOT bookings1/2!!!
+         ##           not assigned to team1/team2
+         ##    maybe use bookings: [] & [[],[]]  - why? why not?
+
+         card_body :   cards                    { result = { bookings:  val[0] }}
+                       | cards CARDS_NONE_RIGHT { result = { bookings1: val[0],
+                                                             bookings2: []}}
+                       | CARDS_NONE_LEFT cards  { result = { bookings1: [],
+                                                             bookings2: val[1]}}
+                       | cards cards_sep cards  { result = { bookings1: val[0],
+                                                             bookings2: val[2]}}
+
+        cards_sep    : ';'
+                     | ';' NEWLINE
+                     | CARDS_SEP_ALT     ## note - dash (-) with leading & trailing spaces required
+                     | CARDS_SEP_ALT NEWLINE
+
+          cards    :  player_w_minute
+                         {  result = val }
+                   |  cards  opt_card_sep  player_w_minute
+                         {
+                            result.push( val[2] )
+                         }
+
+         opt_card_sep  :  /* empty */
+                       | ','
+                       | ',' NEWLINE
+
 
          player_w_minute : PROP_NAME
                               { result = Booking.new( name: val[0].as_str )  }

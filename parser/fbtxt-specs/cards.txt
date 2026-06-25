@@ -1,68 +1,6 @@
-##
-#  check (inline) yellow, red, yellow/red cards
-
-Tirol: Marasek [c]
-
-Tirol: Marasek [Y 118]
-
-Tirol: Marasek [R 118]
-
-Tirol:   Marasek [R 118] - Schiener (Scharrer 46)
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (46' Scharrer [R 115])
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] (Schiener (46' Scharrer [R 115]))
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] (12' Schiener (46' Scharrer [R 115]))
-
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 118] (12' Schiener (46' Scharrer))
-
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 11] (Schiener [Y] (Scharrer [R 115]))
-Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 11] (Schiener [Y] (46' Scharrer [R 115]))
-Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 11] (Schiener [Y] (Scharrer 46' [R 115]))
-Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 11] (Schiener [Y] (Scharrer [R 115] 46'))
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 21] (23' Schiener [Y] (Scharrer [R]))
-Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 21] (Schiener 23' [Y] (46' Scharrer [R]))
-Tirol: Ziegler - Baur - W.Kogler, Marasek [Y 21] (Schiener [Y] 23' (Scharrer 46' [R]))
-
-
-
-Tirol:  Marasek [Y 11]  (Schiener [Y]  (Scharrer [R 115]))
-Tirol:  Marasek [Y 11]  (Schiener [Y]  (46' Scharrer [R 115]))
-Tirol:  Marasek [Y 11]  (Schiener [Y]  (Scharrer 46' [R 115]))
-Tirol:  Marasek   (Schiener  (Scharrer))
-Tirol:  Marasek  (Schiener   (46' Scharrer [R 115]))
-Tirol:  Marasek  (Schiener  (Scharrer 46' [R 115]))
-Tirol:  Marasek   (Schiener  (Scharrer))
-
-
-
-Tirol:  Schiener (46 Scharrer)
-
-Tirol:  Schiener (46 Scharrer [R 115])
-
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer [R 115] 46)
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer 46 [R 115])
-
-
-Tirol: Ziegler - Baur - W.Kogler, Marasek [R 118] - Schiener (Scharrer 46 [R 115]),
-         Kirchler (Mair 46), Barisic (Jezek 46), Panis, Brzeczek - Glieder, Gilewicz
-
-
-Tirol:  Marasek [Y 11]  (Schiener [Y][R]  (Scharrer [R 115]))
-Tirol:  Marasek [Y 11']  (Schiener [Y 32'][Y/R 43']  (Scharrer [R 115']))
-
-
-
-
 ##############
 ## check card lines  (red,yellow, etc.)
-###############
+
 
 ##
 ##  todo/fix-fix-fix - allow dash (-) as separator
@@ -75,11 +13,64 @@ Tirol:  Marasek [Y 11']  (Schiener [Y 32'][Y/R 43']  (Scharrer [R 115']))
 
 
 Mexico                2-0 (1-0)  South Africa            @ Mexico City
+
   Yellow Cards: Brian Gutiérrez 23' ;
                 Teboho Mokoena 17', Nkosinathi Sibisi 74'
   Red Cards:    César Montes 90' ;
                  Sphephelo Sithole 49', Themba Zwane 84'
 
- Canada                1-1 (0-1)  Bosnia & Herzegovina    @ Toronto
+ Red Cards:    César Montes 90' - Sphephelo Sithole 49' Themba Zwane 84'
+
+
+Canada                1-1 (0-1)  Bosnia & Herzegovina    @ Toronto
+
   Yellow Cards: Alistair Johnston 11', Luc de Fougerolles 53';
                 Ermedin Demirovic 45', Jovo Lukic 45', Nikola Katic 90'
+
+  Yellow Cards: Alistair Johnston 11', Luc de Fougerolles 53' -
+                Ermedin Demirovic 45', Jovo Lukic 45' Nikola Katic 90'
+
+  Yellow Cards: Alistair Johnston, Luc de Fougerolles  -
+                Ermedin Demirovic, Jovo Lukic, Nikola Katic
+
+
+
+ Sent off:    César Montes 90' - Sphephelo Sithole 49', Themba Zwane 84'
+ Sent off:    César Montes - Sphephelo Sithole, Themba Zwane
+
+ Sent off:    César Montes 90', Sphephelo Sithole 49', Themba Zwane 84'
+Sent off:    César Montes 90'  Sphephelo Sithole 49'  Themba Zwane 84'
+## note - two spaces required for names if no commas or minutes used to separate!!!
+Sent off:    César Montes  Sphephelo Sithole  Themba Zwane
+Sent off:    César Montes,  Sphephelo Sithole, Themba Zwane
+
+
+ Sent off:    -; Sphephelo Sithole, Themba Zwane
+ Sent off:    -  ;  Sphephelo Sithole, Themba Zwane
+Sent off:    None; Sphephelo Sithole, Themba Zwane
+ Sent off:    None - Sphephelo Sithole, Themba Zwane
+
+Sent off:    César Montes - None
+Sent off:    César Montes - ∅
+ Sent off:    César Montes; None
+Sent off:    César Montes;  -
+
+
+
+__END__
+
+
+fix - fix- fix double nested!!
+
+
+
+<CardsLine SENTOFF bookings={:bookings1=>[],
+      :bookings2=>[Sphephelo Sithole, Themba Zwane]}>,
+ <CardsLine SENTOFF bookings={:bookings1=>[],
+      :bookings2=>[Sphephelo Sithole, Themba Zwane]}>,
+ <CardsLine SENTOFF bookings={:bookings1=>[],
+      :bookings2=>[Sphephelo Sithole, Themba Zwane]}>,
+ <BlankLine>,
+ <CardsLine SENTOFF bookings={:bookings1=>[César Montes], :bookings2=>[]}>,
+ <CardsLine SENTOFF bookings={:bookings1=>[César Montes], :bookings2=>[]}>,
+ <CardsLine SENTOFF bookings={:bookings1=>[César Montes], :bookings2=>[]}>]

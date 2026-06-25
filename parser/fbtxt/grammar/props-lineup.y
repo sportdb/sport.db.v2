@@ -51,7 +51,7 @@
                     }
 
 
-     lineup_name   :   PROP_NAME  opt_captain  opt_cards  opt_lineup_sub
+     lineup_name   :   PROP_NAME  opt_captain  opt_inline_cards  opt_lineup_sub
                            {
                               kwargs = { name: val[0].as_str }.merge( val[1], val[2], val[3] )
                               result = Lineup.new( **kwargs )
@@ -82,14 +82,14 @@
 
          lineup_sub_props
                        ## allow subs WITHOUT minutes  (but optional cards!)
-                       : PROP_NAME  opt_cards
+                       : PROP_NAME  opt_inline_cards
                           {
                              _trace( "REDUCE => lineup_sub_props : PROP_NAME  opt_cards" )
                              result = { name: val[0].as_str }.merge( val[1] )
                           }
 
                        ##     Schiener (Scharrer 46 [R 115])
-                       | PROP_NAME  MINUTE  opt_cards
+                       | PROP_NAME  MINUTE  opt_inline_cards
                            {
                              _trace( "REDUCE => lineup_sub_props : PROP_NAME  MINUTE  opt_cards" )
                               result = { name:   val[0].as_str,
@@ -99,7 +99,7 @@
                        ##   note - minutes AFTER cards  (note - card REQUIRED
                        ##           otherwise rule PROP_NAME MINUTE lineup_cards_opts will match)
                        ##     Schiener (Scharrer [R 115] 46)
-                       | PROP_NAME  cards  MINUTE
+                       | PROP_NAME  inline_cards  MINUTE
                            {
                              _trace( "REDUCE => lineup_sub_props : PROP_NAME  cards  MINUTE" )
                               result = { name:   val[0].as_str,
@@ -110,7 +110,7 @@
 
                        ## allow both styles? minute first or last? keep - yes, yes, yes
                        ##  why? why not?
-                       | MINUTE  PROP_NAME  opt_cards
+                       | MINUTE  PROP_NAME  opt_inline_cards
                            {
                              _trace( "REDUCE => lineup_sub_props : MINUTE  PROP_NAME  opt_cards" )
 
@@ -155,8 +155,8 @@
 
 
 
-      opt_cards      :  /* empty */   { result = {} }   ## optional
-                     |  cards         { result = { cards: val[0] } }
+      opt_inline_cards      :  /* empty */      { result = {} }   ## optional
+                            |  inline_cards     { result = { cards: val[0] } }
 
 
      ##
@@ -165,7 +165,7 @@
      ###  or  result = [val[0],val[1]]   should be default action
      ###   but really defaults to result = val[0] - why?
 
-      cards
+      inline_cards
         : inline_yellow                     {  result =  [val[0]]  }
         | inline_yellow inline_yellow_red   {  result =  [val[0],val[1]]  }
         | inline_yellow inline_red          {  result =  [val[0],val[1]]  }

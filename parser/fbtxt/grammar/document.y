@@ -33,11 +33,15 @@
 
 
           | lineup_lines
-          | yellowcard_lines   ## use _line only - why? why not?
-          | redcard_lines
           | penalties_lines   ## rename to penalties_line or ___ - why? why not?
           | referee_line
           | attendance_line
+
+          | yellowcard_line
+          | redcard_line
+          | yellowredcard_line
+          | sentoff_line
+
 
           | BLANK        ##  was empty_line
              {

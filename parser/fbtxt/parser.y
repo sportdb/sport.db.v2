@@ -40,11 +40,15 @@ rule
 
 
           | lineup_lines
-          | yellowcard_lines   ## use _line only - why? why not?
-          | redcard_lines
           | penalties_lines   ## rename to penalties_line or ___ - why? why not?
           | referee_line
           | attendance_line
+
+          | yellowcard_line
+          | redcard_line
+          | yellowredcard_line
+          | sentoff_line
+
 
           | BLANK        ##  was empty_line
              {
@@ -718,9 +722,25 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                       }
 
 
-        goal_lines_body : goals                 {  result = { goals1: val[0],
-                                                              goals2: [] }
-                                                }
+
+        ##
+        ##  add a GOALS_NONE_RIGHT too  e.g.
+        ##    Jr. 43'; -
+        ##    Jr. 43'; none
+        ##    Jr. 43'; ∅
+        ##
+        ##  fix-fix-fix - change GOALS_NONE to GOALS_NONE_LEFT - why? why not?
+
+        ##  fix-fix-fix -
+        ##         change single goals line to goals: !!!
+        ##                               NOT goals1/goals2 pairs!!!
+
+        goal_lines_body : goals                  {  result = { goals1: val[0],
+                                                               goals2: [] }
+                                                 }
+                        | goals GOALS_NONE_RIGHT {  result = { goals1: val[0],
+                                                               goals2: [] }
+                                                 }
                         | GOALS_NONE goals      {  result = { goals1: [],
                                                               goals2: val[1] }
                                                 }
@@ -735,7 +755,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                      | GOAL_SEP_ALT NEWLINE
 
 
-         opt_goal_sep   : { }    ## empty -- optional
+         opt_goal_sep   : /* empty */       ## empty -- optional
                         | ','
                         | ',' NEWLINE
                         |  NEWLINE       ## note - allow "standalone" newline!!!
@@ -954,41 +974,63 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                            }
 
 
+################
+##   fix-fix-fix - use goal like
+##                       cards1, cards2   with possible none
+##                         only allow one separator
 
-##
-##  fix-fix-fix  - [ ] add sentoff_lines & yellowredcard_lines !!!
-
-
-        yellowcard_lines : PROP_YELLOWCARDS card_body PROP_END NEWLINE
+        yellowcard_line : PROP_YELLOWCARDS card_body PROP_END NEWLINE
                              {
                                @tree << CardsLine.new( type: 'Y', bookings: val[1] )
                              }
-        redcard_lines    : PROP_REDCARDS card_body PROP_END NEWLINE
+        redcard_line     : PROP_REDCARDS card_body PROP_END NEWLINE
                              {
                                @tree << CardsLine.new( type: 'R', bookings: val[1] )
                              }
+        yellowredcard_line  : PROP_REDYELLOWCARDS card_body PROP_END NEWLINE
+                             {
+                               @tree << CardsLine.new( type: 'Y/R', bookings: val[1] )
+                             }
 
+        ## use for "generic"  red|yellow/red cards  or pre-card era
+        sentoff_line    : PROP_SENTOFF card_body PROP_END NEWLINE
+                             {
+                               @tree << CardsLine.new( type: 'SENTOFF', bookings: val[1] )
+                             }
+
+
+         #####
          ## use player_booking or such
-         card_body :  player_w_minute
-                        {
-                           ## note - value must be DOUBLE [[]] nested in array
-                           ##    allows separator for teams
-                           ##   via semicolon (;) separator, see below!
-                           result = [[val[0]]]
-                        }
-                   |  card_body card_sep player_w_minute
-                        {
-                          ## note - if lineup_sep is dash (-) start a new sub array!!
-                          if val[1] == ';'
-                            result << [val[2]]
-                          else
-                            result[-1] << val[2]
-                          end
-                        }
 
-         card_sep  :  ','             { result = ',' }
-                   |  ';'             { result = ';' }
-                   |  ';' NEWLINE     { result = ';' }
+         ##
+         ##  note - cards uses bookings NOT bookings1/2!!!
+         ##           not assigned to team1/team2
+         ##    maybe use bookings: [] & [[],[]]  - why? why not?
+
+         card_body :   cards                    { result = { bookings:  val[0] }}
+                       | cards CARDS_NONE_RIGHT { result = { bookings1: val[0],
+                                                             bookings2: []}}
+                       | CARDS_NONE_LEFT cards  { result = { bookings1: [],
+                                                             bookings2: val[1]}}
+                       | cards cards_sep cards  { result = { bookings1: val[0],
+                                                             bookings2: val[2]}}
+
+        cards_sep    : ';'
+                     | ';' NEWLINE
+                     | CARDS_SEP_ALT     ## note - dash (-) with leading & trailing spaces required
+                     | CARDS_SEP_ALT NEWLINE
+
+          cards    :  player_w_minute
+                         {  result = val }
+                   |  cards  opt_card_sep  player_w_minute
+                         {
+                            result.push( val[2] )
+                         }
+
+         opt_card_sep  :  /* empty */
+                       | ','
+                       | ',' NEWLINE
+
 
          player_w_minute : PROP_NAME
                               { result = Booking.new( name: val[0].as_str )  }
@@ -1089,7 +1131,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                     }
 
 
-     lineup_name   :   PROP_NAME  opt_captain  opt_cards  opt_lineup_sub
+     lineup_name   :   PROP_NAME  opt_captain  opt_inline_cards  opt_lineup_sub
                            {
                               kwargs = { name: val[0].as_str }.merge( val[1], val[2], val[3] )
                               result = Lineup.new( **kwargs )
@@ -1120,14 +1162,14 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
          lineup_sub_props
                        ## allow subs WITHOUT minutes  (but optional cards!)
-                       : PROP_NAME  opt_cards
+                       : PROP_NAME  opt_inline_cards
                           {
                              _trace( "REDUCE => lineup_sub_props : PROP_NAME  opt_cards" )
                              result = { name: val[0].as_str }.merge( val[1] )
                           }
 
                        ##     Schiener (Scharrer 46 [R 115])
-                       | PROP_NAME  MINUTE  opt_cards
+                       | PROP_NAME  MINUTE  opt_inline_cards
                            {
                              _trace( "REDUCE => lineup_sub_props : PROP_NAME  MINUTE  opt_cards" )
                               result = { name:   val[0].as_str,
@@ -1137,7 +1179,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                        ##   note - minutes AFTER cards  (note - card REQUIRED
                        ##           otherwise rule PROP_NAME MINUTE lineup_cards_opts will match)
                        ##     Schiener (Scharrer [R 115] 46)
-                       | PROP_NAME  cards  MINUTE
+                       | PROP_NAME  inline_cards  MINUTE
                            {
                              _trace( "REDUCE => lineup_sub_props : PROP_NAME  cards  MINUTE" )
                               result = { name:   val[0].as_str,
@@ -1148,7 +1190,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
                        ## allow both styles? minute first or last? keep - yes, yes, yes
                        ##  why? why not?
-                       | MINUTE  PROP_NAME  opt_cards
+                       | MINUTE  PROP_NAME  opt_inline_cards
                            {
                              _trace( "REDUCE => lineup_sub_props : MINUTE  PROP_NAME  opt_cards" )
 
@@ -1193,8 +1235,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
 
-      opt_cards      :  /* empty */   { result = {} }   ## optional
-                     |  cards         { result = { cards: val[0] } }
+      opt_inline_cards      :  /* empty */      { result = {} }   ## optional
+                            |  inline_cards     { result = { cards: val[0] } }
 
 
      ##
@@ -1203,7 +1245,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
      ###  or  result = [val[0],val[1]]   should be default action
      ###   but really defaults to result = val[0] - why?
 
-      cards
+      inline_cards
         : inline_yellow                     {  result =  [val[0]]  }
         | inline_yellow inline_yellow_red   {  result =  [val[0],val[1]]  }
         | inline_yellow inline_red          {  result =  [val[0],val[1]]  }

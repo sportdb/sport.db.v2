@@ -138,7 +138,8 @@ def _tokenize_line( line, lineno )
         ### todo/fix - add prop yellow/red cards too - why? why not?
         ##  todo/fix - separate sent off and red card
         ##     sent-off - incl. red card, yellow/red card and the era before red cards!!
-        if ['sent off'].include?( key.downcase)
+        if ['sent-off',
+            'sent off'].include?( key.downcase)
           @re = PROP_CARDS_RE    ## use CARDS_RE ???
           tokens << Token.new(:PROP_SENTOFF, m[:key],
                                    lineno: lineno, offset: m.offset(:key))
@@ -150,6 +151,14 @@ def _tokenize_line( line, lineno )
           @re = PROP_CARDS_RE
           tokens << Token.new(:PROP_YELLOWCARDS, m[:key],
                                    lineno: lineno, offset: m.offset(:key))
+
+        ## fix-fix-fix  check allow yellow/red cards: or such as key!!!
+        ##   check for alternate spellings
+        elsif ['yellowred cards'].include?( key.downcase )
+          @re = PROP_CARDS_RE
+          tokens << Token.new(:PROP_YELLOWREDCARDS, m[:key],
+                                   lineno: lineno, offset: m.offset(:key))
+
         elsif ['ref', 'referee',
                'refs', 'referees'   ## note - allow/support assistant refs
               ].include?( key.downcase )
@@ -426,7 +435,10 @@ def _tokenize_line( line, lineno )
       @re == PROP_PENALTIES_RE  ||
       @re == PROP_ATTENDANCE_RE ||
       @re == PROP_REFEREE_RE
-     if [',', '-', ';'].include?( tokens[-1].type)
+
+     ## note - add :CARDS_SEP_ALT (aka  -)!!! too
+     ##   maybe later  CARDS_NONE_LEFT too - why? why not?
+     if [',', '-', ';', :CARDS_SEP_ALT].include?( tokens[-1].type)
         ## continue/stay in PROP_RE mode
         ##  todo/check - auto-add PROP_CONT token or such
         ##                to help parser with possible NEWLINE

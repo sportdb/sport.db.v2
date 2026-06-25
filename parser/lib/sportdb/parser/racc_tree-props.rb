@@ -89,12 +89,24 @@ end  # Penalty
 
 
 ##  find a better name for player (use bookings?) - note - red/yellow card for trainer possible
-CardsLine = Struct.new( :type, :bookings ) do
+CardsLine = Struct.new( :type,
+                        :bookings,
+                        :bookings1, :bookings2
+                         ) do
   def pretty_print( q )
     q.group( 4, '<CardsLine ', '>') do
       q.text( type )
-      q.text( " bookings=" )
-      q.pp( bookings )
+      ## note - either (all-in-one or undetermined) bookings
+      ##                               or booking1/bookings2
+      if bookings
+        q.text( " bookings=" )
+        q.pp( bookings )
+      else
+        q.text( " bookings1=" )
+        q.pp( bookings1 )
+        q.text( " bookings2=" )
+        q.pp( bookings2 )
+      end
     end
   end
 end  # CardsLine

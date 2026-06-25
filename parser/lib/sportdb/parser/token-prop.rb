@@ -263,6 +263,46 @@ ENCLOSED_NAME_RE = %r{
 
 
 
+###
+##  e.g.   -; ...   or
+##         None - ... or
+CARDS_NONE_LEFT_RE = %r{ (?<cards_none_left>
+                         ## (i) w/ semicolon (;)
+                            (?:  (?: - | \bnone)
+                                  [ ]* ;
+                            )
+                         ## (ii) w/ dash (-)
+                          | (?:   (?: ∅ | \bnone)
+                                  [ ]+ -        ##    space REQUIRED
+                                  (?=[ ]|\z)    ## positive lookahead - speace required
+                            )
+                    )}ix
+
+## e.g   ... ;-
+##    or ... ; None
+CARDS_NONE_RIGHT_RE = %r{ (?<cards_none_right>
+                        ## (i) w/ semicolon (;)
+                           (?:   ; [ ]*
+                               (?:   - | none\b)
+                           )
+                        ## (ii) w/ dash (-)
+                          | (?:
+                               (?<=[ ])      ## positive lookbehind - space required
+                                - [ ]+       ##    space REQUIRED
+                               (?:  ∅ | none\b)
+                            )
+                      )}ix
+
+
+CARDS_SEP_ALT_RE = %r{(?<cards_sep_alt>
+              (?<=[ ])      ## positive lookbehind - space required
+                -
+              (?=[ ]|\z)    ## positive lookahead - speace required
+             )}x
+
+
+
+
 
 
 end  # class Lexer
