@@ -13,6 +13,6 @@
                |  geo_names ',' GEO          {  result.push( val[2].as_str )  }
 
 
-
-       opt_geo  :   { result = {} }    ## empty -- optional
-                |  geo
+#  note - not in use (for now)
+#       opt_geo  :   { result = {} }    ## empty -- optional
+#                |  geo

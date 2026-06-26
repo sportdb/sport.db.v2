@@ -31,6 +31,7 @@ PACK default
    referees.txt
    lineups.txt
    cards.txt
+   cards_inline.txt
 
    round_adds.txt
    geos_inline.txt

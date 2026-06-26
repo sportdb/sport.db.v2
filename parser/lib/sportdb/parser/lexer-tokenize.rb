@@ -152,12 +152,16 @@ def _tokenize_line( line, lineno )
           tokens << Token.new(:PROP_YELLOWCARDS, m[:key],
                                    lineno: lineno, offset: m.offset(:key))
 
-        ## fix-fix-fix  check allow yellow/red cards: or such as key!!!
+        ## todo: check allow yellow/red cards: or such as key!!!
         ##   check for alternate spellings
-        elsif ['yellowred cards'].include?( key.downcase )
+        ##   'yellow/red cards' - note - meaning closes to yellow or red !!
+        ##    thus use yellow-red cards as default/standard - why? why not?
+        elsif ['yellow-red cards',
+               'yellowred cards'].include?( key.downcase )
           @re = PROP_CARDS_RE
           tokens << Token.new(:PROP_YELLOWREDCARDS, m[:key],
                                    lineno: lineno, offset: m.offset(:key))
+
 
         elsif ['ref', 'referee',
                'refs', 'referees'   ## note - allow/support assistant refs

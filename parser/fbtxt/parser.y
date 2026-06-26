@@ -187,10 +187,12 @@ rule
     ## rename to opt_date_datetime_time or such - why? why not?
     ##              yes, rename to opt_date_datetime_time !!
     ##              or keep note (that incl. date/datetime/time and yes, year!!)
-    opt_date
-      :         {  result = {} }       ## optional -- empty rule
-      | date_datetime                  ##  note: is same as date | datetime
-      | time
+
+    #  note - not in use (for now)
+    # opt_date
+    #  :         {  result = {} }       ## optional -- empty rule
+    #  | date_datetime                  ##  note: is same as date | datetime
+    #  | time
 
 
 
@@ -226,9 +228,9 @@ rule
                |  geo_names ',' GEO          {  result.push( val[2].as_str )  }
 
 
-
-       opt_geo  :   { result = {} }    ## empty -- optional
-                |  geo
+#  note - not in use (for now)
+#       opt_geo  :   { result = {} }    ## empty -- optional
+#                |  geo
 
 
 
@@ -987,7 +989,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                              {
                                @tree << CardsLine.new( type: 'R', bookings: val[1] )
                              }
-        yellowredcard_line  : PROP_REDYELLOWCARDS card_body PROP_END NEWLINE
+        yellowredcard_line  : PROP_YELLOWREDCARDS card_body PROP_END NEWLINE
                              {
                                @tree << CardsLine.new( type: 'Y/R', bookings: val[1] )
                              }
@@ -999,21 +1001,16 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                              }
 
 
-         #####
-         ## use player_booking or such
-
          ##
-         ##  note - cards uses bookings NOT bookings1/2!!!
-         ##           not assigned to team1/team2
-         ##    maybe use bookings: [] & [[],[]]  - why? why not?
+         ##  note - cards uses bookings:
+         ##     (i)  []          -  single line (no separator)
+         ##     (ii) [[],[]]     -  nested w/ bookings1/2 (separator or none required)
 
-         card_body :   cards                    { result = { bookings:  val[0] }}
-                       | cards CARDS_NONE_RIGHT { result = { bookings1: val[0],
-                                                             bookings2: []}}
-                       | CARDS_NONE_LEFT cards  { result = { bookings1: [],
-                                                             bookings2: val[1]}}
-                       | cards cards_sep cards  { result = { bookings1: val[0],
-                                                             bookings2: val[2]}}
+         card_body     : cards                  { result =  val[0]           }
+                       | cards CARDS_NONE_RIGHT { result = [val[0], []]      }
+                       | CARDS_NONE_LEFT cards  { result = [[],     val[1]]   }
+                       | cards cards_sep cards  { result = [val[0], val[2]]  }
+
 
         cards_sep    : ';'
                      | ';' NEWLINE

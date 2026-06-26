@@ -34,6 +34,9 @@ Canada                1-1 (0-1)  Bosnia & Herzegovina    @ Toronto
                 Ermedin Demirovic, Jovo Lukic, Nikola Katic
 
 
+  Yellow-Red Cards:    César Montes 90' - Sphephelo Sithole 49'
+  Yellow-Red Cards:    César Montes
+
 
  Sent off:    César Montes 90' - Sphephelo Sithole 49', Themba Zwane 84'
  Sent off:    César Montes - Sphephelo Sithole, Themba Zwane
@@ -54,23 +57,3 @@ Sent off:    César Montes - None
 Sent off:    César Montes - ∅
  Sent off:    César Montes; None
 Sent off:    César Montes;  -
-
-
-
-__END__
-
-
-fix - fix- fix double nested!!
-
-
-
-<CardsLine SENTOFF bookings={:bookings1=>[],
-      :bookings2=>[Sphephelo Sithole, Themba Zwane]}>,
- <CardsLine SENTOFF bookings={:bookings1=>[],
-      :bookings2=>[Sphephelo Sithole, Themba Zwane]}>,
- <CardsLine SENTOFF bookings={:bookings1=>[],
-      :bookings2=>[Sphephelo Sithole, Themba Zwane]}>,
- <BlankLine>,
- <CardsLine SENTOFF bookings={:bookings1=>[César Montes], :bookings2=>[]}>,
- <CardsLine SENTOFF bookings={:bookings1=>[César Montes], :bookings2=>[]}>,
- <CardsLine SENTOFF bookings={:bookings1=>[César Montes], :bookings2=>[]}>]
