@@ -136,11 +136,9 @@
 
                |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  NEWLINE
                   {
-                      kwargs = {}.merge( val[0] )
-                      @tree << MatchLine.new( **kwargs )
+                      @tree << MatchLine.new( **val[0] )
 
-                      kwargs = val[2]
-                      @tree << GoalLine.new( **kwargs )
+                      @tree << GoalLine.new( goals: val[2] )
                   }
 
 

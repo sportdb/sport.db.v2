@@ -92,14 +92,6 @@ START_GOAL_LINE_ALT_RE = %r{
 
 
 
-
-###
-##  e.g.  (-; Metzger)
-GOAL_NONE_RE = %r{ (?<goals_none>
-                        -[ ]*;
-                    )
-                 }x
-
 ###
 #  note - alternate goal separator dash (-) MUST have leading and trailing space!!!
 #    e.g.   (Metzger 83 - Krämer 29, 88, Cichy 33, Rahn 37)

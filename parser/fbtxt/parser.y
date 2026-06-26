@@ -571,11 +571,9 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
                |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  NEWLINE
                   {
-                      kwargs = {}.merge( val[0] )
-                      @tree << MatchLine.new( **kwargs )
+                      @tree << MatchLine.new( **val[0] )
 
-                      kwargs = val[2]
-                      @tree << GoalLine.new( **kwargs )
+                      @tree << GoalLine.new( goals: val[2] )
                   }
 
 
@@ -714,41 +712,25 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         #     BUT now allowed in-between comma-separated minutes!!!
         #
 
-
         ##
         ## note - GOALS token is virtual - basically opening-paranthesis `(` for now
 
+
         goal_lines : GOALS goal_lines_body GOALS_END NEWLINE
                       {
-                         @tree << GoalLine.new( **val[1] )
+                         @tree << GoalLine.new( goals: val[1] )
                       }
 
 
 
-        ##
-        ##  add a GOALS_NONE_RIGHT too  e.g.
-        ##    Jr. 43'; -
-        ##    Jr. 43'; none
-        ##    Jr. 43'; ∅
-        ##
-        ##  fix-fix-fix - change GOALS_NONE to GOALS_NONE_LEFT - why? why not?
 
-        ##  fix-fix-fix -
-        ##         change single goals line to goals: !!!
-        ##                               NOT goals1/goals2 pairs!!!
+         ##
+         ##  note - uses goals:
+         ##     (i)  []          -  single line (no separator)
+         ##     (ii) [[],[]]     -  nested w/ team1/2 (separator required)
 
-        goal_lines_body : goals                  {  result = { goals1: val[0],
-                                                               goals2: [] }
-                                                 }
-                        | goals GOALS_NONE_RIGHT {  result = { goals1: val[0],
-                                                               goals2: [] }
-                                                 }
-                        | GOALS_NONE goals      {  result = { goals1: [],
-                                                              goals2: val[1] }
-                                                }
-                        | goals goals_sep goals {  result = { goals1: val[0],
-                                                              goals2: val[2] }
-                                                }
+        goal_lines_body : goals                  {  result = val[0] }
+                        | goals goals_sep goals  {  result = [val[0],val[2]] }
 
 
         goals_sep    : ';'
@@ -764,6 +746,9 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
          goals   : goal                      { result = val }
                  | goals opt_goal_sep  goal  { result.push( val[2])  }
+
+
+
 
          #####
          ## todo -  make comma required for player only
@@ -804,7 +789,6 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                           }
 
 
-
 ##########
 ##   alternate goal lines starting with score e.g.
 ##
@@ -815,20 +799,26 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 ##     3-2 Messi    108',
 ##     3-3 Mbappé   118'(pen.))
 
+
         goal_lines_alt : GOALS_ALT goals_alt GOALS_END NEWLINE
                            {
                              @tree << GoalLineAlt.new( goals: val[1] )
                            }
 
+
+
+        ## note - allow optional comma sep (or comma sep w/ newline)
+
         goals_alt   :  goal_alt
                         { result = val }
-                       ## note - allow optional comma sep (or comma sep w/ newline)
                     |  goals_alt  opt_goal_sep  goal_alt
                         { result.push( val[2])  }
 
 
 
-        goal_alt    :  SCORE PLAYER     ## note - minute is optional in alt goalline style!!!
+        ## note - minute is optional in alt goal line style!!!
+
+        goal_alt    :  SCORE PLAYER
                         {
                            result = GoalAlt.new( score:   val[0].as_ary,
                                                  player:  val[1].as_str )
@@ -878,6 +868,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 ##   compat ("legacy") goal line style starting with minute
 ##
 
+
+
         goal_lines_compat : GOALS_COMPAT goals_compat GOALS_END NEWLINE
                            {
                              @tree << GoalLineCompat.new( goals: val[1] )
@@ -887,6 +879,38 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                            { result = val }
                        |  goals_compat  opt_goal_sep  goal_compat
                            { result.push( val[2])  }
+
+
+
+ ## note - for now SCORE required - why? why not?
+
+        goal_compat    :  MINUTE PLAYER SCORE
+                        {
+                           result = GoalCompat.new( minute:  Minute.new(**val[0].as_hash),
+                                                    player:  val[1].as_str,
+                                                    score:  val[2].as_ary )
+                        }
+                      | MINUTE PLAYER GOAL_TYPE SCORE
+                        {
+                           result = GoalCompat.new( minute: Minute.new(**val[0].as_hash),
+                                                    player: val[1].as_str,
+                                                    goal_type: GoalType.new( **val[2].as_hash ),
+                                                    score:  val[3].as_ary )
+                       }
+                     | MINUTE SCORE PLAYER
+                        {
+                           result = GoalCompat.new( minute:  Minute.new(**val[0].as_hash),
+                                                    score:  val[1].as_ary,
+                                                    player:  val[2].as_str )
+                        }
+                      | MINUTE SCORE PLAYER GOAL_TYPE
+                        {
+                           result = GoalCompat.new( minute: Minute.new(**val[0].as_hash),
+                                                    score:  val[1].as_ary,
+                                                    player: val[2].as_str,
+                                                    goal_type: GoalType.new( **val[3].as_hash ))
+                       }
+
 
 /**
   * note - for now SCORE required - why? why not?
@@ -902,35 +926,6 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                                     goal_type: GoalType.new( **val[2].as_hash ))
                         }
  */
-
-
-
-        goal_compat    :  MINUTE PLAYER SCORE
-                        {
-                           result = GoalCompat.new( minute:  Minute.new(**val[0].as_hash),
-                                                    player:  val[1].as_str,
-                                                    score:  val[2].as_ary )
-                        }
-                      | MINUTE PLAYER GOAL_TYPE SCORE
-                        {
-                           result = GoalCompat.new( minute: Minute.new(**val[0].as_hash),
-                                                    player: val[1].as_str,
-                                                    goal_type: GoalType.new( **val[2].as_hash ),
-                                                    score:  val[3].as_ary )
-                       }
-                       | MINUTE SCORE PLAYER
-                        {
-                           result = GoalCompat.new( minute:  Minute.new(**val[0].as_hash),
-                                                    score:  val[1].as_ary,
-                                                    player:  val[2].as_str )
-                        }
-                      | MINUTE SCORE PLAYER GOAL_TYPE
-                        {
-                           result = GoalCompat.new( minute: Minute.new(**val[0].as_hash),
-                                                    score:  val[1].as_ary,
-                                                    player: val[2].as_str,
-                                                    goal_type: GoalType.new( **val[3].as_hash ))
-                       }
 
 
 
@@ -976,10 +971,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                            }
 
 
-################
-##   fix-fix-fix - use goal like
-##                       cards1, cards2   with possible none
-##                         only allow one separator
+
 
         yellowcard_line : PROP_YELLOWCARDS card_body PROP_END NEWLINE
                              {
@@ -1017,6 +1009,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                      | CARDS_SEP_ALT     ## note - dash (-) with leading & trailing spaces required
                      | CARDS_SEP_ALT NEWLINE
 
+
           cards    :  player_w_minute
                          {  result = val }
                    |  cards  opt_card_sep  player_w_minute
@@ -1043,11 +1036,9 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                             }
 
 
-
         penalty_sep     :  ','
                         |  ',' NEWLINE
-                        |  ';'
-                        |  ';' NEWLINE
+
 
         penalties_body  :  penalty                             {  result = val  }
                         |  penalties_body penalty_sep penalty  {  result.push( val[2] )  }

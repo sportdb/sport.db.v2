@@ -1,8 +1,5 @@
 
-################
-##   fix-fix-fix - use goal like
-##                       cards1, cards2   with possible none
-##                         only allow one separator
+
 
         yellowcard_line : PROP_YELLOWCARDS card_body PROP_END NEWLINE
                              {
@@ -39,6 +36,7 @@
                      | ';' NEWLINE
                      | CARDS_SEP_ALT     ## note - dash (-) with leading & trailing spaces required
                      | CARDS_SEP_ALT NEWLINE
+
 
           cards    :  player_w_minute
                          {  result = val }

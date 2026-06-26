@@ -1,6 +1,16 @@
 
 
 
+###
+##  e.g.  (-; Metzger)
+GOAL_NONE_RE = %r{ (?<goals_none>
+                        -[ ]*;
+                    )
+                 }x
+
+
+
+
 =begin
                        # check NEGATIVE lookahead
                        (?!

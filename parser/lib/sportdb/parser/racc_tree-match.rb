@@ -103,24 +103,20 @@ end  #  struct MatchLine
 
 
 
-GoalLine    = Struct.new( :goals1, :goals2 ) do
+GoalLine    = Struct.new( :goals ) do
 
   def as_json(*)
-    ['<GoalLine>', { 'goals1' => goals1.as_json,
-                     'goals2' => goals2.as_json, }
-    ]
+    ['<GoalLine>', { 'goals' => goals.as_json }]
   end
 
   def pretty_print( q )
-    q.group( 4, '<GoalLine ', '>') do        ##  group( indent, open, close)
-      q.text( "goals1=" )
-      q.pp( goals1 )
-      q.breakable
-      q.text( "goals2=" )
-      q.pp( goals2 )
+    q.group( 4, '<GoalLine ', '>') do
+      q.text( "goals=" )
+      q.pp( goals )
     end
   end
 end  # GoalLine
+
 
 
 ###

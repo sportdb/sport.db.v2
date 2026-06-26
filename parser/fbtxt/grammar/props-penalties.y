@@ -6,11 +6,9 @@
                             }
 
 
-
         penalty_sep     :  ','
                         |  ',' NEWLINE
-                        |  ';'
-                        |  ';' NEWLINE
+
 
         penalties_body  :  penalty                             {  result = val  }
                         |  penalties_body penalty_sep penalty  {  result.push( val[2] )  }

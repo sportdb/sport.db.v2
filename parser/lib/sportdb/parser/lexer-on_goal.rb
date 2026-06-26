@@ -6,7 +6,6 @@ class Lexer
 
 GOAL_RE = Regexp.union(
     SPACES_RE,
-    GOAL_NONE_RE,
     GOAL_MINUTE_RE,
     GOAL_MINUTE_NA_RE,
     GOAL_COUNT_RE,
@@ -16,15 +15,11 @@ GOAL_RE = Regexp.union(
     ## todo/fix - add ANY_RE !!!!
 )
 
+
 def _on_goal( m, ctx: )
 
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
-         elsif m[:goals_none]    ## note - eats-up semicolon!! e.g. -; or - ;
-             # was:[:GOALS_NONE,"<|GOALS_NONE|>"]
-             ##   use literal text!!
-             Token.new( :GOALS_NONE, m[:goals_none],
-                            lineno: ctx.lineno, offset: m.offset(:goals_none))
          elsif m[:goal_sep_alt]
              # was: [:GOAL_SEP_ALT, "<|GOAL_SEP_ALT|>" ]   ## e.g. dash (-) WITH leading & trailing space required
              Token.new( :GOAL_SEP_ALT, m[:goal_sep_alt],

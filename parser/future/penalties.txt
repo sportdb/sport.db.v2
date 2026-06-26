@@ -1,0 +1,16 @@
+
+
+##
+## support semicolons (;) - why? why not?
+
+Penalty shootout: 0-0 Zinho (held), 0-1 Dudamel;
+                  1-1 Júnior Baiano, 1-2 Gaviria;
+                  2-2 Roque Júnior, 2-3 Yepes;
+                  3-3 Rogério, 3-3 Bedoya (post);
+                  4-3 Euller, 4-3 Zapata (wide)
+
+Penalty shootout:     Zinho (held),  0-1 Dudamel;
+                  1-1 Júnior Baiano, 1-2 Gaviria;
+                  2-2 Roque Júnior,  2-3 Yepes;
+                  3-3 Rogério,           Bedoya (post);
+                  4-3 Euller,            Zapata (wide)
