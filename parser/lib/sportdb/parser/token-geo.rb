@@ -126,7 +126,7 @@ GEO_RE = Regexp.union(
                     SPACES_RE,
                     GEO_END_RE,
                     GEO_TEXT_RE,
-                    /  (?<sym> [,›>\[] ) /x,
+                    /  (?<sym> [,›>\[▪] ) /x,
                     ANY_RE,
                       )
 

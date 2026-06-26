@@ -42,6 +42,15 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                           status_inline: 'canceled' }
                             }
 
+                          ## e.g.  Oxford University  w/o  Queen's Park
+                          | TEAM INLINE_WO TEAM
+                             {
+                               result = { team1: val[0].as_str,
+                                          team2: val[2].as_str,
+                                          status_inline: 'walkover' }
+                             }
+
+
  match_fixture_postponed  :  TEAM INLINE_PPD TEAM
                              {
                                result = { team1: val[0].as_str,

@@ -47,8 +47,11 @@ def _on_top( m, ctx: )      ## note - m is MatchData object
         elsif m[:inline_canc] then Token.new(:INLINE_CANC, m[:inline_canc],
                                                   lineno: ctx.lineno, offset: m.offset(:inline_canc))
 
-        elsif m[:inline_round] then Token.new(:INLINE_ROUND, m[:inline_round],
-                                                  lineno: ctx.lineno, offset: m.offset(:inline_round),
+        elsif m[:inline_round_short] then Token.new(:INLINE_ROUND_SHORT, m[0],
+                                                  lineno: ctx.lineno, offset: m.offset(0),
+                                                     value: m[:inline_round_text])
+        elsif m[:inline_round_big] then Token.new(:INLINE_ROUND_BIG, m[0],
+                                                  lineno: ctx.lineno, offset: m.offset(0),
                                                      value: m[:inline_round_text])
 
         elsif m[:status]      then Token.new(:STATUS, m[:status],

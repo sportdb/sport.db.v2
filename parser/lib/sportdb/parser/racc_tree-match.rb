@@ -16,17 +16,6 @@ MatchLineBye   = Struct.new( :team, :note ) do
 end  # MatchLineBye
 
 
-###
-## fix-fix-fix  - remove - use std MatchLine with status walkover!!
-MatchLineWalkover   = Struct.new( :team1, :team2, :note ) do
-  def pretty_print( printer )
-    printer.text( "<MatchLineWalkover " )
-    printer.text( "#{team1} w/o #{team2}")
-    printer.text( " note=#{note.pretty_inspect}" )  if note
-    printer.text( ">" )
-  end
-end
-
 
 
 MatchLineLegs   = Struct.new( :team1, :team2,
@@ -61,7 +50,7 @@ MatchLine   = Struct.new( :header,  :tty,   ## tty = TELETYPE MODE for teams and
                           :team1, :team2,
                           :score,
                           :status,  :status_inline, :status_note,
-                          :round_inline,
+                          :round_inline_short, :round_inline_big,
                           :geo,
                           :neutral,  ## true/false - NOT -home/away - neutral ground
                           :note,

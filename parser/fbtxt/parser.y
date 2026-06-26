@@ -278,6 +278,15 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                           status_inline: 'canceled' }
                             }
 
+                          ## e.g.  Oxford University  w/o  Queen's Park
+                          | TEAM INLINE_WO TEAM
+                             {
+                               result = { team1: val[0].as_str,
+                                          team2: val[2].as_str,
+                                          status_inline: 'walkover' }
+                             }
+
+
  match_fixture_postponed  :  TEAM INLINE_PPD TEAM
                              {
                                result = { team1: val[0].as_str,
@@ -458,7 +467,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
               | note
 
 
-         inline_round : INLINE_ROUND   { result = { inline_round: val[0].as_str } }
+         inline_round_short : INLINE_ROUND_SHORT   { result = { round_inline_short: val[0].as_str } }
+         inline_round_big   : INLINE_ROUND_BIG     { result = { round_inline_big: val[0].as_str } }
 
 
 
@@ -509,10 +519,18 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
        ##
 
        match_header
-            :     date_datetime geo opt_inline_attendance  NEWLINE
+            :     date_datetime  geo  opt_inline_attendance  NEWLINE
                    {
                       result = {}.merge( val[0], val[1], val[2] )
                    }
+       ##
+       ##  quick test for inline_round_big - make more flexible - why? why not?
+            |     date_datetime  geo  inline_round_big  NEWLINE
+                   {
+                      result = {}.merge( val[0], val[1], val[2] )
+                   }
+       ##
+       ##  keep simple match header with date and inline attendance only - why? why not?
             |      date_datetime inline_attendance  NEWLINE
                    {
                       result = {}.merge( val[0], val[1] )
@@ -557,11 +575,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                          kwargs = {}.merge( val[0], val[1] )
                          @tree << MatchLineBye.new( **kwargs )
                       }
-              |  match_walkover  opt_inline_note   NEWLINE
-                     {
-                         kwargs = {}.merge( val[0], val[1] )
-                         @tree << MatchLineWalkover.new( **kwargs )
-                     }
+
 
 
                ###############
@@ -587,7 +601,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         ## note - allow ord only
         ##      - allow date/datetime only
         ##      - allow time only
-        ##      - allow inline_round only
+        ##      - allow inline_round_short only
         ##      - allow geo only
 
         pre_match_opts
@@ -603,8 +617,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
             | pre_match2
 
         pre_match2
-            : inline_round
-            | inline_round  geo  { result = {}.merge( val[0], val[1]) }
+            : inline_round_short
+            | inline_round_short  geo  { result = {}.merge( val[0], val[1]) }
             | geo
 
 
@@ -626,6 +640,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                    result = {}.merge( val[0], val[1], val[2] )
                  }
              | note
+             ## fix-fix-fix  quick test for inline round - make more flexible!!
+             | inline_round_big
 
 
 
@@ -652,16 +668,6 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                     {
                       result = { team: val[0].as_str }
                     }
-
-        ###
-        ##  fix/fix/fix  - remove special walkover (w/o) handling!!!
-        ##                      add nodate/notime and hrule etc.
-         match_walkover
-              :   TEAM INLINE_WO TEAM    ## e.g.  Oxford University  w/o  Queen's Park
-                   {
-                      result = { team1: val[0].as_str,
-                                 team2: val[2].as_str }
-                   }
 
 
 ## experimental match (w/ two legs)

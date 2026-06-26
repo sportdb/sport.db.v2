@@ -367,7 +367,9 @@ def _tokenize_line( line, lineno )
               when '>' then @geo_count = 0;
                             Token.literal( ',', lineno: lineno, offset: m.offset(:sym))
                                ## note - treat geo sep > (ascii) like comma for now!!!
-              when '[' then
+
+
+              when '[','▪'
                     ##
                     ## todo/fix
                     ##   add virtual geo_end token!!!
@@ -376,6 +378,7 @@ def _tokenize_line( line, lineno )
                  @re = RE
                  pos = old_pos
                  next   ## backtrack (resume new loop step)
+               ## fix-fix-fix  merge  '▪' with '['
               else
                  Token.literal( m[:sym], lineno: lineno, offset: m.offset(:sym))
               end

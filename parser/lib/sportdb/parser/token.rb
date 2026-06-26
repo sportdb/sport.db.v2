@@ -63,15 +63,30 @@ VS_RE = %r{
 ##   note - only numbers and upcase allowed
 ##                limited to two-letters for now - make more generic - why? why not?
 ##                may add SF1, SF2, or such later !!!
-INLINE_ROUND_RE = %r{
-       (?<inline_round>
-           ▪  (?<inline_round_text>
+INLINE_ROUND_SHORT_RE = %r{
+         (?<inline_round_short>
+               ▪
+            (?<inline_round_text>
                     [0-9]+
-                  | [A-Z]{1,2}+ [0-9]*
+                  | [A-Z]{1,2} [0-9]*
               )
           (?= [ ]|$)   # positive lookAHEAD for space (or end-of-line)
-        )
-}x
+        )}x
+
+###
+##  ▪ Replay
+##  ▪ 1st Leg
+INLINE_ROUND_BIG_RE = %r{
+       (?<inline_round_big>
+            ▪ [ ]
+             (?<inline_round_text>
+                [^\[\(@]+?  ## note - non-greedy
+                            ##   allow commas (,) or slash(/) - why? why not?
+              )
+          (?= [ ]{2}|$)   # positive lookAHEAD for TWO(!) spaces (or end-of-line)
+        )}x
+
+
 
 
 ##############
@@ -83,7 +98,8 @@ INLINE_ROUND_RE = %r{
 RE = Regexp.union(
                     SPACES_RE,
 
-                    INLINE_ROUND_RE,
+                    INLINE_ROUND_SHORT_RE,
+                    INLINE_ROUND_BIG_RE,
 
                     STATUS_RE,   ## match status e.g. [cancelled], etc.
 

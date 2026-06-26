@@ -1,0 +1,45 @@
+
+###
+#  short-style (pre match opts)
+
+
+04.03.2026
+  18:00 ▪SF  @ Salzburg    FC RB Salzburg - SC Rheindorf Altach   0-1
+03.03.2026
+  20:30 ▪18  @ Wien        Rapid Wien II - SV Austria Salzburg    1-1
+01.03.2026
+  10:30 ▪19  @ Kapfenberg  Kapfenberger SV 1919 - Sturm Graz II   2-1
+
+
+04.03.2026
+  18:00 ▪SF FC RB Salzburg - SC Rheindorf Altach   0-1
+03.03.2026
+  20:30 ▪18 Rapid Wien II - SV Austria Salzburg    1-1
+01.03.2026
+  10:30 ▪19 Kapfenberger SV 1919 - Sturm Graz II   2-1
+
+
+## note - for now can even start line (if no space used)
+▪SF  FC RB Salzburg - SC Rheindorf Altach
+▪18  Rapid Wien II - SV Austria Salzburg
+▪19  Kapfenberger SV 1919 - Sturm Graz II
+
+
+
+
+#####
+# big-style (post match opts)
+
+07.11.1962 @ Sofia (Vassil Levski) ▪ 1st Leg
+Bulgaria          3-1 Portugal
+  (Asparuchov 65 76, Diev 84; Eusebio 49)
+16.12.1962 @ Lisboa ▪ 2nd Leg
+Portugal          3-1 Bulgaria
+  (Hernani (2), Coluna; Iliev)
+23.01.1963 @ Roma, Italy (Olimpico) ▪ Replay
+Bulgaria          1-0 Portugal
+  (Asparuchov 87)
+
+
+
+ Italy   2-0  Yugoslavia     ▪ Replay
