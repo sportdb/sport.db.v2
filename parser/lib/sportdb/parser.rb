@@ -116,18 +116,20 @@ RaccMatchParser = SportDb::Parser
 
 module Fbtxt
 
-def self.lex( txt )   ## returns SportDb::LexerResult (ok?/tokens/errors)
-  # lexer = SportDb::Lexer.new
-  # lexer.tokenize( txt )
-  puts "to be done; SOON!"
+def self.lex( txt, flatten: true )      ## returns SportDb::LexerResult (ok?/tokens/errors)
+  lexer = SportDb::Lexer.new( txt )
+  ## move "wrapping" into result obj inside lexer - why? why not?
+  tokens, errors = lexer.tokenize_with_errors( flatten: flatten )
+  SportDb::LexerResult.new( tokens, errors )
 end
-
 
 def self.parse( txt )   ## returns SportDb::ParserResult (ok?/tree/errors)
-  # parser = SportDb::Parser.new
-  # parser.parse( txt )
-  puts "to be done; SOON!"
+  parser = SportDb::Parser.new( txt )
+  ## move "wrapping" into result obj inside parser - why? why not?
+  tree, errors = parser.parse_with_errors
+  SportDb::ParserResult.new( tree, errors )
 end
+
 
 
 class Document

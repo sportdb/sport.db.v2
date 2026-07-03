@@ -1,5 +1,18 @@
 
 module SportDb
+
+class LexerResult
+   attr_reader :tokens, :errors
+   def initialize( tokens, errors=[] )
+       @tokens, @errors = tokens, errors
+   end
+
+   def ok?()  @errors.size == 0; end
+   def nok?() !ok?; end
+end  # class LexerResult
+
+
+
 class Lexer
   include Debuggable     ## auto-adds debug?, _trace, _info, etc.
 
@@ -11,7 +24,7 @@ def initialize( txt )
 end
 
 
-def tokenize_with_errors
+def tokenize_with_errors( flatten: true )
 
     tokens_by_line = []   ## note: add tokens line-by-line (flatten later)
     errors         = []   ## keep a list of errors - why? why not?
@@ -189,10 +202,10 @@ def tokenize_with_errors
     ## puts "tokens_by_line:"
     ## pp tokens_by_line
 
-
-    ## flatten tokens
-    tokens = []
-    tokens_by_line.each do |tok_line|
+    if flatten
+      ## flatten tokens
+      tokens = []
+      tokens_by_line.each do |tok_line|
 
         ## if debug?
         ##   pp tok_line
@@ -206,12 +219,12 @@ def tokenize_with_errors
             ##                  use last - why? why not?
             tokens  << Token.newline( lineno: tok_line[0].lineno )
          end
-    end
-
-    [tokens,errors]
-
-end   # method tokenize_with_errors
-
+      end
+      [tokens,errors]
+   else
+      [tokens_by_line, errors]
+   end
+end   # method tokenize
 
 
 end  # class Lexer

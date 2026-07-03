@@ -1,6 +1,18 @@
 
 
 module SportDb
+
+class ParserResult
+   attr_reader :tree, :errors
+   def initialize( tree, errors=[] )
+       @tree, @errors = tree, errors
+   end
+
+   def ok?()  @errors.size == 0; end
+   def nok?() !ok?; end
+end  # class ParserResult
+
+
 class Parser
   include Debuggable     ## auto-adds debug?, _trace, _info, etc.
 
@@ -45,14 +57,18 @@ class Parser
      [@tree, @errors]
   end
 
+
   def parse  ## convenience shortcut (ignores errors)
-    tree, _ = parse_with_errors
-    tree
+     puts "[DEPRECATED] parse; use new (porcelain/public) Fbtxt.parse api!!"
+     tree, _ = parse_with_errors
+     tree
   end
 
-
   attr_reader :errors
-  def errors?()   @errors.size > 0; end
+  def errors?
+     puts "[DEPRECATED] errors?; use new (porcelain/public) Fbtxt.parse api!!"
+     @errors.size > 0;
+  end
 
 
   def on_error(error_token_id, error_value, value_stack)
