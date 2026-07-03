@@ -1,10 +1,10 @@
 
 ####
-#   RaccMatchParser support machinery (incl. node classes/abstract syntax tree)
+#   Parser support machinery (incl. node classes/abstract syntax tree)
 
 
-class RaccMatchParser
-
+module SportDb
+  class Parser
 
 
 GroupDef   = Struct.new( :name, :teams ) do
@@ -197,4 +197,6 @@ Heading3 = Struct.new( :text ) do
   end
 end  # Heading3
 
-end  # class RaccMatchParser
+
+  end   # class Parser
+end   # module SportDb

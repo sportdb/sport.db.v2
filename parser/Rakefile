@@ -40,7 +40,8 @@ task g: 'lib/sportdb/parser/parser.rb'
 
 file 'lib/sportdb/parser/parser.rb' => 'fbtxt/parser.y' do |t|
   puts "  [racc] generate parser.rb from parser.y"
-  sh "racc -v -o #{t.name} #{t.source}"
+  ## sh "racc -v -o #{t.name} #{t.source}"
+  sh "racc -o #{t.name} #{t.source}"
 end
 
 

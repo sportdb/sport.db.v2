@@ -1,8 +1,8 @@
 
 
 
+class SportDb::Parser
 
-class RaccMatchParser
 rule
 
 
@@ -182,6 +182,7 @@ rule
     date_datetime
       :  date
       |  datetime
+
 
 
     ## rename to opt_date_datetime_time or such - why? why not?

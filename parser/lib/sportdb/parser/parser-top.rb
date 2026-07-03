@@ -1,22 +1,14 @@
 
-####
-#   RaccMatchParser support machinery (incl. node classes/abstract syntax tree)
 
-##
-##  todo/check
-##   maybe change rename to
-##     SportDb::Parser   (keep RaccMatchParser as an alias - why? why not?)
-
-
-
-class RaccMatchParser
+module SportDb
+class Parser
   include Debuggable     ## auto-adds debug?, _trace, _info, etc.
 
   def initialize( txt )
     @tree   = []
     @errors = []
 
-    lexer = SportDb::Lexer.new( txt )
+    lexer = Lexer.new( txt )
     ##  note - use tokenize_with_errors and add/collect tokenize errors
     @tokens, @errors = lexer.tokenize_with_errors
     ## pp @tokens
@@ -70,7 +62,7 @@ class RaccMatchParser
     msg = "parse error on token: #{error_token}"
 
     ## add error_value  - might be Lexer::Token or value
-    if error_value.is_a?( SportDb::Lexer::Token)
+    if error_value.is_a?( Lexer::Token)
       if error_value.type == :NEWLINE
          ## skip print of "literal" newline
       else
@@ -90,4 +82,5 @@ class RaccMatchParser
   end
 
 
-end   # class RaccMatchParser
+end   # class Parser
+end  # module SportDb

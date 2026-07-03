@@ -1,5 +1,5 @@
-
-class RaccMatchParser
+module SportDb
+  class Parser
 
 
 =begin
@@ -229,4 +229,5 @@ Sub        = Struct.new( :minute, :sub )  do
 end  # Sub
 
 
-end # class RaccMatchParser
+  end   # class Parser
+end   # module SportDb

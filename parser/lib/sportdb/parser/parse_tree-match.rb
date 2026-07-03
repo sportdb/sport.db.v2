@@ -1,5 +1,5 @@
-class RaccMatchParser
-
+module SportDb
+  class Parser
 
 
 
@@ -305,4 +305,5 @@ end  # Minute
 
 
 
-end # class RaccMatchParser
+  end   # class Parser
+end   # module SportDb
