@@ -3,7 +3,6 @@ Manifest.txt
 README.md
 Rakefile
 lib/sportdb/quick.rb
-lib/sportdb/quick/match_parser.rb
 lib/sportdb/quick/match_tree-helpers.rb
 lib/sportdb/quick/match_tree.rb
 lib/sportdb/quick/match_tree/goal.rb

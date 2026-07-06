@@ -3,6 +3,8 @@ Manifest.txt
 README.md
 Rakefile
 lib/sportdb/parser.rb
+lib/sportdb/parser/debuggable.rb
+lib/sportdb/parser/lexer-logger.rb
 lib/sportdb/parser/lexer-on_goal.rb
 lib/sportdb/parser/lexer-on_group_def.rb
 lib/sportdb/parser/lexer-on_prop_lineup.rb
@@ -16,10 +18,13 @@ lib/sportdb/parser/lexer-tokenize.rb
 lib/sportdb/parser/lexer.rb
 lib/sportdb/parser/lexer_buffer.rb
 lib/sportdb/parser/lexer_token.rb
+lib/sportdb/parser/parse_tree--core.rb
+lib/sportdb/parser/parse_tree-match.rb
+lib/sportdb/parser/parse_tree-props.rb
+lib/sportdb/parser/parse_tree.rb
+lib/sportdb/parser/parser-runtime.rb
+lib/sportdb/parser/parser-top.rb
 lib/sportdb/parser/parser.rb
-lib/sportdb/parser/parser_runtime.rb
-lib/sportdb/parser/racc_parser.rb
-lib/sportdb/parser/racc_tree.rb
 lib/sportdb/parser/token-date--helpers.rb
 lib/sportdb/parser/token-date--names.rb
 lib/sportdb/parser/token-date.rb
