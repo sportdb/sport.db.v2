@@ -11,12 +11,9 @@ require 'sportdb/quick'
 OPENFOOTBALL_PATH = '../../../openfootball'
 
 
-## SportDb::MatchParser.debug = true
-## SportDb::MatchParser.debug = true
-## SportDb::QuickMatchReader.debug = true
 
-SportDb::MatchParser.debug = false
-SportDb::QuickMatchReader.debug = false
+SportDb::MatchTree.debug = false
+Fbtxt::Document.debug = false
 
 
 def parse_matches( *infiles, indir: '.' )
@@ -29,13 +26,13 @@ def parse_matches( *infiles, indir: '.' )
       puts "==> reading #{inpath}..."
       txt = read_text( inpath )
 
-      quick = SportDb::QuickMatchReader.new( txt )
-      more_matches = quick.parse
-      name         = quick.league_name   ## quick hack - get league+season via league_name
+      doc = Fbtxt::Document.parse( txt )
+      more_matches = doc.matches
+      name         = doc.title
 
-      if quick.errors?
-        puts "!! #{quick.errors.size} parse error(s) in #{inpath}:"
-        pp quick.errors
+      if doc.errors?
+        puts "!! #{doc.errors.size} parse error(s) in #{inpath}:"
+        pp doc.errors
         exit 1
       end
 
