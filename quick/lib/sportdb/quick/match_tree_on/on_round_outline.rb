@@ -4,7 +4,7 @@ class MatchTree
 
 
   def on_round_outline( node )
-    logger.debug "on round outline: >#{node}<"
+    _trace( "on round outline: >#{node}<" )
 
     ## always reset dates - why? why not?
     ##    note - needs last_date for year
@@ -20,7 +20,7 @@ class MatchTree
       ##  todo/fix - use only names from group def for lookup/is_group match!!!
       ##    do NOT use (generic) regex!!
       if level == 1 && _is_group?( name )
-        logger.debug "on group header: >#{node}<"
+        _trace( "on group header: >#{node}<" )
 
         group = @groups[ name ]
 

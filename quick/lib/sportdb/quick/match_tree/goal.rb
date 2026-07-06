@@ -47,18 +47,18 @@ class Goal  ### nested (non-freestanding) inside match (match is parent)
     o.class == self.class && o.state == state
   end
 
-  def pretty_print( printer )
-    buf = String.new
-    buf << "<Goal"
-    buf << " #{@player} #{@minute}"
-    buf << "+#{@offset}"    if @offset && @offset > 0
-    buf << "'"
-    buf << " (og)"  if @owngoal
-    buf << " (p)"  if @penalty
-    buf << " for #{@team}"     ### team 1 or 2 - use home/away
-    buf << ">"
+  def pretty_print( q )
+    q.group( 4, '<Goal', '>') do        ##  group( indent, open, close)
+      buf = String.new
+      buf << " #{@player} #{@minute}"
+      buf << "+#{@offset}"    if @offset && @offset > 0
+      buf << "'"
+      q.text( buf )
 
-    printer.text( buf )
+      q.text( "(og)" )  if @owngoal
+      q.text( "(p)" )   if @penalty
+      q.text( " for #{@team}" )      ### team 1 or 2 - use home/away
+    end
   end
 end # class Goal
 

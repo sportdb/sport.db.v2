@@ -16,18 +16,16 @@ class MatchTree
         @auto       = auto        # auto-created (inline reference/header without proper definition before)
       end
 
-      def pretty_print( printer )
+      def pretty_print( q )
         ## todo/check - how to display/format key - use () or not - why? why not?
-        buf = String.new
-        buf << "<Round"
-        buf << " AUTO"    if @auto
-        buf << ": "
-        buf << "#{@name}, "
-        buf << "#{@start_date}"
-        buf << " - #{@end_date}"  if @start_date != @end_date
-        buf << ">"
-
-        printer.text( buf )
+        q.group( 4, '<Round', '>') do        ##  group( indent, open, close)
+           q.text( " AUTO" )    if @auto
+           q.text( " #{@name}" )
+           if @start_date
+             q.text( " : #{@start_date}" )
+             q.text( " - #{@end_date}" )   if @start_date != @end_date
+           end
+        end
       end
 end  # class Round
 

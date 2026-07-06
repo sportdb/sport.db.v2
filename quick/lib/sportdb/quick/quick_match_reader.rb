@@ -1,76 +1,72 @@
-#####
-## quick match reader for datafiles with league outlines
 
-module SportDb
-class QuickMatchReader
-
-  def self.debug=(value) @@debug = value; end
-  def self.debug?() @@debug ||= false; end  ## note: default is FALSE
-  def debug?()  self.class.debug?; end
+module Fbtxt
+class Document
+   include Debuggable
 
 
+def self.read( path )
+  ##  note - use read_text from cocos - why? why not?
+  txt = read_text( path )
+  parse( txt )
+end
 
-  def self.read( path )   ## use - rename to read_file or from_file etc. - why? why not?
-    txt = File.open( path, 'r:utf-8' ) {|f| f.read }
-    parse( txt )
-  end
-
-  def self.parse( txt )
-    new( txt ).parse
-  end
+def self.parse( txt )
+    new( txt )
+end
 
 
-  include Logging
 
-  def initialize( txt )
-    @errors = []
-    @txt    = txt
 
-    @league_name = ''
-    @matches     = []
-  end
+  attr_reader :title    ## e.g.  league name (England | Premier League 2026/27) or such
+  attr_reader :matches
+
+  attr_reader :teams
+  attr_reader :groups
+  attr_reader :rounds
 
   attr_reader :errors
   def errors?() @errors.size > 0; end
 
+  ##
+  ##  keep/store a reference to (source) txt - why? why not?
+  def initialize( txt, start: nil )
+    _parse( txt, start: start )
+  end
 
-  ###
-  #  helpers get matches & more after parse; all stored in data
-  #
-  ## change/rename to event - why? why not?
-  ##  note - may or may not include season
-  def league_name() @league_name; end
-  def matches() @matches; end
 
 
   ##  try to find season in heading
   ##  e.g. Österr. Bundesliga 2015/16  or 2015-16
   ##       World Cup 2018 or  2018 World Cup etc.
   SEASON_IN_HEADING_RE =  %r{
-                \b
-              (?<season>\d{4}
-                 (?:[\/-]\d{1,4})?     ## optional 2nd year in season
-                 )\b
-                   }x
+                  \b
+              (?<season>
+                  \d{4}
+                 (?: [\/-]
+                     \d{1,4} )?       ## optional 2nd year in season
+                )
+                  \b
+              }x
 
 
-  def parse
+  def _parse( txt, start: nil )
     ## note: every (new) read call - resets errors list to empty
-    @errors = []
+    @title   = nil     ## or use '? or use '' - why? why not?
+    @matches = []
 
-    @league_name = ''
-    @matches     = []
+    @teams   = []
+    @groups  = []
+    @rounds  = []
+
+    @errors  = []
 
 
-    ## note - source file MUST always start with heading 1 for now
-    tree   = []
-    parser = RaccMatchParser.new( @txt, debug: debug? )   ## use own parser instance (not shared) - why? why not?
+    parser = SportDb::Parser.new( txt )   ## use own parser instance (not shared) - why? why not?
+    tree, errors = parser.parse_with_errors
 
+    @errors = errors
 
-    ### fix-fix-fix  - use parse_with_errors!!!
-
-    tree = parser.parse
-
+## note - source file MUST always start with heading 1 for now
 
 ##
 ## !! (QUICK) PARSE ERROR - source MUST start with Heading1; got 34 nodes:
@@ -84,57 +80,58 @@ class QuickMatchReader
       end
 
 
+    ## try to get league and season
     if tree[0].is_a? RaccMatchParser::Heading1
-         ## try to get league and season
-         @league_name = tree[0].text
+         @title = tree[0].text
+
+         if (m = SEASON_IN_HEADING_RE.match( @title ))
+           season = Season.parse( m[:season] )   ## convert (str) to season obj!!!
+           start = if season.year?
+                     Date.new( season.start_year, 1, 1 )
+                   else
+                     Date.new( season.start_year, 7, 1 )
+                   end
+         else
+           puts "!! (DOCUMENT) WARN - no season found in Heading1 >#{@title}<"
+         end
     else
         ### report error - source MUST start with heading 1
-       puts "!! (QUICK) PARSE ERROR - source MUST start with Heading1; got #{tree.size} nodes:"
+       puts "!! (DOCUMENT) WARN - source SHOULD start with Heading1; got #{tree.size} nodes:"
        pp tree
-       exit
     end
 
-      ## todo/fix
-      ##  make season optional
-      m = SEASON_IN_HEADING_RE.match( @league_name )
-      if m.nil?
-        puts "!! (QUICK) PARSE ERROR - no season found in Heading1 >#{@league_name}; sorry"
-        exit
-      end
-      season = Season.parse( m[:season] )   ## convert (str) to season obj!!!
-      start =  if season.year?
-                  Date.new( season.start_year, 1, 1 )
-                else
-                  Date.new( season.start_year, 7, 1 )
-                end
 
 
     ############
     ### "walk" tree to get structs (matches/teams/etc.)
-    conv = MatchTree.new( tree, start: start )
+    conv = SportDb::MatchTree.new( tree, start: start )
 
-    auto_conf_teams, matches, rounds, groups = conv.convert
+    teams, matches, rounds, groups = conv.convert
 
 
       ## auto-add "upstream" errors from parser
       ## @errors += parser.errors  if parser.errors?
 
       if debug?
-        puts ">>> #{auto_conf_teams.size} teams:"
-        pp auto_conf_teams
-        puts ">>> #{matches.size} matches:"
-        ## pp matches
-        puts ">>> #{rounds.size} rounds:"
-        pp rounds
+        puts ">>> #{teams.size} teams:"
+        pp teams
         puts ">>> #{groups.size} groups:"
         pp groups
+        puts ">>> #{rounds.size} rounds:"
+        pp rounds
+        puts ">>> #{matches.size} matches:"
+        ## pp matches
       end
 
 
       @matches = matches
-      ## note - skip teams, rounds, and groups for now
-      @matches
-end # method parse
 
-end # class QuickMatchReader
-end # module SportDb
+      @teams    = teams
+      @groups   = groups
+      @rounds   = rounds
+
+      self
+end # method _parse
+
+end # class Document
+end # module Fbtxt

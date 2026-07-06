@@ -4,7 +4,7 @@ class MatchTree
 
 
   def on_match_line( node )
-    logger.debug( "on match: >#{node}<" )
+    _trace( "on match: >#{node}<" )
 
     ## collect (possible) nodes by type
     num    = nil

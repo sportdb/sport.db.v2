@@ -11,28 +11,23 @@ How-to Update the paser and quick match reader gems
 depends on:  cocos   (code commons & quick starter prelude)
 
 
-
 parser usage (cheat sheet):
 
 
 ``` ruby
-parser = SportDb::Parser.new
-tokens, errors = parser.tokenize_with_errors( txt, debug: true|false )
-tree, errors   = parser.parse_with_errors( txt, debug: true|false)
-
-# -or- "raw" parse usage:
-#    note - parser incl. errors from lexer (tokenize)
-
-parser = RaccMatchParser.new( txt, debug: true|false )
-tree, errors = parser.parse_with_errors
-
-parser.errors? & parser.errors
-
+parser = SportDb::Parser.new( txt )
+tree, errors   = parser.parse_with_errors
 
 # -or- "raw" lexer usage:
 
-lexer = SportDb::Lexer.new( txt, debug: true|false )
+lexer = SportDb::Lexer.new( txt )
 tokens, errors = lexer.tokenize_with_errors
+
+
+# -or-  Fbtxt public (porcelain) api
+
+result = Fbtxt.parse( txt )    # result is ParserResult w/ tree, errors, ok?/nok?, etc.
+result =  Fbtxt.lex( txt )     # result is LexerResult w/ tokens, errors, ok?/nok?, etc
 ```
 
 
@@ -42,25 +37,24 @@ tokens, errors = lexer.tokenize_with_errors
 
 **sportdb-quick**   (last updated in may 2026!)
 
-depends on: sportdb-parser, season-formats, logutils
-
+depends on: sportdb-parser, season-formats
 
 usage:
 
 ``` ruby
-matches = SportDb::QuickMatchReader.read( path )
-matches = SportDb::QuickMatchReader.parse( txt )
+doc =  Fbtxt::Document.read( path )
+doc  = Fbtxt::Document.parse( txt )
 
-# returns array of struct Match   (SportDb::MatchTree:Match)
+# returns Fbtxt::Document
+##   incl. matches - array with struct Match   (SportDb::MatchTree:Match) and more
 
 # -or-
 
-quick = SportDb::QuickMatchReader.new( txt )
-matches = quick.parse
+doc = FbTxt::Document.new( txt )
 
-quick.matches
-quick.league_name
-quick.errors? & quick.errors
+doc.matches
+doc.title   # aka league name
+doc.errors? & doc.errors
 ```
 
 

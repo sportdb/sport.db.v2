@@ -3,10 +3,15 @@ class MatchTree
 
 
   def on_goal_line( node )
-    logger.debug "on goal line: >#{node}<"
+    _trace( "on goal line: >#{node}<" )
 
-    goals1 = node.goals1
-    goals2 = node.goals2
+
+     if node.goals[0].is_a?( Array )
+       goals1, goals2 = node.goals[0], node.goals[1]
+     else
+       goals1 = node.goals
+       goals2 = []
+     end
 
 
     pp [goals1,goals2]     if debug?
@@ -37,6 +42,9 @@ class MatchTree
    end
 
 
+
+   ##
+   ## todo/fix - sort goals by minute (+offset) !!!
 
     goals = []
 

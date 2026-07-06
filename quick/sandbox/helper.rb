@@ -9,5 +9,3 @@ require 'sportdb/quick'
 
 ## turn on debugging output
 SportDb::MatchTree.debug = true
-SportDb::MatchParser.debug = true
-SportDb::QuickMatchReader.debug = true

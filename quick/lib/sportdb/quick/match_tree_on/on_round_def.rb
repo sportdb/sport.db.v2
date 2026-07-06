@@ -3,7 +3,7 @@ class MatchTree
 
 
   def on_round_def( node )
-    logger.debug "on round def: >#{node}<"
+    _trace( "on round def: >#{node}<" )
 
     ## e.g. [[:round_def, "Matchday 1"], [:duration, "Fri Jun 14 - Tue Jun 18"]]
     ##      [[:round_def, "Matchday 2"], [:duration, "Wed Jun 19 - Sat Jun 22"]]
@@ -68,9 +68,9 @@ class MatchTree
 
 
 
-    logger.debug "    start_date: #{start_date}"
-    logger.debug "    end_date:   #{end_date}"
-    logger.debug "    name:    >#{name}<"
+    _trace( "    start_date: #{start_date}" )
+    _trace( "    end_date:   #{end_date}" )
+    _trace( "    name:    >#{name}<" )
 
     round = Round.new( name:       name,
                        start_date: start_date,

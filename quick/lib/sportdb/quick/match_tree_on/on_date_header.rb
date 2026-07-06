@@ -5,7 +5,7 @@ class MatchTree
 
 
   def on_date_header( node )
-    logger.debug( "date header: >#{node}<")
+    _trace( "date header: >#{node}<")
 
     date = _build_date( m: node.date[:m],
                         d: node.date[:d],
@@ -15,7 +15,7 @@ class MatchTree
                         start: @start,
                         last_year: true )
 
-    logger.debug( "    date: #{date} with start: #{@start}")
+    _trace( "    date: #{date} with start: #{@start}")
 
       @last_date = date   # keep a reference for later use
       @last_time = nil
@@ -31,7 +31,7 @@ class MatchTree
 =begin
       if @start.month != 1
          if date.year == @start.year+1
-           logger.debug( "!! hack - extending start date to full (next/end) year; assumes all dates are chronologigal - always moving forward" )
+           _trace( "!! hack - extending start date to full (next/end) year; assumes all dates are chronologigal - always moving forward" )
            @start_org = @start   ## keep a copy of the original (old) start date - why? why not? - not used for now
            @start = Date.new( @start.year+1, 1, 1 )
          end

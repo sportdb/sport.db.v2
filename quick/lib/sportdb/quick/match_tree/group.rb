@@ -10,13 +10,11 @@ class Group
         @teams  = teams
       end
 
-      def pretty_print( printer )
-        buf = String.new
-        buf << "<Group #{@name} "
-        buf << @teams.pretty_print_inspect
-        buf << ">"
-
-        printer.text( buf )
+      def pretty_print( q )
+        q.group( 4, '<Group', '>') do        ##  group( indent, open, close)
+          q.text( " #{@name} " )
+          q.pp( @teams )
+        end
       end
 end  # class Group
 

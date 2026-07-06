@@ -21,12 +21,16 @@ OPENFOOTBALL_PATH = '../../../openfootball'
 path =  "#{OPENFOOTBALL_PATH}/austria/rsssf/oost01.txt"
 
 
-matches = SportDb::QuickMatchReader.read( path )
-## pp matches
+doc = Fbtxt::Document.read( path )
 
 puts
 puts "  try json for matches:"
-data = matches.map {|match| match.as_json }
+data = doc.matches.map {|match| match.as_json }
 pp data
+
+puts
+puts "---"
+pp doc
+
 
 puts "bye"

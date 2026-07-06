@@ -129,18 +129,6 @@ def self.parse( txt )   ## returns SportDb::ParserResult (ok?/tree/errors)
   tree, errors = parser.parse_with_errors
   SportDb::ParserResult.new( tree, errors )
 end
-
-
-
-class Document
-   def self.parse( txt )      ## or use/add Fbtxt.parse_doc/load - why? why not??
-     puts "to be done; SOON!"
-   end
-
-   def self.read( path )       ## or use/add Fbtxt.read_doc/load_file - why? why not??
-     puts "to be done; SOON!"
-   end
-end  # class Document
 end #  module Fbtxt
 
 

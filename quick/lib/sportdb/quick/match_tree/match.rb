@@ -149,6 +149,8 @@ def as_json
 
 
   data['num'] = @num    if @num
+
+
   if @date
     ## assume 2020-09-19 date format!!
     data['date']  = @date.is_a?( String ) ? @date : @date.strftime('%Y-%m-%d')

@@ -3,7 +3,7 @@ class MatchTree
 
 
   def on_group_def( node )
-    logger.debug "on group def: >#{node}<"
+    _trace( "on group def: >#{node}<" )
 
    ## e.g
    ##  [:group_def, "Group A"],

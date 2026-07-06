@@ -23,7 +23,7 @@ Hoe.spec 'sportdb-quick' do
   self.extra_deps = [
        ['sportdb-parser',  '>= 0.7.0'],
        ['season-formats',  '>= 0.1.0'],
-       ['logutils',        '>= 0.6.1'],
+   ##    ['logutils',        '>= 0.6.1'],
   ]
 
   self.spec_extras = {

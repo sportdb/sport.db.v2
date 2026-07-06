@@ -4,12 +4,6 @@ require 'season-formats'
 
 
 
-require 'logutils'
-module SportDb
-  ## logging machinery shortcut; use LogUtils for now
-  Logging = LogUtils::Logging
-end
-
 
 
 ## our own code
@@ -32,7 +26,6 @@ require_relative 'quick/match_tree_on/on_match_line'
 require_relative 'quick/match_tree_on/on_goal_line'
 
 
-require_relative 'quick/match_parser'
 require_relative 'quick/quick_match_reader'
 
 
