@@ -1,0 +1,31 @@
+Match-ID:  WC2022-M64
+Date:      2022-12-18
+Comp:      FIFA World Cup 2022 (Final)
+Venue:     Lusail Stadium, Lusail (QAT)
+Att:       88,966
+Ref:       Szymon Marciniak (POL)
+
+Result:    Argentina 3-3 France [AET; 2-2 FT, 2-0 HT]
+Penalties: Argentina won 4-2 on penalties
+
+Goals-ARG: 23' Lionel Messi (pen), 36' Ángel Di María, 108' Lionel Messi
+Goals-FRA: 80' Kylian Mbappé (pen), 81' Kylian Mbappé, 118' Kylian Mbappé (pen)
+
+Shootout: [0-1] Mbappé,              [1-1] Messi,
+          [1-1] Coman (saved),       [2-1] Dybala,
+          [2-1] Tchouaméni (missed), [3-1] Paredes,
+          [3-2] Kolo Muani,          [4-2] Montiel
+
+Lineup-ARG: E. Martínez; Molina (91' Montiel), Romero, Otamendi, Tagliafico (121' Dybala);
+      De Paul (102' Paredes), E. Fernández, Mac Allister (116' Pezzella);
+      Messi, J. Álvarez (102' La. Martínez), Di María (64' Acuña).
+
+Lineup-FRA: Lloris; Koundé (121' Disasi), Varane (113' Konaté),
+      Upamecano, T. Hernández (71' Camavinga);
+      Tchouaméni, Rabiot (96' Fofana); Dembélé (41' Kolo Muani),
+      Griezmann (71' Coman), Mbappé; Giroud (41' Thuram).
+
+Cards-ARG: 45+7' E. Fernández (Y), 90+8' Acuña (Y),
+           114' Paredes (Y), 116' Montiel (Y), 120' E. Martínez (Y)
+
+Cards-FRA: 55' Rabiot (Y), 87' Thuram (Y), 90+5' Giroud (Y)
