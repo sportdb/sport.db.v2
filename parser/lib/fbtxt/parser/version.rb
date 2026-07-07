@@ -3,7 +3,7 @@ module Fbtxt
   module Module
     module Parser
   MAJOR = 0    ## todo: namespace inside version or something - why? why not??
-  MINOR = 8
+  MINOR = 9
   PATCH = 0
   VERSION = [MAJOR,MINOR,PATCH].join('.')
 
