@@ -1,7 +1,7 @@
 
 
 
-class SportDb::Parser
+class Fbtxt::Parser
 
 rule
 

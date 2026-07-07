@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 ##  (match) status inline versions
@@ -109,4 +109,4 @@ INLINE_CANC_RE =  %r{
 
 
 end  # class Lexer
-end  # module SportDb
+end  # module Fbtxt

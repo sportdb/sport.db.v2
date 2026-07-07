@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -80,4 +80,4 @@ PROP_NAME_RE = %r{
 
 
 end  # class Lexer
-end  # module SportDb
+end  # module Fbtxt

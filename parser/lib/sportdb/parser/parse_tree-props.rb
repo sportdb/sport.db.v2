@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
   class Parser
 
 
@@ -230,4 +230,4 @@ end  # Sub
 
 
   end   # class Parser
-end   # module SportDb
+end   # module Fbtxt

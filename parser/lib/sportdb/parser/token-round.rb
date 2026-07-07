@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 ####
@@ -85,4 +85,4 @@ ROUND_DEF_OUTLINE_RE = %r{   \A
 
 
 end  #   class Lexer
-end  # module SportDb
+end  # module Fbtxt

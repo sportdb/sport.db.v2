@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -303,4 +303,4 @@ GOAL_TYPE_RE = %r{
 
 
 end  # class Lexer
-end # module SportDb
+end # module Fbtxt

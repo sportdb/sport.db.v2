@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -141,4 +141,4 @@ def _build_time(m) self.class._build_time(m); end
 
 
 end  #   class Lexer
-end  # module SportDb
+end  # module Fbtxt

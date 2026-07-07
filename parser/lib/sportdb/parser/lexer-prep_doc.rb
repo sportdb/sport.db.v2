@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -128,4 +128,4 @@ def _prep_doc( txt )
 end
 
 end  # class Lexer
-end  # module SportDb
+end  # module Fbtxt

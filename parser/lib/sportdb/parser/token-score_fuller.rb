@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 ###
@@ -27,24 +27,24 @@ def self._mk_score_fuller_agg( win: )    ## with optional win - true|false
                     ############
                     ## opt 1)  with win
                     (?:
-                       #{ win ? '(?: win [ ] )?' : '' }   
+                       #{ win ? '(?: win [ ] )?' : '' }
                         (?<agg1>\\d{1,2}) - (?<agg2>\\d{1,2})
-                          [ ] on [ ] agg (?: regate )?  
+                          [ ] on [ ] agg (?: regate )?
                     )
-                    |        
+                    |
                     #####
                     ## opt 2)  "classic" (post)
                     (?:
                        (?<agg1>\\d{1,2}) - (?<agg2>\\d{1,2})
                           [ ]*
-                        #{AGG_EN}   
+                        #{AGG_EN}
                     )
                     |
                     #####
                     ## opt 3) agg up-front (pre)
                     (?:
                          agg [ ]
-                       (?<agg1>\\d{1,2}) - (?<agg2>\\d{1,2})   
+                       (?<agg1>\\d{1,2}) - (?<agg2>\\d{1,2})
                     )
                  )
     >
@@ -60,30 +60,30 @@ def self._mk_score_fuller_p( win: )    ## with optional win - true|false
                         (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})
                           [ ] on [ ] pens
                     )
-                    |        
+                    |
                     #####
                     ## opt 2)  "classic" (post)
                     (?:
                        (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})
                           [ ]*
-                        #{P_EN}   
+                        #{P_EN}
                     )
                     |
                     #####
                     ## opt 3) up-front (pre)
                     (?:
                          (?: pen|p) [ ]
-                       (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})   
+                       (?<p1>\\d{1,2}) - (?<p2>\\d{1,2})
                     )
-                 )                   
+                 )
     >
 end
 
 
-SCORE_FULLER_AGG     =  _mk_score_fuller_agg( win: false )  
+SCORE_FULLER_AGG     =  _mk_score_fuller_agg( win: false )
 SCORE_FULLER_AGG_WIN =  _mk_score_fuller_agg( win: true )
 
-SCORE_FULLER_P     =  _mk_score_fuller_p( win: false )  
+SCORE_FULLER_P     =  _mk_score_fuller_p( win: false )
 SCORE_FULLER_P_WIN =  _mk_score_fuller_p( win: true )
 
 SCORE_FULLER_AWAY_WIN  = %Q<
@@ -96,56 +96,56 @@ SCORE_FULLER_AWAY_WIN  = %Q<
                         (?: (?<away1>\\d{1,2}) - (?<away2>\\d{1,2}) [ ] )?
                          on [ ] away [ ] goals?     # goal or goals
                     )
-                    |        
+                    |
                     #####
                     ## opt 2)  "classic" (post)
                     (?:
                        (?: (?<away1>\\d{1,2}) - (?<away2>\\d{1,2}) [ ] )?
-                          [ ]* away  
+                          [ ]* away
                     )
                     |
                     #####
                     ## opt 3) up-front (pre)
                     (?:
-                          away 
+                          away
                        (?:  [ ]
                             (?<away1>\\d{1,2}) - (?<away2>\\d{1,2})
-                       )?   
+                       )?
                     )
-                 ))                   
+                 ))
             >
- 
+
 
 
 SCORE_FULLER_HT_OPT   =   %Q<
                               (?:   HT [ ]
-                                  (?: (?<ht1>\\d{1,2}) - (?<ht2>\\d{1,2})) 
+                                  (?: (?<ht1>\\d{1,2}) - (?<ht2>\\d{1,2}))
                                   [ ]*,[ ]*
                               )?  ## note - make optional
                             >
 
 SCORE_FULLER_FT_OPT =  %Q<
                               (?:   FT [ ]
-                                  (?: (?<ft1>\\d{1,2}) - (?<ft2>\\d{1,2})) 
+                                  (?: (?<ft1>\\d{1,2}) - (?<ft2>\\d{1,2}))
                                   [ ]*,[ ]*
                               )?  ## note - make optional
                             >
 
 
 #############
-#     4-4 (HT 2-1)                            
+#     4-4 (HT 2-1)
 #           or
-#    Team A  4-1  Team B  (HT 2-1) 
+#    Team A  4-1  Team B  (HT 2-1)
 
 SCORE_FULLER__HT = %Q<
              \\(  HT [ ]
-                  (?<ht1>\\d{1,2}) - (?<ht2>\\d{1,2}) 
+                  (?<ht1>\\d{1,2}) - (?<ht2>\\d{1,2})
              \\)
 >
 
 SCORE_FULLER__HT_FT__RE  =  %r{
         (?<score_fuller>
-           \b   
+           \b
             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
             [ ]+
              #{SCORE_FULLER__HT}
@@ -177,12 +177,12 @@ SCORE_FULLER_MORE__HT_FT__RE = %r{
 
 SCORE_FULLER__ET = %Q<
              \\(
-                #{SCORE_FULLER_HT_OPT} 
-                #{SCORE_FULLER_FT_OPT} 
+                #{SCORE_FULLER_HT_OPT}
+                #{SCORE_FULLER_FT_OPT}
                 (?:
                   (?<aetgg> #{AETGG_EN})
                    |
-                  (?<aetsg> #{AETSG_EN}) 
+                  (?<aetsg> #{AETSG_EN})
                    |
                   (?<aet> #{ET_EN})
                  )
@@ -191,7 +191,7 @@ SCORE_FULLER__ET = %Q<
 
 SCORE_FULLER__ET__RE  =  %r{
         (?<score_fuller>
-           \b   
+           \b
             (?<et1>\d{1,2}) - (?<et2>\d{1,2})
             [ ]+
              #{SCORE_FULLER__ET}
@@ -204,20 +204,20 @@ SCORE_FULLER_MORE__ET__RE = %r{
 
 
 #############
-#         4-4 (aet, win 3-5 on pens) 
+#         4-4 (aet, win 3-5 on pens)
 #         4-4 (aet, 3-5 on pens)
 #         4-4 (aet, 3-5 pen)
 #         4-4 (a.e.t., 3-5 pen.)
 #            or
-#         Team A  4-4  Team B  (aet, win 3-5 on pens) 
+#         Team A  4-4  Team B  (aet, win 3-5 on pens)
 #         Team A  4-4  Team B  (aet, 3-5 on pens)
 #         Team A  4-4  Team B  (aet, 3-5 pen)
 #         Team A  4-4  Team B  (a.e.t., 3-5 pen.)
 
 SCORE_FULLER__ET_P = %Q<
              \\(
-                #{SCORE_FULLER_HT_OPT} 
-                #{SCORE_FULLER_FT_OPT} 
+                #{SCORE_FULLER_HT_OPT}
+                #{SCORE_FULLER_FT_OPT}
                 (?<aet> #{ET_EN})
                  [ ]*,[ ]*
                  #{SCORE_FULLER_P_WIN}
@@ -226,7 +226,7 @@ SCORE_FULLER__ET_P = %Q<
 
 SCORE_FULLER__ET_P__RE  =  %r{
         (?<score_fuller>
-           \b   
+           \b
             (?<et1>\d{1,2}) - (?<et2>\d{1,2})
             [ ]+
              #{SCORE_FULLER__ET_P}
@@ -238,7 +238,7 @@ SCORE_FULLER_MORE__ET_P__RE = %r{
         )}ix
 
 
-##########################        
+##########################
 #         4-4 (win 3-5 on pens)
 #         4-4 (3-5 pen)
 #         4-4 (3-5p)
@@ -249,14 +249,14 @@ SCORE_FULLER_MORE__ET_P__RE = %r{
 
 SCORE_FULLER__FT_P  =  %Q<
              \\(
-                  #{SCORE_FULLER_HT_OPT} 
+                  #{SCORE_FULLER_HT_OPT}
                   #{SCORE_FULLER_P_WIN}
              \\)
 >
 
 SCORE_FULLER__FT_P__RE  =  %r{
         (?<score_fuller>
-           \b   
+           \b
             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
             [ ]+
              \(
@@ -276,19 +276,19 @@ SCORE_FULLER_MORE__FT_P__RE = %r{
 #   3-2 (4-5 on agg)
 #   3-2 (4-5 agg)
 #   3-2 (4-5 agg.)
-#     or  
+#     or
 #   3-2 (agg 4-5)
 
 SCORE_FULLER__FT_AGG  =  %Q<
              \\(
-                 #{SCORE_FULLER_HT_OPT} 
+                 #{SCORE_FULLER_HT_OPT}
                  #{SCORE_FULLER_AGG_WIN}
              \\)
 >
 
 SCORE_FULLER__FT_AGG__RE  =  %r{
         (?<score_fuller>
-           \b   
+           \b
             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
             [ ]+
              #{SCORE_FULLER__FT_AGG}
@@ -306,7 +306,7 @@ SCORE_FULLER_MORE__FT_AGG__RE = %r{
 
 SCORE_FULLER__FT_AGG_AWAY = %Q<
              \\(
-                #{SCORE_FULLER_HT_OPT} 
+                #{SCORE_FULLER_HT_OPT}
                 #{SCORE_FULLER_AGG}
                    [ ]*,[ ]*
                  #{SCORE_FULLER_AWAY_WIN}
@@ -315,7 +315,7 @@ SCORE_FULLER__FT_AGG_AWAY = %Q<
 
 SCORE_FULLER__FT_AGG_AWAY__RE  =  %r{
         (?<score_fuller>
-           \b   
+           \b
             (?<ft1>\d{1,2}) - (?<ft2>\d{1,2})
             [ ]+
              #{SCORE_FULLER__FT_AGG_AWAY}
@@ -333,19 +333,19 @@ SCORE_FULLER_MORE__FT_AGG_AWAY__RE = %r{
 
 SCORE_FULLER__ET_AGG_P  =  %Q<
              \\(
-                #{SCORE_FULLER_HT_OPT} 
-                #{SCORE_FULLER_FT_OPT} 
+                #{SCORE_FULLER_HT_OPT}
+                #{SCORE_FULLER_FT_OPT}
                 (?<aet> #{ET_EN})
                     [ ]*,[ ]*
-                    #{SCORE_FULLER_AGG}  
+                    #{SCORE_FULLER_AGG}
                     [ ]*,[ ]*
-                    #{SCORE_FULLER_P_WIN}                     
+                    #{SCORE_FULLER_P_WIN}
              \\)
 >
 
 SCORE_FULLER__ET_AGG_P__RE  =  %r{
         (?<score_fuller>
-           \b   
+           \b
             (?<et1>\d{1,2}) - (?<et2>\d{1,2})
             [ ]+
              #{SCORE_FULLER__ET_AGG_P}
@@ -382,7 +382,7 @@ SCORE_FULLER_MORE__HT__RE = %r{
 
 SCORE_FULLER_MORE__FT__RE = %r{
         (?<score_fuller_more>
-             \( (?<ft> ft ) \)  
+             \( (?<ft> ft ) \)
         )}ix
 
 
@@ -395,7 +395,7 @@ SCORE_FULLER_MORE__FT_ET__RE = %r{
               \(#{ET_EN}
                    [ ]
                (?<et1>\d{1,2}) - (?<et2>\d{1,2})
-              \) 
+              \)
         )}ix
 
 
@@ -407,8 +407,8 @@ SCORE_FULLER_MORE__FT_ET__RE = %r{
 
 SCORE_FULLER_MORE__HT_FT__CLASSIC_RE = %r{
         (?<score_fuller_more>
-             \(  
-                  (?<ht1>\d{1,2}) - (?<ht2>\d{1,2}) 
+             \(
+                  (?<ht1>\d{1,2}) - (?<ht2>\d{1,2})
              \)
         )}ix
 
@@ -431,5 +431,4 @@ SCORE_FULLER_MORE_RE = Regexp.union(
 
 
 end  #  class Lexer
-end  # module SportDb
-
+end  # module Fbtxt

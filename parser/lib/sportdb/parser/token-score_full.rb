@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -328,4 +328,4 @@ SCORE_FULL_RE = Regexp.union(
 )
 
 end  #  class Lexer
-end  # module SportDb
+end  # module Fbtxt

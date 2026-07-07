@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -123,4 +123,4 @@ end # class Token
 
 
 end  # class Lexer
-end  # module SportDb
+end  # module Fbtxt

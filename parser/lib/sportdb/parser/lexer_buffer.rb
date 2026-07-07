@@ -1,7 +1,7 @@
 
-module SportDb
+module Fbtxt
 
-## note - Tokens was placed inside Lexer - keep "top-level" for now inside SportDb
+## note - Tokens was placed inside Lexer - keep "top-level" for now inside Fbtxt
 ##            for easier reuse with (new) lexer variants!!
 
 ## transforms
@@ -65,4 +65,4 @@ class Tokens
       t
   end
 end  # class Tokens
-end # module SportDb
+end # module Fbtxt

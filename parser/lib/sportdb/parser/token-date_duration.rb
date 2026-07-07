@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -168,4 +168,4 @@ DURATION_RE = Regexp.union(
 
 
 end  #   class Lexer
-end  # module SportDb
+end  # module Fbtxt

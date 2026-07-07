@@ -18,15 +18,15 @@ def self.prepare( txt )
                             ## note - trailing whitespace may incl. \n or \r\n!!!
 
         next if line.start_with?('#')   ###  skip comments
-       
+
         line = line.sub( /#.*/, '' ).strip   ###  cut-off end-of line comments too
-  
+
         next if line.empty?   ### skip blank lines
 
         names << line
    end
    names
-end   
+end
 
 
 VALID_TEAMS = prepare(<<TXT)
@@ -37,7 +37,7 @@ VALID_TEAMS = prepare(<<TXT)
 345FC               # Cayman Islands
 1987 All Stars      # St Lucia
 758 Boyz            # Sint Maarten
-07 Vestur           # Faroe Islands 
+07 Vestur           # Faroe Islands
 3FB Toliara         # Madagascar
 1899 Hoffenheim     # Germany
 1860 München
@@ -73,14 +73,14 @@ Manchester 62       # Gibraltar
 College 1975        # Gibraltar
 Differdange 03      # Luxembourg
 Witz 72             # Luxembourg
-Schifflange 95      # Luxembourg  
+Schifflange 95      # Luxembourg
 UN Kaerjeng 97      # Luxembourg
 U.N. Kaerjeng '97   # Luxembourg
 U Craiova 1948      # Romania
 Dnipro-1            # Ukraine
 Mainz 05            # Germany
 Bayer 04
-Schalke 04         
+Schalke 04
 Darmstadt 98
 Hannover 96
 Altona 93
@@ -133,7 +133,7 @@ HK     # Iceland
 Vital'O          # Burundi
 Etoile d'Or      # Comoros
 Nathaly's        # Congo
-Zanak'Ala           # Madagascar 
+Zanak'Ala           # Madagascar
 Nouakchott King's   # Mauritania
 Al Zawra'a          # Iraq
 Ma'an               # Jordan
@@ -143,7 +143,7 @@ Nott'm Forest         # England
 O'Higgins            # Chile
 
 B. M'gladbach           # Germany
-M'gladbach                  
+M'gladbach
 U'haching
 
 
@@ -172,10 +172,10 @@ Naval 1° de Maio
 1° de Maio
 
 ##  note - (Beer) assumed as (trailing) country code :-)
-##    to fix change to "plain" - Qingdao Pijiu Beer 
+##    to fix change to "plain" - Qingdao Pijiu Beer
 ##     () in team names is for now reserved (for special cases)
-Qingdao Pijiu (Beer)     # China   
-Qingdao Pijiu Beer     
+Qingdao Pijiu (Beer)     # China
+Qingdao Pijiu Beer
 
 General Caballero (JLM)    # Paraguay   -  (JLM) = Juan León Mallorquín
 General Caballero JLM    # Paraguay   -  (JLM) = Juan León Mallorquín
@@ -253,7 +253,7 @@ ITA - FRA
 
 
 ############
-##  note -   (inline)  _v_  NOT allowed   (reserved as match separator!!) 
+##  note -   (inline)  _v_  NOT allowed   (reserved as match separator!!)
 Achilles'29 II v UDI'19/Beter Bed
 Rapid v Austria
 
@@ -261,12 +261,12 @@ Rapid vs Austria     ## note - for now vs is reserved too - keep (why? why not? 
 
 
 #####
-##  note -   no space allowed in "country code" e.g.  (Army Team) 
+##  note -   no space allowed in "country code" e.g.  (Army Team)
 August 1st (Army Team)
 
 
 #######
-###  reserved special number pairs  - note 3.12 or 5.-8. or such   
+###  reserved special number pairs  - note 3.12 or 5.-8. or such
 Rapid 1-1
 Rapid 2:10
 Rapid 2.10
@@ -317,33 +317,32 @@ a''''''''''
 TXT
 
 
-## pp SportDb::Lexer::IS_TEAM_RE
+## pp Fbtxt::Lexer::IS_TEAM_RE
 
 
 
 def test_teams
    VALID_TEAMS.each do |team|
-      m =  SportDb::Lexer._parse_team( team )
+      m =  Fbtxt::Lexer._parse_team( team )
       if m
          puts "OK >#{team}<"
          assert true
       else
-         puts "!! >#{team}<"         
+         puts "!! >#{team}<"
          assert false, "is_team (regex) match failed for >#{team}<"
       end
   end
 
    INVALID_TEAMS.each do |team|
-      m =  SportDb::Lexer._parse_team( team )
+      m =  Fbtxt::Lexer._parse_team( team )
       if m
          puts "!! >#{team}<"
          assert false, "is_team (regex) match for invalid team >#{team}<"
       else
-         puts "NOK >#{team}<"         
+         puts "NOK >#{team}<"
          assert true
       end
   end
 end
 
 end  # class TestTeam
-

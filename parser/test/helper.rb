@@ -48,14 +48,14 @@ class Minitest::Test
 
 
   def parse_matches( txt )
-    parser = RaccMatchParser.new( txt, debug: true )
-    tree = parser.parse
+    parser = Fbtxt::Parser.new( txt )
+    tree, errors = parser.parse_with_errors
     pp tree
 
 
-    if parser.errors?
-      puts "-- #{parser.errors.size} parse error(s):"
-      pp parser.errors
+    if errors.size > 0
+      puts "-- #{errors.size} parse error(s):"
+      pp errors
     else
       puts "--  OK - no parse errors found"
     end

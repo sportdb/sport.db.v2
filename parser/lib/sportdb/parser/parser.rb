@@ -5,7 +5,7 @@
 #
 
 ## require 'racc/parser.rb'
-module SportDb
+module Fbtxt
   class Parser < Racc::Parser
 ##### State transition tables begin ###
 
@@ -2340,4 +2340,4 @@ def _reduce_none(val, _values, result)
 end
 
   end   # class Parser
-end   # module SportDb
+end   # module Fbtxt

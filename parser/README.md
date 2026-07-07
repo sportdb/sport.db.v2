@@ -1,3 +1,1 @@
-#  sportdb-parser - football.txt match parser (& tokenizer)
-
-
+#  fbtxt-parser - football.txt match parser (& tokenizer)

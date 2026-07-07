@@ -1,6 +1,6 @@
 
 
-module SportDb
+module Fbtxt
 
 class ParserResult
    attr_reader :tree, :errors
@@ -99,4 +99,4 @@ class Parser
 
 
 end   # class Parser
-end  # module SportDb
+end  # module Fbtxt

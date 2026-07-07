@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -197,4 +197,4 @@ DATE_LEGS_RE  =    DATE_LEGS_I_RE
 
 
 end  #   class Lexer
-end  # module SportDb
+end  # module Fbtxt

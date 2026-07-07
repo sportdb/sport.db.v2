@@ -1,6 +1,6 @@
 
 
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -221,4 +221,4 @@ HEADING_RE = %r{   \A
 
 
 end  # class Lexer
-end # module SportDb
+end # module Fbtxt

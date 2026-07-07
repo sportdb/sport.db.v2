@@ -13,7 +13,7 @@ require_relative 'parser/debuggable'    ## generic debug/logger helper
 ##
 ## add shared/most basic regexes here
 ## todo - use ANY_RE  to token_commons or such - for shared by many?
-module SportDb
+module Fbtxt
 class Lexer
 
 ## general catch-all  (RECOMMENDED (ALWAYS) use as last entry in union)
@@ -29,7 +29,7 @@ SPACES_RE = %r{
 
 
 end # class Lexer
-end # module SportDb
+end # module Fbtxt
 
 
 require_relative 'parser/token-score'
@@ -94,7 +94,8 @@ require_relative 'parser/parse_tree-props'
 
 ## deprecated - remove old RaccMatchParser name sooner than later!!
 ##    use Fbtxt.parse for "public" api
-RaccMatchParser = SportDb::Parser
+##
+RaccMatchParser = Fbtxt::Parser
 
 
 
@@ -116,18 +117,18 @@ RaccMatchParser = SportDb::Parser
 
 module Fbtxt
 
-def self.lex( txt, flatten: true )      ## returns SportDb::LexerResult (ok?/tokens/errors)
-  lexer = SportDb::Lexer.new( txt )
+def self.lex( txt, flatten: true )      ## returns Fbtxt::LexerResult (ok?/tokens/errors)
+  lexer = Lexer.new( txt )
   ## move "wrapping" into result obj inside lexer - why? why not?
   tokens, errors = lexer.tokenize_with_errors( flatten: flatten )
-  SportDb::LexerResult.new( tokens, errors )
+  LexerResult.new( tokens, errors )
 end
 
-def self.parse( txt )   ## returns SportDb::ParserResult (ok?/tree/errors)
-  parser = SportDb::Parser.new( txt )
+def self.parse( txt )   ## returns Fbtxt::ParserResult (ok?/tree/errors)
+  parser = Parser.new( txt )
   ## move "wrapping" into result obj inside parser - why? why not?
   tree, errors = parser.parse_with_errors
-  SportDb::ParserResult.new( tree, errors )
+  ParserResult.new( tree, errors )
 end
 end #  module Fbtxt
 
@@ -136,4 +137,4 @@ end #  module Fbtxt
 
 
 
-puts SportDb::Module::Parser.banner    # say hello
+puts Fbtxt::Module::Parser.banner    # say hello

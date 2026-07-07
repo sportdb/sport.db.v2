@@ -3,7 +3,7 @@
 #   Parser support machinery (incl. node classes/abstract syntax tree)
 
 
-module SportDb
+module Fbtxt
   class Parser
 
 
@@ -199,4 +199,4 @@ end  # Heading3
 
 
   end   # class Parser
-end   # module SportDb
+end   # module Fbtxt

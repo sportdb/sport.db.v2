@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
   class Parser
 
 
@@ -306,4 +306,4 @@ end  # Minute
 
 
   end   # class Parser
-end   # module SportDb
+end   # module Fbtxt

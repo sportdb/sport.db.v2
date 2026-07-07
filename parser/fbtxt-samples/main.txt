@@ -46,10 +46,10 @@
 #######
 ### check geo "inline"
 
-Jul 16 @ Stuttgart    Slovenia           1-1 Denmark     
+Jul 16 @ Stuttgart    Slovenia           1-1 Denmark
                          (Janza 77; Eriksen 17)
 
-Jul 16 @ Arena Auf Schalke, Gelsenkirchen  Serbia             0-1 England    
+Jul 16 @ Arena Auf Schalke, Gelsenkirchen  Serbia             0-1 England
                                              (Bellingham 13)
 
 
@@ -60,29 +60,28 @@ Jul 16 @ Arena Auf Schalke, Gelsenkirchen  Serbia             0-1 England
                  score: [1, 1],
                  geo: ["Stuttgart"] ),
 
-  GoalLine.new( goals1:[Goal.new( player: "Janza", minutes: [GoalMinute.new(m:77)])], 
-                goals2:[Goal.new( player: "Eriksen", minutes: [GoalMinute.new(m:17)])] ),
+  GoalLine.new( goals:[[Goal.new( player: "Janza", minutes: [GoalMinute.new(m:77)])],
+                       [Goal.new( player: "Eriksen", minutes: [GoalMinute.new(m:17)])]] ),
 
   MatchLine.new( team1: "Serbia", team2: "England",
                  date: { m: 7, d: 16},
                  score: [0, 1],
                  geo: ["Arena Auf Schalke", "Gelsenkirchen"] ),
 
-  GoalLine.new( goals1:[Goal.new( player: "Bellingham", minutes: [GoalMinute.new(m:13)])], 
-                goals2:[] )
+  GoalLine.new( goals:[Goal.new( player: "Bellingham", minutes: [GoalMinute.new(m:13)])] )
 
 
   §
 
 
-Oct 7 
-Austria  1-2  Rapid 
+Oct 7
+Austria  1-2  Rapid
 
 
-Oct 7   Austria  1-2  Rapid 
+Oct 7   Austria  1-2  Rapid
 
 Oct 11
-Sturm   0-0  LASK  
+Sturm   0-0  LASK
 Mauerbach v Spittelau
 
 Oct 22
@@ -102,27 +101,27 @@ Group A  |    Germany   Scotland     Hungary   Switzerland
 Group B  |  Spain     Croatia      Italy     Albania
 Group C  |  Slovenia  Denmark      Serbia    England
 Group D  |  Poland    Netherlands  Austria   France
-Group E  |  Belgium   Slovakia     Romania   Ukraine 
+Group E  |  Belgium   Slovakia     Romania   Ukraine
 Group F  |  Turkey    Georgia      Portugal  Czech Republic
 
 
-▪ Matchday 1  |  Fri Jun 14 - Tue Jun 18   
-▪ Matchday 2  |  Wed Jun 19 - Sat Jun 22   
+▪ Matchday 1  |  Fri Jun 14 - Tue Jun 18
+▪ Matchday 2  |  Wed Jun 19 - Sat Jun 22
 ▪ Matchday 3  |  Sun Jun 23 - Wed Jun 26
 
-▪ Matchday 1  :  Fri Jun 14 - Tue Jun 18   
-▪ Matchday 2  :  Wed Jun 19 - Sat Jun 22   
+▪ Matchday 1  :  Fri Jun 14 - Tue Jun 18
+▪ Matchday 2  :  Wed Jun 19 - Sat Jun 22
 ▪ Matchday 3  :  Sun Jun 23 - Wed Jun 26
 
 
 ▪ Group A
 Fri Jun 14
    21:00   Germany   5-1 (3-0)  Scotland     @ München
-                (Wirtz 10' Musiala 19' Havertz 45'+1 (pen.)  Füllkrug 68' Can 90'+3;  
+                (Wirtz 10' Musiala 19' Havertz 45'+1 (pen.)  Füllkrug 68' Can 90'+3;
                  Rüdiger 87' (o.g.))
 Sat Jun 15
    15:00    Hungary   1-3 (0-2)   Switzerland  @ Köln
-                 (Varga 66'; 
+                 (Varga 66';
                   Duah 12' Aebischer 45' Embolo 90'+3)
 
 
@@ -135,7 +134,7 @@ Tu July 9 2024
 
 ▪ Final
 Sunday Jul 14 2024
-  21:00   Spain  -  England         @ Berlin   
+  21:00   Spain  -  England         @ Berlin
 
 
 
@@ -190,7 +189,7 @@ Wed Mar 14
   20:45  Barcelona            3-0  Chelsea              @ Camp Nou, Barcelona
            (Messi 3', 63' Dembélé 20')
   18:00  Beşiktaş             1-3  Bayern München       @ Vodafone Park, Istanbul
-           (Vágner Love 59'; 
+           (Vágner Love 59';
             Thiago 18' Gönül 46' (o.g.) Wagner 84')
 
 
@@ -219,7 +218,7 @@ Tue Apr 10
 
 Wed Apr 11
   20:45  Real Madrid          1-3  Juventus             @ Santiago Bernabéu, Madrid
-          (Ronaldo 90+8' (pen.); 
+          (Ronaldo 90+8' (pen.);
              Mandžukić 2', 37' Matuidi 61')
   20:45  Bayern München       0-0  Sevilla              @ Allianz Arena, München
 
@@ -230,7 +229,7 @@ Wed Apr 11
 
 Tue Apr 24
   20:45  Liverpool            5-2  Roma                 @ Anfield, Liverpool
-           (Salah 36', 45+1' Mané 56' Firmino 61', 69'; 
+           (Salah 36', 45+1' Mané 56' Firmino 61', 69';
              Džeko 81' Perotti 85' (pen.))
 
 Wed Apr 25
@@ -259,10 +258,10 @@ Sat May 26
 
 Sat Jun 23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Moscow (UTC+3)
   (Batshuayi 90')
-  (R. Lukaku 16' Batshuayi 90')          
-  (R. Lukaku 45+3' Batshuayi 90')          
-  (R. Lukaku 16', 45+3' Batshuayi 90')          
-  (R. Lukaku 16' 45+3' Batshuayi 90')          
+  (R. Lukaku 16' Batshuayi 90')
+  (R. Lukaku 45+3' Batshuayi 90')
+  (R. Lukaku 16', 45+3' Batshuayi 90')
+  (R. Lukaku 16' 45+3' Batshuayi 90')
   (E. Hazard 6' (pen.), 51' R. Lukaku 16', 45'+3 Batshuayi 90'; Bronn 18' Khazri 90'+3)
   (E. Hazard 6' (pen.) 51' R. Lukaku 16' 45'+3 Batshuayi 90'; Bronn 18' Khazri 90'+3)
 
@@ -271,31 +270,31 @@ Sat Jun 23 15:00          Belgium   5-2 (3-1)   Tunisia    @ Spartak Stadium, Mo
   (E. Hazard 6p 51, R. Lukaku 16 45+3, Batshuayi 90; Bronn 18, Khazri 90+3)
   (E. Hazard 6p, 51, R. Lukaku 16, 45+3, Batshuayi 90; Bronn 18, Khazri 90+3)
 
-  ##   note - allow optional commas between players 
-  (R. Lukaku 16', Batshuayi 90')          
+  ##   note - allow optional commas between players
+  (R. Lukaku 16', Batshuayi 90')
   (R. Lukaku 16', 45'+3, Batshuayi 90')
-  
+
   ## allow break on comma between players - why? why not?
-  (E. Hazard 6' (pen.), 51', R. Lukaku 16', 45'+3, 
+  (E. Hazard 6' (pen.), 51', R. Lukaku 16', 45'+3,
     Batshuayi 90'; Bronn 18', Khazri 90'+3)
-        
+
  ## try "simple" (alt) goal format - goal scorers (players) only
   (E. Hazard,  R. Lukaku,  Batshuayi; Bronn, Khazri)
-  (R. Lukaku, Batshuayi)          
+  (R. Lukaku, Batshuayi)
 
 ##  (E. Hazard  R. Lukaku  Batshuayi; Bronn  Khazri)  ## keep double-space version - why? why not?
 ##  (R. Lukaku   Batshuayi)
- 
+
 
 ### check date formats
 ▪ Semifinals
- 8.7.25 @ East Rutherford    Fluminense        0-2 Chelsea   
+ 8.7.25 @ East Rutherford    Fluminense        0-2 Chelsea
                           (Joao Pedro 18, 56)
- 9.7.25 @ East Rutherford     Paris Saint-Germain 4-0 Real Madrid   
+ 9.7.25 @ East Rutherford     Paris Saint-Germain 4-0 Real Madrid
                           (Fabian Ruiz 6, 24, Dembelé 9, Ramos 87)
 
 ▪ Final
-13.7.25 @ East Rutherford    Paris Saint-Germain 0-3 Chelsea   
+13.7.25 @ East Rutherford    Paris Saint-Germain 0-3 Chelsea
                               (Palmer 22, 30, Joao Pedro 43)
 
 
@@ -342,5 +341,3 @@ Rapid 3-2 Austria  (agg 4-5)
 June 24
   (37)  Winner Group A   v Runner-up Group C   @ Cardiff
   (38)  Runner-up Group A v Runner-up Group B   @ Liverpool
-
-

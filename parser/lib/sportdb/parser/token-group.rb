@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -26,4 +26,4 @@ START_WITH_GROUP_DEF_LINE_RE =  %r{
 
 
 end  #   class Lexer
-end  # module SportDb
+end  # module Fbtxt

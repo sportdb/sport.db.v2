@@ -14,7 +14,7 @@
 ##       Adams (Hanley 46'), McGinn (McLean 67')
 
 
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -306,4 +306,4 @@ CARDS_SEP_ALT_RE = %r{(?<cards_sep_alt>
 
 
 end  # class Lexer
-end  # module SportDb
+end  # module Fbtxt

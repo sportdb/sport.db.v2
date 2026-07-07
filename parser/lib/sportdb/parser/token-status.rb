@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 ##  (match) status
@@ -122,7 +122,7 @@ def _build_status( m ) self.class._build_status( m ); end
 
 
 end  #  class Lexer
-end  # module SportDb
+end  # module Fbtxt
 
 
 __END__

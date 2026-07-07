@@ -7,11 +7,11 @@ require_relative 'helper'
 
 class TestScore < Minitest::Test
 
-  
+
 
 TESTS = [
       ###
-      ['5-1 pen. (2-2, 1-1, 1-0)',        { p:[5,1], et:[2,2], ft:[1,1], ht:[1,0]} ],  
+      ['5-1 pen. (2-2, 1-1, 1-0)',        { p:[5,1], et:[2,2], ft:[1,1], ht:[1,0]} ],
       ###
       ['5-1 pen. 2-2 a.e.t. (1-1, 1-0)',  { p:[5,1], et:[2,2], ft:[1,1], ht:[1,0]}],
       ['5-1 pen 2-2 aet (1-1, 1-0)',      { p:[5,1], et:[2,2], ft:[1,1], ht:[1,0]}],
@@ -32,7 +32,7 @@ TESTS = [
       ['5-1 pen.',{ p:[5,1]}],
       ###
       ['1-1 (1-0)',{ ft:[1,1], ht:[1,0]}],
-      
+
       ##   try pen. in last pos
       ['2-2 a.e.t., 5-1 pen.',{ p:[5,1],et:[2,2]}],
       ['2-2 aet, 5-1p',      { p:[5,1],et:[2,2]}],
@@ -53,12 +53,12 @@ TESTS = [
   ]
 
 
-def test_score  
+def test_score
   TESTS.each do |text, exp_score|
-  
-     score=SportDb::Lexer._parse_score_full( text )
 
-     if score        
+     score=Fbtxt::Lexer._parse_score_full( text )
+
+     if score
       ## pp score
        puts "OK #{text}  -  #{score.pretty_inspect}"
        assert_equal exp_score, score

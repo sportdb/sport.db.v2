@@ -53,9 +53,9 @@ def test_date
   TESTS.each do |text, exp_date|
 
      ## puts "==> #{text}"
-     date=SportDb::Lexer._parse_date( text )
+     date=Fbtxt::Lexer._parse_date( text )
      ## pp date
-     ## pp SportDb::Lexer::DATE_RE.match( text )
+     ## pp Fbtxt::Lexer::DATE_RE.match( text )
 
      if date
        ## pp date
@@ -71,7 +71,7 @@ end
 def test_date_obj
   TESTS_DATE.each do |text, exp_date|
 
-     date=SportDb::Lexer.parse_date( text )
+     date=Fbtxt::Lexer.parse_date( text )
 
      if date
        ## pp date

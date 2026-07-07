@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -105,4 +105,4 @@ DAY_MAP   = build_map( DAY_LINES, downcase: true )
 
 
 end   # class Lexer
-end   # module SportDb
+end   # module Fbtxt

@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class Lexer
 
 
@@ -60,4 +60,4 @@ def _prep_line( line )
 end
 
 end  # class Lexer
-end  # module SportDb
+end  # module Fbtxt

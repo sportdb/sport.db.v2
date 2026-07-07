@@ -1,5 +1,5 @@
 
-module SportDb
+module Fbtxt
 
 class LexerResult
    attr_reader :tokens, :errors
@@ -228,4 +228,4 @@ end   # method tokenize
 
 
 end  # class Lexer
-end # module SportDb
+end # module Fbtxt
