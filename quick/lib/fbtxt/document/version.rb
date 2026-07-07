@@ -1,9 +1,9 @@
 
-module SportDb
+module Fbtxt
   module Module
-    module Quick
+    module Document
   MAJOR = 0    ## todo: namespace inside version or something - why? why not??
-  MINOR = 8
+  MINOR = 9
   PATCH = 0
   VERSION = [MAJOR,MINOR,PATCH].join('.')
 
@@ -12,13 +12,13 @@ module SportDb
   end
 
   def self.banner
-    "sportdb-quick/#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}] in (#{root})"
+    "fbtxt-document/#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}] in (#{root})"
   end
 
   def self.root
     File.expand_path( File.dirname(File.dirname(File.dirname(File.dirname(__FILE__)))) )
   end
 
-    end   # module Quick
+    end   # module Document
   end
 end

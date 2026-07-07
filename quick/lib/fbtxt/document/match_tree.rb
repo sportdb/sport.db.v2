@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 
 
 ##############################
@@ -123,4 +123,4 @@ class MatchTree
     ### todo: cache team lookups in hash?
   end
 end # class MatchTree
-end # module SportDb
+end # module Fbtxt

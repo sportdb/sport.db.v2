@@ -1,4 +1,4 @@
-module SportDb
+module Fbtxt
 class MatchTree
 
 
@@ -64,4 +64,4 @@ end # class Goal
 
 
 end # class MatchTree
-end # module SportDb
+end # module Fbtxt

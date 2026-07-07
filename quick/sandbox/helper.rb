@@ -4,8 +4,8 @@ $LOAD_PATH.unshift( File.expand_path( './lib' ))
 
 
 ## our own code
-require 'sportdb/quick'
+require 'fbtxt/document'
 
 
 ## turn on debugging output
-SportDb::MatchTree.debug = true
+Fbtxt::MatchTree.debug = true

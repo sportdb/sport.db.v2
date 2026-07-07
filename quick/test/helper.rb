@@ -6,4 +6,4 @@ $LOAD_PATH.unshift( '../parser/lib' )
 $LOAD_PATH.unshift( './lib' )
 
 ## our own code
-require  'sportdb/quick'
+require  'fbtxt/document'

@@ -1,5 +1,5 @@
 
-module SportDb
+module Fbtxt
 class MatchTree
 
   def log( msg )
@@ -78,4 +78,4 @@ class MatchTree
   end
 
 end  ## class MatchTree
-end  ## module SportDb
+end  ## module Fbtxt

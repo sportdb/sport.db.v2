@@ -61,7 +61,7 @@ end
     @errors  = []
 
 
-    parser = SportDb::Parser.new( txt )   ## use own parser instance (not shared) - why? why not?
+    parser = Parser.new( txt )   ## use own parser instance (not shared) - why? why not?
     tree, errors = parser.parse_with_errors
 
     @errors = errors
@@ -104,7 +104,7 @@ end
 
     ############
     ### "walk" tree to get structs (matches/teams/etc.)
-    conv = SportDb::MatchTree.new( tree, start: start )
+    conv = MatchTree.new( tree, start: start )
 
     teams, matches, rounds, groups = conv.convert
 

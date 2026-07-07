@@ -1,7 +1,7 @@
 ##
 # move (simpler) struct version inline to MatchTree for now
 #
-module SportDb
+module Fbtxt
 class MatchTree
 
 
@@ -246,4 +246,4 @@ end  # class Match
 
 
 end # class MatchTree
-end # module SportDb
+end # module Fbtxt

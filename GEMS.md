@@ -6,7 +6,7 @@ How-to Update the paser and quick match reader gems
 
 ## "core" parser (& lexer)
 
-**sportdb-parser**   (last updated in may 2026!)
+**fbtxt-parser**   (last updated in may 2026!)
 
 depends on:  cocos   (code commons & quick starter prelude)
 
@@ -15,12 +15,12 @@ parser usage (cheat sheet):
 
 
 ``` ruby
-parser = SportDb::Parser.new( txt )
+parser = Fbtxt::Parser.new( txt )
 tree, errors   = parser.parse_with_errors
 
 # -or- "raw" lexer usage:
 
-lexer = SportDb::Lexer.new( txt )
+lexer = Fbtxt::Lexer.new( txt )
 tokens, errors = lexer.tokenize_with_errors
 
 
@@ -33,11 +33,11 @@ result =  Fbtxt.lex( txt )     # result is LexerResult w/ tokens, errors, ok?/no
 
 
 
-## "quick" matcher reader (& football.txt to .json convert)
+## document matcher reader (& football.txt to .json convert)
 
-**sportdb-quick**   (last updated in may 2026!)
+**fbtxt-document**   (last updated in may 2026!)
 
-depends on: sportdb-parser, season-formats
+depends on: fbtxt-parser, season-formats
 
 usage:
 
@@ -64,18 +64,18 @@ doc.errors? & doc.errors
 
 **fbtok/fbtree (& fbquick/fbquik/fbx)**   (last updated in may 2026!)
 depends-on:
-- sportdb-parser   (fbtok/fbtree)
-- sportdb-quick    (fbquick/fbquick/fbx)
+- fbtxt-parser      (fbtok/fbtree)
+- fbtxt-document    (fbquick/fbquick/fbx)
 
 
 **fbtxt2json/fbtxt2csv**      (last updated in may 2026!)
 depends-on:
-- fbtok  (incl. sportdb-parser & sportdb-quick)
+- fbtok  (incl. fbtxt-parser & fbtxt-document)
 
 
 **footty**     (last updated in may 2026!)
 depends-on:
-- sportdb-quick   (incl. sportdb-parser, season-formats, logutils)
+- fbtxt-document   (incl. fbtxt-parser, season-formats)
 - webget
 
 

@@ -1,6 +1,4 @@
-# sportdb-quick - football.txt (quick) match readers and more
-
-
+# fbtxt-document - football.txt match readers (incl. Fbtxt::Document) and more
 
 
 
@@ -8,7 +6,7 @@
 
 
 ``` ruby
-require 'sportdb/quick'
+require 'fbtxt/document'
 
 
 # path = "./euro/2024--germany/euro.txt"
