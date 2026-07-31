@@ -143,11 +143,11 @@ def _tokenize_line( line, lineno )
           @re = PROP_CARDS_RE    ## use CARDS_RE ???
           tokens << Token.new(:PROP_SENTOFF, m[:key],
                                    lineno: lineno, offset: m.offset(:key))
-        elsif ['red cards'].include?( key.downcase )
+        elsif ['red', 'red cards'].include?( key.downcase )
           @re = PROP_CARDS_RE    ## use CARDS_RE ???
           tokens << Token.new(:PROP_REDCARDS, m[:key],
                                    lineno: lineno, offset: m.offset(:key))
-        elsif ['yellow cards'].include?( key.downcase )
+        elsif ['yellow', 'yellow cards'].include?( key.downcase )
           @re = PROP_CARDS_RE
           tokens << Token.new(:PROP_YELLOWCARDS, m[:key],
                                    lineno: lineno, offset: m.offset(:key))
@@ -156,7 +156,8 @@ def _tokenize_line( line, lineno )
         ##   check for alternate spellings
         ##   'yellow/red cards' - note - meaning closes to yellow or red !!
         ##    thus use yellow-red cards as default/standard - why? why not?
-        elsif ['yellow-red cards',
+        elsif ['yellow-red',
+               'yellow-red cards',
                'yellowred cards'].include?( key.downcase )
           @re = PROP_CARDS_RE
           tokens << Token.new(:PROP_YELLOWREDCARDS, m[:key],
@@ -179,7 +180,7 @@ def _tokenize_line( line, lineno )
      #     tokens << [:PROP_GOALS, m[:key]]
 
         elsif ['penalties',
-               'penalty shootout',
+               'penalty shootout',  'shootout',
                'penalty shoot-out',
                'penalty kicks'].include?( key.downcase )
           @re = PROP_PENALTIES_RE

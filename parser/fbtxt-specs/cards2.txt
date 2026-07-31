@@ -1,0 +1,22 @@
+##############
+## check card lines  (red,yellow, etc.)
+
+
+## try (real-world) samples from 2025/26 season
+
+    Yellow: Romeo Amané 85', Niklas HEDL 90+4'
+    Red:    Jakob Schöller 90+1'
+
+
+    Yellow: Benedikt Zech 2', Filip Milojevic 29'
+    Yellow-Red: Benedikt Zech 77'
+
+
+   Yellow: Elias Havel 31', Maximilian Hennig 57', Lukas Fridrikas 75', Tobias Kainz 81'
+
+
+    Yellow: Elias Havel, Maximilian Hennig, Lukas Fridrikas, Tobias Kainz
+
+
+    Yellow: Yorbe Vertessen 37', Tim Drexler 74', Anrie CHASE 77', Soumaïla Diabaté 86'
+    Yellow-Red: Anrie CHASE 90+1'

@@ -37,3 +37,16 @@ Romania           3-0  Turkey
 
 03.12.1958 @ Athinai (OAKA - Maroussi)
 Greece            1-1  France
+
+
+
+#####
+## try with   _-_ and _/_ in geo
+
+1.1.1980 @ Stade de la Beaujoire - Louis Fonteneau, NANTES
+   A v B
+
+
+## starting with  alpha AND dot (.)
+1.1.1980 @ St. James' Park, Newcastle upon Tyne
+  A v B
