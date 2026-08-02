@@ -24,6 +24,23 @@ def initialize( txt )
 end
 
 
+
+##
+##  check if lexer is in prop(erty) mode
+##      note - property lines auto-continue
+##     and break on blank or another property line
+##     note - follow-up line/match  MUST
+##        add  PROP_END token to last line!!!
+def is_prop?    ## use prop_mode? or such - why? why not?
+   @re == PROP_LINEUP_RE     ||
+   @re == PROP_CARDS_RE      ||
+   @re == PROP_PENALTIES_RE  ||
+   @re == PROP_ATTENDANCE_RE ||
+   @re == PROP_REFEREE_RE
+end
+
+
+
 def tokenize_with_errors( flatten: true )
 
     tokens_by_line = []   ## note: add tokens line-by-line (flatten later)
@@ -88,10 +105,16 @@ def tokenize_with_errors( flatten: true )
         ######
         ### special case for empty line (aka BLANK)
         if line.empty?
+            ## finish prop (if in prop mode)
+            tokens_by_line[-1] << Token.virtual(:PROP_END, lineno: -1 )   if is_prop?
+
            ## note - blank always resets parser mode to std/top-level!!!
            @re = RE
            tokens_by_line << [Token.virtual(:BLANK, lineno: lineno)]
         elsif (m = HEADING_RE.match(line))
+            ## finish prop (if in prop mode)
+            tokens_by_line[-1] << Token.virtual(:PROP_END, lineno: -1 )   if is_prop?
+
            ## note - heading always resets parser mode to std/top-level!!!
            @re = RE
            _trace( 'HEADING' )
@@ -100,10 +123,24 @@ def tokenize_with_errors( flatten: true )
            heading_level = m[:heading_marker].size
            tokens_by_line << [Token.new(:"H#{heading_level}", m[:heading], lineno: lineno)]
         elsif (m = NOTA_BENE_RE.match(line))
+            ## finish prop (if in prop mode)
+            tokens_by_line[-1] << Token.virtual(:PROP_END, lineno: -1 )   if is_prop?
+
            ## note - nota bene always resets parser mode to std/top-level!!!
            @re = RE
            tokens_by_line << [Token.new(:NOTA_BENE, m[:nota_bene], lineno: lineno)]
         else
+
+         ## finish prop (if in prop mode) and new prop upcoming!!
+         ##
+         ##   todo/fix-fix-fix -  add check for and track identation (left-side)
+         ##      (i) break if identation is same or less!!!
+         ##      (ii) handle "sub" properties too
+         if is_prop? && (m = START_WITH_PROP_KEY_RE.match( line ))
+            _trace( "LEAVE PROP_RE MODE, BACK TO TOP_LEVEL/RE" )
+            @re = RE
+            tokens_by_line[-1] << Token.virtual(:PROP_END, lineno: -1 )
+         end
 
           more_tokens, more_errors = _tokenize_line( line, lineno )
 
@@ -111,10 +148,20 @@ def tokenize_with_errors( flatten: true )
           errors          += more_errors
         end
 
+
         ## output last line from tokens by line in debug mode
         _trace( "  #{tokens_by_line[-1].size} token(s): " + tokens_by_line[-1].pretty_inspect )
 
     end # each line
+
+    ## note - always switch back to top-level at the end
+    @re = RE
+
+    ## finish prop (if in prop mode)
+    tokens_by_line[-1] << Token.virtual(:PROP_END, lineno: -1 )  if is_prop?
+
+
+
 
 
 

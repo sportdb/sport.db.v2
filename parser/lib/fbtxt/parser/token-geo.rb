@@ -147,5 +147,25 @@ GEO_RE = Regexp.union(
                     ANY_RE,
                       )
 
+
+
+###
+## helper for testing regex match for geo names
+
+def self._parse_geo( str )
+    ## note - strip - leading/trailing spaces
+    m = GEO_TEXT_RE.match( str.strip )
+    if m && m.pre_match == '' && m.post_match == ''
+      m
+    elsif  m
+        ## note - match BUT not anchored to start and end-of-string!!!
+        ##  report, error somehow??
+      nil
+    else
+      nil  ## no match - return nil
+    end
+end
+
+
 end # class Lexer
 end # module Fbtxt

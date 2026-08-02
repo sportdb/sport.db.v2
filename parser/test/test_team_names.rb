@@ -1,11 +1,11 @@
 ###
 #  to run use
-#     ruby test/test_team.rb
+#     ruby test/test_team_names.rb
 
 
 require_relative 'helper'
 
-class TestTeam < Minitest::Test
+class TestTeamNames < Minitest::Test
 
 
 

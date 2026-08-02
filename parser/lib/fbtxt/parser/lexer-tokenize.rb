@@ -181,7 +181,7 @@ def _tokenize_line( line, lineno )
 
         elsif ['penalties',
                'penalty shootout',  'shootout',
-               'penalty shoot-out',
+               'penalty shoot-out',  'shoot-out',
                'penalty kicks'].include?( key.downcase )
           @re = PROP_PENALTIES_RE
           tokens << Token.new(:PROP_PENALTIES, m[:key],
@@ -392,6 +392,7 @@ def _tokenize_line( line, lineno )
       elsif @re == PROP_ATTENDANCE_RE  then  _on_prop_attendance( m, ctx: ctx )
       elsif @re == PROP_REFEREE_RE     then  _on_prop_referee( m, ctx: ctx )
       elsif @re == PROP_PENALTIES_RE   then  _on_prop_penalties( m, ctx: ctx )
+
       elsif @re == GOAL_COMPAT_RE      then  _on_goal_compat( m, ctx: ctx )
       elsif @re == GOAL_ALT_RE         then  _on_goal_alt( m, ctx: ctx )
       elsif @re == GOAL_RE             then  _on_goal( m, ctx: ctx )
@@ -435,6 +436,7 @@ def _tokenize_line( line, lineno )
    @re = RE  if @re == GROUP_DEF_RE ||
                 @re == ROUND_DEF_RE
 
+=begin
    ##
    ## if in prop mode continue if   last token is [,-]
    ##        otherwise change back to "standard" mode
@@ -459,6 +461,7 @@ def _tokenize_line( line, lineno )
         tokens << Token.virtual(:PROP_END, lineno: lineno)
      end
    end
+=end
 
 
   [tokens,errors]
