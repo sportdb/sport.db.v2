@@ -9,8 +9,12 @@
 ##     3-2 Messi    108',
 ##     3-3 Mbappé   118'(pen.))
 
+##
+##  todo/fix - remove END  from (GOALS_END  END) rule/production - why? why not?
+##    make GOALS_END (automagically) anchored to newline?
 
-        goal_lines_alt : GOALS_ALT goals_alt GOALS_END NEWLINE
+
+        goal_lines_alt : GOALS_ALT goals_alt GOALS_END  END
                            {
                              @tree << GoalLineAlt.new( goals: val[1] )
                            }

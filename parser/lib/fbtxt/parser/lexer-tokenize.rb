@@ -464,6 +464,18 @@ def _tokenize_line( line, lineno )
 =end
 
 
+
+  ##########
+  ## note - auto-add end token
+  ##     inside multi-line token format that is,  prop_cont or goal_cont
+  if is_prop_cont? || is_goal_cont?
+      ## do NOT add end token; continue
+      _trace( "auto-continue - is_prop_cont? #{is_prop_cont?}, is_goal_cont? #{is_goal_cont?}" )
+  else
+      tokens << Token.virtual(:END, lineno: lineno)
+  end
+
+
   [tokens,errors]
 end
 

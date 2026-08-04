@@ -75,25 +75,29 @@
        ##
 
        match_header
-            :     date_datetime  geo  opt_inline_attendance  NEWLINE
+            :     date_datetime  geo  opt_inline_attendance  END
                    {
                       result = {}.merge( val[0], val[1], val[2] )
                    }
        ##
        ##  quick test for inline_round_big - make more flexible - why? why not?
-            |     date_datetime  geo  inline_round_big  NEWLINE
+            |     date_datetime  geo  inline_round_big  END
                    {
                       result = {}.merge( val[0], val[1], val[2] )
                    }
        ##
        ##  keep simple match header with date and inline attendance only - why? why not?
-            |      date_datetime inline_attendance  NEWLINE
+            |      date_datetime inline_attendance  END
                    {
                       result = {}.merge( val[0], val[1] )
                    }
 
+
+         ####
+         ## note  -   match_header + match_line_header
+
          match_line_header
-               :  opt_ord  match  more_match_header_opts  NEWLINE
+               :  opt_ord  match  more_match_header_opts  END
                   {
                       result = {}.merge( val[0], val[1], val[2] )
                   }
@@ -114,19 +118,19 @@
 
 
         match_line
-              :   pre_match_opts  match  more_match_opts NEWLINE
+              :   pre_match_opts  match  more_match_opts  END
                     {
                        kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
                     }
-              |  match  more_match_opts NEWLINE
+              |  match  more_match_opts  END
                     {
                        kwargs = {}.merge( val[0], val[1] )
                        @tree << MatchLine.new( **kwargs )
                     }
 
 
-              |  match_bye  opt_inline_note  NEWLINE
+              |  match_bye  opt_inline_note  END
                       {
                          kwargs = {}.merge( val[0], val[1] )
                          @tree << MatchLineBye.new( **kwargs )
@@ -139,7 +143,7 @@
                ###           make more flexible (allow leading date/time etc. too)
                ###   plus allow  match status/note - why? why not?
 
-               |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  NEWLINE
+               |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  END
                   {
                       @tree << MatchLine.new( **val[0] )
 

@@ -1,13 +1,12 @@
 
 
-        penalties_lines : PROP_PENALTIES penalties_body PROP_END NEWLINE
+        penalties_lines : PROP_PENALTIES penalties_body PROP_END
                             {
                                @tree << PenaltiesLine.new( penalties: val[1] )
                             }
 
 
         penalty_sep     :  ','
-                        |  ',' NEWLINE
 
 
         penalties_body  :  penalty                             {  result = val  }

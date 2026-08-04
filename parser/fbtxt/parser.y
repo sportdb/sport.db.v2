@@ -64,22 +64,26 @@ rule
                 ##  @errors << "parser error (recover) - skipping #{val[0].pretty_inspect}"
               }
 
-          ### use   error NEWLINE - why? why not?
-          ##           will (re)sync on NEWLINE?
+          ### use   error END - why? why not?
+          ##           will (re)sync on END?
 
 
        heading
-           : H1 NEWLINE   {  @tree << Heading1.new( text: val[0].as_str)  }
-           | H2 NEWLINE   {  @tree << Heading2.new( text: val[0].as_str)  }
-           | H3 NEWLINE   {  @tree << Heading3.new( text: val[0].as_str)  }
+           : H1    {  @tree << Heading1.new( text: val[0].as_str)  }
+           | H2    {  @tree << Heading2.new( text: val[0].as_str)  }
+           | H3    {  @tree << Heading3.new( text: val[0].as_str)  }
 
 
-        note_line
-            : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0].as_str) }
 
         nota_bene
-            : NOTA_BENE NEWLINE    { @tree << NotaBene.new( text: val[0].as_str) }
+            : NOTA_BENE     { @tree << NotaBene.new( text: val[0].as_str) }
 
+
+        ## note - NOTE also allowed/used inline
+        ##          thus, must add  END (formerly newline)
+        ##  "standalone" note (on its own line)
+        note_line
+            : NOTE  END   { @tree << NoteLine.new( text: val[0].as_str) }
 
 
 
@@ -93,12 +97,6 @@ rule
                        | blank_lines BLANK
 
 
-
-     ##  note - not used for now
-     ##    opt_newline : { } ## empty; optional
-     ##                | NEWLINE
-
-
         ######
         # e.g   Group A  |    Germany   Scotland     Hungary   Switzerland
         ##  or  Group A  :    Germany, Scotland, Hungary, Switzerland
@@ -106,7 +104,7 @@ rule
         group_def_sep :  '|' | ':'
 
         group_def
-              :   GROUP_DEF group_def_sep   team_values   NEWLINE
+              :   GROUP_DEF group_def_sep   team_values   END
                   {
                       @tree << GroupDef.new( name:  val[0].as_str,
                                              teams: val[2] )
@@ -123,7 +121,13 @@ rule
         ####
         ##   round ouline -  note: is an all-in-one line/text
         ##                          NOT tokens separated by comma(,) or dash(-)
-        round_outline :    ROUND_OUTLINE NEWLINE
+
+
+        ## fix-fix-fix
+        ##   remove END from ROUND_OUTLINE  - why? why not?
+        ##                    treat ROUND_OUTLINE  like H1/H2/H3 etc.
+
+        round_outline :    ROUND_OUTLINE  END
                               {
                                   @tree << RoundOutline.new( **val[0].as_hash )
                               }
@@ -138,7 +142,7 @@ rule
         ##    todo/fix - allow a list of dates & durations
         ##           not just single date or duration!!!
         round_def
-             :  ROUND_DEF round_def_sep   round_date_opts   NEWLINE
+             :  ROUND_DEF round_def_sep   round_date_opts   END
                   {
                       kwargs = { name: val[0].as_str }.merge( val[2] )
                       @tree << RoundDef.new( **kwargs )
@@ -202,14 +206,14 @@ rule
         ##            use match header (with geo tree)
 
         date_header
-              :    date  NEWLINE
+              :    date  END
                   {
                      @tree <<  DateHeader.new( **val[0] )
                   }
 
 
         date_header_legs
-             :     DATE_LEGS  NEWLINE
+             :     DATE_LEGS  END
                   {
                      @tree <<  DateHeaderLegs.new( **val[0].as_hash )
                   }
@@ -520,25 +524,29 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
        ##
 
        match_header
-            :     date_datetime  geo  opt_inline_attendance  NEWLINE
+            :     date_datetime  geo  opt_inline_attendance  END
                    {
                       result = {}.merge( val[0], val[1], val[2] )
                    }
        ##
        ##  quick test for inline_round_big - make more flexible - why? why not?
-            |     date_datetime  geo  inline_round_big  NEWLINE
+            |     date_datetime  geo  inline_round_big  END
                    {
                       result = {}.merge( val[0], val[1], val[2] )
                    }
        ##
        ##  keep simple match header with date and inline attendance only - why? why not?
-            |      date_datetime inline_attendance  NEWLINE
+            |      date_datetime inline_attendance  END
                    {
                       result = {}.merge( val[0], val[1] )
                    }
 
+
+         ####
+         ## note  -   match_header + match_line_header
+
          match_line_header
-               :  opt_ord  match  more_match_header_opts  NEWLINE
+               :  opt_ord  match  more_match_header_opts  END
                   {
                       result = {}.merge( val[0], val[1], val[2] )
                   }
@@ -559,19 +567,19 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
         match_line
-              :   pre_match_opts  match  more_match_opts NEWLINE
+              :   pre_match_opts  match  more_match_opts  END
                     {
                        kwargs = {}.merge( val[0], val[1], val[2] )
                        @tree << MatchLine.new( **kwargs )
                     }
-              |  match  more_match_opts NEWLINE
+              |  match  more_match_opts  END
                     {
                        kwargs = {}.merge( val[0], val[1] )
                        @tree << MatchLine.new( **kwargs )
                     }
 
 
-              |  match_bye  opt_inline_note  NEWLINE
+              |  match_bye  opt_inline_note  END
                       {
                          kwargs = {}.merge( val[0], val[1] )
                          @tree << MatchLineBye.new( **kwargs )
@@ -584,7 +592,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                ###           make more flexible (allow leading date/time etc. too)
                ###   plus allow  match status/note - why? why not?
 
-               |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  NEWLINE
+               |   match_result  INLINE_GOALS  goal_lines_body GOALS_END  END
                   {
                       @tree << MatchLine.new( **val[0] )
 
@@ -682,7 +690,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
         match_line_legs
-              : match_fixture  SCORE_LEGS  NEWLINE
+              : match_fixture  SCORE_LEGS  END
                 {
                       kwargs = { score: val[1].as_hash }.merge( val[0] )
                       @tree << MatchLineLegs.new( **kwargs )
@@ -723,7 +731,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         ## note - GOALS token is virtual - basically opening-paranthesis `(` for now
 
 
-        goal_lines : GOALS goal_lines_body GOALS_END NEWLINE
+        goal_lines : GOALS goal_lines_body GOALS_END  END
                       {
                          @tree << GoalLine.new( goals: val[1] )
                       }
@@ -740,16 +748,13 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                         | goals goals_sep goals  {  result = [val[0],val[2]] }
 
 
+       ### rename/change to goal team separator - why? why not?
         goals_sep    : ';'
-                     | ';' NEWLINE
                      | GOAL_SEP_ALT   ## note - dash (-) with leading & trailing spaces required
-                     | GOAL_SEP_ALT NEWLINE
 
 
          opt_goal_sep   : /* empty */       ## empty -- optional
                         | ','
-                        | ',' NEWLINE
-                        |  NEWLINE       ## note - allow "standalone" newline!!!
 
          goals   : goal                      { result = val }
                  | goals opt_goal_sep  goal  { result.push( val[2])  }
@@ -806,8 +811,12 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 ##     3-2 Messi    108',
 ##     3-3 Mbappé   118'(pen.))
 
+##
+##  todo/fix - remove END  from (GOALS_END  END) rule/production - why? why not?
+##    make GOALS_END (automagically) anchored to newline?
 
-        goal_lines_alt : GOALS_ALT goals_alt GOALS_END NEWLINE
+
+        goal_lines_alt : GOALS_ALT goals_alt GOALS_END  END
                            {
                              @tree << GoalLineAlt.new( goals: val[1] )
                            }
@@ -877,7 +886,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
 
-        goal_lines_compat : GOALS_COMPAT goals_compat GOALS_END NEWLINE
+        goal_lines_compat : GOALS_COMPAT goals_compat GOALS_END  END
                            {
                              @tree << GoalLineCompat.new( goals: val[1] )
                            }
@@ -947,7 +956,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         ## todo - maybe add (soldout) or such optional qualifier!!
         ##           or 50000+ or such for estimates NUM_APPROX/NUM_ESTIMATE ??
 
-        attendance_line  : PROP_ATTENDANCE  PROP_NUM  PROP_END NEWLINE
+        attendance_line  : PROP_ATTENDANCE  PROP_NUM  PROP_END
                               {
                                  @tree << AttendanceLine.new( att: val[1].as_int )
                               }
@@ -957,7 +966,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         ## note - allow inline attendance prop in same line
         ##             why? why not?
         ##           todo - add usage samples here!!!
-        referee_line   :  PROP_REFEREE  referees  attendance_opt PROP_END NEWLINE
+        referee_line   :  PROP_REFEREE  referees  attendance_opt PROP_END
                             {
                                @tree << RefereeLine.new( referees: val[1] )
                             }
@@ -980,21 +989,21 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
 
-        yellowcard_line : PROP_YELLOWCARDS card_body PROP_END NEWLINE
+        yellowcard_line : PROP_YELLOWCARDS card_body PROP_END
                              {
                                @tree << CardsLine.new( type: 'Y', bookings: val[1] )
                              }
-        redcard_line     : PROP_REDCARDS card_body PROP_END NEWLINE
+        redcard_line     : PROP_REDCARDS card_body PROP_END
                              {
                                @tree << CardsLine.new( type: 'R', bookings: val[1] )
                              }
-        yellowredcard_line  : PROP_YELLOWREDCARDS card_body PROP_END NEWLINE
+        yellowredcard_line  : PROP_YELLOWREDCARDS card_body PROP_END
                              {
                                @tree << CardsLine.new( type: 'Y/R', bookings: val[1] )
                              }
 
         ## use for "generic"  red|yellow/red cards  or pre-card era
-        sentoff_line    : PROP_SENTOFF card_body PROP_END NEWLINE
+        sentoff_line    : PROP_SENTOFF card_body PROP_END
                              {
                                @tree << CardsLine.new( type: 'SENTOFF', bookings: val[1] )
                              }
@@ -1012,9 +1021,8 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
         cards_sep    : ';'
-                     | ';' NEWLINE
                      | CARDS_SEP_ALT     ## note - dash (-) with leading & trailing spaces required
-                     | CARDS_SEP_ALT NEWLINE
+
 
 
           cards    :  player_w_minute
@@ -1026,7 +1034,6 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
          opt_card_sep  :  /* empty */
                        | ','
-                       | ',' NEWLINE
 
 
          player_w_minute : PROP_NAME
@@ -1037,14 +1044,13 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
 
 
-        penalties_lines : PROP_PENALTIES penalties_body PROP_END NEWLINE
+        penalties_lines : PROP_PENALTIES penalties_body PROP_END
                             {
                                @tree << PenaltiesLine.new( penalties: val[1] )
                             }
 
 
         penalty_sep     :  ','
-                        |  ',' NEWLINE
 
 
         penalties_body  :  penalty                             {  result = val  }
@@ -1079,7 +1085,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         ## change PROP_NAME to NAME - why? why not?
 
 
-       lineup_lines  : PROP  lineup  opt_coach  PROP_END NEWLINE
+       lineup_lines  : PROP  lineup  opt_coach  PROP_END
                         {
                           kwargs = { team:    val[0].as_str,
                                      lineup:  val[1]  }.merge( val[2] )
@@ -1089,23 +1095,27 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
        ## add (factor out) coach_sep  - why? why not?
 
+      ###
+      ## todo/check - fix/fix/fix - COACH  gets matched with PROP_KEY ???
+      ##    change COACH to INLINE_COACH - why? why not?
+      ##   was
+      ##    | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
+      ##    | '-' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
 
        opt_coach   : /* empty */    { result = {}  }    ## optional
                    | ';' COACH  PROP_NAME
                            {  result = { coach: val[2].as_str } }
-                   | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-                           {  result = { coach: val[3].as_str } }
                    | '-' COACH  PROP_NAME
                            {  result = { coach: val[2].as_str } }
-                   | '-' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-                           {  result = { coach: val[3].as_str } }
 
 
 
        lineup_sep  :  ','           { result = ',' }
-                     | ',' NEWLINE  { result = ',' }
-                     | '-'          { result = '-' }
-                     | '-' NEWLINE  { result = '-' }
+                   |  '-'           { result = '-' }
+
+       opt_lineup_sep : /* empty */  { result = '' }   ## use 'NONE' or such - why? why not?
+                   |  ','            { result = ',' }
+                   |  '-'            { result = '-' }
 
 
        lineup :   lineup_name
@@ -1115,7 +1125,7 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                        ##   via dash (-) separator, see below!
                        result = [[val[0]]]
                     }
-              |   lineup lineup_sep lineup_name
+              |   lineup opt_lineup_sep lineup_name
                     {
                        ## note - if lineup_sep is dash (-) start a new sub array!!
                        if val[1] == '-'

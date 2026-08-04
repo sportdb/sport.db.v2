@@ -24,11 +24,12 @@ class Token
   end
 
   ## or use virt or pseudo - why? why not?
-  def self.virtual( type, lineno:, offset: [])
+  def self.virtual( type, lineno: -1, offset: [])
      ## note - offset (start/end) should be same number (zero-width assertions!!)
      ## e.g.    :GOALS_COMPAT, "<|GOALS_COMPAT|>"
      new( type, '', lineno: lineno, offset: offset )
   end
+
 
 
   attr_reader :type,   :text,

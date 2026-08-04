@@ -57,22 +57,26 @@
                 ##  @errors << "parser error (recover) - skipping #{val[0].pretty_inspect}"
               }
 
-          ### use   error NEWLINE - why? why not?
-          ##           will (re)sync on NEWLINE?
+          ### use   error END - why? why not?
+          ##           will (re)sync on END?
 
 
        heading
-           : H1 NEWLINE   {  @tree << Heading1.new( text: val[0].as_str)  }
-           | H2 NEWLINE   {  @tree << Heading2.new( text: val[0].as_str)  }
-           | H3 NEWLINE   {  @tree << Heading3.new( text: val[0].as_str)  }
+           : H1    {  @tree << Heading1.new( text: val[0].as_str)  }
+           | H2    {  @tree << Heading2.new( text: val[0].as_str)  }
+           | H3    {  @tree << Heading3.new( text: val[0].as_str)  }
 
 
-        note_line
-            : NOTE NEWLINE  { @tree << NoteLine.new( text: val[0].as_str) }
 
         nota_bene
-            : NOTA_BENE NEWLINE    { @tree << NotaBene.new( text: val[0].as_str) }
+            : NOTA_BENE     { @tree << NotaBene.new( text: val[0].as_str) }
 
+
+        ## note - NOTE also allowed/used inline
+        ##          thus, must add  END (formerly newline)
+        ##  "standalone" note (on its own line)
+        note_line
+            : NOTE  END   { @tree << NoteLine.new( text: val[0].as_str) }
 
 
 
@@ -84,9 +88,3 @@
 
           blank_lines  : BLANK
                        | blank_lines BLANK
-
-
-
-     ##  note - not used for now
-     ##    opt_newline : { } ## empty; optional
-     ##                | NEWLINE

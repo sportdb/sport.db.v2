@@ -7,7 +7,7 @@
         ## todo - maybe add (soldout) or such optional qualifier!!
         ##           or 50000+ or such for estimates NUM_APPROX/NUM_ESTIMATE ??
 
-        attendance_line  : PROP_ATTENDANCE  PROP_NUM  PROP_END NEWLINE
+        attendance_line  : PROP_ATTENDANCE  PROP_NUM  PROP_END
                               {
                                  @tree << AttendanceLine.new( att: val[1].as_int )
                               }
@@ -17,7 +17,7 @@
         ## note - allow inline attendance prop in same line
         ##             why? why not?
         ##           todo - add usage samples here!!!
-        referee_line   :  PROP_REFEREE  referees  attendance_opt PROP_END NEWLINE
+        referee_line   :  PROP_REFEREE  referees  attendance_opt PROP_END
                             {
                                @tree << RefereeLine.new( referees: val[1] )
                             }

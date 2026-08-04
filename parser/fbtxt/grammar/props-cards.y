@@ -1,21 +1,21 @@
 
 
 
-        yellowcard_line : PROP_YELLOWCARDS card_body PROP_END NEWLINE
+        yellowcard_line : PROP_YELLOWCARDS card_body PROP_END
                              {
                                @tree << CardsLine.new( type: 'Y', bookings: val[1] )
                              }
-        redcard_line     : PROP_REDCARDS card_body PROP_END NEWLINE
+        redcard_line     : PROP_REDCARDS card_body PROP_END
                              {
                                @tree << CardsLine.new( type: 'R', bookings: val[1] )
                              }
-        yellowredcard_line  : PROP_YELLOWREDCARDS card_body PROP_END NEWLINE
+        yellowredcard_line  : PROP_YELLOWREDCARDS card_body PROP_END
                              {
                                @tree << CardsLine.new( type: 'Y/R', bookings: val[1] )
                              }
 
         ## use for "generic"  red|yellow/red cards  or pre-card era
-        sentoff_line    : PROP_SENTOFF card_body PROP_END NEWLINE
+        sentoff_line    : PROP_SENTOFF card_body PROP_END
                              {
                                @tree << CardsLine.new( type: 'SENTOFF', bookings: val[1] )
                              }
@@ -33,9 +33,8 @@
 
 
         cards_sep    : ';'
-                     | ';' NEWLINE
                      | CARDS_SEP_ALT     ## note - dash (-) with leading & trailing spaces required
-                     | CARDS_SEP_ALT NEWLINE
+
 
 
           cards    :  player_w_minute
@@ -47,7 +46,6 @@
 
          opt_card_sep  :  /* empty */
                        | ','
-                       | ',' NEWLINE
 
 
          player_w_minute : PROP_NAME

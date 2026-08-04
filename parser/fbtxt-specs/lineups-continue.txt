@@ -1,0 +1,105 @@
+###
+#  line-ups
+##   test auto-continue lines
+##    (allows newlines basically between all tokens, that is,
+##        eats-up/removes newlines)
+##      grammar rule/production ends with PROP_END
+
+
+ARG: Botasso
+     Della Tore
+     Paternoster
+     J.Evaristo
+     Monti
+     Orlandini
+     Peucelle
+     Scopelli
+      Stábile
+      Ferreira [c]
+       M.Evaristo
+USA: Douglas
+     Wood, Moorhouse
+     Gallagher, Tracey, Auld
+     Brown, Florie [c], Patenaude, Gonsalves, McGhee
+
+
+## note - two-spaces required (if no comma used)
+URU: Ballestero - Mascheroni  Nasazzi [c] - Andrade   Fernández   Gestido -
+     Dorado  Scarone  Castro  Cea   Iriarte
+ARG: Botasso
+     Della Torre   Paternoster
+     J.Evaristo   Monti   Arico Suárez
+     Peucelle  Varallo  Stábile  Ferreira [c]   M.Evaristo
+
+
+
+###
+# line-ups from world cup 2022
+
+
+## test - weirdo split on sub
+
+Argentina: E. Martínez,  Molina
+           (Montiel 91'), Romero, Otamendi,
+           Tagliafico (Dybala 120+1'), De Paul
+           (Paredes 102'), Fernández,
+           Mac Allister (Pezzella 116'), Messi, Álvarez
+           (La. Martínez 103'),
+           Di María (Acuña 64')
+
+France: Lloris
+        Koundé (Disasi 120+1')
+        Varane (Konaté 113')
+        Upamecano,
+        Th. Hernandez (Camavinga 71')
+        Dembélé (Kolo Muani 41')
+        Tchoauméni
+        Griezmann (Coman 71')
+        Rabiot (Fofana 96')
+        Mbappé
+        Giroud (Thuram 41')
+
+
+
+Argentina:
+    Emiliano MARTINEZ [Y 125']
+    Nicolas TAGLIAFICO          (120+1' Paulo DYBALA)
+    Cristian ROMERO
+    Nicolas OTAMENDI
+    Nahuel MOLINA               (91' Gonzalo MONTIEL [Y 116'])
+    Rodrigo DE PAUL             (102' Leandro PAREDES [Y 114'])
+    Alexis MAC ALLISTER         (116' German PEZZELLA)
+    Enzo FERNANDEZ [Y 45+7']
+    Julian ALVAREZ              (102' Lautaro MARTINEZ)
+    Lionel MESSI [c]
+    Angel DI MARIA              (64' Marcos ACUNA [Y 90+8'])
+
+
+Cameroon:
+     Devis EPASSY
+     Christopher WOOH
+     Collins FAI  [Y 32']
+     Enzo EBOSSE
+     Nouhou TOLO  [Y 6']
+     Nicolas NGAMALEU              (86' Jerome NGOM MBEKELI)
+     Andre-Frank ZAMBO ANGUISSA
+     Pierre KUNDE  [Y 28']         (68' Olivier NTCHAM)
+     Bryan MBEUMO                  (64' Karl TOKO EKAMBI)
+     Vincent ABOUBAKAR [c]  [Y 81'] [Y/R 90+3']
+     Eric Maxim CHOUPO-MOTING
+
+
+
+
+Netherlands:
+      Andries NOPPERT
+      Jurrien TIMBER [Y 43']
+      Virgil VAN DIJK [c]
+      Nathan AKE
+      Cody GAKPO          (113' Noa LANG [Y 129'])
+      Marten DE ROON      (46' Teun KOOPMEINERS)
+      Daley BLIND         (64' Luuk DE JONG)
+      Frenkie DE JONG
+      Denzel DUMFRIES [Y 128'] [Y/R 129']
+      Steven BERGWIJN [Y 91']   (46' Steven BERGHUIS [Y 88'])
+      Memphis DEPAY [Y 76']     (78' Wout WEGHORST [Y 45+2'])

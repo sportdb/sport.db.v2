@@ -6,7 +6,7 @@
         group_def_sep :  '|' | ':'
 
         group_def
-              :   GROUP_DEF group_def_sep   team_values   NEWLINE
+              :   GROUP_DEF group_def_sep   team_values   END
                   {
                       @tree << GroupDef.new( name:  val[0].as_str,
                                              teams: val[2] )
@@ -23,7 +23,13 @@
         ####
         ##   round ouline -  note: is an all-in-one line/text
         ##                          NOT tokens separated by comma(,) or dash(-)
-        round_outline :    ROUND_OUTLINE NEWLINE
+
+
+        ## fix-fix-fix
+        ##   remove END from ROUND_OUTLINE  - why? why not?
+        ##                    treat ROUND_OUTLINE  like H1/H2/H3 etc.
+
+        round_outline :    ROUND_OUTLINE  END
                               {
                                   @tree << RoundOutline.new( **val[0].as_hash )
                               }
@@ -38,7 +44,7 @@
         ##    todo/fix - allow a list of dates & durations
         ##           not just single date or duration!!!
         round_def
-             :  ROUND_DEF round_def_sep   round_date_opts   NEWLINE
+             :  ROUND_DEF round_def_sep   round_date_opts   END
                   {
                       kwargs = { name: val[0].as_str }.merge( val[2] )
                       @tree << RoundDef.new( **kwargs )

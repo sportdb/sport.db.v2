@@ -4,7 +4,7 @@
         ## change PROP_NAME to NAME - why? why not?
 
 
-       lineup_lines  : PROP  lineup  opt_coach  PROP_END NEWLINE
+       lineup_lines  : PROP  lineup  opt_coach  PROP_END
                         {
                           kwargs = { team:    val[0].as_str,
                                      lineup:  val[1]  }.merge( val[2] )
@@ -14,23 +14,27 @@
 
        ## add (factor out) coach_sep  - why? why not?
 
+      ###
+      ## todo/check - fix/fix/fix - COACH  gets matched with PROP_KEY ???
+      ##    change COACH to INLINE_COACH - why? why not?
+      ##   was
+      ##    | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
+      ##    | '-' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
 
        opt_coach   : /* empty */    { result = {}  }    ## optional
                    | ';' COACH  PROP_NAME
                            {  result = { coach: val[2].as_str } }
-                   | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-                           {  result = { coach: val[3].as_str } }
                    | '-' COACH  PROP_NAME
                            {  result = { coach: val[2].as_str } }
-                   | '-' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-                           {  result = { coach: val[3].as_str } }
 
 
 
        lineup_sep  :  ','           { result = ',' }
-                     | ',' NEWLINE  { result = ',' }
-                     | '-'          { result = '-' }
-                     | '-' NEWLINE  { result = '-' }
+                   |  '-'           { result = '-' }
+
+       opt_lineup_sep : /* empty */  { result = '' }   ## use 'NONE' or such - why? why not?
+                   |  ','            { result = ',' }
+                   |  '-'            { result = '-' }
 
 
        lineup :   lineup_name
@@ -40,7 +44,7 @@
                        ##   via dash (-) separator, see below!
                        result = [[val[0]]]
                     }
-              |   lineup lineup_sep lineup_name
+              |   lineup opt_lineup_sep lineup_name
                     {
                        ## note - if lineup_sep is dash (-) start a new sub array!!
                        if val[1] == '-'

@@ -30,6 +30,7 @@ PACK default
    penalties.txt
    referees.txt
    lineups.txt
+   lineups-continue.txt
    cards.txt
    cards2.txt
    cards_inline.txt

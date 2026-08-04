@@ -5,7 +5,7 @@
 
 
 
-        goal_lines_compat : GOALS_COMPAT goals_compat GOALS_END NEWLINE
+        goal_lines_compat : GOALS_COMPAT goals_compat GOALS_END  END
                            {
                              @tree << GoalLineCompat.new( goals: val[1] )
                            }

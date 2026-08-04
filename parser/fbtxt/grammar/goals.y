@@ -31,7 +31,7 @@
         ## note - GOALS token is virtual - basically opening-paranthesis `(` for now
 
 
-        goal_lines : GOALS goal_lines_body GOALS_END NEWLINE
+        goal_lines : GOALS goal_lines_body GOALS_END  END
                       {
                          @tree << GoalLine.new( goals: val[1] )
                       }
@@ -48,16 +48,13 @@
                         | goals goals_sep goals  {  result = [val[0],val[2]] }
 
 
+       ### rename/change to goal team separator - why? why not?
         goals_sep    : ';'
-                     | ';' NEWLINE
                      | GOAL_SEP_ALT   ## note - dash (-) with leading & trailing spaces required
-                     | GOAL_SEP_ALT NEWLINE
 
 
          opt_goal_sep   : /* empty */       ## empty -- optional
                         | ','
-                        | ',' NEWLINE
-                        |  NEWLINE       ## note - allow "standalone" newline!!!
 
          goals   : goal                      { result = val }
                  | goals opt_goal_sep  goal  { result.push( val[2])  }

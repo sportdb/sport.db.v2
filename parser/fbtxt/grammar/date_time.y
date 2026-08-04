@@ -44,14 +44,14 @@
         ##            use match header (with geo tree)
 
         date_header
-              :    date  NEWLINE
+              :    date  END
                   {
                      @tree <<  DateHeader.new( **val[0] )
                   }
 
 
         date_header_legs
-             :     DATE_LEGS  NEWLINE
+             :     DATE_LEGS  END
                   {
                      @tree <<  DateHeaderLegs.new( **val[0].as_hash )
                   }
