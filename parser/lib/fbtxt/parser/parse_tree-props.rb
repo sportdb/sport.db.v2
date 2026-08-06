@@ -122,7 +122,7 @@ end  # Booking
 
 ##
 ## change :lineup to :lineups  (e.g. requires array of lineups)
-LineupLine = Struct.new( :team, :lineup, :coach ) do
+LineupLine = Struct.new( :team, :lineup, :formation, :coach ) do
   def as_json(*)
     h = { 'team'    => team.as_json,
           'lineups' => lineup.as_json
@@ -137,14 +137,19 @@ LineupLine = Struct.new( :team, :lineup, :coach ) do
       q.text( team )
       q.text( ' ' )
 
-      ##  todo/fix - check for   "flat" items - no formation
-      ##                           or empty lineup (possible?)
-      ## add formation e.g. (1-) 3-4-2-1
-      formation = lineup.map { |item| item.size }
-      ## note - remove first entry (assume it's 1 for goalee!)
-      formation.shift
-      q.text( formation.join('-'))
-      q.text( ' ')
+      if formation
+        q.text( "(#{formation})" )
+        q.text( ' ')
+      else
+        ##  todo/fix - check for   "flat" items - no formation
+        ##                           or empty lineup (possible?)
+        ## add formation e.g. (1-) 3-4-2-1
+        autoformation = lineup.map { |item| item.size }
+        ## note - remove first entry (assume it's 1 for goalee!)
+        autoformation.shift
+        q.text( autoformation.join('-'))
+        q.text( ' ')
+      end
 
       q.pp( lineup )
 

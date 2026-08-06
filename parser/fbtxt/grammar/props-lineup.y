@@ -4,12 +4,17 @@
         ## change PROP_NAME to NAME - why? why not?
 
 
-       lineup_lines  : PROP  lineup  opt_coach  PROP_END
+       lineup_lines  : PROP  opt_formation  lineup  opt_coach  PROP_END
                         {
                           kwargs = { team:    val[0].as_str,
-                                     lineup:  val[1]  }.merge( val[2] )
+                                     lineup:  val[2]  }.merge( val[1], val[3] )
                           @tree << LineupLine.new( **kwargs )
                         }
+
+
+       opt_formation : /* empty */  { result = {} }   ## optional
+                     |  FORMATION   { result = { formation: val[0].as_str }}
+
 
 
        ## add (factor out) coach_sep  - why? why not?
@@ -33,8 +38,7 @@
                    |  '-'           { result = '-' }
 
        opt_lineup_sep : /* empty */  { result = '' }   ## use 'NONE' or such - why? why not?
-                   |  ','            { result = ',' }
-                   |  '-'            { result = '-' }
+                      |  lineup_sep
 
 
        lineup :   lineup_name

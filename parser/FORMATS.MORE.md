@@ -1,4 +1,4 @@
-#  Parser (World Service) Experiments  w/ racc 
+#  Parser (World Service) Experiments  w/ racc
 
 
 
@@ -6,20 +6,24 @@
 
 - [ ] add  (4-4 agg.) SCORE_AGG ??  or such - why? why not?
 
-- [ ] change SCORE - ft: to (underscore) :'_' for now (for "undefined/unknown" if ft/et etc.) 
+- [ ] change SCORE - ft: to (underscore) :'_' for now (for "undefined/unknown" if ft/et etc.)
 
 - [ ] rethink how to store (basic) SCORE vs SCORE_MORE  and
-      how to add SCORE_NOTE 
+      how to add SCORE_NOTE
 
 ```
 "score": [0,0]
 "score_note": "aet, 4-4 on pens",
 "score_note": "ajax wins on away goals",
-"score_note": "ajax wins 5-4 on aggregate", 
+"score_note": "ajax wins 5-4 on aggregate",
 
-## turn 4-4 on pens  into      "pen": [4-4] - why? why not? 
+## turn 4-4 on pens  into      "pen": [4-4] - why? why not?
 ##   or 5-4 on aggregate into  "agg": [5-4] - why? why not?
 ##   add winner (if present?)  "winner: "ajax" - why? why not?
+
+
+## tip:  _   --  use "reported" as alternate for "unknown/undefined/score"
+##                                         score (instead of "_")
 
 "score": { "_":  [0,0],        ### find a name/key for "_" - possible ???
            "note":  "aet; 4-4 on pens",
@@ -54,7 +58,7 @@
         - more candidates e.g. 1/4 final, 1/2 final
 
 - [ ]  geoname same as date e.g.  @ Bucuresti, 23 August
-  
+
 
 - [ ]  to props add enclosed_name  e.g. (Italy) or (ITA)
       - change ord number to enclosed_num  e.g. (1) or (14,000)
@@ -63,20 +67,20 @@
 
 - [ ]  use  ; to split (start) props in props - allows you to add "inline" props
        e.g.     Referee: xxx; Attendance: xxx   or ref: xxx; att:
-        or        in lineup add optional ; trainer: Luiz Felipe Scolari    
+        or        in lineup add optional ; trainer: Luiz Felipe Scolari
 
 - [ ]  check if possible goal_alt_sep with NEWLINE only (no comma) - possible??
 
 ```
-              1-0 Evair   65' (pen),   
-              1-1 Zapata  70' (pen),  
-              2-1 Oséas   76'         
+              1-0 Evair   65' (pen),
+              1-1 Zapata  70' (pen),
+              2-1 Oséas   76'
 ```
 
 - [ ]   add "" or '' - why? why not? e.g.
 
 ```
-!! WARN - parse error (tokenize) - skipping >'Jorginho'< @45,46 
+!! WARN - parse error (tokenize) - skipping >'Jorginho'< @45,46
 in line >Nicolò Barella, Jorge Frello Filho 'Jorginho',<
 ```
 
@@ -90,11 +94,14 @@ Germany             2-1 Czech Republic             ASDET
         [Final tournament in Belgium and the Netherlands]
 ```
 
+
+
+
 ## more todos
 
 - [ ]  add a new BLANK token for blank lines (instead of NEWLINE)!!!
          make sure empty / blank lines get passed through (by outline parser!!)
-         and always RESET tokenize_line to "standard" (regex) mode on BLANK!!!  
+         and always RESET tokenize_line to "standard" (regex) mode on BLANK!!!
 
 
 - [ ]  use "old" tokenizer pattern match
@@ -102,7 +109,7 @@ Germany             2-1 Czech Republic             ASDET
          and (2) change  text minute   to  player minute!!!!
 
 
-- [ ]  split parser into def sections (e.g. group def/rouund def) 
+- [ ]  split parser into def sections (e.g. group def/round def)
            and  body - why? why not?
 
 - [ ]   merge o.g. and pen. into goal_minutes regex
@@ -124,26 +131,40 @@ Germany             2-1 Czech Republic             ASDET
          for current goal_line
 
 - [ ]  change goal_line tokens to PLAYER/NAME !!!
-- [ ]  change generic TEXT vs TEXT tokens in match 
+- [ ]  change generic TEXT vs TEXT tokens in match
          to TEAM vs TEAM!!!
 
-- [ ]  lineup - maybe change too to "auto-magic" 
+- [ ]  lineup - maybe change too to "auto-magic"
            line coninuations with , if last token in line!!
             and remove the dot end of lineup marker requirement;
              use simple NEWLINE instead!!
 
 
+
+
 ## "Hard Problems"
 
-Matchday 1    and Messi 24
+Matchday 1    and   Messi 24
 
--  name with minute   or text ?
-    how to tell the difference if no minute marker e.g. `24'`??? 
+-  name with minute   or   text ?
+    how to tell the difference if no minute marker e.g. `24'`???
+
+note:
+- MUST use round (outline) marker (▪) for rounds
+    e.g.  ▪ Matchday 1
+- MUST use goal line marker to switch into goal (lexer) mode
+    e.g.  (Messi 24)
+   note - in goal mode - player names CANNOT incl. numbers
+            (like team names, for example)!!!
+
+
 
 
 ## open (format) questions - discuss
 
-- [x]   use `()` to auto-switch into name mode (for goals/etc) - why? why not?
+- [x]  yes, use `()` to auto-switch into goal mode (with player names)
+            if open parenthesis starts line     -- why? why not?
+
 
 
 
@@ -170,4 +191,3 @@ Matchday 1    and Messi 24
          - V. Köln, Carlos V. etc.
 
 =>  try only v/vs in downcase/lowercase only - why? why not?
-

@@ -31,6 +31,8 @@ PACK default
    referees.txt
    lineups.txt
    lineups-continue.txt
+   lineups-extreme.txt
+   lineups-formation.txt
    cards.txt
    cards2.txt
    cards_inline.txt

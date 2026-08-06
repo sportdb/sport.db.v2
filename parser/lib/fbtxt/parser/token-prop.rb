@@ -142,6 +142,24 @@ class Lexer
 
 
 
+#####
+#  (tactics) formation   - possible with two numbers (e.g. 5-5 ?? or 8-2)
+##   e.g   (4-3-3)    or (433)
+##         (4-1-4-1)  or (4141)
+##         etc.
+
+FORMATION_RE = %r{
+                (?<formation>
+                    \(
+                       (?<value>
+                            (?: [1-9] (?: -[1-9]){1,5} )
+                          | (?: [1-9]{2,6})
+                        )
+                    \)
+                )
+              }x
+
+
 
 
 ################
@@ -191,9 +209,12 @@ class Lexer
                           \]
                      )}x
 
+  ##
+  ##  note make slash (/) optionals
+  ##    e.g. y/r,yr or Y/R,YR
+
   INLINE_YELLOW_RED  = %r{ (?<inline_yellow_red>
-                          \[ (?:y/r |
-                                Y/R  )
+                          \[  (?: y/?r | Y/?R)
                               ## optional minute
                               (?: [ ]+
                                 (?<minute> \d{1,3})

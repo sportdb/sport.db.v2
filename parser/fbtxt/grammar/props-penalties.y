@@ -6,11 +6,15 @@
                             }
 
 
+
         penalty_sep     :  ','
+
+        opt_penalty_sep :   /* empty */    { }   ## optional
+                        |  penalty_sep
 
 
         penalties_body  :  penalty                             {  result = val  }
-                        |  penalties_body penalty_sep penalty  {  result.push( val[2] )  }
+                        |  penalties_body opt_penalty_sep penalty  {  result.push( val[2] )  }
 
 
 

@@ -1,0 +1,31 @@
+###
+#  line-ups
+##   test (extreme) auto-continue lines
+##      todo/fix -   merge with -continue  (remove -extreme)
+
+
+Argentina:
+    E. Martínez
+      ,
+   Molina
+     (
+     Montiel 91'
+     ), Romero, Otamendi,
+           Tagliafico (Dybala 120+1'), De Paul
+           (Paredes 102'), Fernández,
+           Mac Allister (Pezzella 116'), Messi, Álvarez
+           (La. Martínez 103'),
+           Di María (Acuña 64')
+
+
+
+Mexico:
+    Raúl Rangel
+      -
+    Israel Reyes, Jesús Gallardo, Érik Lira, César Montes
+      -
+    Johan Vásquez
+      -
+    Roberto Alvarado, Brian Gutiérrez, Raúl Jiménez, Álvaro Fidalgo
+      -
+    Julián Quiñones

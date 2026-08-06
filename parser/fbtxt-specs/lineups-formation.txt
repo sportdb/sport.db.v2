@@ -1,0 +1,36 @@
+##
+## try lineup w/ formations
+##     e.g. (4-1-4-1)  or (4141) etc
+
+
+   Mexico:
+     (4-1-4-1)
+     Raúl Rangel
+        -
+      Israel Reyes, Jesús Gallardo, Érik Lira, César Montes
+        -
+      Johan Vásquez
+        -
+      Roberto Alvarado, Brian Gutiérrez, Raúl Jiménez, Álvaro Fidalgo
+        -
+      Julián Quiñones
+
+
+   South Africa:
+       (5-3-2)
+      Ronwen Williams
+        -
+      Khuliso Mudau, Aubrey Modiba, Mbekezeli Mbokazi, Ime Okon, Nkosinathi Sibisi
+        -
+      Teboho Mokoena, Sphephelo Sithole, Lyle Foster
+        -
+      Iqraam Rayners, Jayden Adams
+
+
+   Mexico: (4141) Raúl Rangel - Israel Reyes, Jesús Gallardo, Érik Lira, César Montes -
+      Johan Vásquez - Roberto Alvarado, Brian Gutiérrez, Raúl Jiménez, Álvaro Fidalgo -
+      Julián Quiñones
+
+   South Africa: (532) Ronwen Williams - Khuliso Mudau, Aubrey Modiba, Mbekezeli Mbokazi,
+      Ime Okon, Nkosinathi Sibisi - Teboho Mokoena, Sphephelo Sithole, Lyle Foster -
+      Iqraam Rayners, Jayden Adams

@@ -9,8 +9,10 @@ PROP_LINEUP_RE = Regexp.union(
 
    INLINE_CAPTAIN,  ## e.g. [c]
    INLINE_YELLOW,   ## e.g. [Y] or [Y 44] or [Y 44'] or [Y 45+1']
-   INLINE_YELLOW_RED,  ## e.g. [Y/R] or [Y/R 78]
+   INLINE_YELLOW_RED,  ## e.g. [Y/R] or [Y/R 78] or [YR]
    INLINE_RED,         ## e.g. [R] or [R 42] or [R 42']
+
+   FORMATION_RE,     ## e.g. (4-3-3), (4-1-4-1) etc.
 
    PROP_KEY_INLINE_RE,
    PROP_NAME_RE,
@@ -35,6 +37,12 @@ def _on_prop_lineup( m, ctx: )      ## note - m is MatchData object
                 ## report error - for unknown (inline) prop key in lineup
                 nil
               end
+         elsif m[:formation]
+              ## e.g. (4-3-3) or (433)
+              ##   note - value is 4-3-3 or 433 as string (without parenthesis)
+              Token.new(:FORMATION, m[:formation],
+                             lineno: ctx.lineno, offset: m.offset(:formation),
+                             value:  m[:value])
          elsif m[:inline_captain]
               Token.new(:INLINE_CAPTAIN, m[:inline_captain],
                             lineno: ctx.lineno, offset: m.offset(:inline_captain))

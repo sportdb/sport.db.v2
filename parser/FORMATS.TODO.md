@@ -1,4 +1,41 @@
-# Football.TXT Format Todos
+# Todos - Football.TXT Format
+
+
+- [ ]  add (optional) formation to lineup (4-3-3) or (4-3-1-2)
+                             or shortcut (433) or (4312) WITHOUT dash
+
+
+## Properties
+
+- [ ]   "clean-up" inside props
+          - coach (in lineup)  -- note - coach (like referee) allow more than one!!!
+                                        ex. argentina (in world cup 1930 and others)
+          - att (in referee)
+        and  make concat of props "generic"
+         for known props e.g. coach, att :-)
+          e.g.
+            INSIDE_PROP  will first issue PROP_END
+               and than "classic" PROP_ATTENTANCE or PROP_COACH !!
+               and use "standalone"  AttLine, CoachLine, etc.
+
+```
+  how to handle separators?
+    e.g.      -  coach:   or
+              ,  coach:
+              ;  coach:   or maybe
+              |  coach:
+
+    "hacky" incl. leading (optional)
+      separator into regex token!!!
+           [,;|-]
+
+
+maybe change inline_attendance too (to incl./merge in (optional) comma!!)
+  will remove "special" case about
+  and fix lrla(1) - look-ahead(1) of comma + inline_attendance
+   e.g.      , att:         44_400
+             , attendance:  44_400
+```
 
 
 
@@ -8,32 +45,32 @@
        change text input from array of lines to multi-line string
        incl. comments and blank lines etc. (that is, remove Outliner)
 
-- [ ]  use two lexers 
+- [ ]  use two lexers
        - minimal   - no goal lines, no props, etc.
-       - "maximal"  - supports goal lines, and props 
+       - "maximal"  - supports goal lines, and props
 
-       
+
 ### Format Clean-up
 
 - [x]  add heading1/2/3 etc. to parser rules
 - [x]  remove (optional) \[\] from date
 - [x]  remove support for "standalone weekday and weekday+hour only (require date!)
-- [x]   change goal format - MUST start with and enclosed by (); 
-           change minutes to goal minutes and 
+- [x]   change goal format - MUST start with and enclosed by ();
+           change minutes to goal minutes and
            include optional  o.g., pen. WITHOUT enclosing ()!!!
            e.g.  (Benzema 51' Bale 64', 83'; Mané 55') or
                  (Benzema, Bale (2); Mané)
-           or  multi-line-style  
-               (Milner 15'og, Džeko 52', Nainggolan 86', 90+4'pen; 
-                 Mané 9', Wijnaldum 25')   
+           or  multi-line-style
+               (Milner 15'og, Džeko 52', Nainggolan 86', 90+4'pen;
+                 Mané 9', Wijnaldum 25')
 
 
 - [ ]  check minute format (note - BBC uses  `45'+2` instead of `45+2'` - support or change - why? why not?)
        yes, change to the BBC style - use `45'+2`  !!!
-- [ ]  clean-up lexer / tokens / regexes   
+- [ ]  clean-up lexer / tokens / regexes
         - remove (standalone) weekday for now
         - remove list support
-        - ...              
+        - ...
 - [ ]  add back alternate goal line format (e.g  0-1 Milner 15', 1-1 Mané 12' etc.)
        - note - make minutes optional e.g. ( 0-1 Milner, 1-1 Mané)
 - [ ]   simplify v (versus) - only allow `v` (remove `vs`) - why? why not?
@@ -43,41 +80,41 @@
 - [ ]   add  agg to "standard" full score format e.g.
            Rapid v Austria  3-2, 4-5 agg  or
            Rapid v Austria  3-2 (1-1), 4-5 agg   -- with semi-colon - why? why not?
-           - check aggregate with aet, aet+pen, away goals, etc. !!!!!  
+           - check aggregate with aet, aet+pen, away goals, etc. !!!!!
 
 - [ ]  philosophical -   change `score: { et: [] }` to `score: { aet: [] }` - why? why not?
           - keep et: \[\] for extra time score only (NOT incl. full-time)
                       that is,  ft+et = aet  e.g.  \[1,1\] + \[1,0\] = \[2,1\]
-                      
+
 - add sudden death/golden goal option for extra time
   - asdet  (after sudden death extra time)
   - agget  (after golden goal extra time)
   - aet/gg (after extra time/golden goal)
 
- 
+
 ----
 more todos
 
 - [ ]  add football boxes (matches) from <https://en.wikipedia.org/wiki/1871–72_FA_Cup>  incl. w/o from, byes and more!!!
 - [ ] add rsssf samples for
         - <https://github.com/rsssf/brazil/blob/master/2010/1-seriea.txt>
-        
-  
+
+
 
 ## Planned / Clean-up
 
 
 ### Goal Line
 - [x]  do NOT eat-up goal line starter; use "virtual" GOALS token (kind of INLINE_GOALS)!!!
-- [x]  check for negative lookahead `(1)` - ord (number) for goal line starter 
+- [x]  check for negative lookahead `(1)` - ord (number) for goal line starter
 
 
 ### Time / Timezone
 
-- [x]  yes, remove the `12.00`, `17.30` option from time! 
+- [x]  yes, remove the `12.00`, `17.30` option from time!
        only support `12:00`, `17:30` - `12h00`, `17h30`
 - [x]  fix optional timezone  -   follow time w/o enclosing bracket e.g.
-       `12:00 CEST` or `12:00 CEST/UTC+1` etc.  
+       `12:00 CEST` or `12:00 CEST/UTC+1` etc.
 
 
 
