@@ -31,6 +31,14 @@ class Match
 
   attr_accessor :goals      ## todo/fix: make goals like all other attribs!!
 
+###
+#  add details match (report) info
+##          lineup,bench,subs,bookings(y/yr/r/etc.)
+  attr_accessor :lineup
+  attr_accessor :bench
+  attr_accessor :subs
+
+
   def initialize( **kwargs )
     @score = []
     ## @score1,    @score2    = [nil,nil]  ## full time
@@ -239,6 +247,26 @@ def as_json
   end
 
   data['attendance'] = @att   if @att
+
+
+###
+#  check for match (report) details
+#    quick & dirty first try/version/dump
+#      refine (serialize) format later
+    if @lineup
+        data['lineup'] = @lineup.as_json
+
+        if @bench
+          data['bench'] = @bench.as_json
+        end
+
+        if @subs
+          data['subs'] = @subs.as_json
+        end
+    end
+
+
+
   data
 end
 end  # class Match

@@ -69,9 +69,10 @@ class MatchTree
           on_match_line_bye( node )
       elsif node.is_a? RaccMatchParser::GoalLine
           on_goal_line( node )
-      elsif node.is_a?( RaccMatchParser::LineupLine ) ||
-            node.is_a?( RaccMatchParser::RefereeLine )
-           ## skip lineup, referee props for now
+      elsif node.is_a?( RaccMatchParser::LineupLine )
+          on_lineup_line( node )
+      elsif node.is_a?( RaccMatchParser::RefereeLine )
+           ## skip referee props for now
       elsif node.is_a?( RaccMatchParser::Heading1 ) ||
             node.is_a?( RaccMatchParser::Heading2 ) ||
             node.is_a?( RaccMatchParser::Heading3 )

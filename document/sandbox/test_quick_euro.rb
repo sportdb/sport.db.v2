@@ -1,5 +1,10 @@
 #######
 # test search (struct convenience) helpers/methods
+#
+#   use
+#  $ ruby sandbox/test_quick_euro.rb   (in document)
+
+
 
 require_relative 'helper'
 
