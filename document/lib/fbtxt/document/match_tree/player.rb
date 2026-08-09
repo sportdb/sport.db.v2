@@ -3,6 +3,26 @@ module Fbtxt
 class MatchTree
 
 
+class EventCard    ### use EventBooking - why? why not?
+    attr_reader :type
+    attr_reader :name
+    attr_reader :minute
+
+    def initialize( type:, name:, minute: nil )
+        @type   = type
+        @name   = name
+        @minute = minute
+    end
+
+    def as_json(*)
+        h = { 'type' => type,
+              'name' => name }
+        h['minute'] = minute.to_s    if minute
+
+        h
+    end
+end  # class EventCard
+
 
 class EventSub   ## use just Sub or ??
 

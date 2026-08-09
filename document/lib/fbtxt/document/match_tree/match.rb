@@ -34,9 +34,8 @@ class Match
 ###
 #  add details match (report) info
 ##          lineup,bench,subs,bookings(y/yr/r/etc.)
-  attr_accessor :lineup
-  attr_accessor :bench
-  attr_accessor :subs
+  attr_accessor :lineup  ## incl. starter/bench/subs!!!
+  attr_accessor :bookings    ## use cards - why? why not?
 
   attr_accessor :referees
 
@@ -267,16 +266,13 @@ def as_json
 #  check for match (report) details
 #    quick & dirty first try/version/dump
 #      refine (serialize) format later
-    if @lineup
+    if @lineup.is_a?(Array) && @lineup.size > 0
         data['lineup'] = @lineup.as_json
+    end
 
-        if @bench
-          data['bench'] = @bench.as_json
-        end
 
-        if @subs
-          data['subs'] = @subs.as_json
-        end
+    if @bookings.is_a?(Array) && @bookings.size > 0
+       data['bookings'] = @bookings.as_json
     end
 
 
