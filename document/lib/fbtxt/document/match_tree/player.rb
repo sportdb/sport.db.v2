@@ -19,11 +19,30 @@ class EventSub   ## use just Sub or ??
     def as_json(*)
         h = { 'on'  => name_on,
               'off' => name_off }
-        h['minute'] = minute    if minute
+        h['minute'] = minute.to_s    if minute
 
         h
     end
 end  ## EventSub
+
+
+
+class Referee  ## rename to/use Official - why? why not?
+    attr_reader :name, :country
+
+    def initialize( name:, country: nil )
+        @name    = name
+        @country = country
+    end
+
+    def as_json(*)
+        h = { 'name' => name }
+        h['country'] = country    if country
+
+        h
+    end
+end  # class Referee
+
 
 
 class Player

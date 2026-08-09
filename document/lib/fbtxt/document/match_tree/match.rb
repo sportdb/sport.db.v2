@@ -38,6 +38,10 @@ class Match
   attr_accessor :bench
   attr_accessor :subs
 
+  attr_accessor :referees
+
+  attr_accessor :penalties
+
 
   def initialize( **kwargs )
     @score = []
@@ -205,7 +209,7 @@ def as_json
 
 
   ### check for goals
-  if @goals && @goals.size > 0
+  if @goals.is_a?(Array) && @goals.size > 0
     data['goals1'] = []
     data['goals2'] = []
 
@@ -213,12 +217,16 @@ def as_json
           node = {}
           node['name']    = goal.player
 
+=begin
           ## note - use a string for minutes for now
           ##           allows e.g.  45+2 etc. too
           minute_str  = "#{goal.minute}"
           minute_str += "+#{goal.offset}"   if goal.offset
 
           node['minute']  = minute_str
+=end
+          node['minute']  = goal.minute.to_s   if goal.minute
+
 
           node['owngoal'] = true         if goal.owngoal
           node['penalty'] = true         if goal.penalty
@@ -230,6 +238,12 @@ def as_json
           end
      end  # each goal
   end
+
+  ### check for penalties (shootout)
+  if @penalties.is_a?(Array) && @penalties.size > 0
+     data['penalties'] = @penalties.as_json
+  end
+
 
 
   data['status'] = @status  if @status
@@ -265,6 +279,10 @@ def as_json
         end
     end
 
+
+    if @referees.is_a?(Array) && @referees.size > 0
+        data['referees'] = @referees.as_json
+    end
 
 
   data

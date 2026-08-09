@@ -53,8 +53,7 @@ class MatchTree
         goal = Goal.new(
                   player: rec.player,
                   team:   1,
-                  minute:  minute.m,
-                  offset:  minute.offset,
+                  minute:  minute.to_minute, ## from GoalMinute to Minute!!
                   penalty: minute.pen || false, #  note: pass along/use false NOT nil
                   owngoal: minute.og || false
                 )
@@ -67,8 +66,7 @@ class MatchTree
         goal = Goal.new(
                   player: rec.player,
                   team:   2,
-                  minute:  minute.m,
-                  offset:  minute.offset,
+                  minute:  minute.to_minute, ## from GoalMinute to Minute!!
                   penalty: minute.pen || false, #  note: pass along/use false NOT nil
                   owngoal: minute.og || false
                 )
@@ -76,7 +74,29 @@ class MatchTree
       end
     end
 
+
     pp goals   if debug?
+
+
+    ## todo/fix
+    ##    PLUS auto-fill score1,score2 - why? why not?
+
+    ##   sort by minute
+   goals = goals.sort do |l,r|
+                    if l.minute && r.minute
+                            ## note - minute is obj!! (Parser::Minute!!)
+                            l_min,l_offset = _parse_minute( l.minute.to_s )
+                            r_min,r_offset = _parse_minute( r.minute.to_s )
+
+                            res = l_min <=> r_min
+                            res = (l_offset||0) <=> (r_offset||0)   if res == 0
+                            res
+                    else
+                       ## keep as is (no minutes available)
+                       0
+                    end
+               end
+
 
     ## quick & dirty - auto add goals to last match
     ##   note - for hacky (quick& dirty) multi-line support
@@ -85,9 +105,6 @@ class MatchTree
     match.goals ||= []
     match.goals += goals
 
-    ## todo/fix
-    ##   sort by minute
-    ##    PLUS auto-fill score1,score2 - why? why not?
   end
 
 

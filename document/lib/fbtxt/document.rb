@@ -25,9 +25,12 @@ require_relative 'document/match_tree_on/on_round_def'
 require_relative 'document/match_tree_on/on_round_outline'
 require_relative 'document/match_tree_on/on_date_header'
 require_relative 'document/match_tree_on/on_match_line'
+require_relative 'document/match_tree_on/on_match_bye'
 require_relative 'document/match_tree_on/on_goal_line'
+require_relative 'document/match_tree_on/on_penalties'
 
 require_relative 'document/match_tree_on/on_lineup_line'
+require_relative 'document/match_tree_on/on_referee_line'
 
 require_relative 'document/quick_match_reader'
 

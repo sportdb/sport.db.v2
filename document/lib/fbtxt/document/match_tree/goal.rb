@@ -2,12 +2,40 @@ module Fbtxt
 class MatchTree
 
 
+class Penalty
+    attr_reader :name
+    attr_reader :score
+    attr_reader :note
+
+    def initialize( name:, score: nil, note: nil )
+        @name    = name
+        @score   = score
+        @note    = note
+    end
+
+
+    ## add alias for name => player - why? why not?
+    alias_method :player, :name
+
+
+    def as_json(*)
+        h = { 'name'  => name }
+        h['score'] = score     if score.is_a?(Array) && !score.empty?
+        h['note']  = note      if note
+
+        h
+    end
+end  ## Penalty
+
+
+
 
 class Goal  ### nested (non-freestanding) inside match (match is parent)
+##
+## todo/fix - change player to name!!
   attr_reader :team,                ## note - 1|2 expected
               :player,
               :minute,
-              :offset,
               :owngoal,            ## true|false
               :penalty             ## true|false
 
@@ -25,21 +53,19 @@ class Goal  ### nested (non-freestanding) inside match (match is parent)
   def initialize( team:,
                   player:,
                   minute:,
-                  offset:  nil,
                   owngoal: false,
                   penalty: false
                 )
     @team    = team     # 1|2
     @player  = player
-    @minute  = minute
-    @offset  = offset
+    @minute  = minute   ## note - is obj/incl. (optional) offset/injury timee!!
     @owngoal = owngoal
     @penalty = penalty
   end
 
   def state
     [@team,
-     @player, @minute, @offset, @owngoal, @penalty
+     @player, @minute, @owngoal, @penalty
      ]
   end
 
@@ -50,9 +76,8 @@ class Goal  ### nested (non-freestanding) inside match (match is parent)
   def pretty_print( q )
     q.group( 4, '<Goal', '>') do        ##  group( indent, open, close)
       buf = String.new
-      buf << " #{@player} #{@minute}"
-      buf << "+#{@offset}"    if @offset && @offset > 0
-      buf << "'"
+      buf << " #{@player}"
+      buf << " #{@minute}"    if @minute
       q.text( buf )
 
       q.text( "(og)" )  if @owngoal
