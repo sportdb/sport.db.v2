@@ -57,7 +57,7 @@ ARGENTINA:
 Coach: Lionel Scalon
 
 
-▪Final▪
+▪ Final ▪
 18 December 2022 @ Lusail, Lusail Stadium
 Attendance: 88_966
 Referee: Szymon Marciniak (Poland)
@@ -67,9 +67,16 @@ ARGENTINA 3-3 FRANCE [after extra time, Argentina won 4-2 on penalties]
 
 ## allow/use city(name), date e.g.
 
-▪Final▪
+▪ Final ▪
 Lusail, 18 December 2022 - Lusail Stadium
 Attendance: 88_966
 Referee: Szymon Marciniak (Poland)
 
+
+
+▪ Final ▪ 18 December 2022 @ Lusail, Lusail Stadium
+Attendance: 88_966
+Referee:    Szymon Marciniak (Poland)
+
+ARGENTINA 3-3 FRANCE [after extra time, Argentina won 4-2 on penalties]
 ```

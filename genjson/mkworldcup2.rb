@@ -1,6 +1,6 @@
 ##
 ##  to run use:
-##   $ ruby mkworldcup.rb        (in /genjson)
+##   $ ruby mkworldcup2.rb        (in /genjson)
 
 require_relative 'helper'
 
@@ -36,38 +36,13 @@ config_history = [
   ['2014/worldcup.json', ['worldcup/2014--brazil/cup.txt', 'worldcup/2014--brazil/cup_finals.txt']],
   ['2018/worldcup.json', ['worldcup/2018--russia/cup.txt', 'worldcup/2018--russia/cup_finals.txt']],
   ['2022/worldcup.json', ['worldcup/2022--qatar/cup.txt', 'worldcup/2022--qatar/cup_finals.txt']],
-]
 
-
-config_2026 = [
   ['2026/worldcup.json',                ['worldcup/2026--usa/cup.txt',   'worldcup/2026--usa/cup_finals.txt']],
   ['2026/worldcup.quali_playoffs.json', ['worldcup/2026--usa/quali_playoffs.txt']],
 ]
 
 
 config_more = [
-  ['more/1930.json',['worldcup/more/1930.txt']],
-  ['more/1934.json',['worldcup/more/1934.txt']],
-  ['more/1938.json',['worldcup/more/1938.txt']],
-  ['more/1950.json',['worldcup/more/1950.txt']],
-  ['more/1954.json',['worldcup/more/1954.txt']],
-  ['more/1958.json',['worldcup/more/1958.txt']],
-  ['more/1962.json',['worldcup/more/1962.txt']],
-  ['more/1966.json',['worldcup/more/1966.txt']],
-  ['more/1970.json',['worldcup/more/1970.txt']],
-  ['more/1974.json',['worldcup/more/1974.txt']],
-  ['more/1978.json',['worldcup/more/1978.txt']],
-  ['more/1982.json',['worldcup/more/1982.txt']],
-  ['more/1986.json',['worldcup/more/1986.txt']],
-  ['more/1990.json',['worldcup/more/1990.txt']],
-  ['more/1994.json',['worldcup/more/1994.txt']],
-  ['more/1998.json',['worldcup/more/1998.txt']],
-  ['more/2002.json',['worldcup/more/2002.txt']],
-  ['more/2006.json',['worldcup/more/2006.txt']],
-  ['more/2010.json',['worldcup/more/2010.txt']],
-  ['more/2014.json',['worldcup/more/2014.txt']],
-  ['more/2018.json',['worldcup/more/2018.txt']],
-  ['more/2022.json',['worldcup/more/2022.txt']],
 
  ## add/try full too
   ['more/1930-full.json',['worldcup/more/1930_full.txt']],
@@ -95,55 +70,20 @@ config_more = [
 ]
 
 
-config_min = [
-  ['min/1930.json',['worldcup/min/1930.txt']],
-  ['min/1934.json',['worldcup/min/1934.txt']],
-  ['min/1938.json',['worldcup/min/1938.txt']],
-  ['min/1950.json',['worldcup/min/1950.txt']],
-  ['min/1954.json',['worldcup/min/1954.txt']],
-  ['min/1958.json',['worldcup/min/1958.txt']],
-  ['min/1962.json',['worldcup/min/1962.txt']],
-  ['min/1966.json',['worldcup/min/1966.txt']],
-  ['min/1970.json',['worldcup/min/1970.txt']],
-  ['min/1974.json',['worldcup/min/1974.txt']],
-  ['min/1978.json',['worldcup/min/1978.txt']],
-  ['min/1982.json',['worldcup/min/1982.txt']],
-  ['min/1986.json',['worldcup/min/1986.txt']],
-  ['min/1990.json',['worldcup/min/1990.txt']],
-  ['min/1994.json',['worldcup/min/1994.txt']],
-  ['min/1998.json',['worldcup/min/1998.txt']],
-  ['min/2002.json',['worldcup/min/2002.txt']],
-  ['min/2006.json',['worldcup/min/2006.txt']],
-  ['min/2010.json',['worldcup/min/2010.txt']],
-  ['min/2014.json',['worldcup/min/2014.txt']],
-  ['min/2018.json',['worldcup/min/2018.txt']],
-  ['min/2022.json',['worldcup/min/2022.txt']],
-]
-
-
-
-config_rsssf = [
-   ['rsssf/30full.json', ['worldcup/rsssf/30full.txt']],
-   ['rsssf/34f.json',    ['worldcup/rsssf/34f.txt']],
-   ['rsssf/38f.json',    ['worldcup/rsssf/38f.txt']],
-    ['rsssf/2014f.json',  ['worldcup/rsssf/2014f.txt']],
-    ['rsssf/2022f.json',  ['worldcup/rsssf/2022f.txt']],
-
-    ## ['rsssf/2022q.json',  ['worldcup/rsssf/2022q.txt']],
-    ## !! (QUICK) PARSE ERROR - no season found in Heading1 >World Cup Qualifying; sorry
-]
-
-config_rsssf_fix = [
- ['rsssf/worldcup.json',  ['worldcup/rsssf/worldcup.txt']],
-  ## ! (QUICK) PARSE ERROR - no season found in Heading1 >World Cup Finals; sorry
-]
 
 
 indir = OPENFOOTBALL_PATH
 ## outdir =   "#{OPENFOOTBALL_PATH}/worldcup.json"
-outdir = './tmp-worldcup'
+outdir = './tmp-worldcup2'
 
-config = config_rsssf
+
+config =
+[
+  ['1930/worldcup.json', ['worldcup/1930--uruguay/cup.txt']],
+
+  ## add/try full versions
+  ['1930/worldcup-full.json', ['worldcup/more/1930_full.txt']],
+]
 
 
 genjson( config, outdir: outdir,

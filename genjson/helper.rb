@@ -1,19 +1,20 @@
 
 ## note: use the local version of gems
 $LOAD_PATH.unshift( File.expand_path( '../parser/lib' ))
-$LOAD_PATH.unshift( File.expand_path( '../quick/lib' ))
+$LOAD_PATH.unshift( File.expand_path( '../document/lib' ))
 
 
 ## our own code
-require 'sportdb/quick'
+require 'fbtxt/parser'
+require 'fbtxt/document'
 
 
-OPENFOOTBALL_PATH = '../../../openfootball'
+OPENFOOTBALL_PATH = '/sports/openfootball'
 
 
 
-SportDb::MatchTree.debug = false
-Fbtxt::Document.debug = false
+Fbtxt::MatchTree.debug = false
+Fbtxt::Document.debug  = false
 
 
 def parse_matches( *infiles, indir: '.' )
@@ -24,9 +25,8 @@ def parse_matches( *infiles, indir: '.' )
       inpath = File.join( indir, infile )
 
       puts "==> reading #{inpath}..."
-      txt = read_text( inpath )
 
-      doc = Fbtxt::Document.parse( txt )
+      doc = Fbtxt::Document.read( inpath )
       more_matches = doc.matches
       name         = doc.title
 

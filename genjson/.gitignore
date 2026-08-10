@@ -1,12 +1,13 @@
 
-## 
+##
 # ignore more tmp dirs
+##   e.g. tmp-worldcup/, temp-worldcup2/ etc.
 tmp/
-tmp-worldcup/
-tmp-misc/
+tmp-*/
+
 
 
 ###
-# ignore logs 
+# ignore logs
 logs.txt
-
+logs.2.txt
