@@ -272,7 +272,12 @@ def as_json
 
 
     if @bookings.is_a?(Array) && @bookings.size > 0
-       data['bookings'] = @bookings.as_json
+       if @bookings[0].empty? && @bookings[1].empty?
+          ##  skip empty bookings
+          ## "bookings": [[], []]
+       else
+         data['bookings'] = @bookings.as_json
+       end
     end
 
 

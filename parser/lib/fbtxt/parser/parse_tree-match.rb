@@ -292,7 +292,9 @@ Minute      = Struct.new( :m, :offset, :secs )  do
     def to_s
       buf = String.new
       buf << "#{m}"
-      buf << "'"
+      ### note - do NOT autoadd minute quote for now
+      ##    make it an option e.g.  to_s( :quote) or such - why? why not?
+      ### buf << "'"
       buf << "+#{offset}"      if offset
       buf << "/#{secs} secs"   if secs
       buf

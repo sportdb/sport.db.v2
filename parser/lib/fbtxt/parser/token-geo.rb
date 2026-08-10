@@ -6,6 +6,8 @@ class Lexer
 #  allow Cote'd Ivoir or such
 ##   e.g. add '
 
+##  allow Ta' Qali  !!!
+
 
 ## todo/fix - make geo text regex more generic
 ##               only care about two space rule
@@ -51,7 +53,7 @@ GEO_TEXT_RE = %r{
               (?:
                 # opt 1 - start with alpha
                 #   note - allow (dots)
-                 \p{L}[\p{L}.]*    ## all unicode letters (e.g. [a-z])
+                 \p{L}[\p{L}'.]*    ## all unicode letters (e.g. [a-z])
                    |
                 # opt 2 - start with num!! -
                      \d+  # check for num lookahead (MUST be space or dot)

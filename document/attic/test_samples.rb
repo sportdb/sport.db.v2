@@ -1,13 +1,17 @@
 #######
 # test search (struct convenience) helpers/methods
+#
+#  use
+#    $ ruby sandbox/test_samples.rb
+
 
 require_relative 'helper'
 
 
 
-OPENFOOTBALL_PATH = '../../../openfootball'
+SAMPLES_PATH = './samples'
 
-path =  "#{OPENFOOTBALL_PATH}/worldcup/2022--qatar/cup_finals.txt"
+path =  "#{SAMPLES_PATH}/worldcup_2022_final.txt"
 
 doc = Fbtxt::Document.read( path )
 

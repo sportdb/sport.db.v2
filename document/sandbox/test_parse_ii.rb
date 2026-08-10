@@ -1,5 +1,8 @@
 #######
 # test search (struct convenience) helpers/methods
+#
+#  to run use
+#    $   ruby sandbox/test_parse_ii.rb
 
 
 require_relative 'helper'    ## bootup helper

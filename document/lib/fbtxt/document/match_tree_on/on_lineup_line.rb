@@ -178,11 +178,25 @@ end
 
     match.lineup ||= []
 
-    ## add formation here too - why? why not?
-    h = { 'starter' =>  _collect_lineup( lineup ),
-          'bench'   =>  _collect_bench( lineup ),
-          'subs'    =>  _collect_subs( lineup )
-        }
+    ## todo/fix-fix-fix  add formation here too - why? why not?
+
+
+    ## todo/fix-fix-fix  - use a Lineup struct/class (NOT generic hash)!!!
+
+    h = { 'starter' =>  _collect_lineup( lineup ) }
+
+    bench = _collect_bench( lineup )
+    if bench.empty?
+      ## do/add nothing; skip e.g.
+      ## "bench":[],
+      ## "subs":[]
+    else
+       ## note - if there's a bench  ALWAYS keep subs even if empty e.g.
+       ##  "subs":[]
+       h['bench'] = bench
+       h['subs']  =  _collect_subs( lineup )
+    end
+
     match.lineup << h
 
 
