@@ -35,5 +35,7 @@ require_relative 'document/match_tree_on/on_referee_line'
 require_relative 'document/quick_match_reader'
 
 
+require_relative 'document/utils'   ## e.g. (batch) genjson (via config)
+
 
 puts Fbtxt::Module::Document.banner    # say hello

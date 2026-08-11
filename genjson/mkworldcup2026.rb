@@ -20,8 +20,8 @@ outdir = './tmp-worldcup'
 config = config_2026
 
 
-genjson( config, outdir: outdir,
-                 indir: indir)
+Fbtxt::Export.genjson( config, outdir: outdir,
+                               indir: indir)
 
 
 puts "bye"

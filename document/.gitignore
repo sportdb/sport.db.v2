@@ -35,6 +35,8 @@ build/
 
 
 ###
-# add logs
+# add logs & errors
 logs.txt
+logs.*.txt
+
 errors.txt
