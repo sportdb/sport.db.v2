@@ -1,0 +1,86 @@
+####
+#  check lineup with "nested" cards
+
+
+## austria
+
+  LASK Linz v Sturm Graz  0-2 (0-2)
+
+LASK Linz: Lukas Jungwirth - George BELLO, Andres ANDRADE, Kasper Jørgensen,
+      Modou Cissé (66' Melayro BOGARDE) - Moses Usor (74' Valon Berisha),
+      Christoph Lang (66' Krystof Danek) - Lukas Kacavenda (74' Florian Flecker),
+      Samuel Adeniran, Ismaila COULIBALY (83' Art SMAKAJ) - Sascha Horvath [c]
+    Yellow: Samuel Adeniran 45', Modou Cissé 53', Ismaila COULIBALY 79', George BELLO 86'
+Sturm Graz: Matteo Bignetti - Max JOHNSTON, Tim Oermann (45' Emanuel Aiwu), Emir Karic,
+      Dimitri Lavalée - Otari KITEISHVILI (90+2' Filip Rózga) - Tomi HORVAT (76' Jacob Hödl),
+      Tochi Chukwuani - William Bøving (76' Belmin Beganovic) - Leon Grgic (66' Seedy Jatta),
+      Jon GORENC STANKOVIC [c]
+    Yellow: Otari KITEISHVILI 38', Jacob Hödl 87'
+
+
+
+ SV Ried v FC Salzburg  2-2 (1-1)
+
+SV Ried: Andreas Leitner [c] - Nikki Havenaar, Michael Sollbauer, Oliver Steurer -
+      Martin Rasner (71' Yusuf Maart), Mark Grosse (85' Joris Boguo), Ante Bajic,
+      Philipp Pomer (70' Fabian Rossdorfer) - Christopher Wernitznig - Kingstone MUTANDWA,
+      Antonio Van Wyk (65' Peter Kiedl)
+    Yellow: Ante Bajic 76', Christopher Wernitznig 79', Andreas Leitner 90+1'
+FC Salzburg: Alexander SCHLAGER - Jacob Rasmussen, Frans Krätzig, S. Lainer, Joane Gadou -
+      Sota Kitano (71' Kerim ALAJBEGOVIC), Maurits KJAERGAARD -
+      Karim ONISIWO (57' Petar RATKOV), Edmund Baidoo (58' Yorbe Vertessen) -
+      Soumaïla Diabaté (65' Dorgeles NENE), Mads BIDSTRUP [c]
+    Yellow: Frans Krätzig 52'
+    Yellow-Red: Frans Krätzig 90+6'
+
+
+
+ FC Salzburg v Grazer AK  5-0 (1-0)
+
+FC Salzburg: Alexander SCHLAGER - Jacob Rasmussen, Aleksa TERZIC, S. Lainer (67' Tim Trummer),
+      Jannik Schuster - Sota Kitano (25' Maurits KJAERGAARD), Kerim ALAJBEGOVIC -
+      Petar RATKOV, Adam Daghim (45' Yorbe Vertessen) - Soumaïla Diabaté (45' Dorgeles NENE),
+      Mads BIDSTRUP [c] (73' Mamady DIAMBOU)
+    Yellow: Adam Daghim 45+7'
+Grazer AK: Jakob Meierhofer - Ludwig Vraa (62' Donovan Pines), Lukas Graf, Beres Owusu -
+      Sadik FOFANA, Tobias Koch, Jacob ITALIANO (84' Thomas Schiestl), Dominik Frieser -
+      Daniel Maderner [c] (27' Zétény Jánó), Tio Cipot (27' Murat Satin),
+      Ramiz Harakate (45' Alexander Hofleitner)
+    Yellow: Alexander Hofleitner 46'
+    Red:    Sadik FOFANA 23'
+
+
+
+ SCR Altach v SV Ried  2-0 (1-0)
+
+SCR Altach: Dejan Stojanovic - Rassa Rahmani, Lukas Jäger [c], Benedikt Zech -
+      Vesel Demaku (80' Lukas GUGGANIG), Mike-Steven Bähre, Sandro Ingolitsch,
+      Mohamed OUEDRAOGO - Srdjan Hrstic (80' Alexander Gorgon),
+      Patrick Greil (90+1' Precious Benjamin), Yann Litawumba (90+1' Moritz Oswald)
+    Yellow: Patrick Greil 31'
+SV Ried: Andreas Leitner [c] - Jonathan Scherzer, Philip Weissenbacher (57' Nicolas Bajlicz),
+      Michael Sollbauer (67' Nikki Havenaar), Oliver Steurer -
+      Joris Boguo (45' Kingstone MUTANDWA), Jussef Nasrawe - Christopher Wernitznig,
+      Saliou Sané (45' Antonio Van Wyk), Yusuf Maart (57' Leonit Zeqiri) - Martin Rasner
+    Yellow: Martin Rasner 26', Michael Sollbauer 45+7', Oliver Steurer 90+4'
+    Yellow-Red: Martin Rasner 68'
+
+
+
+
+## england
+
+
+ Liverpool v Bournemouth  4-2 (1-0)
+
+Liverpool: ALISSON - Virgil VAN DIJK [c], Ibrahima KONATE, Milos KERKEZ (60' Andy ROBERTSON),
+      Jeremie FRIMPONG (60' Wataru ENDO) - Florian WIRTZ (82' Federico Chiesa),
+      MOHAMED SALAH - Cody GAKPO, Hugo EKITIKE (72' Joe Gomez), Dominik Szoboszlai -
+      Alexis MAC ALLISTER (72' Curtis Jones)
+    Yellow: Milos KERKEZ 43'
+
+Bournemouth: Djordje PETROVIC - Adrien TRUFFERT, Marcos SENESI, Adam SMITH [c] (90' James Hill),
+      Bafode DIAKITE - David BROOKS (84' Ben Winterburn) - Alex Scott (74' Hamed TRAORE),
+      Marcus Tavernier, Antoine SEMENYO, Francisco Evanilson de Lima Barbosa -
+      Tyler ADAMS (90+1' Eli Junior KROUPI)
+    Yellow: David BROOKS 14', Francisco Evanilson de Lima Barbosa 81'

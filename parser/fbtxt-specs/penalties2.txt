@@ -1,0 +1,52 @@
+####
+#  try alternate penalties format
+#     with separator
+#
+#  note - this format WITHOUT scores
+#             makes it impossible to know what team started the penalty shootout
+#         can be team1 or team2 (selected by coin toss) !!!
+
+
+##
+##  parse error on token:  >;<  !!!
+
+
+Argentina v France  3-3 a.e.t., 4-2 pen.
+
+Penalties: Lionel Messi, Paulo Dybala, Leandro Paredes, Gonzalo Montiel;
+           Kylian Mbappé, Kingsley Coman (X), Aurélien Tchouaméni (X), Randal Kolo Muani
+
+
+
+Japan v Croatia  1-1 a.e.t., 1-3 pen.
+
+Penalties: Takumi Minamino (X), Kaoru Mitoma (X), Takuma Asano, Maya Yoshida (X);
+           Nikola Vlašić, Marcelo Brozović, Marko Livaja (X), Mario Pašalić
+
+
+
+Morocco v Spain  0-0 a.e.t., 3-0 pen.
+
+Penalties: Abdelhamid Sabiri, Hakim Ziyech, Badr Benoun (X), Achraf Hakimi;
+           Pablo Sarabia (X), Carlos Soler (X), Sergio Busquets (X)
+
+
+
+Croatia v Brazil  1-1 a.e.t., 4-2 pen.
+
+Penalties: Nikola Vlašić, Lovro Majer, Luka Modrić, Mislav Oršić;
+           Rodrygo (X), Casemiro, Pedro, Marquinhos (X)
+
+
+
+Netherlands v Argentina  2-2 a.e.t., 3-4 pen.
+
+Penalties: Virgil van Dijk (X),
+            Steven Berghuis (X),
+            Teun Koopmeiners,
+           Wout Weghorst, Luuk de Jong;
+           Lionel Messi,
+           Leandro Paredes,
+           Gonzalo Montiel,
+           Enzo Fernández (X),
+           Lautaro Martínez

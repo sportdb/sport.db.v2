@@ -1,0 +1,97 @@
+###
+#  todo/check
+#     change to filename to bookings - why? why not?
+#
+#
+#  try the pre-card sent off property
+#       used in the worldcup, for example
+
+# !! WARN - unknown node (parse tree type) - Fbtxt::Parser::CardsLine
+# <CardsLine SENTOFF bookings=[Daniele De Rossi 28, Eddie Pope 21, Pablo Mastroeni 45]>]
+# <CardsLine SENTOFF bookings=[Plácido Galindo 60]>
+# <CardsLine SENTOFF bookings=[Machado 60, Zezé Procópio 60, Jan Říha 60]>
+# <CardsLine SENTOFF bookings=[Mario David 60, Giorgio Ferrini 60]>
+# <CardsLine SENTOFF bookings=[Thomas Berthold 65, Javier Aguirre 20]>
+# <CardsLine SENTOFF bookings=[Rudi Völler 21, Frank Rijkaard 21]>
+# <CardsLine SENTOFF bookings=[Daniele De Rossi 28, Eddie Pope 21, Pablo Mastroeni 45]>
+
+
+
+Romania v Peru  3-1
+
+Romania: Ion Lǎpuşneanu, Emerich Vogl, Rudolf Bürger, Adalbert Steiner,
+   Alfred Eisenbeisser, László Raffinsky, Adalbert Deşu, Miklós Kovács,
+   Constantin Stanciu, Rudolf Wetzer, Ştefan Barbu
+Peru: Juan Valdivieso, Mario de las Casas, Alberto Soria, Plácido Galindo,
+   Alberto Denegri, Domingo García, José María Lavalle, Demetrio Neyra,
+   Luis Souza Ferreira, Alejandro Villanueva, Julio Lores
+
+Sent off: Plácido Galindo 60'
+
+
+
+Brazil v Czechoslovakia  1-1 a.e.t.
+
+Brazil: Walter, Domingos da Guia, Machado, Martim, Afonsinho, Zezé Procópio,
+   Hércules, Lopes, Perácio, Leônidas, Romeu
+Czechoslovakia: František Plánička, Jaroslav Burgr, Ferdinand Daučík, Jaroslav Bouček,
+   Vlastimil Kopecký, Josef Košťálek, Oldřich Nejedlý, Jan Říha, Antonín Puč,
+   Ladislav Šimůnek, Josef Ludl
+
+Sent off: Machado 60', Zezé Procópio 60', Jan Říha 60'
+
+
+
+Chile v Italy  2-0
+
+Chile: Misael Escuti, Sergio Navarro, Luis Eyzaguirre, Raúl Sánchez,
+   Carlos Contreras, Eladio Rojas, Jorge Toro, Alberto Fouilloux,
+   Jaime Ramírez, Honorino Landa, Leonel Sánchez
+Italy: Carlo Mattrel, Sandro Salvadore, Mario David, Enzo Robotti, Francesco Janich,
+   Giorgio Ferrini, Paride Tumburus, Bruno Mora, José Altafini,
+   Giampaolo Menichelli, Humberto Maschio
+
+Sent off: Mario David 60', Giorgio Ferrini 60'
+
+
+
+West Germany v Mexico  0-0 a.e.t., 4-1 pen.
+
+West Germany: Harald Schumacher, Hans-Peter Briegel, Andreas Brehme, Karlheinz Förster,
+   Norbert Eder (116' Pierre Littbarski), Thomas Berthold, Ditmar Jakobs,
+   Lothar Matthäus, Felix Magath, Karl-Heinz Rummenigge (59' Dieter Hoeneß),
+   Klaus Allofs
+Mexico: Pablo Larios, Fernando Quirarte, Felix Cruz, Raúl Servín,
+   Rafael Amador (69' Francisco Javier Cruz), Miguel España,
+   Tomás Boy (32' Carlos de los Cobos), Javier Aguirre, Carlos Muñoz,
+   Hugo Sánchez, Manuel Negrete
+
+Sent off: Thomas Berthold 65', Javier Aguirre 20'
+
+
+
+West Germany v Netherlands  2-1
+
+West Germany: Bodo Illgner, Stefan Reuter, Andreas Brehme, Jürgen Kohler,
+   Klaus Augenthaler, Thomas Berthold, Guido Buchwald, Pierre Littbarski,
+   Lothar Matthäus, Rudi Völler, Jürgen Klinsmann (77' Karl-Heinz Riedle)
+Netherlands: Hans van Breukelen, Berry van Aerle (66' Wim Kieft), Frank Rijkaard,
+   Ronald Koeman, Adri van Tiggelen, Jan Wouters,
+   Richard Witschge (78' Hans Gillhaus), John van 't Schip, Aron Winter,
+   Marco van Basten, Ruud Gullit
+
+Sent off: Rudi Völler 21', Frank Rijkaard 21'
+
+
+
+  Italy v United States  1-1
+
+Italy: Gianluigi Buffon, Cristian Zaccardo (54' Alessandro Del Piero),
+   Fabio Cannavaro, Alessandro Nesta, Gianluca Zambrotta, Daniele De Rossi,
+   Francesco Totti (35' Gennaro Gattuso), Simone Perrotta, Andrea Pirlo,
+   Luca Toni (61' Vincenzo Iaquinta), Alberto Gilardino
+United States: Kasey Keller, Carlos Bocanegra, Steve Cherundolo, Oguchi Onyewu, Eddie Pope,
+   Pablo Mastroeni, Clint Dempsey (62' DaMarcus Beasley), Claudio Reyna,
+   Bobby Convey (52' Jimmy Conrad), Brian McBride, Landon Donovan
+
+Sent off: Daniele De Rossi 28', Eddie Pope 21', Pablo Mastroeni 45'
