@@ -32,6 +32,9 @@
                        | cards cards_sep cards  { result = [val[0], val[2]]  }
 
 
+         ## change/rename to cards_team_sep - why? why not?
+         ##        same like penalties_team_sep
+
         cards_sep    : ';'
                      | CARDS_SEP_ALT     ## note - dash (-) with leading & trailing spaces required
 

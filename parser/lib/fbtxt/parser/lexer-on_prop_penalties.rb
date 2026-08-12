@@ -9,6 +9,7 @@ PROP_PENALTIES_RE = Regexp.union(
    SCORE_RE,               # e.g. 1-1 etc.
    ENCLOSED_NAME_RE,       # e.g. (save), (post), etc.
    PROP_NAME_RE,
+   PENALTIES_SEP_ALT_RE,     ##  note - add dash (-) with (required) spaces
     /  (?<sym>  [;,]) /x    ## add [] too - why? why not?
    ## todo/fix - add ANY_RE here too!!!
 )
@@ -27,6 +28,9 @@ def _on_prop_penalties( m, ctx: )      ## note - m is MatchData object
              Token.new( :SCORE, m[:score],
                               lineno: ctx.lineno, offset: m.offset(:score),
                               value: _build_score( m ))
+         elsif m[:penalties_sep_alt]
+             Token.new( :PENALTIES_SEP_ALT, m[0],
+                              lineno: ctx.lineno, offset: m.offset(0))
          elsif m[:sym]
               Token.literal( m[:sym], lineno: ctx.lineno, offset: m.offset(:sym))
          else

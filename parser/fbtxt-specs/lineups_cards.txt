@@ -68,6 +68,25 @@ SV Ried: Andreas Leitner [c] - Jonathan Scherzer, Philip Weissenbacher (57' Nico
 
 
 
+ SCR Altach v SV Ried  2-0 (1-0)
+
+SCR Altach: Dejan Stojanovic - Rassa Rahmani, Lukas Jäger [c], Benedikt Zech -
+      Vesel Demaku (80' Lukas GUGGANIG), Mike-Steven Bähre, Sandro Ingolitsch,
+      Mohamed OUEDRAOGO - Srdjan Hrstic (80' Alexander Gorgon),
+      Patrick Greil (90+1' Precious Benjamin), Yann Litawumba (90+1' Moritz Oswald)
+SV Ried: Andreas Leitner [c] - Jonathan Scherzer, Philip Weissenbacher (57' Nicolas Bajlicz),
+      Michael Sollbauer (67' Nikki Havenaar), Oliver Steurer -
+      Joris Boguo (45' Kingstone MUTANDWA), Jussef Nasrawe - Christopher Wernitznig,
+      Saliou Sané (45' Antonio Van Wyk), Yusuf Maart (57' Leonit Zeqiri) - Martin Rasner
+
+    Yellow: Patrick Greil 31';
+            Martin Rasner 26', Michael Sollbauer 45+7', Oliver Steurer 90+4'
+    Yellow-Red: None; Martin Rasner 68'
+
+
+
+
+##########
 ## england
 
 
@@ -84,3 +103,50 @@ Bournemouth: Djordje PETROVIC - Adrien TRUFFERT, Marcos SENESI, Adam SMITH [c] (
       Marcus Tavernier, Antoine SEMENYO, Francisco Evanilson de Lima Barbosa -
       Tyler ADAMS (90+1' Eli Junior KROUPI)
     Yellow: David BROOKS 14', Francisco Evanilson de Lima Barbosa 81'
+
+
+
+
+
+ Liverpool v Bournemouth  4-2 (1-0)
+
+Liverpool: ALISSON - Virgil VAN DIJK [c], Ibrahima KONATE, Milos KERKEZ (60' Andy ROBERTSON),
+      Jeremie FRIMPONG (60' Wataru ENDO) - Florian WIRTZ (82' Federico Chiesa),
+      MOHAMED SALAH - Cody GAKPO, Hugo EKITIKE (72' Joe Gomez), Dominik Szoboszlai -
+      Alexis MAC ALLISTER (72' Curtis Jones)
+
+Bournemouth: Djordje PETROVIC - Adrien TRUFFERT, Marcos SENESI, Adam SMITH [c] (90' James Hill),
+      Bafode DIAKITE - David BROOKS (84' Ben Winterburn) - Alex Scott (74' Hamed TRAORE),
+      Marcus Tavernier, Antoine SEMENYO, Francisco Evanilson de Lima Barbosa -
+      Tyler ADAMS (90+1' Eli Junior KROUPI)
+
+  Yellow: Milos KERKEZ 43';
+          David BROOKS 14', Francisco Evanilson de Lima Barbosa 81'
+
+
+
+
+
+##########
+## how to handle "top-level" card line for two teams ???
+##     MUST use team separator - why? why not?
+##
+##  algo -  track lineups (for team index 1/2)
+##            if index 1 && []   -- makes it [cards,[]]
+##            if index 2 && []   -- if empty makes it [[],cards]
+##                                     otherwise JOIN/REPLACE 2nd item [[1]]!!!
+##
+##   for now special handling for SENTOFF
+##      always assume "top-level"
+##               might be [], or [[],[]]
+##
+##  todo
+##  fix-fix-fix !!!
+##   yes,yes,yes - check if add cards to player (like in inline lineup) is possible
+##
+##    moves to collect cards
+##          to as_json (on demand) !!!
+##
+##
+##   note  - allow sent off/red|yellow|yellow-red cards  WITHOUT lineups (too)!!!
+##              only possible top-level (NOT nested)

@@ -9,13 +9,27 @@
 
         penalty_sep     :  ','
 
-        opt_penalty_sep :   /* empty */    { }   ## optional
+        opt_penalty_sep :   /* empty */    {  }     ## optional
                         |  penalty_sep
 
 
-        penalties_body  :  penalty                             {  result = val  }
-                        |  penalties_body opt_penalty_sep penalty  {  result.push( val[2] )  }
 
+        penalties_team_sep   :  ';'
+                             |  PENALTIES_SEP_ALT
+
+
+         #####
+         ##  note
+         ##     (i)  []          -  single line (no separator)
+         ##     (ii) [[],[]]     -  nested team1/team2 (separator required)
+
+         penalties_body : penalties                                 { result =  val[0]           }
+                        | penalties  penalties_team_sep  penalties  { result = [val[0], val[2]]  }
+
+
+
+        penalties  :  penalty                             {  result = val  }
+                   |  penalties opt_penalty_sep penalty   {  result.push( val[2] )  }
 
 
         penalty         :  SCORE PROP_NAME

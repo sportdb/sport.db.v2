@@ -28,11 +28,18 @@ PACK default
    status.txt
 
    penalties.txt
+   penalties2.txt
+   penalties-continue.txt
+
    referees.txt
+
    lineups.txt
+   lineups_ii.txt
    lineups-continue.txt
-   lineups-extreme.txt
    lineups-formation.txt
+   lineups_sentoff.txt
+   lineups_cards.txt
+
    cards.txt
    cards2.txt
    cards_inline.txt

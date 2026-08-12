@@ -97,6 +97,8 @@ Penalties: 0-1 Señor, 1-1 Claesen, Eloy (save Pfaff), 2-1 Scifo,
            2-2 Chendo, 3-2 Broos, 3-3 Butragueno, 4-3 Vervoort, 4-4 Victor,
            5-4 L.van der Elst
 
+
+
 Penalties:  0-1 Señor,             1-1 Claesen,
                 Eloy (save Pfaff), 2-1 Scifo,
             2-2 Chendo,            3-2 Broos,

@@ -33,8 +33,14 @@
                            {  result = { coach: val[2].as_str } }
 
 
+       ##   note - add back semicolon (;) as an option as (position) separator
+       ##                as an alternative for dash (-)
+       #
+       #   fix-fix-fix  - change  dash (-) to LINEUP_ALT_SEP (to check for space) - why? why not?
+       #                    like  CARDS_ALT_SEP, PENALTIES_ALT_SEP, etc.
 
        lineup_sep  :  ','           { result = ',' }
+                   |  ';'           { result = ';' }
                    |  '-'           { result = '-' }
 
        opt_lineup_sep : /* empty */  { result = '' }   ## use 'NONE' or such - why? why not?
@@ -50,8 +56,9 @@
                     }
               |   lineup opt_lineup_sep lineup_name
                     {
-                       ## note - if lineup_sep is dash (-) start a new sub array!!
-                       if val[1] == '-'
+                       ## note - if lineup_sep is dash (-) or
+                       ##                         semicolor (;) start a new sub array!!
+                       if val[1] == '-' || val[1] == ';'
                           result << [val[2]]
                        else
                           result[-1] << val[2]

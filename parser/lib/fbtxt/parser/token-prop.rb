@@ -321,7 +321,11 @@ CARDS_SEP_ALT_RE = %r{(?<cards_sep_alt>
               (?=[ ]|\z)    ## positive lookahead - speace required
              )}x
 
-
+PENALTIES_SEP_ALT_RE = %r{(?<penalties_sep_alt>
+              (?<=[ ])      ## positive lookbehind - space required
+                -
+              (?=[ ]|\z)    ## positive lookahead - speace required
+             )}x
 
 
 

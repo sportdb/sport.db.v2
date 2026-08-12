@@ -54,7 +54,7 @@ PenaltiesLine = Struct.new( :penalties ) do
   end
 
   def pretty_print( q )
-    q.group( 4, '< ', '>') do
+    q.group( 4, '<PenaltiesLine ', '>') do
       q.pp( penalties )
     end
   end

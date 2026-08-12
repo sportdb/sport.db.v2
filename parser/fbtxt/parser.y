@@ -1020,6 +1020,9 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                        | cards cards_sep cards  { result = [val[0], val[2]]  }
 
 
+         ## change/rename to cards_team_sep - why? why not?
+         ##        same like penalties_team_sep
+
         cards_sep    : ';'
                      | CARDS_SEP_ALT     ## note - dash (-) with leading & trailing spaces required
 
@@ -1053,13 +1056,27 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
 
         penalty_sep     :  ','
 
-        opt_penalty_sep :   /* empty */    { }   ## optional
+        opt_penalty_sep :   /* empty */    {  }     ## optional
                         |  penalty_sep
 
 
-        penalties_body  :  penalty                             {  result = val  }
-                        |  penalties_body opt_penalty_sep penalty  {  result.push( val[2] )  }
 
+        penalties_team_sep   :  ';'
+                             |  PENALTIES_SEP_ALT
+
+
+         #####
+         ##  note
+         ##     (i)  []          -  single line (no separator)
+         ##     (ii) [[],[]]     -  nested team1/team2 (separator required)
+
+         penalties_body : penalties                                 { result =  val[0]           }
+                        | penalties  penalties_team_sep  penalties  { result = [val[0], val[2]]  }
+
+
+
+        penalties  :  penalty                             {  result = val  }
+                   |  penalties opt_penalty_sep penalty   {  result.push( val[2] )  }
 
 
         penalty         :  SCORE PROP_NAME
@@ -1118,8 +1135,14 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                            {  result = { coach: val[2].as_str } }
 
 
+       ##   note - add back semicolon (;) as an option as (position) separator
+       ##                as an alternative for dash (-)
+       #
+       #   fix-fix-fix  - change  dash (-) to LINEUP_ALT_SEP (to check for space) - why? why not?
+       #                    like  CARDS_ALT_SEP, PENALTIES_ALT_SEP, etc.
 
        lineup_sep  :  ','           { result = ',' }
+                   |  ';'           { result = ';' }
                    |  '-'           { result = '-' }
 
        opt_lineup_sep : /* empty */  { result = '' }   ## use 'NONE' or such - why? why not?
@@ -1135,8 +1158,9 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                     }
               |   lineup opt_lineup_sep lineup_name
                     {
-                       ## note - if lineup_sep is dash (-) start a new sub array!!
-                       if val[1] == '-'
+                       ## note - if lineup_sep is dash (-) or
+                       ##                         semicolor (;) start a new sub array!!
+                       if val[1] == '-' || val[1] == ';'
                           result << [val[2]]
                        else
                           result[-1] << val[2]
