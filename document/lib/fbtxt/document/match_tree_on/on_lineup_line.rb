@@ -31,54 +31,6 @@ end
 
 
 
-   def _collect_subs( lineup )
-      recs = []
-
-      lineup.each do |item|
-           current = item
-           while current && current.sub
-              recs << EventSub.new( off:  current.name,
-                                    on:   current.sub.sub.name,
-                                    minute: current.sub.minute )
-              current = current.sub.sub
-           end
-      end
-
-## note - (auto-)sort by minute if present
-   recs = recs.sort do |l,r|
-                    if l.minute && r.minute
-                            ## note - minute is obj!! (Parser::Minute!!)
-                            l_min,l_offset = _parse_minute( l.minute.to_s )
-                            r_min,r_offset = _parse_minute( r.minute.to_s )
-
-                            res = l_min <=> r_min
-                            res = (l_offset||0) <=> (r_offset||0)   if res == 0
-                            res
-                    else
-                       ## keep as is (no minutes available)
-                       0
-                    end
-               end
-
-      recs
-    end
-
-   def _collect_bench( lineup )
-      recs = []
-
-      lineup.each do |item|
-           current = item
-           while current && current.sub
-              recs << Player.new( name:    current.sub.sub.name,
-                                  captain: current.sub.sub.captain )
-               current = current.sub.sub
-           end
-      end
-      recs
-   end
-
-
-
    ##
    ##  fix - move "upstream to lineup"  - why? why not?
    ##       - rename each_lineup?
@@ -94,8 +46,6 @@ end
         end
      end
    end
-
-
 
    ## change to _collect_inline_bookings/cards - why? why not?
    def _collect_bookings( lineup )
@@ -139,17 +89,6 @@ end
 
 
 
-   def _collect_lineup( lineup )
-    recs = []
-    lineup.each do |item|
- ##       puts " lineup.each item:"
- ##       pp item
-        recs << Player.new( name:    item.name,
-                            captain: item.captain )
-    end
-    recs
-   end
-
 
   def on_lineup_line( node )
     _trace( "on lineup: >#{node}<" )
@@ -180,24 +119,11 @@ end
 
     ## todo/fix-fix-fix  add formation here too - why? why not?
 
+    lineup_struct = Lineup.new
+    lineup_struct.add_lineup( lineup )
 
-    ## todo/fix-fix-fix  - use a Lineup struct/class (NOT generic hash)!!!
 
-    h = { 'starter' =>  _collect_lineup( lineup ) }
-
-    bench = _collect_bench( lineup )
-    if bench.empty?
-      ## do/add nothing; skip e.g.
-      ## "bench":[],
-      ## "subs":[]
-    else
-       ## note - if there's a bench  ALWAYS keep subs even if empty e.g.
-       ##  "subs":[]
-       h['bench'] = bench
-       h['subs']  =  _collect_subs( lineup )
-    end
-
-    match.lineup << h
+    match.lineup  <<   lineup_struct
 
 
     match.bookings ||=[]

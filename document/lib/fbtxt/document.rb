@@ -18,6 +18,7 @@ require_relative 'document/match_tree/goal'
 require_relative 'document/match_tree/round'
 require_relative 'document/match_tree/group'
 require_relative 'document/match_tree/player'
+require_relative 'document/match_tree/lineup'
 
 
 require_relative 'document/match_tree_on/on_group_def'
@@ -30,6 +31,7 @@ require_relative 'document/match_tree_on/on_goal_line'
 require_relative 'document/match_tree_on/on_penalties'
 
 require_relative 'document/match_tree_on/on_lineup_line'
+require_relative 'document/match_tree_on/on_cards_line'
 require_relative 'document/match_tree_on/on_referee_line'
 
 require_relative 'document/quick_match_reader'

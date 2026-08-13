@@ -68,7 +68,9 @@ end  # class Referee
 class Player
 
     attr_reader :name
-    ## add pos(ition) e.g. GK,DF,MF,FW
+    ## fix-fix-fix
+    ##   add pos(ition) e.g. GK,DF,MF,FW
+
 
     def initialize( name:, captain: false )
         @name    = name

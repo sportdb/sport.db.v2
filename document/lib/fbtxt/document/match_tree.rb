@@ -71,15 +71,17 @@ class MatchTree
           on_goal_line( node )
       elsif node.is_a? RaccMatchParser::PenaltiesLine
            on_penalties( node )
-      elsif node.is_a?( RaccMatchParser::LineupLine )
+      elsif node.is_a? RaccMatchParser::LineupLine
           on_lineup_line( node )
-      elsif node.is_a?( RaccMatchParser::RefereeLine )
+      elsif node.is_a? RaccMatchParser::CardsLine
+          on_cards_line( node )
+      elsif node.is_a? RaccMatchParser::RefereeLine
            on_referee_line( node )
       elsif node.is_a?( RaccMatchParser::Heading1 ) ||
             node.is_a?( RaccMatchParser::Heading2 ) ||
             node.is_a?( RaccMatchParser::Heading3 )
           ###  skip headings (1/2/3) for now
-      elsif node.is_a?( RaccMatchParser::BlankLine )
+      elsif node.is_a? RaccMatchParser::BlankLine
           ### skip for now; do nothing
       else
         ## report error
