@@ -1,7 +1,12 @@
 
 module Fbtxt
-class MatchTree
+  module Model
 
+
+##############
+## e.g.
+##    'Y',  Player, 44
+##    'YR', Player, 45+2
 
 class EventCard    ### use EventBooking - why? why not?
     attr_reader :type
@@ -11,8 +16,17 @@ class EventCard    ### use EventBooking - why? why not?
     def initialize( type:, name:, minute: nil )
         @type   = type
         @name   = name
-        @minute = minute
+
+        ## note - auto-convert to our own Minute format
+        @minute =  if minute.is_a?( RaccMatchParser::Minute )
+                        Minute.new( m:      minute.m,
+                                    offset: minute.offset,
+                                    secs:   minute.secs )
+                   else
+                    minute
+                   end
     end
+
 
     def as_json(*)
         h = { 'type' => type,
@@ -33,7 +47,15 @@ class EventSub   ## use just Sub or ??
     def initialize( on:, off:, minute: nil )
         @name_on  = on
         @name_off = off
-        @minute   = minute
+
+        ## note - auto-convert to our own Minute format
+        @minute =  if minute.is_a?( RaccMatchParser::Minute )
+                        Minute.new( m:      minute.m,
+                                    offset: minute.offset,
+                                    secs:   minute.secs )
+                   else
+                    minute
+                   end
     end
 
     def as_json(*)
@@ -46,49 +68,5 @@ class EventSub   ## use just Sub or ??
 end  ## EventSub
 
 
-
-class Referee  ## rename to/use Official - why? why not?
-    attr_reader :name, :country
-
-    def initialize( name:, country: nil )
-        @name    = name
-        @country = country
-    end
-
-    def as_json(*)
-        h = { 'name' => name }
-        h['country'] = country    if country
-
-        h
-    end
-end  # class Referee
-
-
-
-class Player
-
-    attr_reader :name
-    ## fix-fix-fix
-    ##   add pos(ition) e.g. GK,DF,MF,FW
-
-
-    def initialize( name:, captain: false )
-        @name    = name
-        @captain = captain
-    end
-
-    def captain?() @captain; end
-
-
-
-    def as_json(*)
-        h = { 'name' => name }
-        h['captain'] = true    if captain?
-
-        h
-    end
-end # class Player
-
-
-end # class MatchTree
+end # module Model
 end # module Fbtxt

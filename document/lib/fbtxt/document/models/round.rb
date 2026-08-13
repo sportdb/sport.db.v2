@@ -1,6 +1,6 @@
 
 module Fbtxt
-class MatchTree
+  module Model
 
 
   class Round
@@ -30,5 +30,5 @@ class MatchTree
 end  # class Round
 
 
-end # class MatchTree
+end # module Model
 end # module Fbtxt

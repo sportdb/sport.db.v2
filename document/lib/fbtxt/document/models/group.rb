@@ -1,5 +1,5 @@
 module Fbtxt
-class MatchTree
+ module Model
 
 class Group
       attr_reader :name, :teams
@@ -19,5 +19,5 @@ class Group
 end  # class Group
 
 
-end # class MatchTree
+end # module Model
 end # module Fbtxt

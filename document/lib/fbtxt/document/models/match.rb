@@ -2,7 +2,7 @@
 # move (simpler) struct version inline to MatchTree for now
 #
 module Fbtxt
-class MatchTree
+ module Model
 
 
 
@@ -213,27 +213,10 @@ def as_json
     data['goals2'] = []
 
     @goals.each do |goal|
-          node = {}
-          node['name']    = goal.player
-
-=begin
-          ## note - use a string for minutes for now
-          ##           allows e.g.  45+2 etc. too
-          minute_str  = "#{goal.minute}"
-          minute_str += "+#{goal.offset}"   if goal.offset
-
-          node['minute']  = minute_str
-=end
-          node['minute']  = goal.minute.to_s   if goal.minute
-
-
-          node['owngoal'] = true         if goal.owngoal
-          node['penalty'] = true         if goal.penalty
-
-          if goal.team == 1
-            data['goals1']  << node
-          else  ## assume 2
-            data['goals2']  << node
+         if goal.team == 1
+            data['goals1']  << goal.as_json
+          else  ## assume 2  (or better raise except if NOT 2)
+            data['goals2']  << goal.as_json
           end
      end  # each goal
   end
@@ -292,5 +275,5 @@ end  # class Match
 
 
 
-end # class MatchTree
+end # module Model
 end # module Fbtxt

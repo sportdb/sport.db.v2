@@ -1,5 +1,12 @@
 #  TODOS
 
+- [ ]  push/publish (core) gems
+       - fbtxt-parser
+       - fbtxt-document
+       - fbtok
+
+
+---
 
 - [ ] update all /openfootball datasets to football.txt v2 !!!
 

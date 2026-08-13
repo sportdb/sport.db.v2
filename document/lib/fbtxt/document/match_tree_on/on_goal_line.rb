@@ -51,7 +51,7 @@ class MatchTree
     goals1.each do |rec|
       rec.minutes.each do |minute|
         goal = Goal.new(
-                  player: rec.player,
+                  name:   rec.player,
                   team:   1,
                   minute:  minute.to_minute, ## from GoalMinute to Minute!!
                   penalty: minute.pen || false, #  note: pass along/use false NOT nil
@@ -64,7 +64,7 @@ class MatchTree
     goals2.each do |rec|
       rec.minutes.each do |minute|
         goal = Goal.new(
-                  player: rec.player,
+                  name:   rec.player,
                   team:   2,
                   minute:  minute.to_minute, ## from GoalMinute to Minute!!
                   penalty: minute.pen || false, #  note: pass along/use false NOT nil

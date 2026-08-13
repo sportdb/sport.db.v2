@@ -7,6 +7,10 @@ class MatchTree
   include Debuggable
 
 
+  include Models      ## e.g. Fbtxt::Model(s)
+                      ##      Match,Round,Group,Goal,etc.
+
+
   ##
   ##  note: allow start(_date) nil
   ##          if in use (start: nil) years expected on first date!!!

@@ -1,7 +1,19 @@
+=begin
+
+(double) check bookings
+  -  is trainer or co-trainer - why NOT included in lineup ???
+==> reading >austria/2025-26/1-bundesliga-full.txt<...
+!! warn - player >Thomas Turner< NOT found; skipping booking Thomas Turner 90+3
+!! warn - player >Thomas Turner< NOT found; skipping booking Thomas Turner 88
+!! warn - player >Tobias Schützenauer< NOT found; skipping booking Tobias Schützenauer 90+5
+!! warn - player >Jeyland MITCHELL< NOT found; skipping booking Jeyland MITCHELL 77
+!! warn - player >Lukas Gütlbauer< NOT found; skipping booking Lukas Gütlbauer 84
+=end
+
+
 
 module Fbtxt
-class MatchTree
-
+  module Model
 
 =begin
 ## fix-fix-fix
@@ -21,7 +33,6 @@ end  ## class Card
     ## note - lineup incl. starter & (optional) bench
 class Lineup
 
-    attr_accessor :bookings
     def initialize
         @starter = {}    ## note - indexed by (player) name
         @bench   = {}    ## note - indexed by (player) name
@@ -154,5 +165,5 @@ end  # class Lineup
 
 
 
-end # class MatchTree
+end # module Model
 end # module Fbtxt
