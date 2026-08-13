@@ -5,13 +5,22 @@ module Fbtxt
 class Minute
 
     attr_reader :m, :offset, :secs
-    ## todo/check - rename offset to injury/stoppage (time) or such - why? why not?
 
     def initialize( m:, offset: nil, secs: nil )
       @m      = m
       @offset = offset
       @secs   = secs
     end
+
+    ## todo/check - rename offset to injury/stoppage (time) or such - why? why not?
+=begin
+Alternative naming conventions
+here are the three best ways to rename it
+ - stoppage:       Short, clean, and highly readable in a class context
+                       Minute.new(m: 90, stoppage: 4).
+ - stoppage_time:  Highly explicit if you want zero ambiguity.
+ - added_time:     Another officially recognized term that reads very naturally.
+=end
 
 
     def as_json(*) to_s; end
@@ -29,6 +38,17 @@ class Minute
 
     def pretty_print( q )
        q.text( to_s )
+    end
+
+
+    include Comparable   ## note - auto-adds <, <=, ==, >=, >, and between?
+    def <=>(other)
+       return nil unless other.is_a?(Minute)
+
+      ## returns -1/0/1
+       res =   m <=> other.m
+       res =  (offset||0) <=> (other.offset||0)   if res == 0
+       res
     end
 end  # class Minute
 

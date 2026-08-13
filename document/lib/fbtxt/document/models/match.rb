@@ -12,6 +12,11 @@ class Match
 ##      note - score might internally be an array [2,3]
 ##                 or hash { ft:, } etc.
 
+###  fix-fix-fix
+##    yes, use score struct  (see fbtxt-pp)  ???
+##            with  "generic" reported
+
+
 ## note - score for now might be
 ##            1) array e.g. [1,0] or []
 ##            2)  hash  e.g. { ft: [1,0] } etc.

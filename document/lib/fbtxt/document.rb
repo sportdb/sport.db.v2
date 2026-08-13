@@ -16,10 +16,12 @@ require_relative 'document/models/goal'
 require_relative 'document/models/round'
 require_relative 'document/models/group'
 require_relative 'document/models/player'
+require_relative 'document/models/referee'
 require_relative 'document/models/lineup'
 require_relative 'document/models/penalty'
 require_relative 'document/models/event'    ##  cards, sub(stitutio)s
 require_relative 'document/models/minute'
+
 
 ###
 #  add Models alias for Model

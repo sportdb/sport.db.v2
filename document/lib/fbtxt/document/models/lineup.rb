@@ -103,27 +103,18 @@ class Lineup
 
 
    ## note - (auto-)sort by minute if present
+   ###  fix-fix-fix  move sort to EventSub  <=>  - why? why not?
    @subs = recs.sort do |l,r|
                     if l.minute && r.minute
-                            ## note - minute is obj!! (Parser::Minute!!)
-                            l_min,l_offset = _parse_minute( l.minute.to_s )
-                            r_min,r_offset = _parse_minute( r.minute.to_s )
-
-                            res = l_min <=> r_min
-                            res = (l_offset||0) <=> (r_offset||0)   if res == 0
-                            res
+                        l.minute <=> r.minute
                     else
-                       ## keep as is (no minutes available)
-                       0
+                       0  ## keep as is (no minutes available)
                     end
                end
     end
 
 
     def as_json(*)
-
-      ### note - as_json EXCLUDES bookings !!!
-
         h = { 'starter' => @starter.values.as_json }
 
         h['bench'] = @bench.values.as_json    if @bench.size > 0
@@ -131,38 +122,7 @@ class Lineup
 
         h
     end
-
-
-
-
-#######################
-## move to shared helper - why? why not?
-
- MINUTE_RE = %r{  \A
-                       (?<minute>\d{1,3}) '?
-                        (  \+
-                          (?<offset>\d{1,2}) '?
-                        )?
-                   \z
-                 }x
-
-
-def _parse_minute( str )
-
-    ## support weirdo  120'+-30'  -- remove minuts
-    str = str.gsub( '-', '' )
-
-    m = MINUTE_RE.match( str )
-    raise ArgumentError, "unknown goal minute format in #{str.inspect}"  if m.nil?
-
-    minute = m[:minute].to_i(10)
-    offset = m[:offset] ? m[:offset].to_i(10) : nil
-
-    [minute,offset]
-end
 end  # class Lineup
-
-
 
 
 end # module Model

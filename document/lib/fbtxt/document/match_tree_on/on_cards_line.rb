@@ -18,7 +18,7 @@ class MatchTree
         ## type = node.type   ## e.g. 'Y', 'Y/R', 'R', 'SENTOFF', etc.
 
         ## note - flatten for now
-        ##   use lineup[0], lineup[1] latter
+        ##   fix-fix-fix  use lineup[0], lineup[1] latter - why? why not?
         bookings = node.bookings.flatten
 
 
