@@ -1,0 +1,48 @@
+=========================================
+=  Austrian Bundesliga 2026/2027
+=========================================
+
+%teams
+  Austria Wien, Rapid Wien, Sturm Graz, RB Salzburg
+
+▪ Matchday 1
+
+Fri Aug 14
+  Austria Wien   1-2  Rapid Wien
+    (Gruber 44' [Pen]; Burgstaller 12', Beljo 89')
+
+      Austria Wien: Sahin-Radlinger, Ranftl, Dragovic, Galvao, Perez, Fischer,
+                    Wels, Fitz, Malone, Gruber, Prelec.
+                    Subs: Kos, Meisl, Potzmann, Barry (for Wels 62'),
+                    Guenouche (for Perez 75').
+      Rapid Wien:   Hedl, Bolla, Cvetkovic, Raux-Yao, Auer, Sangaré, Grgić,
+                    Schaub, Seidl, Burgstaller, Beljo.
+                    Subs: Gartler, Hofmann, Oswald (for Schaub 70'),
+                    Jansson (for Burgstaller 82'), Wurmbrand.
+
+      Bookings:
+        Austria Wien: Dragovic 34' (Y), Fischer 75' (Y)
+        Rapid Wien:   Grgić 22' (Y), Sangaré 81' (Y), Raux-Yao 90+2' (R)
+
+Sat Aug 15
+  Sturm Graz     3-0  RB Salzburg
+    (Biereth 14', 55', Kiteishvili 78')
+
+
+      Sturm Graz:  Scherpen, Gazibegović, Aiwu, Wüthrich, Lavalee, Gorenc Stankovič,
+                   Horvat, Kiteishvili, Zvonarek, Biereth, Jatta.
+                   Subs: Khudyakov, Johnston, Karic, Geyrhofer, Camara.
+      RB Salzburg: Schlager, Dedić, Baidoo, Blank, Terzić, Capaldo, Gourna-Douath,
+                   Kjærgaard, Gloukh, Ratkov, Nene.
+                   Subs: Blaswich, Piatkowski, Diambou, Yeo, Daghim.
+
+      Bookings:
+        Sturm Graz:  Aiwu 40' (Y)
+        RB Salzburg: Capaldo 12' (Y), Terzić 60' (Y)
+
+
+##
+##  Bookings: Tracked explicitly with standard suffix tags:
+#     (Y) for a yellow card,
+#     (Y2) for a second yellow leading to dismissal, and
+#     (R) for a direct red card.

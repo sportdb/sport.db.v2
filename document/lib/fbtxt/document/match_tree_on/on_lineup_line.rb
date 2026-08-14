@@ -85,12 +85,7 @@ class MatchTree
 
     ## todo/fix-fix-fix  add formation here too - why? why not?
 
-    lineup_struct = Lineup.new
-    lineup_struct.add_lineup( lineup )
-
-
-    match.lineup  <<   lineup_struct
-
+    match.lineup  <<   Lineup.build( lineup )
 
     match.bookings ||=[]
     match.bookings << _collect_bookings( lineup )

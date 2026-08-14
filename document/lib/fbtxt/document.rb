@@ -19,8 +19,10 @@ require_relative 'document/models/player'
 require_relative 'document/models/referee'
 require_relative 'document/models/lineup'
 require_relative 'document/models/penalty'
-require_relative 'document/models/event'    ##  cards, sub(stitutio)s
+require_relative 'document/models/event'    ##  cards, sub(stitution)s
 require_relative 'document/models/minute'
+require_relative 'document/models/score'
+
 
 
 ###
@@ -48,7 +50,7 @@ require_relative 'document/match_tree_on/on_cards_line'
 require_relative 'document/match_tree_on/on_referee_line'
 
 
-require_relative 'document/quick_match_reader'
+require_relative 'document/document'   ## e.g. use Fbtxt::Document.parse/read/etc.
 
 
 

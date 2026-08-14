@@ -50,7 +50,9 @@ class MatchTree
             ##    might be trainer, staff or missing player from bench w/o sub
             ## fix-fix-fix
             ##    log error!!
-            puts "!! warn - player >#{b.name}< NOT found; skipping booking #{b.pretty_inspect}"
+            msg = "!! WARN - player >#{b.name}< NOT found; skipping booking #{b.pretty_inspect}"
+            puts msg
+            log( msg )
           end
 
         end

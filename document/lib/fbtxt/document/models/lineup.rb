@@ -30,13 +30,95 @@ end  ## class Card
 
 
 
-    ## note - lineup incl. starter & (optional) bench
+## note - lineup incl. starter & (optional) bench & sub(stituion)s
 class Lineup
 
-    def initialize
+
+
+    def self.build( lineup )
+        ## add starter & bench (via substitutions)
+       starter = _collect_starter( lineup )
+       bench   = _collect_bench( lineup )
+       subs    = _collect_subs( lineup )
+
+       new( starter: starter,
+            bench: bench,
+            subs: subs )
+    end
+
+
+    def self._collect_starter( lineup )
+      recs = []
+      lineup.each do |item|
+ ##        puts " lineup.each item:"
+ ##        pp item
+           rec = Player.new( name:    item.name,
+                             captain: item.captain )
+
+           recs << rec
+      end
+      recs
+    end
+
+    def self._collect_bench( lineup )
+      recs = []
+      lineup.each do |item|
+           current = item
+           while current && current.sub
+              rec = Player.new( name:    current.sub.sub.name,
+                                captain: current.sub.sub.captain )
+
+               recs << rec
+               current = current.sub.sub
+           end
+      end
+      recs
+    end
+
+   def self._collect_subs( lineup )
+      recs = []
+      lineup.each do |item|
+           current = item
+           while current && current.sub
+              ##  fix-fix-fix - use player-ref for off/on
+              rec =  EventSub.new( off:  current.name,
+                                   on:   current.sub.sub.name,
+                                   minute: current.sub.minute )
+              recs << rec
+              current = current.sub.sub
+           end
+      end
+
+   ## note - (auto-)sort by minute if present
+   ###  fix-fix-fix  move sort to EventSub  <=>  - why? why not?
+   recs = recs.sort do |l,r|
+                    if l.minute && r.minute
+                        l.minute <=> r.minute
+                    else
+                       0  ## keep as is (no minutes available)
+                    end
+               end
+      recs
+    end
+
+
+
+
+
+    def initialize( starter:,
+                    bench: [],
+                    subs:  [] )
         @starter = {}    ## note - indexed by (player) name
+        starter.each do |player|
+            @starter[player.name] = player
+        end
+
         @bench   = {}    ## note - indexed by (player) name
-        @subs    = []
+        bench.each do |player|
+             @bench[player.name] = player
+        end
+
+        @subs    = subs
     end
 
     def starter()  @starter.values; end
@@ -48,70 +130,6 @@ class Lineup
         player = @starter[name] || @bench[name]
     end
 
-
-
-
-
-
-    def add_lineup( lineup )
-        ## add starter & bench (via substitutions)
-        _add_starter( lineup )
-        _add_bench( lineup )
-        _add_subs( lineup )
-    end
-
-    def _add_starter( lineup )
-      lineup.each do |item|
- ##        puts " lineup.each item:"
- ##        pp item
-           rec = Player.new( name:    item.name,
-                             captain: item.captain )
-
-          @starter[item.name] = rec
-      end
-    end
-
-    def _add_bench( lineup )
-      lineup.each do |item|
-           current = item
-           while current && current.sub
-              rec = Player.new( name:    current.sub.sub.name,
-                                captain: current.sub.sub.captain )
-
-               @bench[current.sub.sub.name] = rec
-               current = current.sub.sub
-           end
-      end
-    end
-
-
-
-
-   def _add_subs( lineup )
-      recs = []
-      lineup.each do |item|
-           current = item
-           while current && current.sub
-              ##  fix-fix-fix - use player-ref for off/on
-              rec =  EventSub.new( off:  current.name,
-                                    on:   current.sub.sub.name,
-                                    minute: current.sub.minute )
-              recs << rec
-              current = current.sub.sub
-           end
-      end
-
-
-   ## note - (auto-)sort by minute if present
-   ###  fix-fix-fix  move sort to EventSub  <=>  - why? why not?
-   @subs = recs.sort do |l,r|
-                    if l.minute && r.minute
-                        l.minute <=> r.minute
-                    else
-                       0  ## keep as is (no minutes available)
-                    end
-               end
-    end
 
 
     def as_json(*)

@@ -43,27 +43,9 @@ class MatchTree
     end
 
 
-    ### todo/fix
-    ##    add keywords (e.g. ht, ft or such) to Score.new - why? why not?
-    ##     or use new Score.build( ht:, ft:, ) or such - why? why not?
-    ## pp score
     score  = nil
-    score = node.score   if node.score
-
-    ## if node.score.is_a?(Array)
-    ##    ## assume "undefined" score
-    ##    score = node.score
-    ##  else  ## (default) assume Hash
-    ##     # ht = node.score[:ht] || [nil,nil]
-    ##     # ft = node.score[:ft] || [nil,nil]
-    ##     # et = node.score[:et] || [nil,nil]
-    ##     # p  = node.score[:p]  || [nil,nil]
-    ##     # values = [*ht, *ft, *et, *p]
-    ##     # pp values
-    ##     ## pp node.score
-    ##    score = node.score
-    ##  end
-    ## end
+    score = Score.build( node.score )    if node.score
+    ## pp score
 
 
     status = nil

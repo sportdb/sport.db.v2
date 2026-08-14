@@ -8,19 +8,6 @@ module Fbtxt
 
 class Match
 
-### note - use inline Score class Match::Score - why? why not?
-##      note - score might internally be an array [2,3]
-##                 or hash { ft:, } etc.
-
-###  fix-fix-fix
-##    yes, use score struct  (see fbtxt-pp)  ???
-##            with  "generic" reported
-
-
-## note - score for now might be
-##            1) array e.g. [1,0] or []
-##            2)  hash  e.g. { ft: [1,0] } etc.
-
   attr_reader :num,
               :date,
               :time,
@@ -34,6 +21,7 @@ class Match
               :att            ## (optional) attendance as (integer) number
 
 
+  ## e.g. support (flat/undefined) [], or (nested/paired) [[],[]]
   attr_accessor :goals      ## todo/fix: make goals like all other attribs!!
 
 ###
@@ -48,14 +36,6 @@ class Match
 
 
   def initialize( **kwargs )
-    @score = []
-    ## @score1,    @score2    = [nil,nil]  ## full time
-    ## @score1i,   @score2i   = [nil,nil]  ## half time (first (i) part)
-    ## @score1et,  @score2et  = [nil,nil]  ## extra time
-    ## @score1p,   @score2p   = [nil,nil]  ## penalty
-    ## @score1agg, @score2agg = [nil,nil]  ## full time (all legs) aggregated
-
-
     update( **kwargs )  unless kwargs.empty?
   end
 
@@ -81,71 +61,12 @@ class Match
     @ground   = kwargs[:ground]   if kwargs.has_key?( :ground )
     @att      = kwargs[:att]      if kwargs.has_key?( :att )
 
-
-    if kwargs.has_key?( :score )   ## check all-in-one score struct for convenience!!!
-      score = kwargs[:score]
-
-      if score.nil?   ## reset all score attribs to nil!!
-        @score = []    ##  [nil,nil]
-      else
-        ## check if is array - assume "generic" score e.g. 3-2
-        ##     that is, not known if full-time, after extra-time etc.
-        if score.is_a?( Array )
-           @score = score    ## e.g. [3,2]
-        else  ## assume hash
-           @score = score
-           # @score1,    @score2    =    score[:ft]  || []
-           # @score1i,   @score2i   =    score[:ht]  || []
-           # @score1et,  @score2et  =    score[:et]  || []
-           # @score1p,   @score2p   =    score[:p]   || score[:pen] || []
-           # @score1agg, @score2agg =    score[:agg] || []
-        end
-      end
-    end
-      # @score[:ht]   = kwargs[:score_ht]     if kwargs.has_key?( :score_ht )
-      # @score[:et]   = kwargs[:score_et]     if kwargs.has_key?( :score_et )
-      # @score[:p]    = kwargs[:score_p]      if kwargs.has_key?( :score_p )
-      # @score[:agg]  = kwargs[:score_agg]    if kwargs.has_key?( :score_agg )
-
-      ## note: (always) (auto-)convert scores to integers
-      # @score1     = @score1.to_i(10)      if @score1
-      # @score1i    = @score1i.to_i(10)     if @score1i
-      # @score1et   = @score1et.to_i(10)    if @score1et
-      # @score1p    = @score1p.to_i(10)     if @score1p
-      # @score1agg  = @score1agg.to_i(10)   if @score1agg
-
-      # @score2     = @score2.to_i(10)      if @score2
-      # @score2i    = @score2i.to_i(10)     if @score2i
-      # @score2et   = @score2et.to_i(10)    if @score2et
-      # @score2p    = @score2p.to_i(10)     if @score2p
-      # @score2agg  = @score2agg.to_i(10)   if @score2agg
-
-    ## todo/fix:
-    ##  gr-greece/2014-15/G1.csv:
-    ##     G1,10/05/15,Niki Volos,OFI,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-    ##
-
-    ##  for now score1 and score2 must be present
-    ## if @score1.nil? || @score2.nil?
-    ##  puts "** WARN: missing scores for match:"
-    ##  pp kwargs
-    ##  ## exit 1
-    ## end
-
+    ## check/expects all-in-one score struct for convenience!!!
+    @score    = kwargs[:score]     if kwargs.has_key?( :score )
 
     self   ## note - MUST return self for chaining
   end
 
-
-  ####
-  ##  deprecated - use score.to_s and friends - why? why not?
-  # def score_str    # pretty print (full time) scores; convenience method
-  #  "#{@score1}-#{@score2}"
-  # end
-
-  # def scorei_str    # pretty print (half time) scores; convenience method
-  #  "#{@score1i}-#{@score2i}"
-  # end
 
 
 def as_json
@@ -188,27 +109,16 @@ def as_json
   end
 
   ## note - score might be
-  ##           1) array e.g. [0,1]
-  ##           2) hash  e.g. { ft: [0,1] } etc.
+  ##           1) array e.g. [0,1]   -- e.g. uses reported key internally
+  ##           2) hash  e.g. { 'ft' [0,1] } etc.
   ##  note - w/o (walkout)  do NOT add empty score
-  if @score.is_a?(Hash)
-      # note: make sure hash keys are always strings
-      data['score'] = @score.transform_keys(&:to_s)
-  elsif @score.is_a?(Array)
-      ## note:
-      ##   for now always assume full-time (ft)
-      ##     in future check for score note or such
-      ##      to  use "plain" array or such - why? why not?
-      ## data['score'] = { 'ft' => @score }   if !@score.empty?
 
-      data['score'] = @score     if !@score.empty?
-  end
+   ## note:
+   ##   use/assume full-time (ft) if reported - why? why not?
+   ##     in future check for score note or such
+   ##      to  use "plain" array or such - why? why not?
 
-
-  ## data['score']['ht'] = [@score1i,   @score2i]     if @score1i && @score2i
-  ## data['score']['ft'] = [@score1,    @score2]      if @score1 && @score2
-  ## data['score']['et'] = [@score1et,  @score2et]    if @score1et && @score2et
-  ## data['score']['p']  = [@score1p,   @score2p]     if @score1p && @score2p
+  data['score'] = @score.as_json      if @score
 
 
 

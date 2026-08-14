@@ -1,0 +1,89 @@
+=========================================
+=  FIFA World Cup 2022 - Knockout Stage
+=========================================
+
+%teams
+  Argentina, France
+
+▪ Final
+
+[Sun Dec 18]
+  Argentina   3-3 (4-2 p.)  France
+    (Messi 23' [Pen], 108', Di María 36'; Mbappé 80' [Pen], 81', 118' [Pen])
+
+    [Lineups]
+      Argentina: E. Martínez, Molina, Romero, Otamendi, Tagliafico, De Paul,
+                 Enzo Fernández, Mac Allister, Messi, Álvarez, Di María.
+           Subs: Armani, Rulli, Montiel (for Molina 91'), Acuña (for Di María 64'),
+                 Paredes (for De Paul 102'), Lautaro Martínez (for Álvarez 102'),
+                 Pezzella (for Mac Allister 116'), Dybala (for Tagliafico 120+1').
+      France:    Lloris, Koundé, Varane, Upamecano, T. Hernandez, Griezmann,
+                 Tchouaméni, Rabiot, Dembélé, Giroud, Mbappé.
+           Subs: Mandanda, Areola, Pavard, Disasi (for Koundé 120+1'),
+                 Guendouzi, Fofana (for Rabiot 96'), Coman (for Dembélé 41'),
+                 Camavinga (for T. Hernandez 71'), Thuram (for Giroud 41'),
+                 Kolo Muani (for Griezmann 71'), Konaté (for Varane 113').
+
+    [Bookings]
+      Argentina: Enzo Fernández 45+7' (Y), Acuña 90+7' (Y), Paredes 114' (Y),
+                 Montiel 116' (Y), E. Martínez 120+?+ (Y)
+      France:    Rabiot 55' (Y), Thuram 87' (Y), Giroud 90+5' (Y) [Bench]
+
+    [Shootout]
+      France:    Mbappé (O), Coman (X), Tchouaméni (X), Kolo Muani (O)
+      Argentina: Messi (O), Dybala (O), Paredes (O), Montiel (O)
+
+########
+## or chronological-style
+##     Option 1: The ABAB Alternating Sequence Format
+
+    [Shootout]
+      Kickoff: France won toss, elected to shoot first.
+
+      1. France:    Mbappé (O)
+      2. Argentina: Messi (O)
+      3. France:    Coman (X)      [Saved]
+      4. Argentina: Dybala (O)
+      5. France:    Tchouaméni (X) [Missed]
+      6. Argentina: Paredes (O)
+      7. France:    Kolo Muani (O)
+      8. Argentina: Montiel (O)
+
+
+##   Option 2: The Two-Column Timeline Format
+
+    [Shootout]
+      Sequence: France (Left) shoots first, Argentina (Right) shoots second.
+
+      France                 | Argentina
+      -----------------------|-----------------------
+      1. Mbappé (O)          |  2. Messi (O)
+      3. Coman (X)           |  4. Dybala (O)
+      5. Tchouaméni (X)      |  6. Paredes (O)
+      7. Kolo Muani (O)      |  8. Montiel (O)
+
+
+#####
+##  score format options
+##   Option 1: The Chronological Breakdown (Recommended)
+
+  Argentina   3-3 (2-0, 2-2) a.e.t. (4-2 p.)   France
+
+## (2-0, 2-2): The first number is the Half-Time score.
+##             The second number is the Full-Time score (after 90 minutes).
+
+
+##  Option 2: The Explicit Labelled Format
+
+    Argentina   3-3 a.e.t. (HT: 2-0, FT: 2-2, Pen: 4-2)   France
+
+
+
+##  Option 3: The Vertical Summary Block
+
+[Sun Dec 18]
+  Argentina vs France
+    Score:      3-3 a.e.t. (4-2 p.)
+    Half-Time:  2-0
+    Full-Time:  2-2
+    (Messi 23' [Pen], 108', Di María 36'; Mbappé 80' [Pen], 81', 118' [Pen])

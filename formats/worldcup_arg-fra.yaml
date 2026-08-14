@@ -1,0 +1,40 @@
+match_id: 2026-world-cup-f1
+date: 2026-06-15
+stage: Group Stage
+teams:
+  home: Argentina
+  away: France
+score:
+  home: 2
+  away: 1
+lineups:
+  home:
+    starting_xi:
+      - Martinez
+      - Molina
+      - Romero
+    substitutes:
+      - Alvarez
+events:
+  - type: goal
+    minute: 23
+    team: home
+    player: Messi
+  - type: booking
+    minute: 42
+    team: away
+    player: Mbappé
+
+
+#############
+##  vs
+#
+#
+# ▪ Group Stage
+#  2026-06-15    Argentina v France  2-1
+#   (23' Messi (p))
+#
+#  Argentina:  Martinez  Molina  Romero
+#    Substitutes: Alvarez
+#
+#  Bookings:  42' Mbappé [Y]

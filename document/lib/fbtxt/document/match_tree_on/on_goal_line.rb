@@ -5,6 +5,14 @@ class MatchTree
   def on_goal_line( node )
     _trace( "on goal line: >#{node}<" )
 
+     ###
+     #  note: goals formats
+     #   (i)   [[],[]]   (nested/paired) or
+     #   (ii)  []        (flat/undefined)
+     ##
+     ##   add Array#paired? and
+     ##       Array#flat?
+     ##    helper methods/checks or such - why? why not?
 
      if node.goals[0].is_a?( Array )
        goals1, goals2 = node.goals[0], node.goals[1]
@@ -17,25 +25,27 @@ class MatchTree
     pp [goals1,goals2]     if debug?
 
 
+   ## quick & dirty - auto add goals to last match
+   ##   note - for hacky (quick& dirty) multi-line support
+   ##     always append for now
+   match = @matches[-1]
+
+
 ## special rule
 ##    if goals 2 empty check if score for team 1 is zero
 ##                           and team 2 is NOT zero than
 ##                                make goals1 goals2!!
 ##   e.g. Norway 0-1  Austria
 ##                   (Hof 32)
-
-   if goals2.empty? && !goals1.empty?
-
-     match = @matches[-1]
+   if match.score &&
+      goals2.empty? && !goals1.empty?
 
      ##
-     ## todo/fix
-     ##   move upstream
-     ##    use score1_zero? or such - why? why not?
-     if (match.score.is_a?(Array) && match.score[0] == 0 ) ||
-        (match.score.is_a?(Hash)  && match.score[:et] && match.score[:et][0] == 0) ||
-        (match.score.is_a?(Hash)  && match.score[:et].nil? &&
-                                     match.score[:ft] && match.score[:ft][0] == 0)
+     ## todo/fix: move upstream
+     ##             use score1_zero? or such - why? why not?
+     if (match.score.reported?  && match.score.reported[0] == 0 ) ||
+        (match.score.et? && match.score.et[0] == 0) ||
+        (match.score.ft? && !match.score.et? && match.score.ft[0] == 0)
         ## "parallel assignment (or multiple assignment") - swap values in single line
         goals2, goals1 = goals1, goals2
      end
@@ -78,11 +88,9 @@ class MatchTree
     ## todo/fix
     ##    PLUS auto-fill score1,score2 - why? why not?
 
-
     ## quick & dirty - auto add goals to last match
     ##   note - for hacky (quick& dirty) multi-line support
     ##     always append for now
-    match = @matches[-1]
     match.goals ||= []
     match.goals += goals
 
