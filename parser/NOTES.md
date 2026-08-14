@@ -2,6 +2,31 @@
 # Quick Notes
 
 
+## coach prop
+
+```
+
+- [ ]  simplify coach: property for now
+          must be "top-level/standalone" for now
+          add CoachLine or such
+       and support multiple coaches like refs !!
+
+##  supported for now coach/trainer (add manager?)
+  if ['coach',
+     'trainer'].include?( key.downcase )
+## use PROP_COACH or COACH_KEY or such - why? why not?
+  Token.new(:COACH, m[:key],
+       lineno: ctx.lineno, offset: m.offset(:key))
+
+- [ ] also check  attn, refs e.g.
+         Attendance: 88_966
+         Referee:    Szymon Marciniak (Poland)
+
+note - keep only INLINE_ATTENDANCE for now
+```
+
+
+## prop specs
 
 ```
 I would separate "property key classification" from "property mode"

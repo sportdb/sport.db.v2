@@ -72,8 +72,8 @@
 - [ ]  check if possible goal_alt_sep with NEWLINE only (no comma) - possible??
 
 ```
-              1-0 Evair   65' (pen),
-              1-1 Zapata  70' (pen),
+              1-0 Evair   65' (pen)
+              1-1 Zapata  70' (pen)
               2-1 Oséas   76'
 ```
 
@@ -171,10 +171,21 @@ note:
 ## What's News? / What's Different?
 
 
-- [ ]  change :num (e.g. (1), (2), ..)  to :ord  (for ordinal number)
+- [x]  change :num (e.g. (1), (2), ..)  to :ord  (for ordinal number)
        - keep :num in reserve for latter for number without ()
 
-- [ ]  change :vs  to only include  v  (NO more variants e.g. vs. VS. V VS etc.)
+
+
+- [x]  change :vs  to only include  v  (NO more variants e.g. vs. VS. V VS etc.)
+        v/vs/v./vs.  - support all versus variants - why? why not?
+       - remove  v./vs. variants - avoids confusion with Carlos V. etc.
+       - only allow downcase - why? why not?
+       - for now V/VS/V./VS.  supported tooo!!!!
+         - V. Köln, Carlos V. etc.
+
+=>  try only v/vs in downcase/lowercase only - why? why not?
+
+
 
 
 ## text parsing notes
@@ -182,12 +193,3 @@ note:
 - [ ]  allow space before quote - why? why not?
        - UDI'19/Beter Bed     -- yes, works
        - UDI '19/Beter Bed    -- allow/support - yes/no?   (confusion with '19 minute??)
-
-
-- [ ]  v/vs/v./vs.  - support all versus variants - why? why not?
-       - remove  v./vs. variants - avoids confusion with Carlos V. etc.
-       - only allow downcase - why? why not?
-       - for now V/VS/V./VS.  supported tooo!!!!
-         - V. Köln, Carlos V. etc.
-
-=>  try only v/vs in downcase/lowercase only - why? why not?
