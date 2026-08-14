@@ -63,12 +63,12 @@ require_relative 'lexer/token'
 
 require_relative 'lexer/lexer_buffer'   ## incl. Tokens (aka TokenBuffer)
 require_relative 'lexer/lexer_token'
+require_relative 'lexer/lexer_context'
 
 require_relative 'lexer/lexer-prep_doc'
 require_relative 'lexer/lexer-prep_line'
 
 require_relative 'lexer/lexer-logger'   ## e.g. _trace, _warn, _info, etc.
-require_relative 'lexer/lexer-tokenize'
 require_relative 'lexer/lexer-on_round_def'
 require_relative 'lexer/lexer-on_group_def'
 require_relative 'lexer/lexer-on_prop_misc'
@@ -76,6 +76,10 @@ require_relative 'lexer/lexer-on_prop_lineup'
 require_relative 'lexer/lexer-on_prop_penalties'
 require_relative 'lexer/lexer-on_goal'
 require_relative 'lexer/lexer-on_top'
+require_relative 'lexer/lexer-props'
+
+require_relative 'lexer/lexer-tokenize-i'
+require_relative 'lexer/lexer-tokenize-ii'     ## that is, normalize (transform) tokens
 require_relative 'lexer/lexer'
 
 

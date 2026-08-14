@@ -2,72 +2,6 @@ module Fbtxt
 class Lexer
 
 
-###
-## use nested class for context - why? why not?
-##   note: first arg passed in MUST be ref to lexer (instance)
-class Context
-   ## passed along to on_round_def etc. handlers in tokenize_line
-   ##   note - for now only offset (in line begin/end) gets updated !!!
-     attr_writer :offset
-     attr_reader :lineno
-
-     def initialize( lexer,
-                     line:,
-                     lineno:,
-                     errors: )
-        @lexer   = lexer
-        @line    = line
-        @lineno  = lineno
-        @errors  = errors
-
-        @offset = [0,0]   ## or use [] aka [nil,nil] for not defined??? why? why not?
-        ## @offset = offset    ## MatchData offset e.g. [m.begin(0),m.end(0)]
-     end
-
-
-
-     def warn_on_else( match, mode: 'TOP' )
-         if match[:any]
-           _add_warn( "unexpected char >#{match[:any]}< (#{mode})" )
-         else
-         ##  internal error - shouldn't really happen
-           _add_warn( "internal error - unknown match (#{mode}): #{match.inspect}")
-         end
-     end
-
-
-     def _add_warn( msg )
-        ## note - warns gets logged as error for now too
-        ##          maybe add @warns later - why? why not?
-        ##
-        ##  note - add +1 to offset (start at one - not zero-based)
-        ##           will match with (external) text editors
-        msg =  "parse error (tokenize) - " +
-                          msg +
-                " in line @#{@lineno}:#{@offset[0]+1},#{@offset[1]+1} >#{@line}<  "
-
-        @errors << msg
-        @lexer.log( "!! WARN - #{msg}" )
-
-        @lexer._warn( msg )
-     end
-
-=begin
-     ##  use report/log/??_parses_error
-     def _add_error( msg )
-         msg = "parse error (tokenize) -" +
-                          msg +
-                " in line #{@lineno}@#{@offset[0]},#{@offse[1]} >#{@line}<  "
-
-        @errors << msg
-     end
-=end
-
-end  # class Context
-
-
-
-
 
 def _tokenize_line( line, lineno )
   tokens = []
@@ -106,13 +40,6 @@ def _tokenize_line( line, lineno )
 
        offset = m.offset(0)
        pos    = offset[1]      ## update pos
-    elsif (m = START_WITH_YEAR.match(line))
-       tokens << Token.new(:YEAR, m[:year],
-                                 lineno: lineno, offset: m.offset(:year),
-                                 value:  m[:year].to_i(10) )
-
-       offset = m.offset(0)
-       pos    = offset[1]    ## update pos
 
     elsif (m = START_WITH_GROUP_DEF_LINE_RE.match( line ))
       _trace( "ENTER GROUP_DEF_RE MODE" )
@@ -132,60 +59,18 @@ def _tokenize_line( line, lineno )
       ###  switch into new mode
       ##  switch context  to PROP_RE
         _trace("ENTER PROP_RE MODE" )
-        key = m[:key]
 
+        ##  check for (well-known) property (e.g. yellow,red,ref,attn, etc.)
+        ## find prop spec (token_sym, mode , ..)
+        prop = KNOWN_PROP_KEYS[ m[:key].downcase ]
 
-        ### todo/fix - add prop yellow/red cards too - why? why not?
-        ##  todo/fix - separate sent off and red card
-        ##     sent-off - incl. red card, yellow/red card and the era before red cards!!
-        if ['sent-off',
-            'sent off'].include?( key.downcase)
-          @re = PROP_CARDS_RE    ## use CARDS_RE ???
-          tokens << Token.new(:PROP_SENTOFF, m[:key],
+        if prop
+          ## e.g. :PROP_YELLOWCARD, PROP_CARDS_RE
+          prop_token, prop_re, _ = prop
+
+          @re = prop_re
+          tokens << Token.new( prop_token, m[:key],
                                    lineno: lineno, offset: m.offset(:key))
-        elsif ['red', 'red cards'].include?( key.downcase )
-          @re = PROP_CARDS_RE    ## use CARDS_RE ???
-          tokens << Token.new(:PROP_REDCARDS, m[:key],
-                                   lineno: lineno, offset: m.offset(:key))
-        elsif ['yellow', 'yellow cards'].include?( key.downcase )
-          @re = PROP_CARDS_RE
-          tokens << Token.new(:PROP_YELLOWCARDS, m[:key],
-                                   lineno: lineno, offset: m.offset(:key))
-
-        ## todo: check allow yellow/red cards: or such as key!!!
-        ##   check for alternate spellings
-        ##   'yellow/red cards' - note - meaning closes to yellow or red !!
-        ##    thus use yellow-red cards as default/standard - why? why not?
-        elsif ['yellow-red',
-               'yellow-red cards',
-               'yellowred cards'].include?( key.downcase )
-          @re = PROP_CARDS_RE
-          tokens << Token.new(:PROP_YELLOWREDCARDS, m[:key],
-                                   lineno: lineno, offset: m.offset(:key))
-
-
-        elsif ['ref', 'referee',
-               'refs', 'referees'   ## note - allow/support assistant refs
-              ].include?( key.downcase )
-          @re = PROP_REFEREE_RE
-          tokens << Token.new(:PROP_REFEREE, m[:key],
-                                   lineno: lineno, offset: m.offset(:key))
-        elsif ['att', 'attn', 'attendance'].include?( key.downcase )
-          @re = PROP_ATTENDANCE_RE
-          tokens << Token.new(:PROP_ATTENDANCE, m[:key],
-                                   lineno: lineno, offset: m.offset(:key))
-
-     #   elsif ['goals'].include?( key.downcase )
-     #     @re = PROP_GOAL_RE
-     #     tokens << [:PROP_GOALS, m[:key]]
-
-        elsif ['penalties',
-               'penalty shootout',  'shootout',
-               'penalty shoot-out',  'shoot-out',
-               'penalty kicks'].include?( key.downcase )
-          @re = PROP_PENALTIES_RE
-          tokens << Token.new(:PROP_PENALTIES, m[:key],
-                                  lineno: lineno, offset: m.offset(:key))
         else   ## assume (team) line-up
           @re = PROP_LINEUP_RE
           ## fix-fix-fix - rename to PROP_LINEUP !!
@@ -195,6 +80,15 @@ def _tokenize_line( line, lineno )
 
         offset = m.offset(0)
         pos    = offset[1]     ## update pos
+
+    elsif (m = START_WITH_YEAR.match(line))
+       tokens << Token.new(:YEAR, m[:year],
+                                 lineno: lineno, offset: m.offset(:year),
+                                 value:  m[:year].to_i(10) )
+
+       offset = m.offset(0)
+       pos    = offset[1]    ## update pos
+
     ###
     ### todo/fix
     ###   rename to START_WITH_ROUND_DEF_OUTLINE_RE !!!!
