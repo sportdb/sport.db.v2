@@ -32,51 +32,51 @@ end # class Lexer
 end # module Fbtxt
 
 
-require_relative 'parser/token-score'
-require_relative 'parser/token-score_full'
-require_relative 'parser/token-score_fuller'
-require_relative 'parser/token-score_legs'
-require_relative 'parser/token-score--helpers'
+require_relative 'lexer/token-score'
+require_relative 'lexer/token-score_full'
+require_relative 'lexer/token-score_fuller'
+require_relative 'lexer/token-score_legs'
+require_relative 'lexer/token-score--helpers'
 
-require_relative 'parser/token-time'
-require_relative 'parser/token-date--names'
-require_relative 'parser/token-date'
-require_relative 'parser/token-date_duration'
-require_relative 'parser/token-date--helpers'
+require_relative 'lexer/token-time'
+require_relative 'lexer/token-date--names'
+require_relative 'lexer/token-date'
+require_relative 'lexer/token-date_duration'
+require_relative 'lexer/token-date--helpers'
 
-require_relative 'parser/token-text'
-require_relative 'parser/token-prop'    ## team prop(erty) mode (note - must be before token)
-require_relative 'parser/token-prop_name'    ## a.k.a token-text_ii
-require_relative 'parser/token-status'
-require_relative 'parser/token-status_inline'
-require_relative 'parser/token-note'
-require_relative 'parser/token-goals'
-require_relative 'parser/token-goals--helpers'
-require_relative 'parser/token-geo'
-require_relative 'parser/token-group'
-require_relative 'parser/token-round'
-require_relative 'parser/token'
-
-
+require_relative 'lexer/token-text'
+require_relative 'lexer/token-prop'    ## team prop(erty) mode (note - must be before token)
+require_relative 'lexer/token-prop_name'    ## a.k.a token-text_ii
+require_relative 'lexer/token-status'
+require_relative 'lexer/token-status_inline'
+require_relative 'lexer/token-note'
+require_relative 'lexer/token-goals'
+require_relative 'lexer/token-goals--helpers'
+require_relative 'lexer/token-geo'
+require_relative 'lexer/token-group'
+require_relative 'lexer/token-round'
+require_relative 'lexer/token'
 
 
 
-require_relative 'parser/lexer_buffer'   ## incl. Tokens (aka TokenBuffer)
-require_relative 'parser/lexer_token'
 
-require_relative 'parser/lexer-prep_doc'
-require_relative 'parser/lexer-prep_line'
 
-require_relative 'parser/lexer-logger'   ## e.g. _trace, _warn, _info, etc.
-require_relative 'parser/lexer-tokenize'
-require_relative 'parser/lexer-on_round_def'
-require_relative 'parser/lexer-on_group_def'
-require_relative 'parser/lexer-on_prop_misc'
-require_relative 'parser/lexer-on_prop_lineup'
-require_relative 'parser/lexer-on_prop_penalties'
-require_relative 'parser/lexer-on_goal'
-require_relative 'parser/lexer-on_top'
-require_relative 'parser/lexer'
+require_relative 'lexer/lexer_buffer'   ## incl. Tokens (aka TokenBuffer)
+require_relative 'lexer/lexer_token'
+
+require_relative 'lexer/lexer-prep_doc'
+require_relative 'lexer/lexer-prep_line'
+
+require_relative 'lexer/lexer-logger'   ## e.g. _trace, _warn, _info, etc.
+require_relative 'lexer/lexer-tokenize'
+require_relative 'lexer/lexer-on_round_def'
+require_relative 'lexer/lexer-on_group_def'
+require_relative 'lexer/lexer-on_prop_misc'
+require_relative 'lexer/lexer-on_prop_lineup'
+require_relative 'lexer/lexer-on_prop_penalties'
+require_relative 'lexer/lexer-on_goal'
+require_relative 'lexer/lexer-on_top'
+require_relative 'lexer/lexer'
 
 
 ## note - use "embeded" racc parser runtime
