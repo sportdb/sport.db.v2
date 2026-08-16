@@ -1,0 +1,14 @@
+
+## todo/check
+##  - [ ] add support for coaches (!) - more than one coach (like refs)!!
+##        check final in 1930  (argentinia with two coaches!!)
+
+
+
+Coach: Carlos Bilardo
+
+Coach: Franz Beckenbauer
+
+
+
+Coach: Lionel Scalon

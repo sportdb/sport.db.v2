@@ -41,6 +41,7 @@ rule
 
           | lineup_lines
           | penalties_lines   ## rename to penalties_line or ___ - why? why not?
+          | coach_line
           | referee_line
           | attendance_line
 
@@ -961,12 +962,20 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                                  @tree << AttendanceLine.new( att: val[1].as_int )
                               }
 
+     #####
+     ## optional inline attendance
+     ##      check/fix - change to INLINE_ATTENDANCE
+     attendance_opt   : /* empty */
+                        | ';' ATTENDANCE  PROP_NUM
+                           {
+                                 @tree << AttendanceLine.new( att: val[2].as_int )
+                           }
 
 
         ## note - allow inline attendance prop in same line
         ##             why? why not?
         ##           todo - add usage samples here!!!
-        referee_line   :  PROP_REFEREE  referees  attendance_opt PROP_END
+        referee_line   :  PROP_REFEREE  referees  PROP_END
                             {
                                @tree << RefereeLine.new( referees: val[1] )
                             }
@@ -980,11 +989,22 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
                          {  result = Referee.new( name: val[0].as_str, country: val[1].as_str ) }
 
 
-     attendance_opt   : /* empty */
-                        | ';' ATTENDANCE  PROP_NUM
-                           {
-                                 @tree << AttendanceLine.new( att: val[2].as_int )
-                           }
+
+       #############
+       ## coaches
+
+        coach_line   :  PROP_COACH  coaches PROP_END
+                            {
+                               @tree << CoachLine.new( coaches: val[1] )
+                            }
+
+        coaches   :     coach               {  result = val }
+                  |     coaches ',' coach   {  result.push( val[2] ) }
+
+        coach    :      PROP_NAME
+                         {  result = Coach.new( name: val[0].as_str ) }
+                 |      PROP_NAME  ENCLOSED_NAME
+                         {  result = Coach.new( name: val[0].as_str, country: val[1].as_str ) }
 
 
 
@@ -1106,10 +1126,10 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
         ## change PROP_NAME to NAME - why? why not?
 
 
-       lineup_lines  : PROP  opt_formation  lineup  opt_coach  PROP_END
+       lineup_lines  : PROP  opt_formation  lineup  PROP_END
                         {
                           kwargs = { team:    val[0].as_str,
-                                     lineup:  val[2]  }.merge( val[1], val[3] )
+                                     lineup:  val[2]  }.merge( val[1] )
                           @tree << LineupLine.new( **kwargs )
                         }
 
@@ -1117,22 +1137,6 @@ match_fixture_not_played : TEAM INLINE_NP TEAM
        opt_formation : /* empty */  { result = {} }   ## optional
                      |  FORMATION   { result = { formation: val[0].as_str }}
 
-
-
-       ## add (factor out) coach_sep  - why? why not?
-
-      ###
-      ## todo/check - fix/fix/fix - COACH  gets matched with PROP_KEY ???
-      ##    change COACH to INLINE_COACH - why? why not?
-      ##   was
-      ##    | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-      ##    | '-' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-
-       opt_coach   : /* empty */    { result = {}  }    ## optional
-                   | ';' COACH  PROP_NAME
-                           {  result = { coach: val[2].as_str } }
-                   | '-' COACH  PROP_NAME
-                           {  result = { coach: val[2].as_str } }
 
 
        ##   note - add back semicolon (;) as an option as (position) separator

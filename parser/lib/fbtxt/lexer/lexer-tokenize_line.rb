@@ -286,6 +286,7 @@ def _tokenize_line( line, lineno )
       elsif @re == PROP_ATTENDANCE_RE  then  _on_prop_attendance( m, ctx: ctx )
       elsif @re == PROP_REFEREE_RE     then  _on_prop_referee( m, ctx: ctx )
       elsif @re == PROP_PENALTIES_RE   then  _on_prop_penalties( m, ctx: ctx )
+      elsif @re == PROP_COACH_RE       then  _on_prop_coach( m, ctx: ctx )
 
       elsif @re == GOAL_COMPAT_RE      then  _on_goal_compat( m, ctx: ctx )
       elsif @re == GOAL_ALT_RE         then  _on_goal_alt( m, ctx: ctx )
@@ -305,6 +306,8 @@ def _tokenize_line( line, lineno )
 #      puts "#{line[pos..-1]}<"
 #    end
   end
+
+
 
   ## check if no match in end of string
   if offset[1] != line.size

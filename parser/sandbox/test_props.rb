@@ -4,11 +4,11 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/parser'
 
 
-PROP_KEY_RE  = SportDb::Lexer::START_WITH_PROP_KEY_RE
-PROP_NAME_RE = SportDb::Lexer::PROP_NAME_RE
+PROP_KEY_RE  = Fbtxt::Lexer::START_WITH_PROP_KEY_RE
+PROP_NAME_RE = Fbtxt::Lexer::PROP_NAME_RE
 
 
 

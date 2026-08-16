@@ -3,12 +3,13 @@
 #    $ ruby sandbox/test_pp.rb
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/parser'
 
-Minute = RaccMatchParser::Minute
-Lineup = RaccMatchParser::Lineup
-Card   = RaccMatchParser::Card
-Sub    = RaccMatchParser::Sub
+
+Minute = Fbtxt::Parser::Minute
+Lineup = Fbtxt::Parser::Lineup
+Card   = Fbtxt::Parser::Card
+Sub    = Fbtxt::Parser::Sub
 
 
 sub = Sub.new( sub: Lineup.new( name: 'Player' ),  minute: Minute.new( m: 11 ) )

@@ -3,12 +3,15 @@
 #    $ ruby sandbox/test_empty.rb
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/parser'
+
+Fbtxt::Lexer.debug  = true
+Fbtxt::Parser.debug = true
 
 
 
 def lex( txt )
-  tokens, errors = SportDb::Lexer.new( txt, debug: true ).tokenize_with_errors
+  tokens, errors = Fbtxt::Lexer.new( txt ).tokenize_with_errors
 
   if !errors.empty?
      puts "!! errros:"
@@ -19,7 +22,7 @@ def lex( txt )
 end
 
 def parse( txt )
- tree, errors = RaccMatchParser.new( txt, debug: true ).parse_with_errors
+ tree, errors = Fbtxt::Parser.new( txt ).parse_with_errors
 
   if !errors.empty?
      puts "!! errros:"
@@ -28,6 +31,8 @@ def parse( txt )
 
   tree
 end
+
+
 
 
 samples = [

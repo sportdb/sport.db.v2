@@ -34,6 +34,7 @@
 
           | lineup_lines
           | penalties_lines   ## rename to penalties_line or ___ - why? why not?
+          | coach_line
           | referee_line
           | attendance_line
 

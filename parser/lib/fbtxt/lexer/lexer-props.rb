@@ -41,6 +41,10 @@ class Lexer
                                               'penalty shootout',  'shootout',
                                               'penalty shoot-out',  'shoot-out',
                                               'penalty kicks']],
+
+       [:PROP_COACH,   PROP_COACH_RE,  ['coach', 'trainer',
+                                        'coaches', 'trainers']],
+
 ]
 
   ## map alternate prop names to prop spec record

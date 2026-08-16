@@ -36,7 +36,8 @@ def is_prop_cont?    ## use prop_mode? or such - why? why not?
    @re == PROP_CARDS_RE      ||
    @re == PROP_PENALTIES_RE  ||
    @re == PROP_ATTENDANCE_RE ||
-   @re == PROP_REFEREE_RE
+   @re == PROP_REFEREE_RE    ||
+   @re == PROP_COACH_RE
 end
 
 ##

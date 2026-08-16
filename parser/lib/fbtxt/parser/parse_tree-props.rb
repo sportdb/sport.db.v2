@@ -37,6 +37,30 @@ Referee = Struct.new( :name, :country ) do
 end  # Referee
 
 
+## note - support multiple coaches
+CoachLine = Struct.new( :coaches ) do
+  def pretty_print( q )
+    q.group( 4, '<CoachLine ', '>') do
+      q.pp( coaches )
+    end
+  end
+end   # CoachLine
+
+Coach = Struct.new( :name, :country ) do
+  def to_s
+    buf = String.new
+    buf <<  name
+    buf << " (#{country})"    if country
+    buf
+  end
+
+  def pretty_print( q )
+    q.text( to_s )
+  end
+end  # Coach
+
+
+
 AttendanceLine = Struct.new( :att ) do
   def pretty_print( q )
     q.group( 4, '<AttendanceLine ', '>') do

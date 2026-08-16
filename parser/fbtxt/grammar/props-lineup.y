@@ -4,10 +4,10 @@
         ## change PROP_NAME to NAME - why? why not?
 
 
-       lineup_lines  : PROP  opt_formation  lineup  opt_coach  PROP_END
+       lineup_lines  : PROP  opt_formation  lineup  PROP_END
                         {
                           kwargs = { team:    val[0].as_str,
-                                     lineup:  val[2]  }.merge( val[1], val[3] )
+                                     lineup:  val[2]  }.merge( val[1] )
                           @tree << LineupLine.new( **kwargs )
                         }
 
@@ -15,22 +15,6 @@
        opt_formation : /* empty */  { result = {} }   ## optional
                      |  FORMATION   { result = { formation: val[0].as_str }}
 
-
-
-       ## add (factor out) coach_sep  - why? why not?
-
-      ###
-      ## todo/check - fix/fix/fix - COACH  gets matched with PROP_KEY ???
-      ##    change COACH to INLINE_COACH - why? why not?
-      ##   was
-      ##    | ';' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-      ##    | '-' NEWLINE  COACH  PROP_NAME    ## note - allow newline break
-
-       opt_coach   : /* empty */    { result = {}  }    ## optional
-                   | ';' COACH  PROP_NAME
-                           {  result = { coach: val[2].as_str } }
-                   | '-' COACH  PROP_NAME
-                           {  result = { coach: val[2].as_str } }
 
 
        ##   note - add back semicolon (;) as an option as (position) separator

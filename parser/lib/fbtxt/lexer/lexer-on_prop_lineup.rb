@@ -2,6 +2,13 @@ module Fbtxt
 class Lexer
 
 
+###
+##  todo - move  INLINE_CAPTAIN,
+##               INLINE_YELLOW ...  and  FORMATION_RE   here!!!!
+
+##
+##  todo - add  LINEUP_SEP_ALT  (for _-_) - make space required!! ??
+
 
 PROP_LINEUP_RE = Regexp.union(
    SPACES_RE,
@@ -14,29 +21,17 @@ PROP_LINEUP_RE = Regexp.union(
 
    FORMATION_RE,     ## e.g. (4-3-3), (4-1-4-1) etc.
 
-   PROP_KEY_INLINE_RE,
    PROP_NAME_RE,
    /  (?<sym>  [;,()\[\]-]) /x
    ## todo/fix - add ANY_RE here too!!!
 )
 
 
+
 def _on_prop_lineup( m, ctx: )      ## note - m is MatchData object
 
          if m[:space] || m[:spaces]
               nil    ## skip space(s)
-         elsif m[:prop_key]   ## check for inline prop keys
-              key = m[:key]
-              ##  supported for now coach/trainer (add manager?)
-              if ['coach',
-                  'trainer'].include?( key.downcase )
-                ## use PROP_COACH or COACH_KEY or such - why? why not?
-                Token.new(:COACH, m[:key],
-                             lineno: ctx.lineno, offset: m.offset(:key))
-              else
-                ## report error - for unknown (inline) prop key in lineup
-                nil
-              end
          elsif m[:formation]
               ## e.g. (4-3-3) or (433)
               ##   note - value is 4-3-3 or 433 as string (without parenthesis)
