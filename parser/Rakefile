@@ -21,7 +21,8 @@ Hoe.spec 'fbtxt-parser' do
   self.licenses = ['Public Domain']
 
   self.extra_deps = [
-       ['cocos', '>= 0.4.1'],
+     ['cocos',       '>= 0.4.2'],         ## note - pulled-in by fbtxt-lexer (too)
+     ['fbtxt-lexer', '>= 0.0.1'],
   ]
 
   self.spec_extras = {
