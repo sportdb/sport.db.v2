@@ -1,16 +1,6 @@
 
 module Fbtxt
 
-class LexerResult
-   attr_reader :tokens, :errors
-   def initialize( tokens, errors=[] )
-       @tokens, @errors = tokens, errors
-   end
-
-   def ok?()  @errors.size == 0; end
-   def nok?() !ok?; end
-end  # class LexerResult
-
 
 
 class Lexer

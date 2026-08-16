@@ -4,10 +4,10 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/lexer'
 
 
-TEXT_RE = SportDb::Lexer::TEXT_RE
+TEXT_RE = Fbtxt::Lexer::TEXT_RE
 
 
 texts = [## try teams
@@ -106,7 +106,7 @@ texts = [## try teams
          ## test weirdos  - maybe disallow - why? why not?
          "a&&&&&&",
          "a.........",
-         "a''''''''''",   
+         "a''''''''''",
          ## more
          "Park21 Arena",
          "Park21-Arena",

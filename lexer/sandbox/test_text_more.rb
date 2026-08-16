@@ -6,10 +6,10 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/lexer'
 
 
-TEXT_RE = SportDb::Lexer::TEXT_RE
+TEXT_RE = Fbtxt::Lexer::TEXT_RE
 
 
 teams = [## try team names from at (austria)

@@ -4,7 +4,7 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'fbtxt/parser'
+require 'fbtxt/lexer'
 
 
 PROP_KEY_RE  = Fbtxt::Lexer::START_WITH_PROP_KEY_RE

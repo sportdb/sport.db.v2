@@ -4,10 +4,10 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/lexer'
 
 
-TEXT_RE = SportDb::Lexer::GEO_TEXT_RE
+TEXT_RE = Fbtxt::Lexer::GEO_TEXT_RE
 
 
 texts = [## try teams
@@ -47,7 +47,7 @@ texts = [## try teams
          "9.-12. Platz Playoffs",
          "13.-16. Platz Playoffs",
 
-         ## check more 
+         ## check more
          "Park21-Arena Gurten",
          "motion_invest Arena",
          "motion _ invest Arena",  ## FAIL -  allow "free-standing" underscore (_) - why?

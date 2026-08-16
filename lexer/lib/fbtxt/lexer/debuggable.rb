@@ -2,6 +2,11 @@
 ## debugg(able) mix-in helper
 ##      used for lexer & parser
 
+
+############
+##  fix - move (upcstream)  to cocos - why? why not?
+
+
 module Debuggable
   def self.included(base)
     base.extend(ClassMethods)

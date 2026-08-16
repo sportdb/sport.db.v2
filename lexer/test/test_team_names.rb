@@ -1,6 +1,6 @@
 ###
 #  to run use
-#     ruby test/test_team_names.rb
+#    $ ruby test/test_team_names.rb
 
 
 require_relative 'helper'

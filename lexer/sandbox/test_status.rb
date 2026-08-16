@@ -4,9 +4,9 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/lexer'
 
-STATUS_RE  = SportDb::Lexer::STATUS_RE
+STATUS_RE  = Fbtxt::Lexer::STATUS_RE
 
 
 texts = [## try status

@@ -1,6 +1,6 @@
 ###
 #  to run use
-#     ruby test/test_parse.rb
+#     $ ruby test/test_parse.rb
 
 
 require_relative 'helper'
@@ -21,6 +21,5 @@ class TestParse < Minitest::Test
       read_n_assert_tests( "./test/parse_score_fuller-agg.txt" )
       read_n_assert_tests( "./test/parse_score_fuller-min.txt" )
   end
- 
-end # class TestParse
 
+end # class TestParse

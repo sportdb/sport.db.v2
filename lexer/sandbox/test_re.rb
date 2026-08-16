@@ -4,10 +4,10 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/lexer'
 
 
-PROP_NUM_RE  = SportDb::Lexer::PROP_NUM_RE
+PROP_NUM_RE  = Fbtxt::Lexer::PROP_NUM_RE
 
 
 texts = [## try some

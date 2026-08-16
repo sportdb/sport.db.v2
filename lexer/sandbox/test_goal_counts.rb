@@ -4,7 +4,7 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/lexer'
 
 
 
@@ -20,15 +20,15 @@ txt =<<TXT
 (2,1pen)
 (3, 2 pens)
 
-(p) 
-(pen.) 
-(2 pen.) 
+(p)
+(pen.)
+(2 pen.)
 (2p)
-(2 pens)               
+(2 pens)
 
 (o)
-(og) 
-(o.g.) 
+(og)
+(o.g.)
 (2og)
 (2 o.g.)
 (2 ogs)
@@ -41,9 +41,9 @@ txt.each_line do |line|
   next if line.empty? || line.start_with?('#')
 
 
-  m= SportDb::Lexer::_parse_goal_count( line )
+  m= Fbtxt::Lexer::_parse_goal_count( line )
   ## pp m
- 
+
   if m
     print "OK "
     print "%-20s" % line

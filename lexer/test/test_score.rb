@@ -1,6 +1,6 @@
 ###
 #  to run use
-#     ruby test/test_score.rb
+#    $ ruby test/test_score.rb
 
 
 require_relative 'helper'

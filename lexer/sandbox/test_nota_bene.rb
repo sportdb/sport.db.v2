@@ -4,7 +4,7 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/lexer'
 
 
 
@@ -25,16 +25,16 @@ NB: the first stage also served as qualifying stage for the 2023 Asian Cup
 NB: the second stage also served as qualifying stage for the 2023 Asian Cup
     (with the group winners and five best runners-up qualifying for the final tournament and the
     other teams entering the qualifying tournament at various stages (remaining runners-up, third
-    placed teams, fourth placed teams and three best fifth placed teams at group stage, 
+    placed teams, fourth placed teams and three best fifth placed teams at group stage,
     the others entering a playoff round)
 
 
-NB: annulled results against North Korea between square brackets  
+NB: annulled results against North Korea between square brackets
 
 TXT
 
 
-  txt.gsub( SportDb::Lexer::PREPROC_NOTA_BENE_RE ) do |m| 
+  txt.gsub( Fbtxt::Lexer::PREPROC_NOTA_BENE_RE ) do |m|
     puts "==> match:"
     puts m
     m = m.gsub( "\n", '↵' )

@@ -4,7 +4,7 @@
 
 
 $LOAD_PATH.unshift( './lib' )
-require 'sportdb/parser'
+require 'fbtxt/lexer'
 
 
 
@@ -57,7 +57,7 @@ txt =<<TXT
 
 
 ### allow 46+  for 45+1 - why? why not?
-##        94+  for 90+1  
+##        94+  for 90+1
   46+
   94+
   46'+
@@ -67,7 +67,7 @@ txt =<<TXT
 
   94+ (pen)
   46+ og
-  
+
   94'+ (pen)
   90'+4 (pen)
   103'+ (pen)
@@ -83,7 +83,7 @@ txt.each_line do |line|
   next if line.empty? || line.start_with?('#')
 
 
-  m= SportDb::Lexer::_parse_goal_minute( line )
+  m= Fbtxt::Lexer::_parse_goal_minute( line )
   ## pp m
 
   if m

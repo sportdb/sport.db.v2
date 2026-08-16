@@ -65,3 +65,11 @@ emit(token)
 This would make the huge chain of special cases much easier to maintain.
 
 ```
+
+
+
+- [x] up parser/grammar for
+   - cards (incl. yellow/red/yellow-red/sent off)
+   - goals (rm goals none; use goals array instead of goals1/2)
+   - walkover (w/o); no longer special rule/production; uses std (not/played) match fixture
+   - inline rounds (short/big) in matches (incl. match headers)

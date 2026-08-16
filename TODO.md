@@ -1,7 +1,7 @@
 #  TODOS
 
 - [ ]  push/publish (core) gems
-       - fbtxt-parser
+       - fbtxt-lexer & fbtxt-parser
        - fbtxt-document
        - fbtok
 

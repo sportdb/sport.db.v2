@@ -1,6 +1,6 @@
 ###
 #  to run use
-#     ruby test/test_date.rb
+#    $ ruby test/test_date.rb
 
 
 require_relative 'helper'

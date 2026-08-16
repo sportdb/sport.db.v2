@@ -2,15 +2,6 @@
 
 module Fbtxt
 
-class ParserResult
-   attr_reader :tree, :errors
-   def initialize( tree, errors=[] )
-       @tree, @errors = tree, errors
-   end
-
-   def ok?()  @errors.size == 0; end
-   def nok?() !ok?; end
-end  # class ParserResult
 
 
 class Parser

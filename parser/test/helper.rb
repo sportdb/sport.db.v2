@@ -16,20 +16,20 @@ require_relative 'blocktxt'     ## read/parse_blocktxt
 ## add shortcut helpers
 class Minitest::Test
 
-  MatchLine = RaccMatchParser::MatchLine
+  MatchLine = Fbtxt::Parser::MatchLine
 
-  GoalLine    = RaccMatchParser::GoalLine
-  Goal        = RaccMatchParser::Goal
-  GoalMinute  = RaccMatchParser::GoalMinute
-  Minute      = RaccMatchParser::Minute     #  Struct.new( :m, :offset )
+  GoalLine    = Fbtxt::Parser::GoalLine
+  Goal        = Fbtxt::Parser::Goal
+  GoalMinute  = Fbtxt::Parser::GoalMinute
+  Minute      = Fbtxt::Parser::Minute     #  Struct.new( :m, :offset )
 
-  BlankLine  = RaccMatchParser::BlankLine
+  BlankLine  = Fbtxt::Parser::BlankLine
 
-  Heading1  = RaccMatchParser::Heading1
-  Heading2  = RaccMatchParser::Heading2
-  Heading3  = RaccMatchParser::Heading3
+  Heading1  = Fbtxt::Parser::Heading1
+  Heading2  = Fbtxt::Parser::Heading2
+  Heading3  = Fbtxt::Parser::Heading3
 
-  RoundOutline  = RaccMatchParser::RoundOutline
+  RoundOutline  = Fbtxt::Parser::RoundOutline
 
 
 
