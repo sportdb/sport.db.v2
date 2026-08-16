@@ -1,0 +1,158 @@
+= European Championship 2021
+
+# Note: the competition was planned to be held in 2020
+#       but was postponed due to the COVID-19 pandemic.
+
+# see https://www.rsssf.org/tables/2021e-det.html
+
+
+▪ Group A
+
+# 11/06/2021, Roma, Stadio Olimpico, 12916
+# ITALY               3 (Merih Demiral 53' OG, Ciro Immobile 66', Lorenzo Insigne 79')
+# TURKEY              0
+
+Jun 11 @ Stadio Olimpico, Roma     ## (att: 12916)
+  ITALY v TURKEY   3-0
+    (Merih Demiral 53' (og) Ciro Immobile 66' Lorenzo Insigne 79')
+
+
+##  Jorge Frello Filho 'Jorginho'
+
+Italy:              Gianluigi Donnarumma - Alessandro Florenzi (Giovanni Di Lorenzo 46'),
+                   Leonardo Bonucci, Giorgio Chiellini, Leonardo Spinazzola -
+                    Nicolò Barella, Jorge Frello Filho,
+                    Manuel Locatelli (Bryan Cristante 74') -
+                    Domenico Berardi (Federico Bernardeschi 85'),
+                    Ciro Immobile (Andrea Belotti 81'),
+                    Lorenzo Insigne (Federico Chiesa 81')
+                      Coach: Roberto Mancini
+Turkey:             Uğurcan Çakır - Mehmet Zeki Çelik, Merih Demiral, Çağlar Söyüncü,
+                    Umut Meraş - Okay Yokuşlu (İrfan Can Kahveci 65') -
+                    Kenan Karaman (Halil Dervişoğlu 76'), Yusuf Yazıcı (Cengiz Ünder 46'),
+                    Ozan Tufan (Kaan Ayhan 64'), Hakan Çalhanoğlu - Burak Yılmaz
+                      Coach: Şenol Güneş
+Referee:            Danny Makkelie (Netherlands)
+Yellow Cards:      Çağlar Söyüncü 88',  Halil Dervişoğlu 90'
+
+# Cards:              -; Çağlar Söyüncü [Y 88'],  Halil Dervişoğlu [Y 90']
+##  use Yellow Cards ??
+##  use  -; for NONE - why? why not?
+##
+## add formation too e g.  (4-3-3) or  (4-1-4-1)
+
+
+
+# 28/06/2021, Bucureşti (Romania), Arena Naţională, 22642
+# SWITZERLAND         3 (Haris Seferović 15' 81', Mario Gavranović 90')
+# FRANCE              3 (Karim Benzema 57' 59', Paul Pogba 75')
+# Switzerland won 5-4 on penalties, after extra time.
+
+Jun 28  @ Arena Naţională, Bucureşti, Romania   ## (att: 22642)
+  SWITZERLAND v  FRANCE       3-3    [aet; Switzerland won 5-4 on penalties]
+     (Haris Seferović 15', 81'  Mario Gavranović 90';
+      Karim Benzema 57', 59'  Paul Pogba 75')
+
+
+  SWITZERLAND v  FRANCE     5-4 pen 3-3 aet
+
+
+Switzerland:        Yann Sommer -  Nico Elvedi, Manuel Akanji,
+                    Ricardo Rodríguez (Admir Mehmedi 87') - Silvan Widmer (Kevin Mbabu 73'),
+                    Remo Freuler, Granit Xhaka, Steven Zuber (Christian Fassnacht 79') -
+                    Breel Embolo (Ruben Vargas 79'), Xherdan Shaqiri (Mario Gavranović 73'),
+                    Haris Seferović (Fabian Schär 97')
+                       Coach: Vladimir Petković
+
+
+France:             Hugo Lloris - Benjamin Pavard, Raphaël Varane,
+                    Clément Lenglet (Kingsley Coman 46' (Marcus Thuram 111')),
+                    Presnel Kimpembe, Adrien Rabiot -
+                    Paul Pogba, N'Golo Kanté, Antoine Griezmann (Moussa Sissoko 88') -
+                    Karim Benzema (Olivier Giroud 94'), Kylian Mbappé
+                      Coach: Didier Deschamps
+
+Referee:            Fernando Rapallini (Argentina)
+
+Yellow Cards:     Nico Elvedi 32',  Ricardo Rodríguez 62', Granit Xhaka 76',  Manuel Akanji 108';
+                  Raphaël Varane 30',  Kingsley Coman 88', Benjamin Pavard 91'
+
+Penalties:       1-0  Mario Gavranović, 1-1 Paul Pogba, 2-1  Fabian Schär, 2-2 Olivier Giroud,
+                 3-2  Manuel Akanji, 3-3 Marcus Thuram, 4-3 Ruben Vargas,
+                  4-4  Presnel Kimpembe, 5-4 Admir Mehmedi,  Kylian Mbappé (save)
+
+# Note - Hugo Lloris saved a penalty from Ricardo Rodríguez at 55'.
+
+
+
+__END__
+
+
+
+29/06/2021, London, Wembley Stadium, 41973
+ENGLAND             2 (10 Raheem Sterling 75', 9 Harry Kane 86')
+GERMANY             0
+England:            1 Jordan Pickford; 2 Kyle Walker, 5 John Stones, 6 Harry Maguire; 12 Kieran Trippier,
+(3-4-3)             14 Kalvin Phillips, 4 Declan Rice (8 Jordan Henderson 88'), 3 Luke Shaw; 25 Bukayo Saka
+                    (7 Jack Grealish 69'), 9 Harry Kane, 10 Raheem Sterling.
+Germany:            1 Manuel Neuer; 4 Matthias Ginter (23 Emre Can 87'), 5 Mats Hummels,
+(3-4-3)             2 Antonio Rüdiger; 6 Joshua Kimmich, 18 Leon Goretzka, 8 Toni Kroos, 20 Robin Gosens
+                    (19 Leroy Sané 87'); 7 Kai Havertz, 11 Timo Werner (10 Serge Gnabry 68'),
+                    25 Thomas Müller (14 Jamal Musiala 90+2').
+Referee:            Danny Makkelie (Netherlands).
+Coaches:            England: Gareth Southgate.
+                    Germany: Joachim Löw.
+Cards:              England: 4 Declan Rice [Y 8'], 14 Kalvin Phillips [Y 45'],
+                             6 Harry Maguire [Y 77'].
+                    Germany: 4 Matthias Ginter [Y 25'], 20 Robin Gosens [Y 72'].
+
+29/06/2021, Glasgow (Scotland), Hampden Park, 9221
+UKRAINE             2 (17 Oleksandr Zinchenko 27', 26 Artem Dovbyk 120+1')
+SWEDEN              1 (10 Emil Forsberg 43')
+After extra time.
+Ukraine:            1 Heorhii Bushchan; 13 Illia Zabarnyi, 4 Serhii Kryvtsov, 22 Mykola Matviienko;
+(3-4-3)             21 Oleksandr Karavaiev, 5 Serhii Sydorchuk (18 Roman Bezus 118'), 6 Taras Stepanenko
+                    (14 Yevhenii Makarenko 95'), 17 Oleksandr Zinchenko; 7 Andrii Yarmolenko
+                    (26 Artem Dovbyk 106'), 9 Roman Yaremchuk (19 Artem Biesiedin 91'
+                    (15 Viktor Tsyhankov 101')), 10 Mykola Shaparenko (8 Ruslan Malinovskyi 61').
+Sweden:             1 Robin Olsen; 2 Mikael Lustig (16 Emil Krafth 83'), 3 Victor Lindelöf,
+(4-4-2)             24 Marcus Danielson, 6 Ludwig Augustinsson (5 Pierre Bengtsson 83');
+                    7 Sebastian Larsson (17 Viktor Claesson 97'), 20 Kristoffer Olsson
+                    (14 Filip Helander 101'), 8 Albin Ekdal, 10 Emil Forsberg; 21 Dejan Kulusevski
+                    (22 Robin Quaison 97'), 11 Alexander Isak (9 Marcus Berg 97').
+Referee:            Daniele Orsato (Italy).
+Coaches:            Ukraine: Andrii Shevchenko.
+                    Sweden: Janne Andersson.
+Cards:              Ukraine: 7 Andrii Yarmolenko [Y 79'], 26 Artem Dovbyk [Y 120+2'].
+                    Sweden: 21 Dejan Kulusevski [Y 69'], 10 Emil Forsberg [Y 85'],
+                            24 Marcus Danielson [R 99'].
+
+
+▪ Quarter-finals
+
+02/07/2021, Sankt-Peterburg (Russia), Gazprom Arena (Stadion Sankt-Peterburg), 24764
+SPAIN               1 (18 Jordi Alba 8')
+SWITZERLAND         1 (23 Xherdan Shaqiri 68')
+Spain won 3-1 on penalties, after extra time.
+Spain:              23 Unai Simón; 2 César Azpilicueta, 24 Aymeric Laporte, 4 Pau Torres
+(4-3-3)             (10 Thiago Alcântara do Nascimento 113'), 18 Jordi Alba;
+                    8 Jorge Resurrección 'Koke' (6 Marcos Llorente 90+1'), 5 Sergio Busquets,
+                    26 Pedro González 'Pedri' (16 Rodrigo Hernández 'Rodri' 119'); 11 Ferran Torres
+                    (21 Mikel Oyarzabal 91'), 7 Álvaro Morata (9 Gerard Moreno 54'), 22 Pablo Sarabia
+                    (19 Dani Olmo 46').
+Switzerland:        1 Yann Sommer; 3 Silvan Widmer (2 Kevin Mbabu 100'), 4 Nico Elvedi, 5 Manuel Akanji,
+(4-2-3-1)           13 Ricardo Rodríguez; 6 Denis Zakaria (22 Fabian Schär 100'), 8 Remo Freuler;
+                    7 Breel Embolo (11 Ruben Vargas 23'), 23 Xherdan Shaqiri (15 Djibril Sow 81'),
+                    14 Steven Zuber (16 Christian Fassnacht 90+2'); 9 Haris Seferović
+                    (19 Mario Gavranović 82').
+Referee:            Michael Oliver (England).
+Coaches:            Spain: Luis Enrique Martínez.
+                    Switzerland: Vladimir Petković (Bosnia and Herzegovina/Switzerland).
+Cards:              Spain: 24 Aymeric Laporte [Y 90+3'].
+                    Switzerland: 3 Silvan Widmer [Y 67'], 8 Remo Freuler [R 77'],
+                                 19 Mario Gavranović [Y 120+1'].
+Penalties:          0-0 5 Sergio Busquets (post), 0-1 19 Mario Gavranović, 1-1 19 Dani Olmo,
+                    1-1 22 Fabian Schär (save), 1-1 16 Rodrigo Hernández 'Rodri' (save),
+                    1-1 5 Manuel Akanji (save), 2-1 9 Gerard Moreno, 2-1 11 Ruben Vargas (miss),
+                    3-1 21 Mikel Oyarzabal.
+Note:               The Spanish goal is also attributed to Denis Zakaria as an own-goal.
