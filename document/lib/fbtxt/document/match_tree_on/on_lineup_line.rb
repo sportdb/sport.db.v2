@@ -85,7 +85,11 @@ class MatchTree
 
     ## todo/fix-fix-fix  add formation here too - why? why not?
 
-    match.lineup  <<   Lineup.build( lineup )
+    ## note - keep track (a reference) of the last lineup
+    ##           e.g.   on_coach auto-adds coach
+    @last_lineup = Lineup.build( lineup )
+    match.lineup  <<   @last_lineup
+
 
     match.bookings ||=[]
     match.bookings << _collect_bookings( lineup )

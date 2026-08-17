@@ -24,6 +24,10 @@ class Match
   ## e.g. support (flat/undefined) [], or (nested/paired) [[],[]]
   attr_accessor :goals      ## todo/fix: make goals like all other attribs!!
 
+  ####   - alternate (single) sequence format with REQUIRED score
+  attr_accessor :goals_alt
+
+
 ###
 #  add details match (report) info
 ##          lineup,bench,subs,bookings(y/yr/r/etc.)
@@ -135,6 +139,14 @@ def as_json
           end
      end  # each goal
   end
+
+
+  ### check for goals (alt)
+  if @goals_alt.is_a?(Array) && @goals_alt.size > 0
+    data['goals'] = @goals_alt.as_json
+  end
+
+
 
   ### check for penalties (shootout)
   if @penalties.is_a?(Array) && @penalties.size > 0

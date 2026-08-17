@@ -17,6 +17,7 @@ require_relative 'document/models/round'
 require_relative 'document/models/group'
 require_relative 'document/models/player'
 require_relative 'document/models/referee'
+require_relative 'document/models/coach'
 require_relative 'document/models/lineup'
 require_relative 'document/models/penalty'
 require_relative 'document/models/event'    ##  cards, sub(stitution)s
@@ -44,10 +45,13 @@ require_relative 'document/match_tree_on/on_date_header'
 require_relative 'document/match_tree_on/on_match_line'
 require_relative 'document/match_tree_on/on_match_bye'
 require_relative 'document/match_tree_on/on_goal_line'
+require_relative 'document/match_tree_on/on_goal_line_alt'
 require_relative 'document/match_tree_on/on_penalties'
 require_relative 'document/match_tree_on/on_lineup_line'
 require_relative 'document/match_tree_on/on_cards_line'
-require_relative 'document/match_tree_on/on_referee_line'
+require_relative 'document/match_tree_on/on_referee'
+require_relative 'document/match_tree_on/on_coach'
+require_relative 'document/match_tree_on/on_attendance'
 
 
 require_relative 'document/document'   ## e.g. use Fbtxt::Document.parse/read/etc.

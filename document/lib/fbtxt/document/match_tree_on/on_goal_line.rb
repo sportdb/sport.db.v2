@@ -91,6 +91,12 @@ class MatchTree
     ## quick & dirty - auto add goals to last match
     ##   note - for hacky (quick& dirty) multi-line support
     ##     always append for now
+
+    ##
+    ##  fix
+    ##   multiple goal lines NOT possible
+    ##    report warn/error - why? why not?
+
     match.goals ||= []
     match.goals += goals
 

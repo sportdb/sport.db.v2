@@ -47,6 +47,8 @@ class MatchTree
 
     @last_group   = nil
 
+    @last_lineup  = nil
+
 
     @teams   = Hash.new(0)   ## track counts (only) for now for (interal) team stats - why? why not?
     @rounds  = {}
@@ -55,37 +57,45 @@ class MatchTree
 
 
     @tree.each do |node|
-       if node.is_a? RaccMatchParser::RoundDef
+       if node.is_a? Parser::RoundDef
         ## todo/fix:  add round definition (w begin n end date)
         ## todo: do not patch rounds with definition (already assume begin/end date is good)
         ##  -- how to deal with matches that get rescheduled/postponed?
           on_round_def( node )
-        elsif node.is_a? RaccMatchParser::GroupDef  ## NB: group goes after round (round may contain group marker too)
+        elsif node.is_a? Parser::GroupDef  ## NB: group goes after round (round may contain group marker too)
         ### todo: add pipe (|) marker (required)
           on_group_def( node )
-      elsif node.is_a? RaccMatchParser::RoundOutline
+      elsif node.is_a? Parser::RoundOutline
           on_round_outline( node )
-      elsif node.is_a? RaccMatchParser::DateHeader
+      elsif node.is_a? Parser::DateHeader
           on_date_header( node )
-      elsif node.is_a? RaccMatchParser::MatchLine
+      elsif node.is_a? Parser::MatchLine
           on_match_line( node )
-      elsif node.is_a? RaccMatchParser::MatchLineBye
+      elsif node.is_a? Parser::MatchLineBye
           on_match_line_bye( node )
-      elsif node.is_a? RaccMatchParser::GoalLine
+      elsif node.is_a? Parser::GoalLine
           on_goal_line( node )
-      elsif node.is_a? RaccMatchParser::PenaltiesLine
+      elsif node.is_a? Parser::GoalLineAlt
+          on_goal_line_alt( node )
+      elsif node.is_a? Parser::PenaltiesLine
            on_penalties( node )
-      elsif node.is_a? RaccMatchParser::LineupLine
+      elsif node.is_a? Parser::LineupLine
           on_lineup_line( node )
-      elsif node.is_a? RaccMatchParser::CardsLine
+      elsif node.is_a? Parser::CardsLine
           on_cards_line( node )
-      elsif node.is_a? RaccMatchParser::RefereeLine
-           on_referee_line( node )
-      elsif node.is_a?( RaccMatchParser::Heading1 ) ||
-            node.is_a?( RaccMatchParser::Heading2 ) ||
-            node.is_a?( RaccMatchParser::Heading3 )
+      #### todo/fix
+      ##  change RefereeLine to RefereeProp(erty)  - why? why not?
+      ##  change CoachLine to CoachProp(erty)  - why? why not?
+      ##  change AttendanceLine to AttendacProp(erty)  - why? why not?
+      elsif node.is_a?(Parser::RefereeLine)    then  on_referee( node )
+      elsif node.is_a?(Parser::CoachLine)      then  on_coach( node )
+      elsif node.is_a?(Parser::AttendanceLine) then  on_attendance( node )
+
+      elsif node.is_a?( Parser::Heading1 ) ||
+            node.is_a?( Parser::Heading2 ) ||
+            node.is_a?( Parser::Heading3 )
           ###  skip headings (1/2/3) for now
-      elsif node.is_a? RaccMatchParser::BlankLine
+      elsif node.is_a? Parser::BlankLine
           ### skip for now; do nothing
       else
         ## report error

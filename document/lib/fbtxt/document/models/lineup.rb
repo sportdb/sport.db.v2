@@ -104,7 +104,6 @@ class Lineup
 
 
 
-
     def initialize( starter:,
                     bench: [],
                     subs:  [] )
@@ -119,11 +118,19 @@ class Lineup
         end
 
         @subs    = subs
+
+        ## note - use array (supports multiple coaches)
+        @coaches   = []
     end
 
     def starter()  @starter.values; end
     def bench()    @bnech.values; end
     def subs()     @subs; end
+
+
+    def coaches()        @coaches; end
+    def coaches=(value)  @coaches = value; end
+
 
 
     def find_player( name )
@@ -137,6 +144,9 @@ class Lineup
 
         h['bench'] = @bench.values.as_json    if @bench.size > 0
         h['subs']  = @subs.as_json            if @subs.size > 0
+
+        ## note - use coach (singular) for now even if (always) serialzed to array for now
+        h['coach'] = @coaches.as_json           if @coaches.size > 0
 
         h
     end

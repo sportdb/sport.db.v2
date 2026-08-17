@@ -56,3 +56,13 @@ Red cards: Mosquera, Evair
 
 Referee: Aquino (Paraguay)
 Attendance: 32_000
+
+
+
+
+
+__END__
+
+fix/check:
+
+!!  player >Mosquera< NOT found; skipping booking Mosquera

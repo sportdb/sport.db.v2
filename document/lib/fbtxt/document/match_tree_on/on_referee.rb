@@ -2,7 +2,7 @@ module Fbtxt
 class MatchTree
 
 
-  def on_referee_line( node )
+  def on_referee( node )
     _trace( "on referee(s): >#{node}<" )
 
     ## get last match

@@ -6,6 +6,12 @@ class MatchTree
   def on_match_line( node )
     _trace( "on match: >#{node}<" )
 
+##
+##  reset last lineup
+    @last_lineup = nil
+
+
+
     ## collect (possible) nodes by type
     num    = nil
     num = node.num   if node.num

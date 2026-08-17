@@ -5,6 +5,10 @@ class MatchTree
 
   def on_match_line_bye( node )
     _trace( "on match (bye): >#{node}<" )
+##
+##  reset last lineup
+    @last_lineup = nil
+
 
     ## note - bye    records NO date/time or ground (or score etc.)
     ##                 for now only team1/team2 and match status!!

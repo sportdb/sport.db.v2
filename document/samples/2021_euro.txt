@@ -12,7 +12,7 @@
 # ITALY               3 (Merih Demiral 53' OG, Ciro Immobile 66', Lorenzo Insigne 79')
 # TURKEY              0
 
-Jun 11 @ Stadio Olimpico, Roma     ## (att: 12916)
+Jun 11 @ Stadio Olimpico, Roma,       Att: 12916
   ITALY v TURKEY   3-0
     (Merih Demiral 53' (og) Ciro Immobile 66' Lorenzo Insigne 79')
 
@@ -48,12 +48,17 @@ Yellow Cards:      Çağlar Söyüncü 88',  Halil Dervişoğlu 90'
 # FRANCE              3 (Karim Benzema 57' 59', Paul Pogba 75')
 # Switzerland won 5-4 on penalties, after extra time.
 
-Jun 28  @ Arena Naţională, Bucureşti, Romania   ## (att: 22642)
-  SWITZERLAND v  FRANCE       3-3    [aet; Switzerland won 5-4 on penalties]
+Jun 28  @ Arena Naţională, Bucureşti, Romania,   Att: 22642
+  SWITZERLAND v  FRANCE       3-3     [aet; Switzerland won 5-4 on penalties]
      (Haris Seferović 15', 81'  Mario Gavranović 90';
       Karim Benzema 57', 59'  Paul Pogba 75')
 
+Penalties:       1-0  Mario Gavranović, 1-1 Paul Pogba, 2-1  Fabian Schär, 2-2 Olivier Giroud,
+                 3-2  Manuel Akanji, 3-3 Marcus Thuram, 4-3 Ruben Vargas,
+                  4-4  Presnel Kimpembe, 5-4 Admir Mehmedi,  Kylian Mbappé (save)
 
+
+## try  (match line w/) alt score format
   SWITZERLAND v  FRANCE     5-4 pen 3-3 aet
 
 
@@ -77,11 +82,9 @@ Referee:            Fernando Rapallini (Argentina)
 Yellow Cards:     Nico Elvedi 32',  Ricardo Rodríguez 62', Granit Xhaka 76',  Manuel Akanji 108';
                   Raphaël Varane 30',  Kingsley Coman 88', Benjamin Pavard 91'
 
-Penalties:       1-0  Mario Gavranović, 1-1 Paul Pogba, 2-1  Fabian Schär, 2-2 Olivier Giroud,
-                 3-2  Manuel Akanji, 3-3 Marcus Thuram, 4-3 Ruben Vargas,
-                  4-4  Presnel Kimpembe, 5-4 Admir Mehmedi,  Kylian Mbappé (save)
 
 # Note - Hugo Lloris saved a penalty from Ricardo Rodríguez at 55'.
+
 
 
 
