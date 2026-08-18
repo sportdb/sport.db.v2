@@ -15,3 +15,8 @@ logs.*.txt
 ###
 #  ignore env files
 .env
+
+
+###
+#  ignore generated websites
+_site/
