@@ -20,7 +20,10 @@ HX_RE = %r{          ## negative lookahead
                     ## (ii) heading text  -- note: non-greedy match
                             (?<text> .+?)
                     ## (iii) optional trailing markers
-                            (?: [ ]* ={1,6}  )?
+                    ##       or inline comment (extract and move to next line) !!!!
+                            (?:   [ ]* ={1,6}
+                                | [ ]* (?<comment> \#{1,} [ ]* .+? )
+                            )?
                     [ ]*
             $}x
 
@@ -61,21 +64,6 @@ def build_page( page )
                   end
 
 
-   ## mark end-of-line comments
-   ##   note  - keep comment markers
-   txt = txt.gsub( %r{
-                           (?<comment> \#{1,} [ ]*
-                               .*?
-                            )
-                            [ ]*
-                        $
-                       }ix) do |_|
-                          m = Regexp.last_match
-                        "<span class='comment' title='end-of-line comment'>" +
-                        "#{m[:comment]}" +
-                        "</span>"
-                       end
-
 
 
    ## remove newlines if more than triple
@@ -99,9 +87,33 @@ def build_page( page )
                     ## note - record title if h1 found
                      title = m[:text]   if level == 1
 
-                    "<h#{level}>#{'='*level} #{m[:text]} #{'='*level}</h#{level}>"
+                     if m[:comment]
+                        ## exctract comment and move to next line!!!
+                        "<h#{level}>#{'='*level} #{m[:text]} #{'='*level}</h#{level}>\n"+
+                        "#{m[:comment]}"
+                     else
+                        "<h#{level}>#{'='*level} #{m[:text]} #{'='*level}</h#{level}>"
+                     end
                end
              end
+
+
+   ## mark end-of-line comments
+   ##   note  - keep comment markers
+   txt = txt.gsub( %r{
+                           (?<comment> \#{1,} [ ]*
+                               .*?
+                            )
+                            [ ]*
+                        $
+                       }ix) do |_|
+                          m = Regexp.last_match
+                        "<span class='comment' title='end-of-line comment'>" +
+                        "#{m[:comment]}" +
+                        "</span>"
+                       end
+
+
 
 
   ## build table of contents (toc)
@@ -119,7 +131,7 @@ def build_page( page )
 
 
 
- banner = build_banner( page: page )
+ banner = build_banner( site: site, page: page )
 
 
 body = String.new

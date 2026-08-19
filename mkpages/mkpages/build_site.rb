@@ -42,8 +42,9 @@ end
 class SiteIndex
 
 
-def self.build( files, dir: )
-   idx = self.new( dir: dir )
+def self.build( files, dir:, baseurl: )
+   idx = self.new( dir:     dir,
+                   baseurl: baseurl )
    idx.add( files )
    idx
 end
@@ -51,9 +52,10 @@ end
 
 
 ## use basedir - why? why not?
-attr_reader :dir
+attr_reader :dir, :baseurl
 
-def initialize( dir: )
+
+def initialize( dir:, baseurl: )
 
      ##
      ##  note - expand dir
@@ -61,7 +63,9 @@ def initialize( dir: )
      ##     /site   =>   c:/sites
      ##    required to make relative_path work
 
-    @dir = File.expand_path(dir)
+    @dir     = File.expand_path(dir)
+    @baseurl = baseurl
+
     @pages  = []
 end
 
