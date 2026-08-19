@@ -16,9 +16,12 @@ require 'pathname'
 
 
 #  quick hack - always auto-add latest lexer if present for now
-$LOAD_PATH.unshift( '../lexer/lib' )
-$LOAD_PATH.unshift( '../parser/lib' )
-$LOAD_PATH.unshift( '../document/lib' )
+#    note - instead  of ../   use absolute path with
+#                 File.dirname(__dir__)
+
+$LOAD_PATH.unshift( "#{File.dirname(__dir__)}/lexer/lib" )
+$LOAD_PATH.unshift( "#{File.dirname(__dir__)}/parser/lib" )
+$LOAD_PATH.unshift( "#{File.dirname(__dir__)}/document/lib" )
 require 'fbtxt/document'
 
 
