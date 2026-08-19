@@ -56,6 +56,36 @@ baseurl = opts[:baseurl]
 ### note - auto-excludes .edits.txt
 ##           e.g. braz2024.edits.txt.
 files =   Fbtxt::Pathspec.find( rootdir )
+
+###
+#
+#  note - add upstream more excludes
+#    required for nested github checkouts e.g.
+# relpath: sport.db.v2/prompts/worldcup_final, basename: googleai-final_v3
+#  relpath: sport.db.v2/prompts/worldcup_final, basename: googleai_final_v4
+# relpath: sport.db.v2/sandbox, basename: quick
+# relpath: vendor/bundle/ruby/3.2.0/gems/cocos-0.4.2, basename: Manifest
+# relpath: vendor/bundle/ruby/3.2.0/gems/csvjson-1.0.1, basename: Manifest
+
+
+## note - work path in github is:
+##   e.g. /home/runner/work/england/england
+
+files = files.select do |file|
+                          ## exclude our own script
+                          ##   housed in /sport.db.v2 !!!
+                         if file.include?( '/sport.db.v2/' )
+                             false
+                         elsif file.include?( '/.git/' ) ||
+                               file.include?( '/vendor/' ) ||
+                               file.include?( '/bundle/' )
+                            false
+                         else
+                            true
+                         end
+                     end
+
+
 puts "    #{files.size} source .txt file(s) found"
 
 
