@@ -6,12 +6,12 @@ module Pages
 
 def self.main( args=ARGV )
 ##
-##  add -j/--json generation option - why? why not?
+##  add -j/--[no-]json generation option - why? why not?
 
  opts = {
    outdir:     './_site',
-   rootdir:    '/sports/openfootball/england',
-   index:      false,
+   rootdir:    '.',
+   index:      true,
    baseurl:    nil,
  }
 
@@ -63,10 +63,8 @@ site = SiteIndex.build( files, dir:     rootdir,
                                baseurl: baseurl )
 
 
-build_index( site, outdir: outdir )
-exit 1
-
 build_pages( site, outdir: outdir )
+build_index( site, outdir: outdir )
 
 ## write out sitewide stylesheet (style.css)
 build_style( outdir: outdir )
