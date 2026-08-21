@@ -19,7 +19,7 @@ name: Generate and deploy html pages & json datasets
 
 on:
   workflow_call:
-    inputs:
+      # inputs:
       # whatever you want callers to customize
 
 
@@ -30,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/sport.db.v2/.github/workflows/Gemfile
+    permissions:
+      contents: read
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -71,6 +73,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
