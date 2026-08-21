@@ -8,12 +8,10 @@ def build_banner( site:,
                   page: )
 
 
- baseurl = site.baseurl   ## add/use default - why? why not?
+ edit_url = "https://github.com/#{site.repo}/blob/#{site.branch}/#{page.relpath}/#{page.basename}.txt"
 
-
- edit_url = "#{baseurl}/blob/master/#{page.relpath}/#{page.basename}.txt"
-
- txt_url  = "#{baseurl}/raw/refs/heads/master/#{page.relpath}/#{page.basename}.txt"
+ txt_url  = "https://raw.githubusercontent.com/#{site.repo}/refs/heads/#{site.branch}/#{page.relpath}/#{page.basename}.txt"
+ ## txt_url  = "#{baseurl}/raw/refs/heads/master/#{page.relpath}/#{page.basename}.txt"
 
 
  json_url = "#{page.outpath('.json')}"

@@ -57,6 +57,17 @@ a:hover {
             color: green;
       }
 
+
+
+/***
+   pre block for errors
+  **/
+
+  pre.errors {
+      color:       red;
+      font-weight: bold;
+  }
+
 CSS
 
    write_text( "#{outdir}/style.css", css )

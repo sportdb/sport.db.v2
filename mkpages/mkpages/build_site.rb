@@ -42,9 +42,10 @@ end
 class SiteIndex
 
 
-def self.build( files, dir:, baseurl: )
+def self.build( files, dir:, repo:, branch: 'master' )
    idx = self.new( dir:     dir,
-                   baseurl: baseurl )
+                   repo:    repo,
+                   branch:  branch )
    idx.add( files )
    idx
 end
@@ -52,10 +53,11 @@ end
 
 
 ## use basedir - why? why not?
-attr_reader :dir, :baseurl
+attr_reader :dir,
+            :repo, :branch    ### for github e.g.   openfootball/england, master (or main)
 
 
-def initialize( dir:, baseurl: )
+def initialize( dir:, repo:, branch: )
 
      ##
      ##  note - expand dir
@@ -64,81 +66,12 @@ def initialize( dir:, baseurl: )
      ##    required to make relative_path work
 
     @dir     = File.expand_path(dir)
-    @baseurl = baseurl
+
+    @repo    = repo
+    @branch  = branch
 
     @pages  = []
 end
-
-
-
-class Page
-    ## maybe later -  read meta (title) on demand only
-    attr_reader :site, :relpath, :basename
-
-
-    ### flattened (relative) outpath - incl.
-    ###   e.g. 2024-25/1-premier  =>  2024-25_1-premier
-    ###
-    ###  check/rename   use calc/mk_outpath or such?
-    def outpath( extension = '.html')
-                         outpath = ""
-                         outpath += @relpath
-
-                         ## strip archive/YYYYs/
-                         outpath = outpath.sub( %r{^archive/\d{4}s/
-                                                   }ix, '' )
-
-                         ## replace  / (slash) with _ (underscore)
-                         outpath = outpath.gsub( '/', '_' )
-
-                         outpath += "_"     unless outpath == ''
-                         outpath += @basename
-                         outpath += extension
-
-                          outpath
-    end
-
-
-    def initialize( site:, relpath:, basename: )
-        @site = site    # link to (parent) site
-
-        @relpath  = relpath
-        @basename = basename
-
-        ## get meta data block via html-style comment header (in .txt)
-        ##    incl.   title, autor(s), source,  updated
-        ##  e.g.
-        ##    <!--
-        ##       title:   Austria 2024/25
-        ##       source:  https://rsssf.org/tableso/oost2025.html
-        ##       author:  Hans Schöggl
-        ##       updated: 7 Jul 2025
-        ##      -->
-        ##  -or-
-        ##      authors: Hans Schöggl and Karel Stokkermans
-
-        ## @meta   =   parse_meta( _read_text() )
-    end
-
-
-
-    def _read_text
-        txt = read_text( "#{@site.dir}/#{relpath}/#{basename}.txt" )
-
-        ## check windows files on unix  -- remove \r - carriage return (cr)
-        ##  clean-up windows-style newlines - why? why not?
-        txt = txt.gsub( "\r\n", "\n" )
-        txt
-    end
-
-    ## note - maybe memorize (cache) txt later - why? why not?
-    ##    do NOT reread - and freeze text (to make read-only)??
-    alias_method :txt,  :_read_text
-    alias_method :text, :_read_text
-
-
-end # (nested) class Page
-
 
 
 

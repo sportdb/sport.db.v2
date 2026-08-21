@@ -137,6 +137,16 @@ def build_page( page )
 body = String.new
 ## body   += toc   if toc
 
+###
+## check for errors
+  if page.errors?
+        body += "<pre class='errors'>\n"
+        body += "#{page.errors.size} football.txt format error(s) found:\n"
+        body += page.errors.pretty_inspect
+        body += "</pre>\n\n"
+  end
+
+
 ## note - wrap .txt page in its own pre block
 body   += "<pre>\n"
 body   += txt

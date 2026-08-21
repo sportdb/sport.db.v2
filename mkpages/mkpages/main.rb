@@ -12,7 +12,10 @@ def self.main( args=ARGV )
    outdir:     './_site',
    rootdir:    '.',
    index:      true,
-   baseurl:    nil,
+
+   repo:      ENV['GITHUB_REPOSITORY'],
+   branch:    'master',   ## note - hard-code for now; use env too in future
+   ## baseurl:    nil,
  }
 
 
@@ -29,9 +32,9 @@ def self.main( args=ARGV )
        opts[:rootdir] = rootdir
      end
 
-     parser.on( "--baseurl URL",
-                 "(github) baseurl for view/edit link, .txt and more (default: #{opts[:baseurl]})" ) do |baseurl|
-       opts[:baseurl] = baseurl
+     parser.on( "--repo REPO",
+                 "(github) repo e.g. {owner}/{name} for view/edit link, .txt and more (default: #{opts[:repo]})" ) do |repo|
+       opts[:repo] = repo
      end
 
 
@@ -51,7 +54,10 @@ pp opts
 
 rootdir = opts[:rootdir]
 outdir  = opts[:outdir]
-baseurl = opts[:baseurl]
+repo    = opts[:repo]
+branch  = opts[:branch]
+
+
 
 ### note - auto-excludes .edits.txt
 ##           e.g. braz2024.edits.txt.
@@ -90,7 +96,8 @@ puts "    #{files.size} source .txt file(s) found"
 
 
 site = SiteIndex.build( files, dir:     rootdir,
-                               baseurl: baseurl )
+                               repo:    repo,
+                               branch:  branch )
 
 
 build_pages( site, outdir: outdir )
@@ -106,11 +113,40 @@ end  # method self.main
 
 
 def self.build_pages( site, outdir: )
-    ## todo/check - why each_page.with_index is not working??)
+
+
+  ## todo/check - why each_page.with_index is not working??)
     site.each_page_with_index do |page,i|
 
       outpath = "#{outdir}/#{page.outpath('.html')}"
       puts "==> [#{i+1}/#{site.size}] building page #{outpath} (#{page.relpath}/#{page.basename}.txt)..."
+
+
+      doc = Fbtxt::Document.parse( page.text )
+
+      if doc.errors?
+        puts "!! ERROR  -  #{doc.errors.size} parse error(s):"
+        pp doc.errors
+        ## exit 1
+
+        page.errors = doc.errors
+
+        data = { 'name'    => doc.title,
+                 'errors'  => doc.errors.as_json,
+                 'matches' => doc.matches.as_json,  ## keep matches - why? why not?
+                  }
+
+      else
+        page.errors = []
+
+        data = { 'name'    => doc.title,
+                 'matches' => doc.matches.as_json }
+      end
+
+
+      ####
+      #  note: parse page first (before build)
+      #          fills-up Page::Stat#errors
 
       html = build_page( page )
 
@@ -120,16 +156,6 @@ def self.build_pages( site, outdir: )
 
       ###
       ## generate json
-      doc = Fbtxt::Document.parse( page.text )
-
-      if doc.errors?
-        puts "!! ERROR  -  #{doc.errors.size} parse error(s):"
-        pp doc.errors
-        exit 1
-      end
-
-      data = { 'name'    => doc.title,
-               'matches' => doc.matches.as_json }
 
       ####################
       ## hack - use pretty_inspect for json pretty print

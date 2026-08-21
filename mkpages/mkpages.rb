@@ -25,10 +25,13 @@ $LOAD_PATH.unshift( "#{File.dirname(__dir__)}/document/lib" )
 require 'fbtxt/document'
 
 
-
+$LOAD_PATH.unshift( "#{File.dirname(__dir__)}/fbtok/lib" )
 require 'fbtok'   ### pulls-in  Fbtxt::Pathspec.find()
 
 
+
+
+require_relative 'mkpages/page'
 
 require_relative 'mkpages/build_page'
 require_relative 'mkpages/build_index'
