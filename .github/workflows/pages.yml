@@ -1,0 +1,80 @@
+###
+##
+## note:  requires permissions for build
+##  permissions:
+##      contents: read
+##
+##   and for deploy
+##   permissions:
+##      pages: write
+##      id-token: write
+
+
+##
+## rename workflow to fbpages (from pages) - why? why not?
+
+
+
+name: Generate and deploy html pages & json datasets
+
+on:
+  workflow_call:
+    inputs:
+      # whatever you want callers to customize
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/sport.db.v2/.github/workflows/Gemfile
+
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v4
+      with:
+        path: source
+
+    ## why not just use
+    ##           git clone https://github.com/sportdb/sport.db.v2.git  ???
+    - uses: actions/checkout@v4
+      with:
+        repository: sportdb/sport.db.v2
+        path:       sport.db.v2
+
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2' # Version range or exact version of a Ruby version to use, using semvers version range syntax.
+        bundler-cache: true  # runs 'bundle install' and caches installed gems automatically
+
+
+    - name: Build pages & datasets
+      run: |
+        bundle exec ruby sport.db.v2/mkpages/mkpages.rb --outdir=./_site --rootdir=./source
+
+
+    - name: Upload static files as artifact
+      id: deployment
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./_site
+
+
+  # Deployment job
+  ##  todo/check - if there's a wayo to simplify the deploy config here
+  ##                 is the with token required? or the default?
+  ##                        what about permissions?
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
