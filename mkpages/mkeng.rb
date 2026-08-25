@@ -10,7 +10,7 @@
 ARGV = [
   '--rootdir=/sports/openfootball/england',
   '--outdir=./_site/england',
-  '--baseurl=https://github.com/openfootball/england',
+  '--repo=openfootball/england',
 ]
 
 

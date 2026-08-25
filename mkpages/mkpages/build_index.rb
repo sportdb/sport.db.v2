@@ -1,4 +1,37 @@
 
+##
+## todo
+##    on render tree
+##   - [ ]  sort keys if path is a (all-number) season
+##          make latest go first e.g. 2026-27 before 1986-87 etc.!!!
+
+
+###
+##  build a tree from pages
+##     use relpath as key for now
+
+##
+##  maybe auto-collape (w/ summary/details)
+##      dirs with subdirs
+##   and yes, track subdirs
+
+
+def _build_tree( site )
+   tree = {}
+
+   site.each_page_with_index do |page,i|
+       key = ""
+       key += page.relpath
+       ## strip archive/YYYYs/ for now
+       key = key.sub( %r{^archive/\d{4}s/}ix, '' )
+
+       node = tree[key] ||=[]
+       node << page
+   end
+
+   tree
+end
+
 
 def build_index( site, outdir: )
 
@@ -48,12 +81,45 @@ def build_index( site, outdir: )
     end
 
 
-    site.each_page_with_index do |page,i|
-      buf << %Q{<a href="#{page.outpath('.html')}">#{page.relpath}/#{page.basename}</a>}
-      buf << %Q{ <a href="#{page.outpath('.json')}">(.json)</a>}
-      buf << "\n"
+    tree = _build_tree( site )
+
+
+    ## note - use unicode open folder e.g. 📂
+    ##    or maybe closed folder?
+    folder = "\u{1F4C2}"
+
+    tree.each do |path,pages|
+       ## buf << "#{folder}#{path} (#{pages.size})\n"
+       buf << "#{folder}#{path}\n"
+       buf << "    "
+
+       pages.each_with_index do |page,i|
+
+        ## quick hack for /internationals
+        ##    if dirname with leading underscore (_) incl. in basename than auto-remove!!
+        ##  arab_cup/1963_arab_cup.txt
+         dirname = File.basename(path)  ## note - get last entry from path (all dirs)
+         basename = page.basename.sub( "_#{dirname}", '' )
+
+         if i > 0
+            buf << " · "
+            buf << "\n    "    if i % 6 == 0   ## simple break after six entries for now
+         end
+
+         buf << %Q{<a href="#{page.outpath('.html')}">#{basename}</a>}
+         buf << %Q{ <a href="#{page.outpath('.json')}">(.json)</a>}
+       end
+       buf << "\n"
     end
-    buf << "</pre>\n"
+
+
+ #   site.each_page_with_index do |page,i|
+ #     buf << %Q{<a href="#{page.outpath('.html')}">#{page.relpath}/#{page.basename}</a>}
+ #     buf << %Q{ <a href="#{page.outpath('.json')}">(.json)</a>}
+ #     buf << "\n"
+ #   end
+
+   buf << "</pre>\n"
 
 
 
