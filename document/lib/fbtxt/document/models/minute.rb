@@ -7,6 +7,11 @@ class Minute
     attr_reader :m, :offset, :secs
 
     def initialize( m:, offset: nil, secs: nil )
+
+      raise ArgumentError, "(integer) number or ?,?? string expected for minute; " +
+                           "got >#{m}< #{m.class.name}"  unless m.is_a?(Integer) ||
+                                                                (m.is_a?(String) && m == '?' || m == '??')
+
       @m      = m
       @offset = offset
       @secs   = secs
@@ -45,8 +50,10 @@ here are the three best ways to rename it
     def <=>(other)
        return nil unless other.is_a?(Minute)
 
-      ## returns -1/0/1
-       res =   m <=> other.m
+       ## returns -1/0/1
+        ## -- note - check for unknowns e.g. ?? or such
+        ##       quick hack - for now assume everything but a number is unknown!!!
+       res =   (m.is_a?(Integer) ? m : 999) <=> (other.m.is_a?(Integer) ? other.m : 999)
        res =  (offset||0) <=> (other.offset||0)   if res == 0
        res
     end
