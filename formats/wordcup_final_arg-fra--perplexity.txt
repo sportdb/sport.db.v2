@@ -1,0 +1,202 @@
+####
+#  perplexity.ai (aug 2026)
+#
+# q:  can you show the world cup 2022 final in football.txt
+#       and include the line-up, subs, cards and penalty-shootout?
+
+Here’s the 2022 World Cup final in a **Football.TXT**-style format,
+extended to include line-ups, substitutions, cards,
+and the penalty shoot-out.
+This follows the openfootball conventions
+while adding optional detail sections. [en.wikipedia](https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_final)
+
+
+```txt
+= FIFA World Cup 2022 – Final
+# Date: 2022-12-18
+# Venue: Lusail Stadium, Lusail, Qatar
+# Attendance: 88966
+# Referee: Szymon Marciniak (Poland)
+# Competition: Final
+# Stage: Final
+
+▪ Final
+Sun Dec 18
+18:00 Argentina 3-3 (a.e.t.) (4-2 pen) France @ Lusail Stadium, Lusail
+        [Messi 23' (pen), 108'; Di María 36']
+        [Mbappé 80' (pen), 81', 118' (pen)]
+
+-- Line-ups --
+
+Argentina (4-3-3)
+GK 23 Emiliano Martínez
+RB 26 Nahuel Molina          [91' → Montiel]
+CB 13 Cristian Romero
+CB 19 Nicolás Otamendi
+LB 3  Nicolás Tagliafico     [120+1' → Pezzella]
+DM 24 Enzo Fernández         [Y 45+7']
+CM 20 Alexis Mac Allister    [116' → Paredes]
+CM 7  Rodrigo De Paul        [102' → Lautaro Martínez]
+RF 10 Lionel Messi (c)
+CF 9  Julián Álvarez         [102' → Dybala]
+LF 11 Ángel Di María         [64' → Acuña]
+Manager: Lionel Scaloni
+
+France (4-2-3-1)
+GK 1  Hugo Lloris (c)
+RB 5  Jules Koundé           [120+1' → Disasi]
+CB 4  Raphaël Varane         [113' → Konaté]
+CB 18 Dayot Upamecano
+LB 22 Théo Hernandez         [71' → Camavinga]
+CM 8  Aurélien Tchouaméni
+CM 14 Adrien Rabiot          [Y 55'; 96' → Fofana; concussion sub]
+RW 11 Ousmane Dembélé        [41' → Kolo Muani]
+AM 7  Antoine Griezmann      [71' → Coman]
+LW 10 Kylian Mbappé
+CF 9  Olivier Giroud         [Y 90+5'; 41' → Thuram]
+Manager: Didier Deschamps
+
+-- Substitutions --
+
+Argentina
+64'  Ángel Di María → Marcos Acuña (LB)        [Y 90+8']
+91'  Nahuel Molina → Gonzalo Montiel (RB)      [Y 116', 120+6']
+102' Rodrigo De Paul → Lautaro Martínez (CF)
+102' Julián Álvarez → Paulo Dybala (SS)
+116' Alexis Mac Allister → Leandro Paredes (DM) [Y 114']
+120+1' Nicolás Tagliafico → Germán Pezzella (CB)
+
+France
+41'  Ousmane Dembélé → Randal Kolo Muani (RW)
+41'  Olivier Giroud → Marcus Thuram (CF)       [Y 87']
+71'  Théo Hernandez → Eduardo Camavinga (LB)
+71'  Antoine Griezmann → Kingsley Coman (LW)
+96'  Adrien Rabiot → Youssouf Fofana (CM)      [concussion protocol]
+113' Raphaël Varane → Ibrahima Konaté (CB)
+120+1' Jules Koundé → Axel Disasi (RB)
+
+-- Cards --
+
+Argentina
+Y 45+7' Enzo Fernández (foul)
+Y 90+8' Marcos Acuña (foul)
+Y 114'  Leandro Paredes (foul)
+Y 116'  Gonzalo Montiel (foul)
+Y 120+6' Emiliano Martínez (unsporting behaviour)
+
+France
+Y 55'   Adrien Rabiot (foul)
+Y 87'   Marcus Thuram (diving)
+Y 90+5' Olivier Giroud (dissent)
+
+-- Penalty Shoot-out --
+
+Argentina 4-2 France
+1. Messi (ARG)        scored     0-0 → Mbappé (FRA)        scored     1-1
+2. Dybala (ARG)       scored     2-1 → Coman (FRA)         saved      2-1
+3. Paredes (ARG)      scored     3-1 → Tchouaméni (FRA)    missed     3-1
+4. Montiel (ARG)      scored     4-2 → Kolo Muani (FRA)    scored     4-2
+
+# Man of the Match: Lionel Messi (Argentina)
+# Notes: Rabiot substituted under concussion protocol (7th sub allowed in extra time)
+```
+
+### Notes on the Format
+
+- **Header**: `= Competition – Stage` with metadata lines starting with `#`.
+- **Match line**: `Date Time Home Score (a.e.t.) (pen) Away @ Venue`
+- **Goals**: In `[]` with minute and method (e.g., `(pen)`). [en.wikipedia](https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_final)
+- **Line-ups**: Position, number, name, captain `(c)`, and in-line subs with `[minute → player]`. [transfermarkt](https://www.transfermarkt.com/argentina_france/index/spielbericht/3975879)
+- **Substitutions**: Detailed list with minute, player off/on, position, and cards if applicable.
+- **Cards**: Separate section with minute, player, and reason.
+- **Penalties**: Paired format showing each taker and outcome for clarity.
+- **Extra notes**: Man of the Match, special rules (e.g., concussion sub). [transfermarkt](https://www.transfermarkt.com/argentina_france/index/spielbericht/3975879)
+
+This keeps the file human-readable while being structured enough for parsing.
+
+ ---
+
+## q: thanks. yes, please, show and try a more compact variant
+##     for humans but parseable
+
+Here’s a **compact, human-readable but parseable** variant of the same match. It keeps the Football.TXT spirit but uses consistent delimiters and shorthand so a simple parser can extract all fields reliably.
+
+```txt
+= FIFA World Cup 2022 – Final
+# date:2022-12-18 | venue:Lusail Stadium, Lusail, Qatar | att:88966 | ref:Szymon Marciniak (POL) | stage:Final
+
+▪ Final
+2022-12-18 18:00 | Argentina 3-3 (a.e.t.) (4-2 pen) France | @:Lusail Stadium, Lusail
+goals: Messi 23(p), 108; Di María 36 | Mbappé 80(p), 81, 118(p)
+
+lineups:
+ARG|4-3-3|Scaloni
+GK|23|E.Martínez
+RB|26|N.Molina → 91|G.Montiel[Y116,120+6]
+CB|13|C.Romero
+CB|19|N.Otamendi
+LB|3|N.Tagliafico → 120+1|G.Pezzella
+DM|24|E.Fernández[Y45+7]
+CM|20|A.Mac Allister → 116|L.Paredes[Y114]
+CM|7|R.De Paul → 102|L.Martínez
+RF|10|L.Messi(c)
+CF|9|J.Álvarez → 102|P.Dybala
+LF|11|Á.Di María → 64|M.Acuña[Y90+8]
+
+FRA|4-2-3-1|Deschamps
+GK|1|H.Lloris(c)
+RB|5|J.Koundé → 120+1|A.Disasi
+CB|4|R.Varane → 113|I.Konaté
+CB|18|D.Upamecano
+LB|22|T.Hernandez → 71|E.Camavinga
+CM|8|A.Tchouaméni
+CM|14|A.Rabiot[Y55] → 96|Y.Fofana[conc]
+RW|11|O.Dembélé → 41|R.Kolo Muani
+AM|7|A.Griezmann → 71|K.Coman
+LW|10|K.Mbappé
+CF|9|O.Giroud[Y90+5] → 41|M.Thuram[Y87]
+
+cards:
+ARG|Y45+7|E.Fernández|foul
+ARG|Y90+8|M.Acuña|foul
+ARG|Y114|L.Paredes|foul
+ARG|Y116|G.Montiel|foul
+ARG|Y120+6|E.Martínez|unsporting
+FRA|Y55|A.Rabiot|foul
+FRA|Y87|M.Thuram|diving
+FRA|Y90+5|O.Giroud|dissent
+
+penalties:
+ARG|1|L.Messi|scored
+FRA|1|K.Mbappé|scored
+ARG|2|P.Dybala|scored
+FRA|2|K.Coman|saved
+ARG|3|L.Paredes|scored
+FRA|3|A.Tchouaméni|missed
+ARG|4|G.Montiel|scored
+FRA|4|R.Kolo Muani|scored
+
+# motm:L.Messi(ARG) | notes:Rabiot conc.sub(7th allowed)
+```
+
+## Why This Is Compact Yet Parseable
+
+- **Pipe delimiters (`|`)** separate fields cleanly.
+- **Key-value pairs** in comments (`# key:value`) for metadata.
+- **Consistent patterns**:
+  - Match line: `DATE TIME | HOME SCORE AWAY | @:VENUE`
+  - Goals: `PLAYER MIN(p); PLAYER MIN`
+  - Line-ups: `POS|NUM|NAME → MIN|SUBNAME[tags]`
+  - Cards: `TEAM|YMIN|PLAYER|reason`
+  - Penalties: `TEAM|ORDER|PLAYER|outcome`
+- **Shorthand tags**:
+  - `(c)` = captain
+  - `[Ymin]` = yellow card at minute
+  - `(p)` = penalty goal
+  - `[conc]` = concussion substitution
+
+A simple regex or split-on-`|` parser can extract:
+- Teams, score, venue, date/time
+- Full line-ups with positions, numbers, subs, and cards
+- All cards with reasons
+- Penalty shoot-out order and outcomes
