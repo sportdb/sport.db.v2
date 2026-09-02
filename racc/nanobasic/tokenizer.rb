@@ -57,6 +57,7 @@ TOKEN_RE = Regexp.union(
                            | return) \b ) }ix,   ## check add word boundray - why? why not
                                             ##  e.g.  will print match println ???
 
+    ## operators/punctuation
     %r{   (?<SYM> (?:  ,   ## COMMA
                     |  =   ## EQUAL
                     |  <>  ## NOT_EQUAL      -- note - drop ><
@@ -80,6 +81,9 @@ TOKEN_RE = Regexp.union(
     )
 
 
+## note - add \G anchor
+TOKEN_RE = /\G#{TOKEN_RE}/
+
 pp TOKEN_RE
 
 
@@ -92,6 +96,13 @@ def _tokenize( txt )
 
        puts "==> #{lineno}: >#{line}<"
        while line.length-pos > 0
+
+## StringScanner is a built-in Ruby library specifically designed for this.
+##  It maintains an internal pos pointer and automatically
+##  uses the \G behavior under the hood to ensure your parsing is 100% contiguous
+##  and leaves no gaps.
+
+
             m = TOKEN_RE.match( line, pos )
 
             raise "internal lexer error"  unless m && m.begin(0) == pos
@@ -171,6 +182,18 @@ code =  <<BASIC
   ' CHECK NEGATIVE NUMBER
   70 LET Y = 1 - 1 - - 1
 BASIC
+
+=begin
+code =  <<BASIC
+  10 XPRINT
+BASIC
+
+code =  <<BASIC
+  10 @ PRINT
+BASIC
+=end
+
+
 
 lexer = NanoBasicLexer.new
 tokens = lexer.tokenize(code)
