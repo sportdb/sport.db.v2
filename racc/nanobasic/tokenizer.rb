@@ -27,11 +27,20 @@ end
 end   ## class Token
 
 
+######
+## difference to "upstream" lexer
+##    add optional ' for REM e.g.
+##      REM  check negative numbers or
+##      '    check negative numbers
+##
+##    remove -? from NUMBER (handled by MINUS)
+##    whitespace - handles multiple spaces/tabs (BUT no newline)
+
 
 
 TOKEN_RE = Regexp.union(
-    %r{   (?<COMMENT>      rem \b .*)    }ix,
-    %r{   (?<WHITESPACE>   [ \t\n\r]) }x,
+    %r{   (?<COMMENT>      (?: rem \b |') .*  )}ix,
+    %r{   (?<WHITESPACE>   [ \t\n]+   )}x,
     %r{   (?<KEYWORD>   (?:
                         print
                       | if
@@ -57,8 +66,8 @@ TOKEN_RE = Regexp.union(
            | (?<CLOSE_PAREN> \)  )}x,
 
     %r{  (?<VARIABLE>   [A-Za-z_]+ )}x,
-    %r{  (?<NUMBER>   -? [0-9]+ )}x,
-    %r{  (?<STRING>   ".*?") }x,     ## note - use non-greedy .*? (will break on first closing quote (")
+    %r{  (?<NUMBER>    [0-9]+ )}x,      ## note -   -? handled/matched by MINUS
+    %r{  (?<STRING>   "[^"]*") }x,
 
     %r{   (?<ANY> . ) }x   ## last - catch all/fall back for any character
     )
@@ -76,9 +85,12 @@ def tokenize( txt )
        puts " #{lineno}: >#{line}<"
        while line.length-pos > 0
             m = TOKEN_RE.match( line, pos )
+
+            raise "internal lexer error"  unless m && m.begin(0) == pos
             ## hack: convert captures to hash (should only have single entry/capture)
-            captures = m.named_captures(symbolize_names: true).compact
-            type = captures.keys[0]
+            ## or use
+            ##  type, _text = m.named_captures.find { |_name, text| text }
+            type, _text = m.named_captures(symbolize_names: true).compact.first
 
             puts "#{type} #{m[0]} #{lineno}@#{m.offset(0)}"
             case type
@@ -124,6 +136,8 @@ tokens = tokenize( <<BASIC )
   40 LET X = X + 1
   50 IF X < 4 THEN 30
   60 PRINT "DONE!"
+  ' CHECK NEGATIVE NUMBER
+  70 LET Y = 1 - 1 - - 1
 BASIC
 
 
