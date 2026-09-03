@@ -1,5 +1,15 @@
 # NanoBASIC/tokenizer.rb
 
+######
+## difference to "upstream" (original) NanoBASIC lexer
+##    add optional ' for REM e.g.
+##      REM  check negative numbers or
+##      '    check negative numbers
+##
+##    remove -? from NUMBER (handled by MINUS)
+##    whitespace - handles multiple spaces/tabs (BUT no newline)
+
+
 
 
 class Token
@@ -19,8 +29,8 @@ class Token
           q.pp( @type )
         else
           q.text( @type )
-          q.text( " " )
-          q.pp( @text )
+          ## q.text( " " )
+          ## q.pp( @text )
         end
         q.text( " @#{@lineno}" )
         q.text( ",#{@offset.join(':')}" )   unless @offset.empty?
@@ -33,16 +43,10 @@ end
 end   ## class Token
 
 
-######
-## difference to "upstream" lexer
-##    add optional ' for REM e.g.
-##      REM  check negative numbers or
-##      '    check negative numbers
-##
-##    remove -? from NUMBER (handled by MINUS)
-##    whitespace - handles multiple spaces/tabs (BUT no newline)
 
 
+
+class NanoBasicLexer
 
 TOKEN_RE = Regexp.union(
     %r{   (?<COMMENT>      (?: rem \b |') .*  )}ix,
@@ -82,26 +86,29 @@ TOKEN_RE = Regexp.union(
 
 
 ## note - add \G anchor
+##
+## tip: StringScanner is a built-in Ruby library specifically designed for this.
+##  It maintains an internal pos pointer and automatically
+##  uses the \G behavior under the hood to ensure your parsing is 100% contiguous
+##  and leaves no gaps.
 TOKEN_RE = /\G#{TOKEN_RE}/
 
 pp TOKEN_RE
 
 
-def _tokenize( txt )
-    tokens_all = []
+
+
+def tokenize( txt )
+    tokens_by_line = []
+
+    ### note - start lineno counting at 1 (NOT zero)
     txt.each_line.with_index(1) do |line,lineno|
-       tokens = []   ## per line
+       tokens = []
        line = line.chomp    ## remove newline
        pos  = 0   ## aka col_start
 
        puts "==> #{lineno}: >#{line}<"
        while line.length-pos > 0
-
-## StringScanner is a built-in Ruby library specifically designed for this.
-##  It maintains an internal pos pointer and automatically
-##  uses the \G behavior under the hood to ensure your parsing is 100% contiguous
-##  and leaves no gaps.
-
 
             m = TOKEN_RE.match( line, pos )
 
@@ -110,8 +117,13 @@ def _tokenize( txt )
             ## puts "   match #{lineno}@#{m.offset(0)} -- #{m[0]}"
 
             token  =
-            if m[:COMMENT] || m[:WHITESPACE]         ## eat-up / ignore
+            if m[:WHITESPACE]  ## eat-up / ignore
                 nil
+            elsif m[:COMMENT]
+                   ## note - return REM as token type (NOT COMMENT)
+                   ##      or eat-up / ignore here in future - why? why not?
+                   Token.new( :REM, m[0],
+                               lineno: lineno, offset: m.offset(0) )
             elsif m[:KEYWORD]
                    Token.new( m[0].upcase.to_sym, m[0],  ## no value - turn text/lexeme in token type
                               lineno: lineno, offset: m.offset(0) )
@@ -145,28 +157,16 @@ def _tokenize( txt )
           pos += m[0].length
        end
 
-       ## add new line with newline if NOT empty
-       ##   that is, basically skip blank lines (incl. newline)!!
-       ##   todo/fix - handle blank lines upstream in grammer/parser
-       unless tokens.empty?
-          tokens << Token.new( "\n", "\n",  lineno: lineno)
-          tokens_all += tokens
+       tokens << Token.new( "\n", "\n",  lineno: lineno)
+       pp tokens
 
-          pp tokens
-       end
-
+       tokens_by_line << tokens
     end ## each line
-    tokens_all
+
+    tokens_by_line.flatten
 end
+end  # class NanoBasicLexer
 
-
-
-class NanoBasicLexer
-
-  def tokenize( code)
-     _tokenize( code )
-  end
-end
 
 
 
