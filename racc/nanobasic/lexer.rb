@@ -10,6 +10,11 @@
 ##    whitespace - handles multiple spaces/tabs (BUT no newline)
 
 
+##
+##  todo - fix
+##     allow numbers/digits in variable names
+
+
 
 
 class Token
@@ -48,9 +53,11 @@ end   ## class Token
 
 class NanoBasicLexer
 
+## note - regexes are a pipeline where order matters
+##           first match wins e.g. KEYWORD match before VARIABLE, for example!
 TOKEN_RE = Regexp.union(
     %r{   (?<COMMENT>      (?: rem \b |') .*  )}ix,
-    %r{   (?<WHITESPACE>   [ \t\n]+   )}x,
+    %r{   (?<WHITESPACE>   [ \t]+   )}x,
 
     %r{   (?<KEYWORD>   (?:  print
                            | if
@@ -62,6 +69,7 @@ TOKEN_RE = Regexp.union(
                                             ##  e.g.  will print match println ???
 
     ## operators/punctuation
+    ##   note - order matters - longer matches (e.g. <=) MUST be before shorter (e.g. <)
     %r{   (?<SYM> (?:  ,   ## COMMA
                     |  =   ## EQUAL
                     |  <>  ## NOT_EQUAL      -- note - drop ><
@@ -77,6 +85,12 @@ TOKEN_RE = Regexp.union(
                     | \)   ## CLOSE_PAREN
                    ))}x,
 
+    ### fix - allow digits/numbers in variable names
+    ###         X1 or ABC123
+    ###  =>    VARIABLE("X1")
+    ##         VARIABLE("ABC123")
+    ###  instead of  VARIABLE("X")+NUMBER("1")
+    ##               VARIABLE("ABC")+ NUMBER("123")
     %r{  (?<VARIABLE>   [A-Za-z_]+ )}x,
     %r{  (?<NUMBER>    [0-9]+ )}x,      ## note -   -? handled/matched by MINUS
     %r{  (?<STRING>   "[^"]*") }x,
@@ -145,7 +159,7 @@ def tokenize( txt )
                               lineno: lineno, offset: m.offset(0) )
             else
                if m[:ANY]
-                 puts "syntax error on line #{lineno}:#{pos+1}"
+                 puts "syntax error on line #{lineno}:#{pos+1} at >#{m[0]}<"
                else
                  puts "internal lexer error - unhandled token type: #{m}"
                end
@@ -197,8 +211,28 @@ BASIC
 
 lexer = NanoBasicLexer.new
 tokens = lexer.tokenize(code)
-
 pp tokens
+
+
+code =<<BASIC
+10 XPRINT
+20 XREM
+30 PRINTX
+40 REMARK
+50 @PRINT
+60 X@Y
+70 123@456
+80 A<=B
+90 A<>B
+100 A>=B
+110 1--2
+120 PRINT ""
+130 ' comment
+BASIC
+
+tokens = lexer.tokenize(code)
+pp tokens
+
 
 puts "bye"
 
