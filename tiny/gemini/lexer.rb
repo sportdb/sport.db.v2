@@ -153,6 +153,13 @@ class FootballParser
   end
 end
 
+
+
+###
+##  TODO/FIX/FIX
+##    uses old legacy format
+##     change to use latest (standard) format
+
 # 4. EXAMPLE USAGE
 sample_data = <<~TXT
   # English Premier League Sample
